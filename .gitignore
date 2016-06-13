@@ -1,3 +1,7 @@
+# Compiled test files (as the tests are purely compilation success tests for signatures/typings and not to be run)
+tests/**/*.js
+tests/**/*.js.map
+
 # Logs
 logs
 *.log
