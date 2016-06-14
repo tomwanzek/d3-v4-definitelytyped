@@ -30,13 +30,13 @@ export interface CountableInterval extends Interval{
 // ---------------------------------------------------------------
 
 export function timeInterval(
-    floor: (date: Date) => Date,
-    offset: (date: Date, step: number) => Date,
+    floor: (date: Date) => void,
+    offset: (date: Date, step: number) => void,
 ): Interval;
 
 export function timeInterval(
-    floor: (date: Date) => Date,
-    offset: (date: Date, step: number) => Date,
+    floor: (date: Date) => void,
+    offset: (date: Date, step: number) => void,
     count: (start: Date, end: Date) => number,
     field?: (date: Date) => number
 ): CountableInterval;
@@ -46,7 +46,7 @@ export function timeInterval(
 // ---------------------------------------------------------------
 
 
-// time ----------------------------------------------------------
+// local time ----------------------------------------------------------
 
 export var timeMillisecond: CountableInterval;
 export function timeMilliseconds(start: Date, stop: Date, step?: number): Date[];
@@ -88,7 +88,7 @@ export var timeYear: CountableInterval;
 export function timeYears(start: Date, stop: Date, step?: number): Date[];
 
 
-// utc ----------------------------------------------------------
+// utc Universal Coordinated Time ----------------------------------------------------------
 
 export var utcMillisecond: CountableInterval;
 export function utcMilliseconds(start: Date, stop: Date, step?: number): Date[];
