@@ -1,6 +1,7 @@
 {
   "name": "d3-v4-definitelytyped",
   "dependencies": {
+    "d3-selection": "file:./src/d3-selection/typings.json",
     "d3-time": "file:./src/d3-time/typings.json",
     "d3-timer": "file:./src/d3-timer/typings.json"
   }
