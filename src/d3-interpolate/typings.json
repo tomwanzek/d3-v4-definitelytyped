@@ -1,0 +1,14 @@
+{
+  "name": "d3-interpolate",
+  "homepage": "https://github.com/d3/d3-interpolate",
+  "version": "0.9.0",
+  "global": false,
+  "main": "index.d.ts",
+  "files": [
+    "index.d.ts"
+  ],
+  "dependencies": {
+    
+  },
+  "globalDependencies": {}
+}
