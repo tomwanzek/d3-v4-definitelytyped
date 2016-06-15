@@ -292,7 +292,7 @@ export function mouse(container: ContainerElement): [number, number];
 export function touch(container: ContainerElement, identifier: number): [number, number];
 export function touch(container: ContainerElement, touches: TouchList, identifier: number): [number, number];
 
-export function touches(container: HTMLElement | SVGSVGElement | SVGGElement, touches?: TouchList): Array<[number, number]>;
+export function touches(container: ContainerElement, touches?: TouchList): Array<[number, number]>;
 
 // ---------------------------------------------------------------------------
 // local.js related
