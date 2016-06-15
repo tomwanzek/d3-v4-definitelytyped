@@ -1,6 +1,6 @@
 {
-  "name": "d3-interpolate",
-  "homepage": "https://github.com/d3/d3-interpolate",
+  "name": "d3-dispatch",
+  "homepage": "https://github.com/d3/d3-dispatch",
   "version": "1.0.0",
   "global": false,
   "main": "index.d.ts",
