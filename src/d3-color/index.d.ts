@@ -54,7 +54,6 @@ export interface HSLColor extends Color {
     darker(k?: number): HSLColor;
     displayable(): boolean
     rgb(): RGBColor;
-//    toString(): string;
 }
 
 export interface HSLColorFn extends Function {
@@ -71,9 +70,7 @@ export interface LabColor extends Color {
     opacity: number;
     brighter(k?: number): LabColor;
     darker(k?: number): LabColor;
-//    displayable(): boolean
     rgb(): RGBColor;
-//    toString(): string;
 }
 
 export interface LabColorFn extends Function {
@@ -90,9 +87,7 @@ export interface HCLColor extends Color {
     opacity: number;
     brighter(k?: number): HCLColor;
     darker(k?: number): HCLColor;
-//    displayable(): boolean
     rgb(): RGBColor;
-//    toString(): string;
 }
 
 export interface HCLColorFn extends Function {
@@ -109,9 +104,7 @@ export interface CubehelixColor extends Color {
     opacity: number;
     brighter(k?: number): CubehelixColor;
     darker(k?: number): CubehelixColor;
-//    displayable(): boolean
     rgb(): RGBColor;
-//    toString(): string;
 }
 
 export interface CubehelixColorFn extends Function {
