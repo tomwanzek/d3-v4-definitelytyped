@@ -1,7 +1,7 @@
 {
   "name": "d3-time",
   "homepage": "https://github.com/d3/d3-time",
-  "version": "0.3.2",
+  "version": "1.0.0",
   "global": false,
   "main": "index.d.ts",
   "files": [
