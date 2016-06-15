@@ -1,14 +1,13 @@
 {
-  "name": "d3-selection",
-  "homepage": "https://github.com/d3/d3-selection",
-  "version": "0.9.0",
+  "name": "d3-transition",
+  "homepage": "https://github.com/d3/d3-transition",
+  "version": "0.3.0",
   "global": false,
   "main": "index.d.ts",
   "files": [
     "index.d.ts"
   ],
   "dependencies": {
-    
   },
   "globalDependencies": {}
 }

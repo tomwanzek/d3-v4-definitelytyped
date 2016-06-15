@@ -1,8 +1,13 @@
 {
   "name": "d3-v4-definitelytyped",
   "dependencies": {
+    "d3-color": "file:./src/d3-color/typings.json",
+    "d3-dispatch": "file:./src/d3-dispatch/typings.json",
+    "d3-ease": "file:./src/d3-ease/typings.json",
+    "d3-interpolate": "file:./src/d3-interpolate/typings.json",
     "d3-selection": "file:./src/d3-selection/typings.json",
     "d3-time": "file:./src/d3-time/typings.json",
-    "d3-timer": "file:./src/d3-timer/typings.json"
+    "d3-timer": "file:./src/d3-timer/typings.json",
+    "d3-transition": "file:./src/d3-transition/typings.json"
   }
 }
