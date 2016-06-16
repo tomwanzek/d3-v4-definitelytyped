@@ -20,10 +20,10 @@ export interface Color {
     toString(): string; // Note: While this method is used in prototyping for colors of specific colorspaces, it should not be called directly, as 'this.rgb' would not be implemented on Color
 }
 
-export interface ColorFn extends Function {
+export interface ColorFactory extends Function {
     (cssColorSpecifier: string): RGBColor | HSLColor;
     (color: ColorSpaceObject): RGBColor | HSLColor;
-    prototype: Color;
+//    prototype: Color;
 }
 
 export interface RGBColor extends Color {
@@ -38,11 +38,11 @@ export interface RGBColor extends Color {
     toString(): string;
 }
 
-export interface RGBColorFn extends Function {
+export interface RGBColorFactory extends Function {
     (r: number, g: number, b: number, opacity?: number): RGBColor;
     (cssColorSpecifier: string): RGBColor;
     (color: ColorSpaceObject): RGBColor;
-    prototype: RGBColor;
+//    prototype: RGBColor;
 }
 
 export interface HSLColor extends Color {
@@ -56,11 +56,11 @@ export interface HSLColor extends Color {
     rgb(): RGBColor;
 }
 
-export interface HSLColorFn extends Function {
+export interface HSLColorFactory extends Function {
     (h: number, s: number, l: number, opacity?: number): HSLColor;
     (cssColorSpecifier: string): HSLColor;
     (color: ColorSpaceObject): HSLColor;
-    prototype: HSLColor;
+//    prototype: HSLColor;
 }
 
 export interface LabColor extends Color {
@@ -73,11 +73,11 @@ export interface LabColor extends Color {
     rgb(): RGBColor;
 }
 
-export interface LabColorFn extends Function {
+export interface LabColorFactory extends Function {
     (l: number, a: number, b: number, opacity?: number): LabColor;
     (cssColorSpecifier: string): LabColor;
     (color: ColorSpaceObject): LabColor;
-    prototype: LabColor;
+//    prototype: LabColor;
 }
 
 export interface HCLColor extends Color {
@@ -90,11 +90,11 @@ export interface HCLColor extends Color {
     rgb(): RGBColor;
 }
 
-export interface HCLColorFn extends Function {
+export interface HCLColorFactory extends Function {
     (h: number, l: number, c: number, opacity?: number): HCLColor;
     (cssColorSpecifier: string): HCLColor;
     (color: ColorSpaceObject): HCLColor;
-    prototype: HCLColor;
+//    prototype: HCLColor;
 }
 
 export interface CubehelixColor extends Color {
@@ -107,25 +107,25 @@ export interface CubehelixColor extends Color {
     rgb(): RGBColor;
 }
 
-export interface CubehelixColorFn extends Function {
+export interface CubehelixColorFactory extends Function {
     (h: number, s: number, l: number, opacity?: number): CubehelixColor;
     (cssColorSpecifier: string): CubehelixColor;
     (color: ColorSpaceObject): CubehelixColor;
-    prototype: CubehelixColor;
+//    prototype: CubehelixColor;
 }
 
 // --------------------------------------------------------------------------
 // Color object factories
 // --------------------------------------------------------------------------
 
-export var color: ColorFn;
+export var color: ColorFactory;
 
-export var rgb: RGBColorFn;
+export var rgb: RGBColorFactory;
 
-export var hsl: HSLColorFn;
+export var hsl: HSLColorFactory;
 
-export var lab: LabColorFn;
+export var lab: LabColorFactory;
 
-export var hcl: HCLColorFn;
+export var hcl: HCLColorFactory;
 
-export var cubehelix: CubehelixColorFn;
+export var cubehelix: CubehelixColorFactory;

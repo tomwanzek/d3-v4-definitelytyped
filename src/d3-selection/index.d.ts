@@ -106,7 +106,6 @@ export interface SelectorFn<GroupElement extends BaseType, U, ChildElement exten
 /**
  * Interface of selectorAll function
  */
-// TODO: validate return type (could be NodeListOf<T>)
 export interface SelectorAllFn<GroupElement extends BaseType, U, ChildElement extends BaseType> extends Function {
     (this: GroupElement, datum?: U, index?: number, group?: Array<GroupElement> | NodeListOf<GroupElement>): Array<ChildElement> | NodeListOf<ChildElement>;
 }
@@ -250,7 +249,7 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 // TODO: Review this, as this is the root selection.
 interface selectionFn extends Function {
     (): Selection<HTMLElement, any, null, undefined>;
-    prototype: Selection<HTMLElement, any, null, undefined>;
+//    prototype: Selection<HTMLElement, any, null, undefined>;
 }
 export var selection: selectionFn;
 
@@ -297,8 +296,6 @@ export function touches(container: ContainerElement, touches?: TouchList): Array
 // local.js related
 // ---------------------------------------------------------------------------
 
-// TODO: Not yet included in npm install d3@next as of May/29/2016, but included
-// on github d3-selection with API description
 // TODO: validate type of node (BaseType?)
 export interface Local {
     get(node: BaseType): any;
