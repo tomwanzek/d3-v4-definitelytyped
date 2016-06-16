@@ -23,7 +23,7 @@ A further separate consideration, is the question of flexibly using typescript d
 
 ## Module-Level Status
 
-_Note_: All references to "Test File" below should be read as typescript files that should compile without errors to indicated the consistency of the typescript definitions.
+**Note**: All references to "Test File" below should be read as typescript files that should compile without errors to indicated the consistency of the typescript definitions.
 They are not meant to be used with a test runner as functional tests.
 
 ### d3-color
@@ -35,6 +35,8 @@ They are not meant to be used with a test runner as functional tests.
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-dispatch/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-dispatch/d3-dispatch-test.ts)
+
+**Note**: Utilizes `this`-typing (criticality: _low_)
 
 ### d3-ease
 
@@ -51,6 +53,10 @@ They are not meant to be used with a test runner as functional tests.
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-selection/index.d.ts) (_draft_)
 - [ ] Test File
 
+**Note**: Utilizes `this`-typing (criticality: high)
+
+`this`-typing is used for context-binding to DOM element.
+
 ### d3-time
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-time/index.d.ts)
@@ -66,3 +72,6 @@ They are not meant to be used with a test runner as functional tests.
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-transition/index.d.ts) (_draft_)
 - [ ] Test File
 
+**Note**: Utilizes `this`-typing (criticality: high)
+
+`this`-typing is used for context-binding to DOM element.
