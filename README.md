@@ -19,3 +19,50 @@ Furthermore, where indicated, some features of the definition files may be consi
 With respect to **D3**, this ability, may be of specific interest when working with [selections](https://github.com/d3/d3-selection) and [transitions](https://github.com/d3/d3-transition), where the current DOM element is provided through the this context.
 
 A further separate consideration, is the question of flexibly using typescript definitions for *D3*, given the bundling scenarios contemplated by the D3 release.
+
+
+## Module-Level Status
+
+_Note_: All references to "Test File" below should be read as typescript files that should compile without errors to indicated the consistency of the typescript definitions.
+They are not meant to be used with a test runner as functional tests.
+
+### d3-color
+
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-color/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-color/d3-color-test.ts)
+
+### d3-dispatch
+
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-dispatch/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-dispatch/d3-dispatch-test.ts)
+
+### d3-ease
+
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-ease/index.d.ts)
+- [ ] Test File
+
+### d3-interpolate
+
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-interpolate/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-interpolate/d3-interpolate-test.ts)
+
+### d3-selection
+
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-selection/index.d.ts) (_draft_)
+- [ ] Test File
+
+### d3-time
+
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-time/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-time/d3-time-test.ts)
+
+### d3-timer
+
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-timer/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-timer/d3-timer-test.ts)
+
+### d3-transition
+
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-transition/index.d.ts) (_draft_)
+- [ ] Test File
+
