@@ -39,7 +39,6 @@ export type Primitive = number | string | boolean;
  * without 'd3-selection' trying to use properties internally which would otherwise not
  * be supported.
  */
-
 export type BaseType = Element;
 
 

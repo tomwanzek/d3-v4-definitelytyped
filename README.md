@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repo is intended as a staging area for typescript definitions related to the upcoming release of [D3js](https://github.com/d3/d3) version 4.x.
+This repo is intended as a staging area for typescript definitions related to the upcoming release of [D3js](https://github.com/d3/d3) version 4.x by [Mike Bostock](https://github.com/mbostock).
 
 Its content is _work in progress_ and intended to be rolled into a contribution to DefinitelyTyped or comparable community effort. The repo is **not intended** as a source for definition files to be used in the regular course of working with D3 in typescript.
 
@@ -26,6 +26,12 @@ A further separate consideration, is the question of flexibly using typescript d
 **Note**: All references to "Test File" below should be read as typescript files that should compile without errors to indicated the consistency of the typescript definitions.
 They are not meant to be used with a test runner as functional tests.
 
+### d3-array
+
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-array/index.d.ts)
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-array/d3-array-test.ts)
+
+
 ### d3-color
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-color/index.d.ts)
@@ -41,7 +47,7 @@ They are not meant to be used with a test runner as functional tests.
 ### d3-ease
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-ease/index.d.ts)
-- [ ] Test File
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-ease/d3-ease-test.ts)
 
 ### d3-interpolate
 
@@ -75,3 +81,8 @@ They are not meant to be used with a test runner as functional tests.
 **Note**: Utilizes `this`-typing (criticality: high)
 
 `this`-typing is used for context-binding to DOM element.
+
+## Related Contributions
+
+This repo benefits from the original work on **D3js 3.x** typings on [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped) for the file _d3.d.ts_ and its tests _d3-test.ts_.
+By implication the debt is to all its contributors with primary listed responsibility of [Alex Ford](https://github.com/gustavderdrache) and [Boris Yankov](https://github.com/borisyankov).
