@@ -31,6 +31,20 @@ They are not meant to be used with a test runner as functional tests.
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-array/index.d.ts)
 - [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-array/d3-array-test.ts)
 
+### d3-axis
+
+- [ ] Definition File
+- [ ] Test File
+
+### d3-brush
+
+- [ ] Definition File
+- [ ] Test File
+
+### d3-chord
+
+- [ ] Definition File
+- [ ] Test File
 
 ### d3-collection
 
@@ -49,15 +63,33 @@ They are not meant to be used with a test runner as functional tests.
 
 **Note**: Utilizes `this`-typing (criticality: _low_)
 
+### d3-drag
+
+- [ ] Definition File
+- [ ] Test File
+
+### d3-dsv
+
+
 ### d3-ease
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-ease/index.d.ts)
 - [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-ease/d3-ease-test.ts)
 
+### d3-force
+
+- [ ] Definition File
+- [ ] Test File
+
 ### d3-format
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-format/index.d.ts)
 - [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-format/d3-format-test.ts)
+
+### d3-hierarchy
+
+- [ ] Definition File
+- [ ] Test File
 
 ### d3-interpolate
 
@@ -69,6 +101,32 @@ They are not meant to be used with a test runner as functional tests.
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-path/index.d.ts) (_draft_)
 - [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-path/d3-path-test.ts)
 
+### d3-polygon
+
+- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-polygon/index.d.ts)
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-polygon/d3-polygon-test.ts)
+
+### d3-quadtree
+
+- [ ] Definition File
+- [ ] Test File
+
+### d3-queue
+
+
+### d3-random
+
+- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-random/index.d.ts)
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-random/d3-random-test.ts)
+
+### d3-request
+
+
+### d3-scale
+
+- [ ] Definition File
+- [ ] Test File
+
 ### d3-selection
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-selection/index.d.ts) (_draft_)
@@ -78,6 +136,11 @@ They are not meant to be used with a test runner as functional tests.
 
 `this`-typing is used for context-binding to DOM element.
 
+### d3-shape
+
+- [ ] Definition File
+- [ ] Test File
+
 ### d3-time
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-time/index.d.ts)
@@ -86,7 +149,7 @@ They are not meant to be used with a test runner as functional tests.
 ### d3-time-format
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-time-format/index.d.ts)
-- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-time-format/d3-time-format-test.ts)
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-time-format/d3-time-format-test.ts)
 
 ### d3-timer
 
@@ -101,6 +164,16 @@ They are not meant to be used with a test runner as functional tests.
 **Note**: Utilizes `this`-typing (criticality: high)
 
 `this`-typing is used for context-binding to DOM element.
+
+### d3-voronoi
+
+- [ ] Definition File
+- [ ] Test File
+
+### d3-zoom
+
+- [ ] Definition File
+- [ ] Test File
 
 ## Related Contributions
 
