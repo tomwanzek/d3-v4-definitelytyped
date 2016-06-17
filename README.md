@@ -167,8 +167,8 @@ They are not meant to be used with a test runner as functional tests.
 
 ### d3-voronoi
 
-- [ ] Definition File
-- [ ] Test File
+- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-voronoi/index.d.ts)
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-voronoi/d3-voronoi-test.ts)
 
 ### d3-zoom
 

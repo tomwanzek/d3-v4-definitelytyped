@@ -15,6 +15,7 @@
     "d3-time": "file:./src/d3-time/typings.json",
     "d3-time-format": "file:./src/d3-time-format/typings.json",
     "d3-timer": "file:./src/d3-timer/typings.json",
-    "d3-transition": "file:./src/d3-transition/typings.json"
+    "d3-transition": "file:./src/d3-transition/typings.json",
+    "d3-voronoi": "file:./src/d3-voronoi/typings.json"
   }
 }
