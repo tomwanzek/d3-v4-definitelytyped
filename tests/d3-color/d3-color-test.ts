@@ -112,8 +112,6 @@ console.log('Opacity = %d', cHcl.opacity);
 
 // Signature tests for Cubehelix
 
-// Signature tests for HCL
-
 let cCubehelix: d3Color.CubehelixColor;
 
 cCubehelix = d3Color.cubehelix(20, 100, 200);
