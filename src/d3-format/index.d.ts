@@ -6,9 +6,9 @@
 // TODO: Clean-up header for proper referencing of new project/module information
 
 /**
- * Specification of Locale to use when creating a new LocalObject
+ * Specification of locale to use when creating a new FormatLocaleObject
  */
-export interface Locale {
+export interface FormatLocale {
     /**
      * The decimal point (e.g., ".")
      */
@@ -29,7 +29,7 @@ export interface Locale {
 }
 
 
-export interface LocaleObject {
+export interface FormatLocaleObject {
 
     /**
      * Returns a new format function for the given string specifier. The returned function 
@@ -67,9 +67,9 @@ export interface FormatSpecifier {
 
 /**
  * Create a new locale-based object which exposes format(...) and formatPrefix(...)
- * methods for the specified local.
+ * methods for the specified locale.
  */
-export function formatLocale(locale: Locale): LocaleObject;
+export function formatLocale(locale: FormatLocale): FormatLocaleObject;
 
 /**
  * Returns a new format function for the given string specifier. The returned function 

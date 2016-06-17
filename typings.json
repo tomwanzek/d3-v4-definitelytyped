@@ -11,6 +11,7 @@
     "d3-path": "file:./src/d3-path/typings.json",
     "d3-selection": "file:./src/d3-selection/typings.json",
     "d3-time": "file:./src/d3-time/typings.json",
+    "d3-time-format": "file:./src/d3-time-format/typings.json",
     "d3-timer": "file:./src/d3-timer/typings.json",
     "d3-transition": "file:./src/d3-transition/typings.json"
   }
