@@ -10,6 +10,7 @@
     "d3-interpolate": "file:./src/d3-interpolate/typings.json",
     "d3-path": "file:./src/d3-path/typings.json",
     "d3-polygon": "file:./src/d3-polygon/typings.json",
+    "d3-quadtree": "file:./src/d3-quadtree/typings.json",
     "d3-random": "file:./src/d3-random/typings.json",
     "d3-selection": "file:./src/d3-selection/typings.json",
     "d3-time": "file:./src/d3-time/typings.json",

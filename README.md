@@ -108,7 +108,7 @@ They are not meant to be used with a test runner as functional tests.
 
 ### d3-quadtree
 
-- [ ] Definition File
+- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-quadtree/index.d.ts) (_draft_)
 - [ ] Test File
 
 ### d3-queue
