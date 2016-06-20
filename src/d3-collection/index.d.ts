@@ -9,7 +9,7 @@
 /**
  * Reference type things that can be coerced to string implicitely
  */
-export type Stringifiable = {
+type Stringifiable = {
     toString(): string;
 };
 

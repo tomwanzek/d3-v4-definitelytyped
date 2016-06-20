@@ -9,8 +9,8 @@
 import * as d3Time from 'd3-time';
 
 
-let countableI: d3Time.CountableInterval;
-let simpleI: d3Time.Interval;
+let countableI: d3Time.CountableTimeInterval;
+let simpleI: d3Time.TimeInterval;
 let dateArray: Array<Date>;
 let start: Date = new Date(2014, 1, 1, 6, 0, 0, 0),
     end: Date = new Date(2016, 6, 13, 1, 25, 15, 500),

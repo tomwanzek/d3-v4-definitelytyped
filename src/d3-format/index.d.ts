@@ -5,6 +5,8 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
+// TODO: Check whether instead of number, 'Numeric'-type, i.e. coercible is sufficient
+
 /**
  * Specification of locale to use when creating a new FormatLocaleObject
  */

@@ -124,8 +124,8 @@ They are not meant to be used with a test runner as functional tests.
 
 ### d3-scale
 
-- [ ] Definition File
-- [ ] Test File
+- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-scale/index.d.ts)
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-scale/d3-scale-test.ts)
 
 ### d3-selection
 

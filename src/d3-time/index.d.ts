@@ -10,19 +10,19 @@
 // Interfaces
 // ---------------------------------------------------------------
 
-export interface Interval {
+export interface TimeInterval {
     (date: Date): Date;
     floor(date: Date): Date;
     round(date: Date): Date;
     ceil(date: Date): Date;
     offset(date: Date, step?: number): Date;
     range(start: Date, stop: Date, step?: number): Date[];
-    filter(test: (date: Date) => boolean): Interval;
+    filter(test: (date: Date) => boolean): TimeInterval;
 }
 
-export interface CountableInterval extends Interval{
+export interface CountableTimeInterval extends TimeInterval{
     count(start: Date, end: Date): number;
-    every(step: number): Interval | null;
+    every(step: number): TimeInterval | null;
 }
 
 // ---------------------------------------------------------------
@@ -32,14 +32,14 @@ export interface CountableInterval extends Interval{
 export function timeInterval(
     floor: (date: Date) => void,
     offset: (date: Date, step: number) => void,
-): Interval;
+): TimeInterval;
 
 export function timeInterval(
     floor: (date: Date) => void,
     offset: (date: Date, step: number) => void,
     count: (start: Date, end: Date) => number,
     field?: (date: Date) => number
-): CountableInterval;
+): CountableTimeInterval;
 
 // ---------------------------------------------------------------
 // Built-In Factories and Date Array Creators
@@ -48,83 +48,83 @@ export function timeInterval(
 
 // local time ----------------------------------------------------------
 
-export var timeMillisecond: CountableInterval;
+export var timeMillisecond: CountableTimeInterval;
 export function timeMilliseconds(start: Date, stop: Date, step?: number): Date[];
 
-export var timeSecond: CountableInterval;
+export var timeSecond: CountableTimeInterval;
 export function timeSeconds(start: Date, stop: Date, step?: number): Date[];
 
-export var timeMinute: CountableInterval;
+export var timeMinute: CountableTimeInterval;
 export function timeMinutes(start: Date, stop: Date, step?: number): Date[];
 
-export var timeHour: CountableInterval;
+export var timeHour: CountableTimeInterval;
 export function timeHours(start: Date, stop: Date, step?: number): Date[];
 
-export var timeDay: CountableInterval;
+export var timeDay: CountableTimeInterval;
 export function timeDays(start: Date, stop: Date, step?: number): Date[];
 
-export var timeWeek: CountableInterval;
+export var timeWeek: CountableTimeInterval;
 export function timeWeeks(start: Date, stop: Date, step?: number): Date[];
 
-export var timeSunday: CountableInterval;
+export var timeSunday: CountableTimeInterval;
 export function timeSundays(start: Date, stop: Date, step?: number): Date[];
-export var timeMonday: CountableInterval;
+export var timeMonday: CountableTimeInterval;
 export function timeMondays(start: Date, stop: Date, step?: number): Date[];
-export var timeTuesday: CountableInterval;
+export var timeTuesday: CountableTimeInterval;
 export function timeTuesdays(start: Date, stop: Date, step?: number): Date[];
-export var timeWednesday: CountableInterval;
+export var timeWednesday: CountableTimeInterval;
 export function timeWednesdays(start: Date, stop: Date, step?: number): Date[];
-export var timeThursday: CountableInterval;
+export var timeThursday: CountableTimeInterval;
 export function timeThursdays(start: Date, stop: Date, step?: number): Date[];
-export var timeFriday: CountableInterval;
+export var timeFriday: CountableTimeInterval;
 export function timeFridays(start: Date, stop: Date, step?: number): Date[];
-export var timeSaturday: CountableInterval;
+export var timeSaturday: CountableTimeInterval;
 export function timeSaturdays(start: Date, stop: Date, step?: number): Date[];
 
-export var timeMonth: CountableInterval;
+export var timeMonth: CountableTimeInterval;
 export function timeMonths(start: Date, stop: Date, step?: number): Date[];
 
-export var timeYear: CountableInterval;
+export var timeYear: CountableTimeInterval;
 export function timeYears(start: Date, stop: Date, step?: number): Date[];
 
 
 // utc Universal Coordinated Time ----------------------------------------------------------
 
-export var utcMillisecond: CountableInterval;
+export var utcMillisecond: CountableTimeInterval;
 export function utcMilliseconds(start: Date, stop: Date, step?: number): Date[];
 
-export var utcSecond: CountableInterval;
+export var utcSecond: CountableTimeInterval;
 export function utcSeconds(start: Date, stop: Date, step?: number): Date[];
 
-export var utcMinute: CountableInterval;
+export var utcMinute: CountableTimeInterval;
 export function utcMinutes(start: Date, stop: Date, step?: number): Date[];
 
-export var utcHour: CountableInterval;
+export var utcHour: CountableTimeInterval;
 export function utcHours(start: Date, stop: Date, step?: number): Date[];
 
-export var utcDay: CountableInterval;
+export var utcDay: CountableTimeInterval;
 export function utcDays(start: Date, stop: Date, step?: number): Date[];
 
-export var utcWeek: CountableInterval;
+export var utcWeek: CountableTimeInterval;
 export function utcWeeks(start: Date, stop: Date, step?: number): Date[];
 
-export var utcSunday: CountableInterval;
+export var utcSunday: CountableTimeInterval;
 export function utcSundays(start: Date, stop: Date, step?: number): Date[];
-export var utcMonday: CountableInterval;
+export var utcMonday: CountableTimeInterval;
 export function utcMondays(start: Date, stop: Date, step?: number): Date[];
-export var utcTuesday: CountableInterval;
+export var utcTuesday: CountableTimeInterval;
 export function utcTuesdays(start: Date, stop: Date, step?: number): Date[];
-export var utcWednesday: CountableInterval;
+export var utcWednesday: CountableTimeInterval;
 export function utcWednesdays(start: Date, stop: Date, step?: number): Date[];
-export var utcThursday: CountableInterval;
+export var utcThursday: CountableTimeInterval;
 export function utcThursdays(start: Date, stop: Date, step?: number): Date[];
-export var utcFriday: CountableInterval;
+export var utcFriday: CountableTimeInterval;
 export function utcFridays(start: Date, stop: Date, step?: number): Date[];
-export var utcSaturday: CountableInterval;
+export var utcSaturday: CountableTimeInterval;
 export function utcSaturdays(start: Date, stop: Date, step?: number): Date[];
 
-export var utcMonth: CountableInterval;
+export var utcMonth: CountableTimeInterval;
 export function utcMonths(start: Date, stop: Date, step?: number): Date[];
 
-export var utcYear: CountableInterval;
+export var utcYear: CountableTimeInterval;
 export function utcYears(start: Date, stop: Date, step?: number): Date[];
