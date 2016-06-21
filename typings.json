@@ -14,6 +14,7 @@
     "d3-random": "file:./src/d3-random/typings.json",
     "d3-scale": "file:./src/d3-scale/typings.json",
     "d3-selection": "file:./src/d3-selection/typings.json",
+    "d3-shape": "file:./src/d3-shape/typings.json",
     "d3-time": "file:./src/d3-time/typings.json",
     "d3-time-format": "file:./src/d3-time-format/typings.json",
     "d3-timer": "file:./src/d3-timer/typings.json",

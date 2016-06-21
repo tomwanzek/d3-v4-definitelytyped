@@ -1,0 +1,14 @@
+{
+  "name": "d3-shape",
+  "homepage": "https://github.com/d3/d3-shape",
+  "version": "0.7.1",
+  "global": false,
+  "main": "index.d.ts",
+  "files": [
+    "index.d.ts"
+  ],
+  "dependencies": {
+    
+  },
+  "globalDependencies": {}
+}
