@@ -6,17 +6,6 @@
 // TODO: Clean-up header for proper referencing of new project/module information
 
 // --------------------------------------------------------------------------
-// Shared Type Definitions and Interfaces
-// --------------------------------------------------------------------------
-
-/**
- * Type for Easing Function
- */
-export interface EasingFn extends Function {
-    (normalizedTime: number): number;
-}
-
-// --------------------------------------------------------------------------
 // Easing Functions
 // --------------------------------------------------------------------------
 

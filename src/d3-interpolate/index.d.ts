@@ -10,14 +10,9 @@ import * as d3_color from 'd3-color';
 // Shared Type Definitions and Interfaces
 // --------------------------------------------------------------------------
 
-/**
- * Type for Interpolation Function
- */
-export interface InterpolationFn<T> extends Function {
-    (t: number): T;
-}
 
-export interface ZoomInterpolationFn extends InterpolationFn<ZoomView> {
+export interface ZoomInterpolationFn extends Function{
+    (t: number): ZoomView;
     /**
      * Recommended duration of zoom transition in ms
      */
@@ -25,7 +20,7 @@ export interface ZoomInterpolationFn extends InterpolationFn<ZoomView> {
 }
 
 export interface ColorGammaInterpolationFactory extends Function {
-    (a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): InterpolationFn<string>;
+    (a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
     gamma(g: number): ColorGammaInterpolationFactory;
 }
 
@@ -42,28 +37,28 @@ export type ZoomView = [number, number, number];
 // Interpolation Function Factories
 // --------------------------------------------------------------------------
 
-export function interpolate(a: any, b: null): InterpolationFn<null>;
-export function interpolate(a: any, b: number): InterpolationFn<number>;
-export function interpolate(a: any, b: d3_color.ColorSpaceObject): InterpolationFn<string>;
-export function interpolate(a: any, b: string): InterpolationFn<string>;
-export function interpolate<U>(a: any, b: Array<U>): InterpolationFn<Array<U>>;
-export function interpolate(a: any, b: { [key: string]: any }): InterpolationFn<{ [key: string]: any }>;
-export function interpolate<U extends Object>(a: any, b: U): InterpolationFn<U>;
+export function interpolate(a: any, b: null): ((t: number) => null);
+export function interpolate(a: any, b: number): ((t: number) => number);
+export function interpolate(a: any, b: d3_color.ColorSpaceObject): ((t: number) => string);
+export function interpolate(a: any, b: string): ((t: number) => string);
+export function interpolate<U>(a: any, b: Array<U>): ((t: number) => Array<U>);
+export function interpolate(a: any, b: { [key: string]: any }): ((t: number) => { [key: string]: any });
+export function interpolate<U extends Object>(a: any, b: U): ((t: number) => U);
 
-export function interpolateNumber(a: number, b: number): InterpolationFn<number>;
+export function interpolateNumber(a: number, b: number): ((t: number) => number);
 
-export function interpolateRound(a: number, b: number): InterpolationFn<number>;
+export function interpolateRound(a: number, b: number): ((t: number) => number);
 
-export function interpolateString(a: string, b: string): InterpolationFn<string>;
+export function interpolateString(a: string, b: string): ((t: number) => string);
 
-export function interpolateArray<U>(a: Array<any>, b: Array<U>): InterpolationFn<Array<U>>;
+export function interpolateArray<U>(a: Array<any>, b: Array<U>): ((t: number) => Array<U>);
 
-export function interpolateObject(a: { [key: string]: any }, b: { [key: string]: any }): InterpolationFn<{ [key: string]: any }>;
-export function interpolateObject<U extends Object>(a: any, b: U): InterpolationFn<U>;
+export function interpolateObject(a: { [key: string]: any }, b: { [key: string]: any }): ((t: number) => { [key: string]: any });
+export function interpolateObject<U extends Object>(a: any, b: U): ((t: number) => U);
 
 
-export function interpolateTransformCss(a: string, b: string): InterpolationFn<string>;
-export function interpolateTransformSvg(a: string, b: string): InterpolationFn<string>;
+export function interpolateTransformCss(a: string, b: string): ((t: number) => string);
+export function interpolateTransformSvg(a: string, b: string): ((t: number) => string);
 
 /**
  * Create Interpolator for zoom views
@@ -71,24 +66,24 @@ export function interpolateTransformSvg(a: string, b: string): InterpolationFn<s
 export function interpolateZoom(a: ZoomView, b: ZoomView): ZoomInterpolationFn;
 
 
-export function quantize<T>(interpolator: InterpolationFn<T>, n :number): Array<T>;
+export function quantize<T>(interpolator: ((t: number) => T), n :number): Array<T>;
 
 // Color interpolation related
 
 export var interpolateRgb: ColorGammaInterpolationFactory;
 
-export function interpolateRgbBasis(colors: Array<string | d3_color.ColorSpaceObject>): InterpolationFn<string>;
-export function interpolateRgbBasisClosed(colors: Array<string | d3_color.ColorSpaceObject>): InterpolationFn<string>;
+export function interpolateRgbBasis(colors: Array<string | d3_color.ColorSpaceObject>): ((t: number) => string);
+export function interpolateRgbBasisClosed(colors: Array<string | d3_color.ColorSpaceObject>): ((t: number) => string);
 
-export function interpolateHsl(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): InterpolationFn<string>;
-export function interpolateHslLong(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): InterpolationFn<string>;
-export function interpolateLab(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): InterpolationFn<string>;
-export function interpolateHcl(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): InterpolationFn<string>;
-export function interpolateHclLong(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): InterpolationFn<string>;
+export function interpolateHsl(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
+export function interpolateHslLong(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
+export function interpolateLab(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
+export function interpolateHcl(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
+export function interpolateHclLong(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
 export var interpolateCubehelix: ColorGammaInterpolationFactory;
 export var interpolateCubehelixLong: ColorGammaInterpolationFactory;
 
 // Spline related
 
-export function interpolateBasis(splineNodes: Array<number>): InterpolationFn<number>;
-export function interpolateBasisClosed(splineNodes: Array<number>): InterpolationFn<number>;
+export function interpolateBasis(splineNodes: Array<number>): ((t: number) => number);
+export function interpolateBasisClosed(splineNodes: Array<number>): ((t: number) => number);

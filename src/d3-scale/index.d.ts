@@ -28,7 +28,7 @@ type Stringifiable = {
 };
 
 interface InterpolatorFactory<T, U> {
-    (a: T, b: T): d3_interpolate.InterpolationFn<U>;
+    (a: T, b: T): ((t: number) => U);
 }
 
 
@@ -227,34 +227,34 @@ interface ScaleSequential<Output> {
     domain(domain: Array<number>): ScaleSequential<Output>;
     clamp(): boolean;
     clamp(clamp: boolean): ScaleSequential<Output>;
-    interpolator(): d3_interpolate.InterpolationFn<Output>;
-    interpolator(interpolator: d3_interpolate.InterpolationFn<Output>): ScaleSequential<Output>;
-    interpolator<NewOutput>(interpolator: d3_interpolate.InterpolationFn<NewOutput>): ScaleSequential<NewOutput>;
+    interpolator(): ((t: number) => Output);
+    interpolator(interpolator: ((t: number) => Output)): ScaleSequential<Output>;
+    interpolator<NewOutput>(interpolator: ((t: number) => NewOutput)): ScaleSequential<NewOutput>;
     copy(): ScaleSequential<Output>;
 }
 
-export function scaleSequential<Output>(interpolator: d3_interpolate.InterpolationFn<Output>): ScaleSequential<Output>;
+export function scaleSequential<Output>(interpolator: ((t: number) => Output)): ScaleSequential<Output>;
 
 // -------------------------------------------------------------------------------
 // Color Interpolators for Sequential Scale Factory
 // -------------------------------------------------------------------------------
 
 
-export function interpolateViridis(): d3_interpolate.InterpolationFn<string>;
+export function interpolateViridis(): ((t: number) => string);
 
-export function interpolateMagma(): d3_interpolate.InterpolationFn<string>;
+export function interpolateMagma(): ((t: number) => string);
 
-export function interpolateInferno(): d3_interpolate.InterpolationFn<string>;
+export function interpolateInferno(): ((t: number) => string);
 
-export function interpolatePlasma(): d3_interpolate.InterpolationFn<string>;
+export function interpolatePlasma(): ((t: number) => string);
 
-export function interpolateRainbow(): d3_interpolate.InterpolationFn<string>;
+export function interpolateRainbow(): ((t: number) => string);
 
-export function interpolateWarm(): d3_interpolate.InterpolationFn<string>;
+export function interpolateWarm(): ((t: number) => string);
 
-export function interpolateCool(): d3_interpolate.InterpolationFn<string>;
+export function interpolateCool(): ((t: number) => string);
 
-export function interpolateCubehelixDefault(): d3_interpolate.InterpolationFn<string>;
+export function interpolateCubehelixDefault(): ((t: number) => string);
 
 // -------------------------------------------------------------------------------
 // Quantize Scale Factory

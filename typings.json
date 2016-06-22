@@ -5,6 +5,7 @@
     "d3-collection": "file:./src/d3-collection/typings.json",
     "d3-color": "file:./src/d3-color/typings.json",
     "d3-dispatch": "file:./src/d3-dispatch/typings.json",
+    "d3-drag": "file:./src/d3-drag/typings.json",
     "d3-ease": "file:./src/d3-ease/typings.json",
     "d3-format": "file:./src/d3-format/typings.json",
     "d3-interpolate": "file:./src/d3-interpolate/typings.json",

@@ -11,12 +11,16 @@ import * as d3Interpolate from 'd3-interpolate';
 
 // Preparatory steps -------------------------------------------------------------------
 
-let iNum: d3Interpolate.InterpolationFn<number>,
-    iString: d3Interpolate.InterpolationFn<string>,
-    iArrayNum: d3Interpolate.InterpolationFn<Array<number>>,
-    iArrayStr: d3Interpolate.InterpolationFn<Array<string>>,
-    iKeyVal: d3Interpolate.InterpolationFn<{ [key: string]: any }>,
-    iRGBColorObj: d3Interpolate.InterpolationFn<d3Color.RGBColor>,
+interface InterpolationFn<T> {
+    (t: number): T;
+}
+
+let iNum: InterpolationFn<number>,
+    iString: InterpolationFn<string>,
+    iArrayNum: InterpolationFn<Array<number>>,
+    iArrayStr: InterpolationFn<Array<string>>,
+    iKeyVal: InterpolationFn<{ [key: string]: any }>,
+    iRGBColorObj: InterpolationFn<d3Color.RGBColor>,
     iZoom: d3Interpolate.ZoomInterpolationFn;
 
 let num: number,
