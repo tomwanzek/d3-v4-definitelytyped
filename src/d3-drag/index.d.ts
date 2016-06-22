@@ -45,8 +45,8 @@ export interface DragBehavior<GElement extends BaseType, Datum> extends Function
     subject(): (this: GElement, datum: Datum, index: number, group: Array<GElement>) => any;
     subject(accessor: (this: GElement, datum: Datum, index: number, group: Array<GElement>) => (Datum | SubjectDatum)): DragBehavior<GElement, Datum>;
     on(typenames: string): (this: GElement, datum: Datum, index: number, group: Array<GElement>) => any;
-    on(typenames: string, callback: (this: GElement, datum: Datum, index: number, group: Array<GElement>) => any): DragBehavior<GElement, Datum>;
     on(typenames: string, callback: null): DragBehavior<GElement, Datum>;
+    on(typenames: string, callback: (this: GElement, datum: Datum, index: number, group: Array<GElement>) => any): DragBehavior<GElement, Datum>;    
 }
 
 export function drag<GElement extends BaseType, Datum>(): DragBehavior<GElement, Datum>;

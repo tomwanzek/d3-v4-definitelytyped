@@ -7,14 +7,14 @@
 
 
 
-export interface Dispatch {
-    apply<T>(type: string, that?: T, args?: any[]): void;
-    call<T>(type: string, that?: T, ...args: any[]): void;
-    copy(): Dispatch;
+export interface Dispatch<T extends EventTarget> {
+    apply(type: string, that?: T, args?: any[]): void;
+    call(type: string, that?: T, ...args: any[]): void;
+    copy(): Dispatch<T>;
 
-    on<T>(typenames: string): (this: T, ...args: any[]) => void;
-    on<T>(typenames: string, callback: (this: T, ...args: any[]) => void): Dispatch;
-    on<T>(typenames: string, callback: null): Dispatch;
+    on(typenames: string): (this: T, ...args: any[]) => void;
+    on(typenames: string, callback: null): Dispatch<T>;
+    on(typenames: string, callback: (this: T, ...args: any[]) => void): Dispatch<T>;    
 }
 
-export function dispatch(...types: string[]): Dispatch;
+export function dispatch<T extends EventTarget>(...types: string[]): Dispatch<T>;

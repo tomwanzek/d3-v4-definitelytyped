@@ -15,11 +15,9 @@ interface Datum {
     b: string;
 }
 
-let dispatch: d3Dispatch.Dispatch,
-    copy: d3Dispatch.Dispatch;
-
-let cbFn: d3Dispatch.CallbackFn<HTMLElement>;
-
+let dispatch: d3Dispatch.Dispatch<HTMLElement>,
+    copy: d3Dispatch.Dispatch<HTMLElement>,
+    copy2: d3Dispatch.Dispatch<SVGElement>;
 
 // Signature Tests ----------------------------------------
 
@@ -27,27 +25,31 @@ let cbFn: d3Dispatch.CallbackFn<HTMLElement>;
 dispatch = d3Dispatch.dispatch('foo', 'bar');
 
 
-cbFn = function (this: HTMLElement, d: Datum, i: number) {
+function cbFn (this: HTMLElement, d: Datum, i: number) {
+    console.log(this.baseURI ? this.baseURI : 'nada');
+    console.log(d ? d.a : 'nada');
+};
+
+function cbFn2 (this: SVGElement, d: Datum, i: number) {
     console.log(this.baseURI ? this.baseURI : 'nada');
     console.log(d ? d.a : 'nada');
 };
 
 dispatch.on('foo', cbFn);
-// dispatch.on<SVGElement>('foo', cb2); // test fails as this context type is mismatched
+// dispatch.on('foo', cbFn2); // test fails as 'this' context type is mismatched between dispatch and callback function
 
 dispatch.on('bar', dispatch.on('bar'));
 
 dispatch.call('foo');
 dispatch.call('foo', document.body);
-// dispatch.call<SVGElement>('foo', document.body); // test fails incompatible 'that' argument
 dispatch.call('foo', document.body, { a: 3, b: 'test' }, 1);
 
 dispatch.apply('bar');
 dispatch.apply('bar', document.body);
-// dispatch.apply<SVGElement>('bar', document.body); // test fails incompatible 'that' argument
-dispatch.apply<HTMLElement>('bar', document.body, [{ a: 3, b: 'test' }, 1]);
+dispatch.apply('bar', document.body, [{ a: 3, b: 'test' }, 1]);
 
 dispatch.on('bar', null);
 
-// Copy dispatch
+// Copy dispatch -----------------------------------------------
 copy = dispatch.copy();
+// copy2 = dispatch.copy(); // test fails type mismatch of underlying event target
