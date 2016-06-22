@@ -68,6 +68,10 @@ They are not meant to be used with a test runner as functional tests.
 - [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-drag/index.d.ts)
 - [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-drag/d3-drag-test.ts)
 
+**Note**: Utilizes `this`-typing (criticality: high)
+
+`this`-typing is used for context-binding to DOM element.
+
 ### d3-dsv
 
 
@@ -172,8 +176,13 @@ They are not meant to be used with a test runner as functional tests.
 
 ### d3-zoom
 
-- [ ] Definition File
-- [ ] Test File
+- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-zoom/index.d.ts)
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-zoom/d3-zoom-test.ts)
+
+**Note**: Utilizes `this`-typing (criticality: high)
+
+`this`-typing is used for context-binding to DOM element.
+
 
 ## Related Contributions
 

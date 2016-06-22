@@ -1,0 +1,13 @@
+{
+  "name": "d3-zoom",
+  "homepage": "https://github.com/d3/d3-zoom",
+  "version": "0.3.1",
+  "global": false,
+  "main": "index.d.ts",
+  "files": [
+    "index.d.ts"
+  ],
+  "dependencies": {
+  },
+  "globalDependencies": {}
+}

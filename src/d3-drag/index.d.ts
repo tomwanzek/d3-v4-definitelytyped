@@ -30,13 +30,13 @@ type ContainerElement = HTMLElement | SVGSVGElement | SVGGElement; // HTMLElemen
  * The subject datum should at a minimum expose x and y properties, so that the relative position
  * of the subject and the pointer can be preserved during the drag gesture. 
  */
-interface SubjectDatum {
+export interface SubjectDatum {
     x?: number;
     y?: number;
 }
 
-interface DragBehavior<GElement extends BaseType, Datum> extends Function {
-    (this: d3_selection.Selection<GElement, Datum, any, any>, ...args: any[]): void;
+export interface DragBehavior<GElement extends BaseType, Datum> extends Function {
+    (selection: d3_selection.Selection<GElement, Datum, any, any>, ...args: any[]): void;
     container(): (this: GElement, datum: Datum, i: number, group: Array<GElement> | NodeListOf<GElement>) => ContainerElement;
     container(accessor: (this: GElement, datum?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => ContainerElement): DragBehavior<GElement, Datum>;
     container(container: ContainerElement): DragBehavior<GElement, Datum>;
@@ -49,13 +49,7 @@ interface DragBehavior<GElement extends BaseType, Datum> extends Function {
     on(typenames: string, callback: null): DragBehavior<GElement, Datum>;
 }
 
-export function drag<T extends BaseType, Datum>(): DragBehavior<T, Datum>;
-
-
-export function dragDisable(window: Window): void;
-
-export function dragEnable(window: Window, noClick?: boolean): void;
-
+export function drag<GElement extends BaseType, Datum>(): DragBehavior<GElement, Datum>;
 
 
 // TODO: Decide on approach to extending d3.event typing, when d3-drag module is loaded.
@@ -76,3 +70,7 @@ export interface D3DragEvent<GElement extends BaseType, Datum> {
     on(typenames: string, callback: (this: GElement, datum: Datum, index: number, group: Array<GElement>) => any): D3DragEvent<GElement, Datum>;
     on(typenames: string, callback: null): D3DragEvent<GElement, Datum>;
 }
+
+export function dragDisable(window: Window): void;
+
+export function dragEnable(window: Window, noClick?: boolean): void;
