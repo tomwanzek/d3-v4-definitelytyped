@@ -10,7 +10,7 @@
 /**
  * Specification of locale to use when creating a new FormatLocaleObject
  */
-export interface FormatLocale {
+export interface FormatLocaleDefinition {
     /**
      * The decimal point (e.g., ".")
      */
@@ -71,13 +71,20 @@ export interface FormatSpecifier {
  * Create a new locale-based object which exposes format(...) and formatPrefix(...)
  * methods for the specified locale.
  */
-export function formatLocale(locale: FormatLocale): FormatLocaleObject;
+export function formatLocale(locale: FormatLocaleDefinition): FormatLocaleObject;
+
+/**
+ * Create a new locale-based object which exposes format(...) and formatPrefix(...)
+ * methods for the specified locale definition. The specified locale definition will be
+ * set as the new default locale definition.
+ */
+export function formatLocale(defaultLocale: FormatLocaleDefinition): FormatLocaleObject;
 
 /**
  * Returns a new format function for the given string specifier. The returned function 
  * takes a number as the only argument, and returns a string representing the formatted number.
  * 
- * Uses the U.S. English locale.
+ * Uses the current default locale.
  *  
  * @param specifier A Specifier string
  */
@@ -89,7 +96,7 @@ export function format(specifier: string): (n: number) => string;
  * The returned function will convert values to the units of the appropriate SI prefix for the 
  * specified numeric reference value before formatting in fixed point notation.
  * 
- *  Uses the U.S. English locale.
+ *  Uses the current default locale.
  * 
  * @param specifier A Specifier string
  * @param value The reference value to determine the appropriate SI prefix.
