@@ -6,6 +6,6 @@
  * are not intended as functional tests.
  */
 
-import * as d3Format from 'd3-format';
+import * as d3Format from '../../src/d3-format';
 
 // TODO: Add definitions tests

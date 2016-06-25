@@ -6,6 +6,6 @@
  * are not intended as functional tests.
  */
 
-import * as d3Random from 'd3-random';
+import * as d3Random from '../../src/d3-random';
 
 // TODO: Add definitions tests

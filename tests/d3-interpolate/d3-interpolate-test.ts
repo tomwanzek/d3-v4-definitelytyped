@@ -6,8 +6,8 @@
  * are not intended as functional tests.
  */
 
-import * as d3Color from 'd3-color';
-import * as d3Interpolate from 'd3-interpolate';
+import * as d3Color from '../../src/d3-color';
+import * as d3Interpolate from '../../src/d3-interpolate';
 
 // Preparatory steps -------------------------------------------------------------------
 

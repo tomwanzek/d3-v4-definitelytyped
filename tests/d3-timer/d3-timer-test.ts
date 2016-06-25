@@ -6,7 +6,7 @@
  * are not intended as functional tests.
  */
 
-import * as d3Timer from 'd3-timer';
+import * as d3Timer from '../../src/d3-timer';
 
 // Test now definition
 let now: number = d3Timer.now();

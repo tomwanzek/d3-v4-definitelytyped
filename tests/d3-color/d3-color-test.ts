@@ -6,7 +6,7 @@
  * are not intended as functional tests.
  */
 
-import * as d3Color from 'd3-color';
+import * as d3Color from '../../src/d3-color';
 
 // RGB and HSL Typeguards
 

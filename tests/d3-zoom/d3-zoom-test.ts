@@ -6,5 +6,4 @@
  * are not intended as functional tests.
  */
 
-import * as d3Zoom from 'd3-zoom';
-
+import * as d3Zoom from '../../src/d3-zoom';

@@ -6,4 +6,4 @@
  * are not intended as functional tests.
  */
 
-import * as d3Voronoi from 'd3-voronoi';
+import * as d3Voronoi from '../../src/d3-voronoi';

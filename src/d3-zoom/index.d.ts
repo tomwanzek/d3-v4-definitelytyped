@@ -5,11 +5,15 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
-import * as d3_selection from 'd3-selection';
-import * as d3_transition from 'd3-transition';
+import * as d3_selection from '../d3-selection';
+import * as d3_transition from '../d3-transition';
 
 // Note: This dependency is driven by Definitions, not D3 itself
-import {ScaleIdentity, ScaleLinear, ScaleLogarithmic, ScalePower} from 'd3-scale';
+import {ScaleIdentity, ScaleLinear, ScaleLogarithmic, ScalePower} from '../d3-scale';
+
+// TODO: consider defining a minimal scale interface, which can be used with
+// rescaleX and rescaleY instead of the import of the defined contiuous scales
+// from d3-scale
 
 // --------------------------------------------------------------------------
 // Shared Type Definitions and Interfaces

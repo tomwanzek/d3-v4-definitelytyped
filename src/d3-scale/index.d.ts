@@ -6,8 +6,8 @@
 // TODO: Clean-up header for proper referencing of new project/module information
 
 
-import * as d3_interpolate from 'd3-interpolate';
-import * as d3_time from 'd3-time';
+import * as d3_interpolate from '../d3-interpolate';
+import * as d3_time from '../d3-time';
 
 // -------------------------------------------------------------------------------
 // Shared Types and Interfaces

@@ -6,5 +6,4 @@
  * are not intended as functional tests.
  */
 
-import * as d3Drag from 'd3-drag';
- 
+import * as d3Drag from '../../src/d3-drag';

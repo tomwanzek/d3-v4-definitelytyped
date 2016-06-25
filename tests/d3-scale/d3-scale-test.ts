@@ -6,5 +6,5 @@
  * are not intended as functional tests.
  */
 
-import * as d3Scale from 'd3-scale';
+import * as d3Scale from '../../src/d3-scale';
 

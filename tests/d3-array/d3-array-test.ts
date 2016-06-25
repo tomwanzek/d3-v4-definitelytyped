@@ -6,6 +6,6 @@
  * are not intended as functional tests.
  */
 
-import * as d3Array from 'd3-array';
+import * as d3Array from '../../src/d3-array';
 
 // TODO: Add definitions tests

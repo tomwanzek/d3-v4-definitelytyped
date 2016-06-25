@@ -6,6 +6,6 @@
  * are not intended as functional tests.
  */
 
-import * as d3Ease from 'd3-ease';
+import * as d3Ease from '../../src/d3-ease';
 
 // TODO: Add definitions tests

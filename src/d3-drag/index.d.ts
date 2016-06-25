@@ -5,7 +5,7 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
-import * as d3_selection from 'd3-selection';
+import * as d3_selection from '../d3-selection';
 
 
 // --------------------------------------------------------------------------

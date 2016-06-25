@@ -6,7 +6,7 @@
  * are not intended as functional tests.
  */
 
-import * as d3Dispatch from 'd3-dispatch';
+import * as d3Dispatch from '../../src/d3-dispatch';
 
 // Preparation --------------------------------------------
 

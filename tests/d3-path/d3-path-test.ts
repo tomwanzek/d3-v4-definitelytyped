@@ -6,6 +6,6 @@
  * are not intended as functional tests.
  */
 
-import * as d3Path from 'd3-path';
+import * as d3Path from '../../src/d3-path';
 
 // TODO: Add definitions tests

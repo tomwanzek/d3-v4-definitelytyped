@@ -15,8 +15,7 @@ module.exports = function (grunt) {
             compileService: {
                 files: [{
                     src: [
-                        'tests/**/*.ts',
-                        'typings/index.d.ts'
+                        'tests/**/*.ts'
                     ]
                 }],
                 options: {

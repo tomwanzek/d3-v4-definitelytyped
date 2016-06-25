@@ -7,11 +7,7 @@
 
 // TODO-List
 //
-// TODO: Review signatures for append, insert (need to consider whether or not they change
-//      they change the typed nature of the selection, i.e. what do they return? Do they mutate
-//      prior step  typing?)
 // TODO: event and customEvent specifications
-// TODO: Explanatory comments for exports
 // TODO: Review Use of EnterElement interface for enter() selection return value. (Note that, the current BaseType is more extensive than
 //       the placeholder EnterElement prior to appending materialized arguments to them) By Implication, while D3 returns a selection object,
 //       certain methods, e.g. .on(...), .attr(...), .style(...) etc are meaningless/will create errors when invoked
@@ -79,99 +75,72 @@ export type CustomEventParameters = {
 }
 
 
-
-/**
- * Interface of callback function used for modifying attributes,styles and properties
- * of elements in a selection (The return type  must correspond to the choice of attr, styles or prop)
- */
-export interface ValueFn<T extends BaseType, U, V> extends Function {
-    (this: T, datum?: U, index?: number, group?: Array<T> | NodeListOf<T>): V;
-}
-
-/**
- * Interface of event listener function for registration on selected nodes
- * or customEvent
- */
-export interface ListenerFn<T extends BaseType, U> extends Function {
-    (this: T, datum?: U, index?: number, group?: Array<T> | NodeListOf<T>): any;
-}
-
-/**
- * Interface of selector function
- */
-export interface SelectorFn<GroupElement extends BaseType, U, ChildElement extends BaseType> extends Function {
-    (this: GroupElement, datum?: U, index?: number, group?: Array<GroupElement> | NodeListOf<GroupElement>): ChildElement;
-}
-
-/**
- * Interface of selectorAll function
- */
-export interface SelectorAllFn<GroupElement extends BaseType, U, ChildElement extends BaseType> extends Function {
-    (this: GroupElement, datum?: U, index?: number, group?: Array<GroupElement> | NodeListOf<GroupElement>): Array<ChildElement> | NodeListOf<ChildElement>;
-}
-
 // --------------------------------------------------------------------------
 // All Selection related interfaces and function
 // --------------------------------------------------------------------------
 
+// NB: Note that, d3.select does not generate the same parent element, when targeting the same DOM element with string selector
+// or node element  
 export function select<GElement extends BaseType, Datum>(selector: string): Selection<GElement, Datum, HTMLElement, any>;
-export function select<GElement extends BaseType, Datum>(node: GElement): Selection<GElement, Datum, HTMLElement, any>;
+export function select<GElement extends BaseType, Datum>(node: GElement): Selection<GElement, Datum, null, undefined>;
 
-export function selectAll<GElement extends BaseType, Datum>(selector: string): Selection<GElement, Datum, HTMLElement, any>;
-export function selectAll<GElement extends BaseType, Datum>(nodes: GElement[] | NodeListOf<GElement>): Selection<GElement, Datum, HTMLElement, any>;
-export function selectAll<GElement extends BaseType, Datum>(...nodes: GElement[]): Selection<GElement, Datum, HTMLElement, any>;
+export function selectAll(): Selection<undefined, undefined, null, undefined>; // _groups are set to empty array, first generic type is set to undefined by convention
+export function selectAll(selector: null): Selection<undefined, undefined, null, undefined>; // _groups are set to empty array, first generic type is set to undefined by convention
+export function selectAll<GElement extends BaseType, OldDatum>(selector: string): Selection<GElement, OldDatum, HTMLElement, any>;
+export function selectAll<GElement extends BaseType, OldDatum>(nodes: GElement[]): Selection<GElement, OldDatum, null, undefined>;
+export function selectAll<GElement extends BaseType, OldDatum>(nodes: NodeListOf<GElement>): Selection<GElement, OldDatum, null, undefined>;
+
 
 
 interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
 
     // Sub-selection -------------------------
 
-    // The Selection.select(...) sub-selection method propagates the data to the newly selected elements
-    // consequently the type of Datum does not change, however the type of element selected can change
-    select<ChildElement extends BaseType>(selector: string): Selection<ChildElement, Datum, PElement, PDatum>;
-    select<ChildElement extends BaseType>(selector: SelectorFn<GElement, Datum, ChildElement>): Selection<ChildElement, Datum, PElement, PDatum>;
+    select<DescElement extends BaseType>(selector: string): Selection<DescElement, Datum, PElement, PDatum>;
+    select<DescElement extends BaseType>(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => DescElement): Selection<DescElement, Datum, PElement, PDatum>;
 
-    // The Selection.selectAll(...) sub-selection method does not propagate data to the newly selected elements,
-    // This requires a separate call to Selection.data(...), as a result, this sub-selection method does not 
-    // carry over the Datum type of Selection
-    selectAll<ChildElement extends BaseType, NewDatum>(selector: string): Selection<ChildElement, NewDatum, GElement, Datum>;
-    selectAll<ChildElement extends BaseType, NewDatum>(selector: SelectorAllFn<GElement, Datum, ChildElement>): Selection<ChildElement, NewDatum, GElement, Datum>;
+    selectAll(): Selection<undefined, undefined, GElement, Datum>; // _groups are set to empty array, first generic type is set to undefined by convention
+    selectAll(selector: null): Selection<undefined, undefined, GElement, Datum>; // _groups are set to empty array, first generic type is set to undefined by convention
+    selectAll<DescElement extends BaseType, OldDatum>(selector: string): Selection<DescElement, OldDatum, GElement, Datum>;
+    selectAll<DescElement extends BaseType, OldDatum>(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (Array<DescElement> | NodeListOf<DescElement>)): Selection<DescElement, OldDatum, GElement, Datum>;
 
     // Modifying -------------------------------
 
     attr(name: string): string;
     attr(name: string, value: Primitive): Selection<GElement, Datum, PElement, PDatum>;
-    attr(name: string, value: ValueFn<GElement, Datum, Primitive>): Selection<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive): Selection<GElement, Datum, PElement, PDatum>;
 
     classed(name: string): boolean;
     classed(name: string, value: boolean): Selection<GElement, Datum, PElement, PDatum>;
-    classed(name: string, value: ValueFn<GElement, Datum, boolean>): Selection<GElement, Datum, PElement, PDatum>;
+    classed(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => boolean): Selection<GElement, Datum, PElement, PDatum>;
 
     style(name: string): string;
     style(name: string, value: Primitive, priority?: string): Selection<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: ValueFn<GElement, Datum, Primitive>, priority?: string): Selection<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive, priority?: string): Selection<GElement, Datum, PElement, PDatum>;
 
     property(name: string): any;
     property(name: string, value: any): Selection<GElement, Datum, PElement, PDatum>;
-    property(name: string, value: ValueFn<GElement, Datum, any>): Selection<GElement, Datum, PElement, PDatum>;
+    property(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => any): Selection<GElement, Datum, PElement, PDatum>;
 
     text(): string;
     text(value: Primitive): Selection<GElement, Datum, PElement, PDatum>;
-    text(value: ValueFn<GElement, Datum, Primitive>): Selection<GElement, Datum, PElement, PDatum>;
+    text(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive): Selection<GElement, Datum, PElement, PDatum>;
 
     html(): string;
     html(value: string): Selection<GElement, Datum, PElement, PDatum>;
-    html(value: ValueFn<GElement, Datum, string>): Selection<GElement, Datum, PElement, PDatum>;
+    html(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => string): Selection<GElement, Datum, PElement, PDatum>;
 
-    append<NewGElement extends BaseType>(type: string): Selection<NewGElement, Datum, PElement, PDatum>;
-    append<NewGElement extends BaseType>(type: ValueFn<GElement, Datum, NewGElement>): Selection<NewGElement, Datum, PElement, PDatum>;
+    
+    append<ChildElement extends BaseType>(type: string): Selection<ChildElement, Datum, PElement, PDatum>;
 
 
-    insert<NewGElement extends BaseType>(type: string, before: string): Selection<NewGElement, Datum, PElement, PDatum>;
-    insert<NewGElement extends BaseType>(type: ValueFn<GElement, Datum, NewGElement>, before: string): Selection<NewGElement, Datum, PElement, PDatum>;
+    
+    insert<ChildElement extends BaseType>(type: string, before: string): Selection<ChildElement, Datum, PElement, PDatum>;
+    insert<ChildElement extends BaseType>(type: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => ChildElement, before: string): Selection<ChildElement, Datum, PElement, PDatum>;
     // TODO: check return type specification of 'before' function should permit any type that extends BaseType
-    insert<NewGElement extends BaseType>(type: string, before: ValueFn<GElement, Datum, BaseType>): Selection<NewGElement, Datum, PElement, PDatum>;
-    insert<NewGElement extends BaseType>(type: ValueFn<GElement, Datum, NewGElement>, before: ValueFn<GElement, Datum, BaseType>): Selection<NewGElement, Datum, PElement, PDatum>;
+    insert<ChildElement extends BaseType>(type: string, before: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => BaseType): Selection<ChildElement, Datum, PElement, PDatum>;
+    insert<ChildElement extends BaseType>(type: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => ChildElement,
+        before: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => BaseType): Selection<ChildElement, Datum, PElement, PDatum>;
 
     /**
      * Removes the selected elements from the document.
@@ -182,10 +151,10 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     merge(other: Selection<GElement, Datum, PElement, PDatum>): Selection<GElement, Datum, PElement, PDatum>;
     // TODO: should this be permissible?
     // merge<TJointElement extends BaseType, JointDatum>(other: Selection<TJointElement, JointDatum>): Selection<TJointElement, JointDatum>;
-   
+
 
     filter(selector: string): Selection<GElement, Datum, PElement, PDatum>;
-    filter(selector: ValueFn<GElement, Datum, boolean>): Selection<GElement, Datum, PElement, PDatum>;
+    filter(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => boolean): Selection<GElement, Datum, PElement, PDatum>;
 
 
 
@@ -203,16 +172,21 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     datum(): Datum;
     datum<NewDatum>(value: NewDatum): Selection<GElement, NewDatum, PElement, PDatum>;
     // TODO: Review below
-    datum<NewDatum>(value: ValueFn<GElement, Datum, NewDatum>): Selection<GElement, NewDatum, PElement, PDatum>;
+    datum<NewDatum>(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => NewDatum): Selection<GElement, NewDatum, PElement, PDatum>;
 
     data(): Datum[];
-    // TODO: Validate below i.p. function-driven data argument, consider 'this' type and check mapping from old to new (what is passed into the function)
-    // TODO: Review logic with respect to Parent datum and Parent DOM element
-    // TODO: Review key signature in data.js it is invoked in two different spots with different arguments: ln 45 and ln 58, i.p. check 'groups' argument of ln 58
-    data<NewDatum>(data: Array<NewDatum>, key?: ValueFn<GElement | PElement, Datum | NewDatum, string>): Selection<GElement, NewDatum, PElement, PDatum>;
-    data<NewDatum>(data: ValueFn<PElement, PDatum, Array<NewDatum>>, key?: ValueFn<GElement | PElement, Datum | NewDatum, string>): Selection<GElement, NewDatum, PElement, PDatum>;
+    data<NewDatum>(
+        data: Array<NewDatum>,
+        key?: (this: GElement | PElement, datum?: Datum | NewDatum, index?: number, group?: Array<GElement | PElement> | NodeListOf<GElement | PElement>) => string
+    ): Selection<GElement, NewDatum, PElement, PDatum>;
+    data<NewDatum>(
+        data: (this: PElement, datum?: PDatum, index?: number, group?: Array<PElement> | NodeListOf<PElement>) => Array<NewDatum>,
+        key?: (this: GElement | PElement, datum?: Datum | NewDatum, index?: number, group?: Array<GElement | PElement> | NodeListOf<GElement | PElement>) => string
+    ): Selection<GElement, NewDatum, PElement, PDatum>;
 
-    // TODO: Enter Selection returns GElements of type EnterNode
+    // TODO: Enter Selection returns GElements of type EnterNode, which do not meet the minimum interface of BaseType = Element
+    // HACK: Keep enter() selection 'as-if' they  are of type GElement, while overly permissive, this may be of little practical relevance,
+    // given that the normal next step is an .append(...), which would address the matter
     enter(): Selection<GElement, Datum, PElement, PDatum>;
 
     // TODO: Review this: The type Datum on the exit items is actually of the type prior to calling data(...), as by definition, no new data of type NewDatum exists for these
@@ -223,16 +197,17 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     // Event Handling -------------------
 
     // TODO: Check return type of on(type) (i.e. 'this' typing as 'any',  given that functionis not bound when returned?)
-    on(type: string): ListenerFn<any, Datum>;
-    on(type: string, listener: ListenerFn<GElement, Datum> | null, capture?: boolean): Selection<GElement, Datum, PElement, PDatum>;
-
+    on(type: string): (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any;
+    on(type: string, listener: null): Selection<GElement, Datum, PElement, PDatum>;
+    on(type: string, listener: (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any, capture?: boolean): Selection<GElement, Datum, PElement, PDatum>;
+    
 
     dispatch(type: string, parameters?: CustomEventParameters): Selection<GElement, Datum, PElement, PDatum>;
-    dispatch(type: string, parameters?: ValueFn<GElement, Datum, CustomEventParameters>): Selection<GElement, Datum, PElement, PDatum>;
+    dispatch(type: string, parameters?: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => CustomEventParameters): Selection<GElement, Datum, PElement, PDatum>;
 
     // Control Flow ----------------------
 
-    each(valueFn: ValueFn<GElement, Datum, void>): Selection<GElement, Datum, PElement, PDatum>;
+    each(valueFn: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => void): Selection<GElement, Datum, PElement, PDatum>;
 
     call(func: (selection: Selection<GElement, Datum, PElement, PDatum>, ...args: any[]) => void, ...args: any[]): Selection<GElement, Datum, PElement, PDatum>;
 
@@ -249,7 +224,7 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 // TODO: Review this, as this is the root selection.
 interface selectionFn extends Function {
     (): Selection<HTMLElement, any, null, undefined>;
-//    prototype: Selection<HTMLElement, any, null, undefined>;
+    //    prototype: Selection<HTMLElement, any, null, undefined>;
 }
 export var selection: selectionFn;
 
@@ -260,8 +235,9 @@ export var selection: selectionFn;
 
 // TODO: Review this section this is incorporated from D3js 3.x.x and had
 // some related issues like .pageX, .pageY
-
-interface BaseEvent extends Event{
+// TODO: Review preferred approach to integration with D3DragEvent and D3ZoomEvent currently defined in d3-drag and d3-zoom, respectively
+// Need to consider module dependencency between definitions vs d3 source code (coupling minimization and module/definition resolution)
+interface BaseEvent extends Event {
     type: string;
     sourceEvent?: Event | MouseEvent | TouchEvent;
 }
@@ -392,6 +368,6 @@ export function matcher<GElement extends BaseType>(selector: string): (this: Bas
 // selector.js and selectorAll.js related functions
 // ----------------------------------------------------------------------------
 
-export function selector<ChildElement extends BaseType>(selector: string): (this: BaseType) => ChildElement
+export function selector<DescElement extends BaseType>(selector: string): (this: BaseType) => DescElement
 
-export function selectorAll<ChildElement extends BaseType>(selector: string): (this: BaseType) => NodeListOf<ChildElement>;
+export function selectorAll<DescElement extends BaseType>(selector: string): (this: BaseType) => NodeListOf<DescElement>;

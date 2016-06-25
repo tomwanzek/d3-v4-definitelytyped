@@ -6,7 +6,7 @@
  * are not intended as functional tests.
  */
 
-import * as d3Time from 'd3-time';
+import * as d3Time from '../../src/d3-time';
 
 
 let countableI: d3Time.CountableTimeInterval;

@@ -7,8 +7,6 @@
     },
     "exclude": [
         "src",
-        "node_modules",
-        "typings/modules",
-        "typings/global"
+        "node_modules"
     ]
 }

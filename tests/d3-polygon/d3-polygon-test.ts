@@ -6,6 +6,6 @@
  * are not intended as functional tests.
  */
 
-import * as d3Polygon from 'd3-polygon';
+import * as d3Polygon from '../../src/d3-polygon';
 
 // TODO: Add definitions tests

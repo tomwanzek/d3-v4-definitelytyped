@@ -79,5 +79,7 @@ export interface VoronoiDiagram<T> {
 // voronoi Export
 // --------------------------------------------------------------------------
 
-
+// TODO: Review, whether to specify T = [number, number] as separate signature
+// or simply comment on it: 
+// export function voronoi(): VoronoiLayout<[number, number]>; 
 export function voronoi<T>(): VoronoiLayout<T>;

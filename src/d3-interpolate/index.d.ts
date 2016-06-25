@@ -3,7 +3,7 @@
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek <https://github.com/tomwanzek>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-import * as d3_color from 'd3-color';
+import * as d3_color from '../d3-color';
 
 
 // --------------------------------------------------------------------------
