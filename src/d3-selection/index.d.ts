@@ -5,14 +5,6 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
-// TODO-List
-//
-// TODO: event and customEvent specifications
-// TODO: Review Use of EnterElement interface for enter() selection return value. (Note that, the current BaseType is more extensive than
-//       the placeholder EnterElement prior to appending materialized arguments to them) By Implication, while D3 returns a selection object,
-//       certain methods, e.g. .on(...), .attr(...), .style(...) etc are meaningless/will create errors when invoked
-// TODO: Consider separating out EnterSelection as separate interface with restricted methods, although this is not strictly the way d3-selection
-// itself is written (This would be in line with the D3 3.x type definition)
 
 // IMPORTANT: This typescript definitions file is intended for use with typescript version 1.9.0 or up. It uses
 // a new compiler feature that allows the typing of 'this' context in functions, which is not supported in earlier
@@ -129,15 +121,12 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     html(): string;
     html(value: string): Selection<GElement, Datum, PElement, PDatum>;
     html(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => string): Selection<GElement, Datum, PElement, PDatum>;
-
     
     append<ChildElement extends BaseType>(type: string): Selection<ChildElement, Datum, PElement, PDatum>;
-
-
+    append<ChildElement extends BaseType>(type: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => ChildElement): Selection<ChildElement, Datum, PElement, PDatum>;
     
     insert<ChildElement extends BaseType>(type: string, before: string): Selection<ChildElement, Datum, PElement, PDatum>;
     insert<ChildElement extends BaseType>(type: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => ChildElement, before: string): Selection<ChildElement, Datum, PElement, PDatum>;
-    // TODO: check return type specification of 'before' function should permit any type that extends BaseType
     insert<ChildElement extends BaseType>(type: string, before: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => BaseType): Selection<ChildElement, Datum, PElement, PDatum>;
     insert<ChildElement extends BaseType>(type: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => ChildElement,
         before: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => BaseType): Selection<ChildElement, Datum, PElement, PDatum>;
@@ -149,9 +138,6 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     remove(): Selection<GElement, Datum, PElement, PDatum>;
 
     merge(other: Selection<GElement, Datum, PElement, PDatum>): Selection<GElement, Datum, PElement, PDatum>;
-    // TODO: should this be permissible?
-    // merge<TJointElement extends BaseType, JointDatum>(other: Selection<TJointElement, JointDatum>): Selection<TJointElement, JointDatum>;
-
 
     filter(selector: string): Selection<GElement, Datum, PElement, PDatum>;
     filter(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => boolean): Selection<GElement, Datum, PElement, PDatum>;
@@ -196,7 +182,6 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 
     // Event Handling -------------------
 
-    // TODO: Check return type of on(type) (i.e. 'this' typing as 'any',  given that functionis not bound when returned?)
     on(type: string): (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any;
     on(type: string, listener: null): Selection<GElement, Datum, PElement, PDatum>;
     on(type: string, listener: (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any, capture?: boolean): Selection<GElement, Datum, PElement, PDatum>;
@@ -221,10 +206,9 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 
 }
 
-// TODO: Review this, as this is the root selection.
+
 interface selectionFn extends Function {
     (): Selection<HTMLElement, any, null, undefined>;
-    //    prototype: Selection<HTMLElement, any, null, undefined>;
 }
 export var selection: selectionFn;
 
@@ -272,7 +256,7 @@ export function touches(container: ContainerElement, touches?: TouchList): Array
 // local.js related
 // ---------------------------------------------------------------------------
 
-// TODO: validate type of node (BaseType?)
+
 export interface Local {
     get(node: BaseType): any;
     remove(node: BaseType): boolean;

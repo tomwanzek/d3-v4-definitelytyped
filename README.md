@@ -33,8 +33,8 @@ They are not meant to be used with a test runner as functional tests.
 
 ### d3-axis
 
-- [ ] Definition File
-- [ ] Test File
+- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-axis/index.d.ts)
+- [ ] [Test File]((https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-axis/d3-axis-test.ts))
 
 ### d3-brush
 
@@ -61,7 +61,7 @@ They are not meant to be used with a test runner as functional tests.
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-dispatch/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-dispatch/d3-dispatch-test.ts)
 
-**Note**: Utilizes `this`-typing (criticality: _low_)
+**Note**: Utilizes `this`-typing (criticality: _medium_)
 
 ### d3-drag
 
@@ -162,7 +162,7 @@ They are not meant to be used with a test runner as functional tests.
 
 ### d3-transition
 
-- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-transition/index.d.ts) (_draft_)
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-transition/index.d.ts)
 - [ ] Test File
 
 **Note**: Utilizes `this`-typing (criticality: high)
