@@ -6,11 +6,11 @@ This repo is intended as a staging area for typescript definitions related to th
 
 Its content is _work in progress_ and intended to be rolled into a contribution to DefinitelyTyped or comparable community effort. The repo is **not intended** as a source for definition files to be used in the regular course of working with D3 in typescript.
 
-The definitions are currently written on a per module basis in reference to the now separeted **D3** modules.
+The definitions are currently written on a per module basis in reference to the now separated **D3** modules.
 
 ## General Status
 
-At the time of creating this repository **D3 version 4** is in **alpha stage** and under active development. Release notes are under preparation.
+At the time of creating this repository **D3 version 4** is in **release candidate stage** and being finalized for full release. 
 
 By extension, any definition files contained herein are to be considered with care.
 
