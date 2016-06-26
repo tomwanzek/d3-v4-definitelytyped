@@ -34,12 +34,12 @@ They are not meant to be used with a test runner as functional tests.
 ### d3-axis
 
 - [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-axis/index.d.ts)
-- [ ] [Test File]((https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-axis/d3-axis-test.ts))
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-axis/d3-axis-test.ts)
 
 ### d3-brush
 
-- [ ] Definition File
-- [ ] Test File
+- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-brush/index.d.ts)
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-brush/d3-brush-test.ts)
 
 ### d3-chord
 
