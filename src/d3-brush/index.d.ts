@@ -1,0 +1,49 @@
+// Type definitions for d3JS d3-brush module
+// Project: http://d3js.org/
+// Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek <https://github.com/tomwanzek>
+// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+
+// TODO: Clean-up header for proper referencing of new project/module information
+
+import { Selection } from '../d3-selection';
+import { Transition } from '../d3-transition';
+
+/**
+ * Type alias for a BrushSelection. For a two-dimensional brush, it must be defined as [[x0, y0], [x1, y1]], 
+ * where x0 is the minimum x-value, y0 is the minimum y-value, x1 is the maximum x-value, and y1 is the maximum y-value. 
+ * For an x-brush, it must be defined as [x0, x1]; for a y-brush, it must be defined as [y0, y1].
+ */
+export type BrushSelection = [[number, number],[number, number]] | [number, number];
+
+
+export interface BrushBehavior<Datum> {
+    (group: Selection<SVGGElement, Datum, any, any>, ...args: any[]): void;
+    move(group: Selection<SVGGElement, Datum, any, any>, selection: BrushSelection): BrushBehavior<Datum>;
+    move(group: Selection<SVGGElement, Datum, any, any>, selection: (this: SVGGElement, d?:Datum, i?: number, group?: Array<SVGGElement> | NodeListOf<SVGGElement>) => BrushSelection): BrushBehavior<Datum>;
+    move(group: Transition<SVGGElement, Datum, any, any>, selection: BrushSelection): BrushBehavior<Datum>;
+    move(group: Transition<SVGGElement, Datum, any, any>, selection: (this: SVGGElement, d?:Datum, i?: number, group?: Array<SVGGElement> | NodeListOf<SVGGElement>) => BrushSelection): BrushBehavior<Datum>;
+    extent(): (this: SVGGElement, d: Datum, i:number, group:Array<SVGGElement> | NodeListOf<SVGGElement>) => [[number, number], [number, number]];
+    extent(extent: [[number, number], [number, number]]): BrushBehavior<Datum>;
+    extent(extent: (this: SVGGElement, d: Datum, i:number, group:Array<SVGGElement> | NodeListOf<SVGGElement>) => [[number, number], [number, number]]): BrushBehavior<Datum>;
+    filter(): (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => boolean;
+    filter(filterFn: (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => boolean): BrushBehavior<SVGGElement>;
+    handleSize():number;
+    handleSize(size: number): BrushBehavior<Datum>;
+    on(typenames: string): (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => any;
+    on(typenames: string, callback: null): BrushBehavior<SVGGElement>;
+    on(typenames: string, callback: (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => any): BrushBehavior<SVGGElement>;
+
+}
+
+export function brush<Datum>(): BrushBehavior<Datum>;
+export function brushX<Datum>(): BrushBehavior<Datum>;
+export function brushY<Datum>(): BrushBehavior<Datum>;
+
+export function brushSelection(node: SVGGElement): BrushSelection;
+
+export interface D3BrushEvent<Datum> {
+    target: BrushBehavior<Datum>;
+    type: 'start' | 'brush' | 'end' | string; // Leave failsafe string type for cases like 'brush.foo'
+    selection: BrushSelection;
+    sourceEvent: MouseEvent | TouchEvent;
+}
