@@ -8,12 +8,6 @@
 import * as d3_selection from '../d3-selection';
 import * as d3_transition from '../d3-transition';
 
-// Note: This dependency is driven by Definitions, not D3 itself
-import {ScaleIdentity, ScaleLinear, ScaleLogarithmic, ScalePower} from '../d3-scale';
-
-// TODO: consider defining a minimal scale interface, which can be used with
-// rescaleX and rescaleY instead of the import of the defined contiuous scales
-// from d3-scale
 
 // --------------------------------------------------------------------------
 // Shared Type Definitions and Interfaces
@@ -27,10 +21,18 @@ import {ScaleIdentity, ScaleLinear, ScaleLogarithmic, ScalePower} from '../d3-sc
 type BaseType = Element;
 
 /**
- * Type alias for permissible continuous scales which can be used with ZoomTransform.rescaleX(),
- * and ZoomTransform.rescaleY() 
+ * Minimal interface for a continuous scale.
+ * This interface is used as a minimum contract for scale objects
+ * that  can be passed into zoomTransform methods rescaleX and rescaleY
  */
-type ContinuousScale = ScaleIdentity | ScaleLinear<number, number> | ScaleLogarithmic<number, number> | ScalePower<number, number>;
+export interface ZoomScale {
+    domain(): Array<number>;
+    domain(domain: Array<number>): ZoomScale;
+    range(): Array<number>;
+    range(range: Array<number>): ZoomScale;
+    copy(): ZoomScale;
+    invert(value: number): number;
+}
 
 // --------------------------------------------------------------------------
 // Zoom Behavior
@@ -110,8 +112,8 @@ export interface ZoomTransform {
     invert(point: [number, number]): [number, number];
     invertX(x: number): number;
     invertY(y: number): number
-    rescaleX<S extends ContinuousScale>(xScale: S): S;
-    rescaleY<S extends ContinuousScale>(yScale: S): S;
+    rescaleX<S extends ZoomScale>(xScale: S): S;
+    rescaleY<S extends ZoomScale>(yScale: S): S;
     scale(k: number): ZoomTransform;
     toString(): string;
     translate(x: number, y: number): ZoomTransform;
