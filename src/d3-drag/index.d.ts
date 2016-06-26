@@ -52,8 +52,6 @@ export interface DragBehavior<GElement extends BaseType, Datum> extends Function
 export function drag<GElement extends BaseType, Datum>(): DragBehavior<GElement, Datum>;
 
 
-// TODO: Decide on approach to extending d3.event typing, when d3-drag module is loaded.
-
 export interface D3DragEvent<GElement extends BaseType, Datum> {
     target: DragBehavior<GElement, Datum>;
     type: 'start' | 'drag' | 'end' | string;  // Leave failsafe string type for cases like 'drag.foo'
@@ -65,10 +63,9 @@ export interface D3DragEvent<GElement extends BaseType, Datum> {
     identifier: 'mouse' | number;
     active: number;
     sourceEvent: MouseEvent | TouchEvent;
-    // TODO: Check signatures of on here! Return values of setters D3DragEvent
-    on(typenames: string): (this: GElement, datum: Datum, index: number, group: Array<GElement>) => any;
+    on(typenames: string): (this: GElement, datum: Datum, index: number, group: Array<GElement>) => void;
     on(typenames: string, callback: null): D3DragEvent<GElement, Datum>;
-    on(typenames: string, callback: (this: GElement, datum: Datum, index: number, group: Array<GElement>) => any): D3DragEvent<GElement, Datum>;    
+    on(typenames: string, callback: (this: GElement, datum: Datum, index: number, group: Array<GElement>) => void): D3DragEvent<GElement, Datum>;    
 }
 
 export function dragDisable(window: Window): void;

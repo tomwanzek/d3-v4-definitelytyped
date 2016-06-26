@@ -5,8 +5,6 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
-// TODO: consider expanding to allow arguments to be implicitly coercible to number (as the underlying code coerces with +)
-
 export interface Path {
     moveTo(x: number, y: number): void;
     closePath(): void;

@@ -29,9 +29,9 @@ export interface BrushBehavior<Datum> {
     filter(filterFn: (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => boolean): BrushBehavior<SVGGElement>;
     handleSize():number;
     handleSize(size: number): BrushBehavior<Datum>;
-    on(typenames: string): (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => any;
+    on(typenames: string): (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => void;
     on(typenames: string, callback: null): BrushBehavior<SVGGElement>;
-    on(typenames: string, callback: (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => any): BrushBehavior<SVGGElement>;
+    on(typenames: string, callback: (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => void): BrushBehavior<SVGGElement>;
 
 }
 

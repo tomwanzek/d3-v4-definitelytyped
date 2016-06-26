@@ -121,10 +121,10 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     html(): string;
     html(value: string): Selection<GElement, Datum, PElement, PDatum>;
     html(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => string): Selection<GElement, Datum, PElement, PDatum>;
-    
+
     append<ChildElement extends BaseType>(type: string): Selection<ChildElement, Datum, PElement, PDatum>;
     append<ChildElement extends BaseType>(type: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => ChildElement): Selection<ChildElement, Datum, PElement, PDatum>;
-    
+
     insert<ChildElement extends BaseType>(type: string, before: string): Selection<ChildElement, Datum, PElement, PDatum>;
     insert<ChildElement extends BaseType>(type: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => ChildElement, before: string): Selection<ChildElement, Datum, PElement, PDatum>;
     insert<ChildElement extends BaseType>(type: string, before: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => BaseType): Selection<ChildElement, Datum, PElement, PDatum>;
@@ -156,8 +156,8 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     // Data Join ---------------------------------
 
     datum(): Datum;
+    datum(value: null): Selection<GElement, undefined, PElement, PDatum>;
     datum<NewDatum>(value: NewDatum): Selection<GElement, NewDatum, PElement, PDatum>;
-    // TODO: Review below
     datum<NewDatum>(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => NewDatum): Selection<GElement, NewDatum, PElement, PDatum>;
 
     data(): Datum[];
@@ -182,10 +182,10 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 
     // Event Handling -------------------
 
-    on(type: string): (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any;
+    on(type: string): (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => void;
     on(type: string, listener: null): Selection<GElement, Datum, PElement, PDatum>;
-    on(type: string, listener: (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any, capture?: boolean): Selection<GElement, Datum, PElement, PDatum>;
-    
+    on(type: string, listener: (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => void, capture?: boolean): Selection<GElement, Datum, PElement, PDatum>;
+
 
     dispatch(type: string, parameters?: CustomEventParameters): Selection<GElement, Datum, PElement, PDatum>;
     dispatch(type: string, parameters?: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => CustomEventParameters): Selection<GElement, Datum, PElement, PDatum>;
@@ -228,9 +228,10 @@ interface BaseEvent extends Event {
 
 export var event: BaseEvent | Event | MouseEvent | TouchEvent;
 
-// TODO: Check signature w.r.t event and this-context and ...args
-// returns return value of invoked listener
-export function customEvent<Datum>(event: BaseEvent | Event, listener: (d: Datum, index: number) => any, that: any, ...args: any[]): any;
+// TODO: Check signature w.r.t event
+export function customEvent<GElement extends BaseType, Datum, Result>(event: BaseEvent | Event, listener: (this: GElement, d: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Result,
+    that: GElement, d: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>): Result;
+export function customEvent<Context, Result>(event: BaseEvent | Event, listener: (this: Context, ...args: any[]) => Result, that: Context, ...args: any[]): Result;
 
 // ---------------------------------------------------------------------------
 // mouse.js related

@@ -101,8 +101,6 @@ export function min<T, U extends Numeric>(array: T[], accessor: (datum: T, index
 
 
 
-// TODO: Review extend signatures, i.p. when Primitive is used.
-
 /**
  * Return the min and max simultaneously.
  */

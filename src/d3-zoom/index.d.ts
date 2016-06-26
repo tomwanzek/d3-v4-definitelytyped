@@ -75,9 +75,9 @@ export interface ZoomBehavior<GElement extends BaseType, Datum> extends Function
     duration(): number;
     duration(duration: number): ZoomBehavior<GElement, Datum>;
 
-    on(typenames: string): (this: GElement, datum: Datum, index: number, group: Array<GElement>) => any;
+    on(typenames: string): (this: GElement, datum: Datum, index: number, group: Array<GElement>) => void;
     on(typenames: string, callback: null): ZoomBehavior<GElement, Datum>;
-    on(typenames: string, callback: (this: GElement, datum: Datum, index: number, group: Array<GElement>) => any): ZoomBehavior<GElement, Datum>;    
+    on(typenames: string, callback: (this: GElement, datum: Datum, index: number, group: Array<GElement>) => void): ZoomBehavior<GElement, Datum>;    
 }
 
 

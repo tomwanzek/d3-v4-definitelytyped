@@ -4,7 +4,6 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 // TODO: Clean-up header for proper referencing of new project/module information
-// TODO: Explanatory comments for exports
 
 // ---------------------------------------------------------------
 // Interfaces
