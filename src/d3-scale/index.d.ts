@@ -43,7 +43,7 @@ interface ScaleLinear<Range, Output> {
      * Important: While value should come out of range R, this is method is only applicable to
      * values that can be coerced to numeric. Otherwise, returns NaN
      */
-    invert(value: Range): number;
+    invert(value: Numeric): number;
     domain(): Array<number>;
     domain(domain: Array<Numeric>): ScaleLinear<Range, Output>;
     range(): Array<Range>;
@@ -52,7 +52,7 @@ interface ScaleLinear<Range, Output> {
      * Important: While value should come out of range R, this is method is only applicable to
      * values that can be coerced to numeric.
      */
-    rangeRound(range: Array<Range>): ScaleLinear<Range, Output>;
+    rangeRound(range: Array<Numeric>): ScaleLinear<Range, Output>;
     clamp(): boolean;
     clamp(clamp: boolean): ScaleLinear<Range, Output>;
     interpolate(): InterpolatorFactory<any, any>;
@@ -79,7 +79,7 @@ export interface ScalePower<Range, Output> {
      * Important: While value should come out of range R, this is method is only applicable to
      * values that can be coerced to numeric. Otherwise, returns NaN
      */
-    invert(value: Range): number;
+    invert(value: Numeric): number;
     domain(): Array<number>;
     domain(domain: Array<Numeric>): ScalePower<Range, Output>;
     range(): Array<Range>;
@@ -88,7 +88,7 @@ export interface ScalePower<Range, Output> {
      * Important: While value should come out of range R, this is method is only applicable to
      * values that can be coerced to numeric.
      */
-    rangeRound(range: Array<Range>): ScalePower<Range, Output>;
+    rangeRound(range: Array<Numeric>): ScalePower<Range, Output>;
     clamp(): boolean;
     clamp(clamp: boolean): ScalePower<Range, Output>;
     interpolate(): InterpolatorFactory<any, any>;
@@ -122,7 +122,7 @@ export interface ScaleLogarithmic<Range, Output> {
      * Important: While value should come out of range R, this is method is only applicable to
      * values that can be coerced to numeric. Otherwise, returns NaN
      */
-    invert(value: Range): number;
+    invert(value: Numeric): number;
     domain(): Array<number>;
     domain(domain: Array<Numeric>): ScaleLogarithmic<Range, Output>;
     range(): Array<Range>;
@@ -131,7 +131,7 @@ export interface ScaleLogarithmic<Range, Output> {
      * Important: While value should come out of range R, this is method is only applicable to
      * values that can be coerced to numeric.
      */
-    rangeRound(range: Array<Range>): ScaleLogarithmic<Range, Output>;
+    rangeRound(range: Array<Numeric>): ScaleLogarithmic<Range, Output>;
     clamp(): boolean;
     clamp(clamp: boolean): ScaleLogarithmic<Range, Output>;
     interpolate(): InterpolatorFactory<any, any>;
@@ -185,7 +185,7 @@ interface ScaleTime<Range, Output> {
      * Important: While value should come out of range R, this is method is only applicable to
      * values that can be coerced to numeric. Otherwise, returns NaN
      */
-    invert(value: Range): Date;
+    invert(value: Numeric): Date;
     domain(): Array<Date>;
     domain(domain: Array<Date>): ScaleTime<Range, Output>;
     range(): Array<Range>;
@@ -194,7 +194,7 @@ interface ScaleTime<Range, Output> {
      * Important: While value should come out of range R, this is method is only applicable to
      * values that can be coerced to numeric.
      */
-    rangeRound(range: Array<Range>): ScaleTime<Range, Output>;
+    rangeRound(range: Array<Numeric>): ScaleTime<Range, Output>;
     clamp(): boolean;
     clamp(clamp: boolean): ScaleTime<Range, Output>;
     interpolate(): InterpolatorFactory<any, any>;
@@ -266,7 +266,7 @@ interface ScaleQuantize<Range> {
      * Important: While value should come out of range R, this is method is only applicable to
      * values that can be coerced to numeric. Otherwise, returns NaN
      */
-    invertExtent(value: Range): [number, number];
+    invertExtent(value: Numeric): [number, number];
     domain(): [number, number];
     domain(domain: [Numeric, Numeric]): ScaleQuantize<Range>;
     range(): Array<Range>;
@@ -302,22 +302,23 @@ export function scaleQuantile<Range>(): ScaleQuantile<Range>;
 // Threshold Scale Factory
 // -------------------------------------------------------------------------------
 
-interface ScaleThreshold<Range> {
-    (value: Numeric): Range;
+// TODO: review Domain Type, should be naturally orderable
+interface ScaleThreshold<Domain extends number | string | Date, Range> {
+    (value: Domain): Range;
     /**
      * Important: While value should come out of range R, this is method is only applicable to
      * values that can be coerced to numeric. Otherwise, returns NaN
      */
-    invertExtent(value: Range): [number, number];
-    domain(): [number, number];
-    domain(domain: [Numeric, Numeric]): ScaleThreshold<Range>;
+    invertExtent(value: Range): [Domain, Domain] | [undefined, Domain] | [Domain, undefined] | [undefined, undefined];
+    domain(): Array<Domain>;
+    domain(domain: Array<Domain>): ScaleThreshold<Domain,Range>;
     range(): Array<Range>;
-    range(range: Array<Range>): ScaleThreshold<Range>;
-    copy(): ScaleThreshold<Range>;
+    range(range: Array<Range>): ScaleThreshold<Domain, Range>;
+    copy(): ScaleThreshold<Domain,Range>;
 }
 
-export function scaleThreshold(): ScaleThreshold<number>;
-export function scaleThreshold<Range>(): ScaleThreshold<Range>;
+export function scaleThreshold(): ScaleThreshold<number, number>;
+export function scaleThreshold<Domain extends number | string | Date, Range>(): ScaleThreshold<Domain, Range>;
 
 // -------------------------------------------------------------------------------
 // Ordinal Scale Factory
@@ -332,10 +333,11 @@ interface ScaleOrdinal<Domain extends Stringifiable, Range> {
     range(range: Array<Range>): ScaleOrdinal<Domain, Range>;
     unknown(): Range | { name: 'implicit' };
     unknown(value: Range | { name: 'implicit' }): ScaleOrdinal<Domain, Range>;
+    copy(): ScaleOrdinal<Domain, Range>;
 }
 
-export function scaleOrdinal<Range>(range?: Range): ScaleOrdinal<string, Range>;
-export function scaleOrdinal<Domain extends Stringifiable, Range>(range?: Range): ScaleOrdinal<Domain, Range>;
+export function scaleOrdinal<Range>(range?: Array<Range>): ScaleOrdinal<string, Range>;
+export function scaleOrdinal<Domain extends Stringifiable, Range>(range?: Array<Range>): ScaleOrdinal<Domain, Range>;
 
 export const scaleImplicit: { name: 'implicit' };
 
