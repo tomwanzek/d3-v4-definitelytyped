@@ -39,7 +39,7 @@ export interface D3Map<T> {
 
 export function map<T>(): D3Map<T>;
 export function map<T>(d3Map: D3Map<T>): D3Map<T>;
-export function map<T>(array: Array<T>, key?: (value: T) => string): D3Map<T>;
+export function map<T>(array: Array<T>, key?: (value: T, i?: number, array?: Array<T>) => string): D3Map<T>;
 export function map(object: Object): D3Map<any>;
 
 
