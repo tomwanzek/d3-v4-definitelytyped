@@ -68,7 +68,7 @@ They are not meant to be used with a test runner as functional tests.
 - [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-drag/index.d.ts)
 - [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-drag/d3-drag-test.ts)
 
-**Note**: Utilizes `this`-typing (criticality: high)
+**Note**: Utilizes `this`-typing (criticality: _high_)
 
 `this`-typing is used for context-binding to DOM element.
 
@@ -82,8 +82,13 @@ They are not meant to be used with a test runner as functional tests.
 
 ### d3-force
 
-- [ ] Definition File
-- [ ] Test File
+- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-force/index.d.ts)
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-ease/d3-ease-test.ts)
+
+**Note**: Utilizes `this`-typing (criticality: _medium_)
+
+`this`-typing is used for context-binding of event handler to Simulation (using `Simulation.on(...)`).
+
 
 ### d3-format
 
@@ -136,7 +141,7 @@ They are not meant to be used with a test runner as functional tests.
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-selection/index.d.ts) (_draft_)
 - [ ] Test File
 
-**Note**: Utilizes `this`-typing (criticality: high)
+**Note**: Utilizes `this`-typing (criticality: _high_)
 
 `this`-typing is used for context-binding to DOM element.
 
@@ -165,7 +170,7 @@ They are not meant to be used with a test runner as functional tests.
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-transition/index.d.ts)
 - [ ] Test File
 
-**Note**: Utilizes `this`-typing (criticality: high)
+**Note**: Utilizes `this`-typing (criticality: _high_)
 
 `this`-typing is used for context-binding to DOM element.
 
@@ -179,7 +184,7 @@ They are not meant to be used with a test runner as functional tests.
 - [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-zoom/index.d.ts)
 - [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-zoom/d3-zoom-test.ts)
 
-**Note**: Utilizes `this`-typing (criticality: high)
+**Note**: Utilizes `this`-typing (criticality: _high_)
 
 `this`-typing is used for context-binding to DOM element.
 
