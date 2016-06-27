@@ -1,0 +1,14 @@
+{
+  "name": "d3-chord",
+  "homepage": "https://github.com/d3/d3-chord",
+  "version": "1.0.0",
+  "global": false,
+  "main": "index.d.ts",
+  "files": [
+    "index.d.ts"
+  ],
+  "dependencies": {
+    
+  },
+  "globalDependencies": {}
+}

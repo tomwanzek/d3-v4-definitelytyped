@@ -43,8 +43,13 @@ They are not meant to be used with a test runner as functional tests.
 
 ### d3-chord
 
-- [ ] Definition File
-- [ ] Test File
+- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-chord/index.d.ts)
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-chord/d3-chord-test.ts)
+
+**Note**: Utilizes `this`-typing (criticality: _medium_)
+
+`this`-typing is used for context-binding of accessor functions used in RibbonGenerator
+
 
 ### d3-collection
 
