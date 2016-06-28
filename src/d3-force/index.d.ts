@@ -100,7 +100,7 @@ export interface SimulationLinkDatum<NodeDatum extends SimulationNodeDatum> {
 export interface ForceLink<NodeDatum extends SimulationNodeDatum, LinksDatum extends SimulationLinkDatum<NodeDatum>> extends Force<NodeDatum> {
     links(): Array<LinksDatum>;
     links(links: Array<LinksDatum>): ForceLink<NodeDatum, LinksDatum>;
-    id(): (d: LinksDatum, i: number, linksData: Array<LinksDatum>) => string | number;
+    id(): (d: LinksDatum, i: number, linksData: Array<LinksDatum>) => (string | number);
     id(id: (d: LinksDatum, i?: number, linksData?: Array<LinksDatum>) => string): ForceLink<NodeDatum, LinksDatum>;
     distance(): (d: LinksDatum, i: number, linksData: Array<LinksDatum>) => number;
     distance(distance: (d: LinksDatum, i: number, linksData: Array<LinksDatum>) => number): ForceLink<NodeDatum, LinksDatum>;

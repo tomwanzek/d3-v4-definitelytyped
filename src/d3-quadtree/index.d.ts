@@ -41,7 +41,7 @@ export interface Quadtree<T> {
     data(): Array<T>;
     size(): number;
     find(x: number, y: number, radius?: number): T | undefined;
-    visit(callback: (node: QuadtreeInternalNode<T> | QuadtreeLeaf<T>, x0: number, y0: number, x1: number, y1: number) => void | boolean): Quadtree<T>;
+    visit(callback: (node: QuadtreeInternalNode<T> | QuadtreeLeaf<T>, x0: number, y0: number, x1: number, y1: number) => (void | boolean)): Quadtree<T>;
     // TODO: validate return types in API Documents ('Returns root'???)
     visitAfter(callback: (node: QuadtreeInternalNode<T> | QuadtreeLeaf<T>, x0: number, y0: number, x1: number, y1: number) => void): Quadtree<T>;
 }

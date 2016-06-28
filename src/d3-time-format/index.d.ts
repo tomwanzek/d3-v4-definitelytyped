@@ -47,9 +47,9 @@ export interface TimeLocaleDefinition {
 
 export interface TimeLocaleObject {
     format(specifier: string): (date: Date) => string;
-    parse(specifier: string): (dateString: string) => Date | null;
+    parse(specifier: string): (dateString: string) => (Date | null);
     utcFormat(specifier: string): (date: Date) => string;
-    utcParse(specifier: string): (dateString: string) => Date | null;
+    utcParse(specifier: string): (dateString: string) => (Date | null);
 }
 
 /**
@@ -67,11 +67,11 @@ export function timeFormatDefaultLocale(defaultTimeLocale: TimeLocaleDefinition)
 
 export function timeFormat(specifier: string): (date: Date) => string;
 
-export function timeParse(specifier: string): (dateString: string) => Date | null;
+export function timeParse(specifier: string): (dateString: string) => (Date | null);
 
 export function utcFormat(specifier: string): (date: Date) => string;
 
-export function utcParse(specifier: string): (dateString: string) => Date | null;
+export function utcParse(specifier: string): (dateString: string) => (Date | null);
 
 
 
