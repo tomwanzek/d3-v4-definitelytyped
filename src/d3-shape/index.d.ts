@@ -28,36 +28,34 @@ export interface DefaultArcObject {
     padAngle: number
 }
 
-// TODO: review below, (1) call signatures with ...args: any[] (2) this-typing?
-
-export interface Arc<T> {
-    (d: T, ...args: any[]): string | void;
-    centroid(d: T, ...args: any[]): [number, number];
-    innerRadius(): (d: T, ...args: any[]) => number;
-    innerRadius(radius: number): Arc<T>;
-    innerRadius(radius: (d: T, ...args: any[]) => number): Arc<T>;
-    outerRadius(): (d: T, ...args: any[]) => number;
-    outerRadius(radius: number): Arc<T>;
-    outerRadius(radius: (d: T, ...args: any[]) => number): Arc<T>;
-    cornerRadius(): (d: T, ...args: any[]) => number;
-    cornerRadius(radius: number): Arc<T>;
-    cornerRadius(radius: (d: T, ...args: any[]) => number): Arc<T>;
-    startAngle(): (d: T, ...args: any[]) => number;
-    startAngle(angle: number): Arc<T>;
-    startAngle(angle: (d: T, ...args: any[]) => number): Arc<T>;
-    endAngle(): (d: T, ...args: any[]) => number;
-    endAngle(angle: number): T;
-    endAngle(angle: (d: T, ...args: any[]) => number): Arc<T>;
-    padAngle(): (d: T, ...args: any[]) => number;
-    padAngle(angle: number): Arc<T>;
-    padAngle(angle: (d: T, ...args: any[]) => number): Arc<T>;
+export interface Arc<Datum> {
+    (d: Datum, ...args: any[]): string | void;
+    centroid(d: Datum, ...args: any[]): [number, number];
+    innerRadius(): (this: any, d: Datum, ...args: any[]) => number;
+    innerRadius(radius: number): Arc<Datum>;
+    innerRadius(radius: (this: any, d: Datum, ...args: any[]) => number): Arc<Datum>;
+    outerRadius(): (this: any, d: Datum, ...args: any[]) => number;
+    outerRadius(radius: number): Arc<Datum>;
+    outerRadius(radius: (this: any, d: Datum, ...args: any[]) => number): Arc<Datum>;
+    cornerRadius(): (this: any, d: Datum, ...args: any[]) => number;
+    cornerRadius(radius: number): Arc<Datum>;
+    cornerRadius(radius: (this: any, d: Datum, ...args: any[]) => number): Arc<Datum>;
+    startAngle(): (this: any, d: Datum, ...args: any[]) => number;
+    startAngle(angle: number): Arc<Datum>;
+    startAngle(angle: (this: any, d: Datum, ...args: any[]) => number): Arc<Datum>;
+    endAngle(): (this: any, d: Datum, ...args: any[]) => number;
+    endAngle(angle: number): Datum;
+    endAngle(angle: (this: any, d: Datum, ...args: any[]) => number): Arc<Datum>;
+    padAngle(): (this: any, d: Datum, ...args: any[]) => number;
+    padAngle(angle: number): Arc<Datum>;
+    padAngle(angle: (this: any, d: Datum, ...args: any[]) => number): Arc<Datum>;
     context(): CanvasRenderingContext2D | null;
-    context(context: CanvasRenderingContext2D): Arc<T>;
-    context(context: null): Arc<T>;
+    context(context: CanvasRenderingContext2D): Arc<Datum>;
+    context(context: null): Arc<Datum>;
 }
 
 export function arc(): Arc<DefaultArcObject>;
-export function arc<T>(): Arc<T>;
+export function arc<Datum>(): Arc<Datum>;
 
 // -----------------------------------------------------------------------------------
 // Pie Generator
@@ -73,24 +71,31 @@ export interface PieArcDatum<T> {
     padAngle: number;
 }
 
-// TODO: review below, (1) call signatures with ...args: any[] (2) this-typing?
 
-export interface Pie<T> {
-    (data: Array<T>, ...args: any[]): Array<PieArcDatum<T>>;
-    value(): (d: T, i?: number, data?: Array<T>) => number;
-    value(value: number): Pie<T>;
-    value(value: (d: T, i?: number, data?: Array<T>) => number): Pie<T>;
-    sort(): (a: T, b: T) => number | null;
-    sort(comparator: (a: T, b: T) => number): Pie<T>;
-    sort(comparator: null): Pie<T>;
-    sortValues(): (a: number, b: number) => number | null;
-    sortValues(comparator: (a: number, b: number) => number): Pie<T>;
-    sortValues(comparator: null): Pie<T>;
-
+export interface Pie<Datum> {
+    (data: Array<Datum>, ...args: any[]): Array<PieArcDatum<Datum>>;
+    value(): (d: Datum, i?: number, data?: Array<Datum>) => number;
+    value(value: number): Pie<Datum>;
+    value(value: (d: Datum, i?: number, data?: Array<Datum>) => number): Pie<Datum>;
+    sort(): ((a: Datum, b: Datum) => number) | null;
+    sort(comparator: (a: Datum, b: Datum) => number): Pie<Datum>;
+    sort(comparator: null): Pie<Datum>;
+    sortValues(): ((a: number, b: number) => number) | null;
+    sortValues(comparator: (a: number, b: number) => number): Pie<Datum>;
+    sortValues(comparator: null): Pie<Datum>;
+    startAngle(): (this:any, data: Array<Datum>, ...args: any[]) => number;
+    startAngle(angle: number): Pie<Datum>;
+    startAngle(angle: (this:any, data: Array<Datum>, ...args: any[]) => number): Pie<Datum>;
+    endAngle(): (this:any, ...args: any[]) => number;
+    endAngle(angle: number): Pie<Datum>;
+    endAngle(angle: (this:any, data: Array<Datum>, ...args: any[]) => number): Pie<Datum>;
+    padAngle(): (this:any, data: Array<Datum>, ...args: any[]) => number;
+    padAngle(angle: number): Pie<Datum>;
+    padAngle(angle: (this:any, data: Array<Datum>, ...args: any[]) => number): Pie<Datum>;
 }
 
 export function pie(): Pie<Numeric>;
-export function pie<T>(): Pie<T>;
+export function pie<Datum>(): Pie<Datum>;
 
 // -----------------------------------------------------------------------------------
 // Line Generators
@@ -107,13 +112,12 @@ export interface Line<T> {
     y(y: (d: T, index?: number, data?: Array<T>) => number): Line<T>;
     defined(): (d: T, index?: number, data?: Array<T>) => boolean;
     defined(defined: (d: T, index?: number, data?: Array<T>) => boolean): Line<T>;
-    curve(): CurveFactory;
-    curve(curve: CurveFactory): Line<T>;
+    curve(): CurveFactory | CurveFactoryLineOnly;
+    curve(curve: CurveFactory | CurveFactoryLineOnly): Line<T>;
     context(): CanvasRenderingContext2D | null;
     context(context: CanvasRenderingContext2D): Line<T>;
     context(context: null): Line<T>;
 }
-
 export function line(): Line<[number, number]>;
 export function line<T>(): Line<T>;
 
@@ -127,8 +131,8 @@ export interface RadialLine<T> {
     radius(radius: (d: T, index?: number, data?: Array<T>) => number): RadialLine<T>;
     defined(): (d: T, index?: number, data?: Array<T>) => boolean;
     defined(defined: (d: T, index?: number, data?: Array<T>) => boolean): RadialLine<T>;
-    curve(): CurveFactory;
-    curve(curve: CurveFactory): RadialLine<T>;
+    curve(): CurveFactory | CurveFactoryLineOnly;
+    curve(curve: CurveFactory | CurveFactoryLineOnly): RadialLine<T>;
     context(): CanvasRenderingContext2D | null;
     context(context: CanvasRenderingContext2D): RadialLine<T>;
     context(context: null): RadialLine<T>;
@@ -225,6 +229,9 @@ export interface CurveGeneratorLineOnly {
     point(x: number, y: number): void;
 }
 
+export interface CurveFactoryLineOnly {
+    (context: CanvasRenderingContext2D | null): CurveGeneratorLineOnly;
+}
 
 export interface CurveGenerator extends CurveGeneratorLineOnly {
     areaStart(): void;
@@ -241,15 +248,13 @@ export var curveBasisOpen: CurveFactory;
 
 export var curveBasisClosed: CurveFactory;
 
-export interface CurveBundleFactory {
-    (context: CanvasRenderingContext2D | null): CurveGeneratorLineOnly;
+export interface CurveBundleFactory extends CurveFactoryLineOnly{
     beta(beta: number): CurveBundleFactory;
 }
 
 export var curveBundle: CurveBundleFactory;
 
-export interface CurveCardinalFactory {
-    (context: CanvasRenderingContext2D | null): CurveGenerator;
+export interface CurveCardinalFactory extends CurveFactory{
     tension(tension: number): CurveCardinalFactory;
 }
 
@@ -257,8 +262,7 @@ export var curveCardinal: CurveCardinalFactory;
 export var curveCardinalOpen: CurveCardinalFactory;
 export var curveCardinalClosed: CurveCardinalFactory;
 
-export interface CurveCatmullRomFactory {
-    (context: CanvasRenderingContext2D | null): CurveGenerator;
+export interface CurveCatmullRomFactory extends CurveFactory{
     alpha(alpha: number): CurveCatmullRomFactory;
 }
 
@@ -291,24 +295,23 @@ export interface SymbolType {
     draw(context: CanvasPathMethods, size: number): void;
 }
 
-// TODO: review below, (1) call signatures with ...args: any[] (2) this-typing?
 
-export interface Symbol<T> {
-    (d: T, ...args: any[]): void | string;
-    size(): (...args: any[]) => number;
-    size(size: number): Symbol<T>;
-    size(size: (...args: any[]) => number): Symbol<T>;
-    type(): (...args: any[]) => SymbolType;
-    type(type: SymbolType): Symbol<T>;
-    type(type: (...args: any[]) => number): Symbol<T>;
+export interface Symbol<Datum> {
+    (d?: Datum, ...args: any[]): void | string;
+    size(): (this: any, d?: Datum, ...args: any[]) => number;
+    size(size: number): Symbol<Datum>;
+    size(size: (this: any, d?: Datum, ...args: any[]) => number): Symbol<Datum>;
+    type(): (this: any, d?: Datum, ...args: any[]) => SymbolType;
+    type(type: SymbolType): Symbol<Datum>;
+    type(type: (this: any, d?: Datum, ...args: any[]) => number): Symbol<Datum>;
     context(): CanvasRenderingContext2D | null;
-    context(context: CanvasRenderingContext2D): Symbol<T>;
-    context(context: null): Symbol<T>;
+    context(context: CanvasRenderingContext2D): Symbol<Datum>;
+    context(context: null): Symbol<Datum>;
 
 }
 
 export function symbol(): Symbol<any>;
-export function symbol<T>(): Symbol<T>;
+export function symbol<Datum>(): Symbol<Datum>;
 
 export var symbols: Array<SymbolType>;
 
@@ -327,7 +330,6 @@ export var symbolWye: SymbolType;
 // STACKS
 // -----------------------------------------------------------------------------------
 
-// TODO: review below, (1) call signatures with ...args: any[] (2) this-typing?
 
 // HACK: SeriesPoint is a [number, number] two-element Array with added
 // data and index properties related to the data element which formed the basis for the
@@ -344,9 +346,9 @@ export interface Series<Datum, Key> extends Array<SeriesPoint<Datum>> {
 export interface Stack<Datum, Key> {
     (data: Array<Datum>, ...args: any[]): Array<Series<Datum, Key>>;
 
-    keys(): (data: Array<Datum>, ...args: any[]) => Array<Key>;
+    keys(): (this: any, data: Array<Datum>, ...args: any[]) => Array<Key>;
     keys(keys: Array<Key>): Stack<Datum, Key>;
-    keys(keys: (data: Array<Datum>, ...args: any[]) => Array<Key>): Stack<Datum, Key>;
+    keys(keys: (this: any, data: Array<Datum>, ...args: any[]) => Array<Key>): Stack<Datum, Key>;
 
     value(): (d: Datum, key: Key, j?: number, data?: Array<Datum>) => number;
     value(value: number): Stack<Datum, Key>;

@@ -46,10 +46,10 @@ They are not meant to be used with a test runner as functional tests.
 - [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-chord/index.d.ts)
 - [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-chord/d3-chord-test.ts)
 
-**Note**: Utilizes `this`-typing (criticality: _medium_)
+**Note**: Utilizes `this`-typing (criticality: _low_)
 
-`this`-typing is used for context-binding of accessor functions used in RibbonGenerator
-
+`this`-typing is used accessor functions in RibbonGenerator. The semantic value is limited. The `this` context depends on the context bound when invoking the
+respective generator with data. I.e. it can be global object, undefined or anything explicitly bound using `.call(...)` et al.
 
 ### d3-collection
 
@@ -152,8 +152,13 @@ They are not meant to be used with a test runner as functional tests.
 
 ### d3-shape
 
-- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-shape/index.d.ts) (_draft_)
+- [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-shape/index.d.ts)
 - [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-shape/d3-shape-test.ts)
+
+**Note**: Utilizes `this`-typing (criticality: _low_)
+
+`this`-typing is used accessor functions in Arc, Pie, Symbol, Stack. The semantic value is limited. The `this` context depends on the context bound when invoking the
+respective generator with data. I.e. it can be global object, undefined or anything explicitly bound using `.call(...)` et al.  
 
 ### d3-time
 

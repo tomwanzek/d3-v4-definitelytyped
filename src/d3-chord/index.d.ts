@@ -37,14 +37,13 @@ export interface ChordLayout {
     (matrix: number[][]): Chords;
     padAngle(): number;
     padAngle(angle: number): ChordLayout;
-    // TODO: check comparator signature
-    sortGroups(): (a: number, b: number) => number;
+    sortGroups(): ((a: number, b: number) => number) | null;
     sortGroups(compare: null): ChordLayout;
     sortGroups(compare: (a: number, b: number) => number): ChordLayout;
-    sortSubgroups(): (a: number, b: number) => number;
+    sortSubgroups(): ((a: number, b: number) => number) | null;
     sortSubgroups(compare: null): ChordLayout;
     sortSubgroups(compare: (a: number, b: number) => number): ChordLayout;
-    sortChords(): (a: number, b: number) => number;
+    sortChords(): ((a: number, b: number) => number) | null;
     sortChords(compare: null): ChordLayout;
     sortChords(compare: (a: number, b: number) => number): ChordLayout;
 }
@@ -58,16 +57,16 @@ export function chord(): ChordLayout;
 
 export interface RibbonGenerator<Datum> {
     (d: Datum, ...args: any[]): string | void;
-    source(): (this: RibbonGenerator<Datum>, d: Datum, ...args: any[]) => ChordSubgroup;
-    source(source: (this: RibbonGenerator<Datum>, d: Datum, ...args: any[]) => ChordSubgroup): RibbonGenerator<Datum>;
-    target(): (this: RibbonGenerator<Datum>, d: Datum, ...args: any[]) => ChordSubgroup;
-    target(target: (this: RibbonGenerator<Datum>, d: Datum, ...args: any[]) => ChordSubgroup): RibbonGenerator<Datum>;
-    radius(): (this: RibbonGenerator<Datum>, d: Datum, ...args: any[]) => number;
-    radius(radius: (this: RibbonGenerator<Datum>, d: Datum, ...args: any[]) => number): RibbonGenerator<Datum>;
-    startAngle(): (this: RibbonGenerator<Datum>, d: Datum, ...args: any[]) => number;
-    startAngle(angle: (this: RibbonGenerator<Datum>, d: Datum, ...args: any[]) => number): RibbonGenerator<Datum>;
-    endAngle(): (this: RibbonGenerator<Datum>, d: Datum, ...args: any[]) => number;
-    endAngle(angle: (this: RibbonGenerator<Datum>, d: Datum, ...args: any[]) => number): RibbonGenerator<Datum>;
+    source(): (this: any, d: Datum, ...args: any[]) => ChordSubgroup;
+    source(source: (this: any, d: Datum, ...args: any[]) => ChordSubgroup): RibbonGenerator<Datum>;
+    target(): (this: any, d: Datum, ...args: any[]) => ChordSubgroup;
+    target(target: (this: any, d: Datum, ...args: any[]) => ChordSubgroup): RibbonGenerator<Datum>;
+    radius(): (this: any, d: Datum, ...args: any[]) => number;
+    radius(radius: (this: any, d: Datum, ...args: any[]) => number): RibbonGenerator<Datum>;
+    startAngle(): (this: any, d: Datum, ...args: any[]) => number;
+    startAngle(angle: (this: any, d: Datum, ...args: any[]) => number): RibbonGenerator<Datum>;
+    endAngle(): (this: any, d: Datum, ...args: any[]) => number;
+    endAngle(angle: (this: any, d: Datum, ...args: any[]) => number): RibbonGenerator<Datum>;
     context(): CanvasRenderingContext2D | null;
     context(context: CanvasRenderingContext2D): RibbonGenerator<Datum>;
     context(context: null): RibbonGenerator<Datum>;
