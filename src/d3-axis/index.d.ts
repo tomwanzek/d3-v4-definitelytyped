@@ -6,8 +6,8 @@
 // TODO: Clean-up header for proper referencing of new project/module information
 
 // TODO: Clarify dependencies, axis relies on d3-selection (and optionally d3-transition)
-import {Selection} from '../d3-selection';
-import {Transition} from '../d3-transition';
+import { Selection } from '../d3-selection';
+import { Transition } from '../d3-transition';
 
 
 // --------------------------------------------------------------------------

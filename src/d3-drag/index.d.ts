@@ -5,7 +5,7 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
-import * as d3_selection from '../d3-selection';
+import { Selection } from '../d3-selection';
 
 
 // --------------------------------------------------------------------------
@@ -36,7 +36,7 @@ export interface SubjectDatum {
 }
 
 export interface DragBehavior<GElement extends BaseType, Datum> extends Function {
-    (selection: d3_selection.Selection<GElement, Datum, any, any>, ...args: any[]): void;
+    (selection: Selection<GElement, Datum, any, any>, ...args: any[]): void;
     container(): (this: GElement, datum: Datum, i: number, group: Array<GElement> | NodeListOf<GElement>) => ContainerElement;
     container(accessor: (this: GElement, datum?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => ContainerElement): DragBehavior<GElement, Datum>;
     container(container: ContainerElement): DragBehavior<GElement, Datum>;

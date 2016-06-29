@@ -5,7 +5,7 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
-import * as d3_color from '../d3-color';
+import { ColorSpaceObject } from '../d3-color';
 
 
 // --------------------------------------------------------------------------
@@ -22,7 +22,7 @@ export interface ZoomInterpolationFn extends Function{
 }
 
 export interface ColorGammaInterpolationFactory extends Function {
-    (a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
+    (a: string | ColorSpaceObject, b: string | ColorSpaceObject): ((t: number) => string);
     gamma(g: number): ColorGammaInterpolationFactory;
 }
 
@@ -41,7 +41,7 @@ export type ZoomView = [number, number, number];
 
 export function interpolate(a: any, b: null): ((t: number) => null);
 export function interpolate(a: any, b: number): ((t: number) => number);
-export function interpolate(a: any, b: d3_color.ColorSpaceObject): ((t: number) => string);
+export function interpolate(a: any, b: ColorSpaceObject): ((t: number) => string);
 export function interpolate(a: any, b: string): ((t: number) => string);
 export function interpolate<U>(a: any, b: Array<U>): ((t: number) => Array<U>);
 export function interpolate(a: any, b: { [key: string]: any }): ((t: number) => { [key: string]: any });
@@ -74,14 +74,14 @@ export function quantize<T>(interpolator: ((t: number) => T), n :number): Array<
 
 export var interpolateRgb: ColorGammaInterpolationFactory;
 
-export function interpolateRgbBasis(colors: Array<string | d3_color.ColorSpaceObject>): ((t: number) => string);
-export function interpolateRgbBasisClosed(colors: Array<string | d3_color.ColorSpaceObject>): ((t: number) => string);
+export function interpolateRgbBasis(colors: Array<string | ColorSpaceObject>): ((t: number) => string);
+export function interpolateRgbBasisClosed(colors: Array<string | ColorSpaceObject>): ((t: number) => string);
 
-export function interpolateHsl(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
-export function interpolateHslLong(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
-export function interpolateLab(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
-export function interpolateHcl(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
-export function interpolateHclLong(a: string | d3_color.ColorSpaceObject, b: string | d3_color.ColorSpaceObject): ((t: number) => string);
+export function interpolateHsl(a: string | ColorSpaceObject, b: string | ColorSpaceObject): ((t: number) => string);
+export function interpolateHslLong(a: string | ColorSpaceObject, b: string | ColorSpaceObject): ((t: number) => string);
+export function interpolateLab(a: string | ColorSpaceObject, b: string | ColorSpaceObject): ((t: number) => string);
+export function interpolateHcl(a: string | ColorSpaceObject, b: string | ColorSpaceObject): ((t: number) => string);
+export function interpolateHclLong(a: string | ColorSpaceObject, b: string | ColorSpaceObject): ((t: number) => string);
 export var interpolateCubehelix: ColorGammaInterpolationFactory;
 export var interpolateCubehelixLong: ColorGammaInterpolationFactory;
 

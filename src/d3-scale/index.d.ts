@@ -6,8 +6,8 @@
 // TODO: Clean-up header for proper referencing of new project/module information
 
 
-import * as d3_interpolate from '../d3-interpolate';
-import * as d3_time from '../d3-time';
+
+import { CountableTimeInterval } from '../d3-time';
 
 // -------------------------------------------------------------------------------
 // Shared Types and Interfaces
@@ -201,10 +201,10 @@ interface ScaleTime<Range, Output> {
     interpolate(interpolate: InterpolatorFactory<Range, Output>): ScaleTime<Range, Output>;
     interpolate<NewOutput>(interpolate: InterpolatorFactory<Range, NewOutput>): ScaleTime<Range, NewOutput>;
     ticks(count?: number): Array<Date>;
-    ticks(interval?: d3_time.CountableTimeInterval, step?: number): Array<Date>;
+    ticks(interval?: CountableTimeInterval, step?: number): Array<Date>;
     tickFormat(count?: number, specifier?: string): ((d: Date) => string);
     nice(count?: number): ScaleTime<Range, Output>;
-    nice(interval?: d3_time.CountableTimeInterval, step?: number): ScaleTime<Range, Output>;
+    nice(interval?: CountableTimeInterval, step?: number): ScaleTime<Range, Output>;
     copy(): ScaleTime<Range, Output>;
 }
 

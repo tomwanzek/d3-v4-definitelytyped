@@ -5,8 +5,8 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
-import * as d3_selection from '../d3-selection';
-import * as d3_transition from '../d3-transition';
+import { Selection } from '../d3-selection';
+import { Transition } from '../d3-transition';
 
 
 // --------------------------------------------------------------------------
@@ -40,26 +40,26 @@ export interface ZoomScale {
 
 
 export interface ZoomBehavior<GElement extends BaseType, Datum> extends Function {
-    (selection: d3_selection.Selection<GElement, Datum, any, any>, ...args: any[]): void;
-    transform(selection: d3_selection.Selection<GElement, Datum, any, any>, transform: ZoomTransform): void;
-    transform(selection: d3_selection.Selection<GElement, Datum, any, any>, transform: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => ZoomTransform): void;
-    transform(transition: d3_transition.Transition<GElement, Datum, any, any>, transform: ZoomTransform): void;
-    transform(transition: d3_transition.Transition<GElement, Datum, any, any>, transform: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => ZoomTransform): void;
+    (selection: Selection<GElement, Datum, any, any>, ...args: any[]): void;
+    transform(selection: Selection<GElement, Datum, any, any>, transform: ZoomTransform): void;
+    transform(selection: Selection<GElement, Datum, any, any>, transform: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => ZoomTransform): void;
+    transform(transition: Transition<GElement, Datum, any, any>, transform: ZoomTransform): void;
+    transform(transition: Transition<GElement, Datum, any, any>, transform: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => ZoomTransform): void;
 
-    translateBy(selection: d3_selection.Selection<GElement, Datum, any, any>, x: number, y: number): void;
-    translateBy(selection: d3_selection.Selection<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: number): void;
-    translateBy(selection: d3_selection.Selection<GElement, Datum, any, any>, x: number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
-    translateBy(selection: d3_selection.Selection<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
-    translateBy(transition: d3_transition.Transition<GElement, Datum, any, any>, x: number, y: number): void;
-    translateBy(transition: d3_transition.Transition<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: number): void;
-    translateBy(transition: d3_transition.Transition<GElement, Datum, any, any>, x: number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
-    translateBy(transition: d3_transition.Transition<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    translateBy(selection: Selection<GElement, Datum, any, any>, x: number, y: number): void;
+    translateBy(selection: Selection<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: number): void;
+    translateBy(selection: Selection<GElement, Datum, any, any>, x: number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    translateBy(selection: Selection<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    translateBy(transition: Transition<GElement, Datum, any, any>, x: number, y: number): void;
+    translateBy(transition: Transition<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: number): void;
+    translateBy(transition: Transition<GElement, Datum, any, any>, x: number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    translateBy(transition: Transition<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
 
-    scaleBy(selection: d3_selection.Selection<GElement, Datum, any, any>, k: number): void;
-    scaleBy(transition: d3_transition.Transition<GElement, Datum, any, any>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    scaleBy(selection: Selection<GElement, Datum, any, any>, k: number): void;
+    scaleBy(transition: Transition<GElement, Datum, any, any>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
 
-    scaleTo(selection: d3_selection.Selection<GElement, Datum, any, any>, k: number): void;
-    scaleTo(transition: d3_transition.Transition<GElement, Datum, any, any>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    scaleTo(selection: Selection<GElement, Datum, any, any>, k: number): void;
+    scaleTo(transition: Transition<GElement, Datum, any, any>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
 
     filter(): (this: GElement, datum: Datum, index: number, group: Array<GElement>) => boolean;
     filter(filterFn: (this: GElement, d?: Datum, index?: number, group?: Array<GElement>) => boolean): ZoomBehavior<GElement, Datum>;
