@@ -350,7 +350,9 @@ divs = divs
 
 divs = divs
     .style('background-color', 'blue') // string
-    .style('hidden', false); // boolean
+    .style('hidden', false) // boolean
+    // .style('color', 'green', 'test') // fails, invalid priority value
+    .style('color', 'green', 'important');
 
 divs = divs
     .style('padding', function (d, i, group) {
@@ -362,7 +364,9 @@ divs = divs
     })
     .style('hidden', function () {
         return true;
-    });
+    }, null) // boolean return + test: priority = null
+    //    .style('color', function () { return 'green'; }, 'test') // fails, test: invalid priority value
+    .style('color', function () { return 'green'; }, 'important'); // boolean return + test: priority = 'important';
 
 
 // property(...) Tests
@@ -597,15 +601,17 @@ circles2 = enterCircles.merge(circles2); // merge enter and update selections
 // append(...) and creator(...) ----------------------------------------------------------
 
 // without append<...> typing returned selection has group element of type BaseType
-let newDiv: d3Selection.Selection<d3Selection.BaseType, BodyDatum, HTMLElement, any> = body.append('div');
+let newDiv: d3Selection.Selection<d3Selection.BaseType, BodyDatum, HTMLElement, any>;
+newDiv = body.append('div');
 
-let newDiv2: d3Selection.Selection<HTMLDivElement, BodyDatum, HTMLElement, any> = body.append<HTMLDivElement>('div');
+let newDiv2: d3Selection.Selection<HTMLDivElement, BodyDatum, HTMLElement, any>;
+newDiv2 = body.append<HTMLDivElement>('div');
 
 // using creator
 newDiv2 = body.append(d3Selection.creator<HTMLDivElement>('div'));
 // newDiv2 = body.append(d3Selection.creator('div')); // fails, as creator returns BaseType element, but HTMLDivElement is expected.
 
-newDiv2 = body.append(function(d) {
+newDiv2 = body.append(function (d) {
     console.log('Body element foo property: ', d.foo); // data of type BodyDatum
     return this.ownerDocument.createElement('div'); // this-type HTMLBodyElement
 });
@@ -620,12 +626,48 @@ newDiv2 = body.append(function(d) {
 
 // insert(...) ---------------------------------------------------------------------------
 
-// TODO: insert
+// without insert<...> typing returned selection has group element of type BaseType
+let newParagraph: d3Selection.Selection<d3Selection.BaseType, BodyDatum, HTMLElement, any>;
+newParagraph = body.insert('p', 'p.second-paragraph');
+
+let newParagraph2: d3Selection.Selection<HTMLParagraphElement, BodyDatum, HTMLElement, any>;
+newParagraph2 = body.insert<HTMLParagraphElement>('p', 'p.second-paragraph');
+
+newParagraph2 = body.insert(d3Selection.creator<HTMLParagraphElement>('p'), 'p.second-paragraph');
+newParagraph2 = body.insert(function (d) {
+    console.log('Body element foo property: ', d.foo); // data of type BodyDatum
+    return this.ownerDocument.createElement('p'); // this-type HTMLParagraphElement
+}, 'p.second-paragraph');
+
+// newParagraph2 = body.insert<HTMLParagraphElement>(function(d) {
+//     return this.ownerDocument.createElement('a'); // fails, HTMLParagraphElement expected by type parameter, HTMLAnchorElement returned
+// }, 'p.second-paragraph');
+
+// newParagraph2 = body.insert(function(d) {
+//     return this.ownerDocument.createElement('a'); // fails, HTMLParagraphElement expected by type inference, HTMLAnchorElement returned
+// }, 'p.second-paragraph');
+
+newParagraph2 = body.insert(d3Selection.creator<HTMLParagraphElement>('p'), function (d, i, group) {
+    console.log('Body element foo property: ', d.foo); // data of type BodyDatum
+    return this.children[0]; // this type HTMLBodyElement
+});
+
+newParagraph2 = body.insert(
+    // type
+    function (d) {
+        console.log('Body element foo property: ', d.foo); // data of type BodyDatum
+        return this.ownerDocument.createElement('p'); // this-type HTMLParagraphElement
+    },
+    //before
+    function (d, i, group) {
+        console.log('Body element foo property: ', d.foo); // data of type BodyDatum
+        return this.children[0]; // this type HTMLBodyElement
+    });
 
 // sort(...) -----------------------------------------------------------------------------
 
 // NB: Return new selection of same type
-circles2 = circles2.sort(function(a, b) {
+circles2 = circles2.sort(function (a, b) {
     return (b.r - a.r);
 });
 

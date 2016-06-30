@@ -109,9 +109,9 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     classed(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => boolean): Selection<GElement, Datum, PElement, PDatum>;
 
     style(name: string): string;
-    style(name: string, value: Primitive, priority?: string): Selection<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: Primitive, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
     style(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive, priority?: string): Selection<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive, priority?:  null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
 
     property(name: string): any;
     property(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => any): Selection<GElement, Datum, PElement, PDatum>;
