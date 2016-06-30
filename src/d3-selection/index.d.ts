@@ -73,11 +73,11 @@ export type CustomEventParameters = {
 
 // NB: Note that, d3.select does not generate the same parent element, when targeting the same DOM element with string selector
 // or node element  
-export function select<GElement extends BaseType, Datum>(selector: string): Selection<GElement, Datum, HTMLElement, any>;
-export function select<GElement extends BaseType, Datum>(node: GElement): Selection<GElement, Datum, null, undefined>;
+export function select<GElement extends BaseType, OldDatum>(selector: string): Selection<GElement, OldDatum, HTMLElement, any>;
+export function select<GElement extends BaseType, OldDatum>(node: GElement): Selection<GElement, OldDatum, null, undefined>;
 
-export function selectAll(): Selection<undefined, undefined, null, undefined>; // _groups are set to empty array, first generic type is set to undefined by convention
-export function selectAll(selector: null): Selection<undefined, undefined, null, undefined>; // _groups are set to empty array, first generic type is set to undefined by convention
+export function selectAll(): Selection<null, undefined, null, undefined>; // _groups are set to empty array, first generic type is set to null by convention
+export function selectAll(selector: null): Selection<null, undefined, null, undefined>; // _groups are set to empty array, first generic type is set to null by convention
 export function selectAll<GElement extends BaseType, OldDatum>(selector: string): Selection<GElement, OldDatum, HTMLElement, any>;
 export function selectAll<GElement extends BaseType, OldDatum>(nodes: GElement[]): Selection<GElement, OldDatum, null, undefined>;
 export function selectAll<GElement extends BaseType, OldDatum>(nodes: NodeListOf<GElement>): Selection<GElement, OldDatum, null, undefined>;
@@ -89,10 +89,11 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     // Sub-selection -------------------------
 
     select<DescElement extends BaseType>(selector: string): Selection<DescElement, Datum, PElement, PDatum>;
+    select<DescElement extends BaseType>(selector: null): Selection<null, undefined, PElement, PDatum>;// _groups are set to empty array, first generic type is set to null by convention
     select<DescElement extends BaseType>(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => DescElement): Selection<DescElement, Datum, PElement, PDatum>;
 
-    selectAll(): Selection<undefined, undefined, GElement, Datum>; // _groups are set to empty array, first generic type is set to undefined by convention
-    selectAll(selector: null): Selection<undefined, undefined, GElement, Datum>; // _groups are set to empty array, first generic type is set to undefined by convention
+    selectAll(): Selection<null, undefined, GElement, Datum>; // _groups are set to empty array, first generic type is set to null by convention
+    selectAll(selector: null): Selection<null, undefined, GElement, Datum>; // _groups are set to empty array, first generic type is set to null by convention
     selectAll<DescElement extends BaseType, OldDatum>(selector: string): Selection<DescElement, OldDatum, GElement, Datum>;
     selectAll<DescElement extends BaseType, OldDatum>(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (Array<DescElement> | NodeListOf<DescElement>)): Selection<DescElement, OldDatum, GElement, Datum>;
 
@@ -100,6 +101,7 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 
     attr(name: string): string;
     attr(name: string, value: Primitive): Selection<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
     attr(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive): Selection<GElement, Datum, PElement, PDatum>;
 
     classed(name: string): boolean;
@@ -108,11 +110,13 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 
     style(name: string): string;
     style(name: string, value: Primitive, priority?: string): Selection<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
     style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive, priority?: string): Selection<GElement, Datum, PElement, PDatum>;
 
     property(name: string): any;
-    property(name: string, value: any): Selection<GElement, Datum, PElement, PDatum>;
     property(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => any): Selection<GElement, Datum, PElement, PDatum>;
+    property(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
+    property(name: string, value: any): Selection<GElement, Datum, PElement, PDatum>;
 
     text(): string;
     text(value: Primitive): Selection<GElement, Datum, PElement, PDatum>;
@@ -157,8 +161,8 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 
     datum(): Datum;
     datum(value: null): Selection<GElement, undefined, PElement, PDatum>;
-    datum<NewDatum>(value: NewDatum): Selection<GElement, NewDatum, PElement, PDatum>;
     datum<NewDatum>(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => NewDatum): Selection<GElement, NewDatum, PElement, PDatum>;
+    datum<NewDatum>(value: NewDatum): Selection<GElement, NewDatum, PElement, PDatum>;
 
     data(): Datum[];
     data<NewDatum>(
@@ -323,7 +327,7 @@ export var namespaces: NamespaceMap;
 // window.js related
 // ---------------------------------------------------------------------------
 
-export function window(DOMNode: Window | Document | BaseType): Window;
+export function window(DOMNode: Window | Document | Element): Window;
 
 
 // ---------------------------------------------------------------------------
