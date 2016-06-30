@@ -506,25 +506,143 @@ d3Selection.select('#svg-1') // irrelevant typing to get contextual typing in la
 
 // Tests of Data Join --------------------------------------------------------------------
 
-// TODO: Redo.
 
-// Test with continuation in Data type
+let dimensions: SVGDatum = {
+    width: 500,
+    height: 300
+}
+
+let startCircleData: Array<CircleDatumAlternative>,
+    endCircleData: Array<CircleDatumAlternative>;
+
+let circles2: d3Selection.Selection<SVGCircleElement, CircleDatumAlternative, SVGSVGElement, SVGDatum>;
+
+// Test creating initial data-driven circle selection
+// and append materialized SVGCircleElement per enter() selection element
+// - use data(...) with array-signature and infer data type from arrray type passed into data(...)
+// - use enter() to obtain enter selection
+// - materialize svg circles using append(...) with type-parameter and string argument
+
+circles2 = d3Selection.select<SVGSVGElement, any>('#svg2')
+    .datum(dimensions)
+    .attr('width', function (d) { return d.width; })
+    .attr('height', function (d) { return d.height; })
+    .selectAll() // create empty Selection
+    .data(startCircleData) // assign data for circles to be added (no previous circles)
+    .enter() // obtain enter selection
+    .append<SVGCircleElement>('circle');
+
+// UPDATE-selection with continuation in data type ---------------------------------
+
+// Assign new data and use key(...) function for mapping
+circles2 = circles2 // returned update selection has the same type parameters as original selection, if data type is unchanged
+    .data<CircleDatumAlternative>(endCircleData, function (d) { return d.nodeId; });
+
+// circles2.data<DivDatum>(endCircleData, function (d) { return d.nodeId; }); // fails, forced data type parameter and data argument mismatch 
+
+// ENTER-selection -----------------------------------------------------------------
+
+// TODO: Related to BaseType Choice issue
+
+// let enterElements: d3Selection.Selection<d3Selection.EnterElement, CircleDatumAlternative, SVGSVGElement, SVGDatum>; ,fails as current BaseType is Element
+
+let enterElements: d3Selection.Selection<SVGCircleElement, CircleDatumAlternative, SVGSVGElement, SVGDatum>;
+
+enterElements = circles2.enter(); // enter selection
+
+let enterCircles = enterElements
+    .append<SVGCircleElement>('circle') // enter selection with materialized DOM elements (svg circles)
+    .attr('cx', function (d) { return d.cx; })
+    .attr('cy', function (d) { return d.cy; })
+    .attr('r', function (d) { return d.r; })
+    .style('stroke', function (d) { return d.color; })
+    .style('fill', function (d) { return d.color; });
+
+// EXIT-selection ----------------------------------------------------------------------
+
+// tests exit(...) and remove()
+
+let exitCircles = circles2.exit<CircleDatumAlternative>(); // Note: need to re-type datum type, as the exit selection elements have the 'old data'
+
+exitCircles
+    .style('opacity', function (d) {
+        console.log('Circle Radius exit node: ', this.r.baseVal.value); // this type is SVGCircleElement
+        return d.color === 'green' ? 1 : 0; // data type as per .exit<...>() parameterization
+    })
+    .remove();
+
+// Note: the alternative using only .exit() without typing, will fail, if access to datum properties is attemped.
+// If access to d is not required, the short-hand is acceptable e.g. circles2.exit().remove();
+
+// let exitCircles = circles2.exit(); // Note: Without explicit re-typing to the old data type, the data type default to '{}'
+// exitCircles
+//     .style('opacity', function (d) {
+//         console.log('Circle Radius exit node: ', this.r.baseVal.value);
+//         return d.color === 'green' ? 1 : 0; // fails, as data type is defaulted to {}. If datum access is required, this should trigger the thought to type .exit<...>
+//     });
+
+// MERGE ENTER + UPDATE ------------------------------------------------------------------
+
+circles2 = enterCircles.merge(circles2); // merge enter and update selections
+
+// FURTHER DATA-JOIN TESTs (function argument, changes in data type between old and new data)
 
 
-// Test with change in Data type
-
-
-// Test with inferred New Data type
-
-
-// TODO: (1) test with keys 
+// TODO:
 
 // ---------------------------------------------------------------------------------------
 // Tests of Alternative DOM Manipulation
 // ---------------------------------------------------------------------------------------
 
-// TODO: insert, order / sort, raise, lower, creator
+// append(...) and creator(...) ----------------------------------------------------------
 
+// without append<...> typing returned selection has group element of type BaseType
+let newDiv: d3Selection.Selection<d3Selection.BaseType, BodyDatum, HTMLElement, any> = body.append('div');
+
+let newDiv2: d3Selection.Selection<HTMLDivElement, BodyDatum, HTMLElement, any> = body.append<HTMLDivElement>('div');
+
+// using creator
+newDiv2 = body.append(d3Selection.creator<HTMLDivElement>('div'));
+// newDiv2 = body.append(d3Selection.creator('div')); // fails, as creator returns BaseType element, but HTMLDivElement is expected.
+
+newDiv2 = body.append(function(d) {
+    console.log('Body element foo property: ', d.foo); // data of type BodyDatum
+    return this.ownerDocument.createElement('div'); // this-type HTMLBodyElement
+});
+
+// newDiv2 = body.append<HTMLDivElement>(function(d) {
+//     return this.ownerDocument.createElement('a'); // fails, HTMLDivElement expected by type parameter, HTMLAnchorElement returned
+// });
+
+// newDiv2 = body.append(function(d) {
+//     return this.ownerDocument.createElement('a'); // fails, HTMLDivElement expected by inference, HTMLAnchorElement returned
+// });
+
+// insert(...) ---------------------------------------------------------------------------
+
+// TODO: insert
+
+// sort(...) -----------------------------------------------------------------------------
+
+// NB: Return new selection of same type
+circles2 = circles2.sort(function(a, b) {
+    return (b.r - a.r);
+});
+
+// order(...) ----------------------------------------------------------------------------
+
+// returns 'this' selection
+circles2 = circles2.order();
+
+// raise() -------------------------------------------------------------------------------
+
+// returns 'this' selection
+circles2 = circles2.raise();
+
+// lower() -------------------------------------------------------------------------------
+
+// returns 'this' selection
+circles2 = circles2.lower();
 
 // ---------------------------------------------------------------------------------------
 // Control FLow
@@ -545,7 +663,8 @@ let size: number = gElementsOldData.size();
 
 // each() -------------------------------------------------------------------------------
 
-circles.each(function (d, i, group) {
+// returns 'this' selection
+circles = circles.each(function (d, i, group) {  // check chaining return type by re-assigning
     if (this.r.baseVal.value < d.r) { // this of type SVGCircleElement, datum of type CircleDatumAlternative
         d3Selection.select(this).attr('r', d.r);
     }
@@ -563,7 +682,8 @@ function enforceMinRadius(selection: d3Selection.Selection<SVGCircleElement, Cir
 
 }
 
-circles.call(enforceMinRadius, 40);
+// returns 'this' selection
+circles = circles.call(enforceMinRadius, 40); // check chaining return type by re-assigning 
 
 // circles.call(function (selection: d3Selection.Selection<HTMLDivElement, CircleDatum, any, any>):void {
 //     // fails, group element types of selection not compatible: SVGCircleElement v HTMLDivElement
@@ -581,7 +701,7 @@ circles.call(enforceMinRadius, 40);
 
 let listener: (this: HTMLBodyElement, datum: BodyDatum, index: number, group: Array<HTMLBodyElement> | NodeListOf<HTMLBodyElement>) => void
 
-
+// returns 'this' selection
 body = body.on('click', listener) // check chaining return type by re-assigning
 
 body = body.on('click', function (d) {
@@ -604,6 +724,7 @@ let fooEventParam: d3Selection.CustomEventParameters = {
     detail: [1, 2, 3, 4]
 };
 
+// returns 'this' selection
 body = body.dispatch('fooEvent', fooEventParam); // re-assign for chaining test;
 
 body = body.dispatch('fooEvent', function (d, i, group) { // re-assign for chaining test;
