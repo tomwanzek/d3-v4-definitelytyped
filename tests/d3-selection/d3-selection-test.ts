@@ -7,7 +7,7 @@
  * are not intended as functional tests.
  */
 
-import * as d3 from '../../src/d3-selection';
+import * as d3Selection from '../../src/d3-selection';
 
 
 // ---------------------------------------------------------------------------------------
@@ -59,34 +59,34 @@ interface CircleDatumAlternative {
 
 // test top-level .selection() -----------------------------------------------------------
 
-let topSelection: d3.Selection<HTMLElement, any, null, undefined> = d3.selection();
+let topSelection: d3Selection.Selection<HTMLElement, any, null, undefined> = d3Selection.selection();
 
 // test top-level select() ---------------------------------------------------------------
 
 // Using select() with string argument and no type parameters creates selection
 // with Group element of type BaseType and datum of type 'any'. The parent element is of type HTMLElement with datum of type 'any'
 
-let baseTypeEl: d3.Selection<d3.BaseType, any, HTMLElement, any> = d3.select('body');
+let baseTypeEl: d3Selection.Selection<d3Selection.BaseType, any, HTMLElement, any> = d3Selection.select('body');
 
 // Using select() with string argument and type parameters creates selection
 // with Group element of type HTMLBodyElement and datum of BodyDatum type. The parent element is of type HTMLElement with datum of type 'any'
 
-let body: d3.Selection<HTMLBodyElement, BodyDatum, HTMLElement, any> = d3.select<HTMLBodyElement, BodyDatum>('body');
+let body: d3Selection.Selection<HTMLBodyElement, BodyDatum, HTMLElement, any> = d3Selection.select<HTMLBodyElement, BodyDatum>('body');
 
 // Using select() with node argument and no type parameters creates selection
 // with Group element of type BaseType and datum of type 'any' The parent element is of type 'null' with datum of type 'undefined'
 
-let baseTypeEl2: d3.Selection<d3.BaseType, any, null, undefined> = d3.select(baseTypeEl.node());
-// let body2: d3.Selection<HTMLElement, any, null, undefined> = d3.select(baseTypeEl.node()); // Fails, group element types not of compatible for baseTypeEl
+let baseTypeEl2: d3Selection.Selection<d3Selection.BaseType, any, null, undefined> = d3Selection.select(baseTypeEl.node());
+// let body2: d3Selection.Selection<HTMLElement, any, null, undefined> = d3Selection.select(baseTypeEl.node()); // Fails, group element types not of compatible for baseTypeEl
 
-let body3: d3.Selection<HTMLBodyElement, any, null, undefined> = d3.select(body.node()); // element types match, but datum is of type 'any' as it cannot be inferred from .node()
+let body3: d3Selection.Selection<HTMLBodyElement, any, null, undefined> = d3Selection.select(body.node()); // element types match, but datum is of type 'any' as it cannot be inferred from .node()
 
 // Using select() with node argument and type parameters creates selection
 // with Group element of type HTMLBodyElement and datum of BodyDatum type. The parent element is of type 'null' with datum of type 'undefined'
 
-let body4: d3.Selection<HTMLBodyElement, BodyDatum, null, undefined> = d3.select<HTMLBodyElement, BodyDatum>(body.node());
+let body4: d3Selection.Selection<HTMLBodyElement, BodyDatum, null, undefined> = d3Selection.select<HTMLBodyElement, BodyDatum>(body.node());
 
-// d3.select<HTMLBodyElement, BodyDatum>(baseTypeEl.node()); // fails as baseTypeEl.node() is not of type HTMLBodyElement
+// d3Selection.select<HTMLBodyElement, BodyDatum>(baseTypeEl.node()); // fails as baseTypeEl.node() is not of type HTMLBodyElement
 
 
 // TODO: The below are related to github issue #2 (BaseType choice)
@@ -100,46 +100,46 @@ let body4: d3.Selection<HTMLBodyElement, BodyDatum, null, undefined> = d3.select
 
 // Using selectAll(), selectAll(null) or selectAll(undefined) creates an empty selection
 
-let emptyRootSelection: d3.Selection<undefined, undefined, null, undefined> = d3.selectAll();
-emptyRootSelection = d3.selectAll(null);
-emptyRootSelection = d3.selectAll(undefined);
+let emptyRootSelection: d3Selection.Selection<undefined, undefined, null, undefined> = d3Selection.selectAll();
+emptyRootSelection = d3Selection.selectAll(null);
+emptyRootSelection = d3Selection.selectAll(undefined);
 
 // Using selectAll(...) with string argument and no type parameters creates selection
 // with Group elements of type BaseType and datum of type 'any'. The parent element is of type HTMLElement with datum of type 'any'
 
-let baseTypeElements: d3.Selection<d3.BaseType, any, HTMLElement, any> = d3.selectAll('div');
+let baseTypeElements: d3Selection.Selection<d3Selection.BaseType, any, HTMLElement, any> = d3Selection.selectAll('div');
 
 // Using selectAll() with string argument and type parameters creates selection
 // with Group element of type HTMLDivElement and datum of DivDatum type. The parent element is of type HTMLElement with datum of type 'any'
 
-let divElements: d3.Selection<HTMLDivElement, DivDatum, HTMLElement, any> = d3.selectAll<HTMLDivElement, DivDatum>('div');
+let divElements: d3Selection.Selection<HTMLDivElement, DivDatum, HTMLElement, any> = d3Selection.selectAll<HTMLDivElement, DivDatum>('div');
 
 // Using selectAll(...) with node array argument and no type parameters creates selection
 // with Group element of type BaseType and datum of type 'any' The parent element is of type 'null' with datum of type 'undefined'
 
-let baseTypeElements2: d3.Selection<d3.BaseType, any, null, undefined> = d3.selectAll(baseTypeElements.nodes());
-// let divElements2: d3.Selection<HTMLDivElement, any, null, undefined> = d3.selectAll(baseTypeElements.nodes()); // Fails, group elements types not of compatible for baseTypeElements
+let baseTypeElements2: d3Selection.Selection<d3Selection.BaseType, any, null, undefined> = d3Selection.selectAll(baseTypeElements.nodes());
+// let divElements2: d3Selection.Selection<HTMLDivElement, any, null, undefined> = d3Selection.selectAll(baseTypeElements.nodes()); // Fails, group elements types not of compatible for baseTypeElements
 
-let divElements3: d3.Selection<HTMLDivElement, any, null, undefined> = d3.selectAll(divElements.nodes()); // element types match, but datum is of type 'any' as it cannot be inferred from .nodes()
+let divElements3: d3Selection.Selection<HTMLDivElement, any, null, undefined> = d3Selection.selectAll(divElements.nodes()); // element types match, but datum is of type 'any' as it cannot be inferred from .nodes()
 
 
 // Using selectAll(...) with node array argument and type parameters creates selection
 // with Group element of type HTMLDivElement and datum of DivDatum type. The parent element is of type 'null' with datum of type 'undefined'
 
-let divElements4: d3.Selection<HTMLDivElement, DivDatum, null, undefined> = d3.selectAll<HTMLDivElement, DivDatum>(divElements.nodes());
+let divElements4: d3Selection.Selection<HTMLDivElement, DivDatum, null, undefined> = d3Selection.selectAll<HTMLDivElement, DivDatum>(divElements.nodes());
 
-// d3.selectAll<HTMLDivElement, DivDatum>(baseTypeElements.nodes()); // fails as baseTypeEl.node() is not of type HTMLBodyElement
+// d3Selection.selectAll<HTMLDivElement, DivDatum>(baseTypeElements.nodes()); // fails as baseTypeEl.node() is not of type HTMLBodyElement
 
 
 // selectAll(...) accepts NodeListOf<...> argument
 
 
 let xSVGCircleElementList: NodeListOf<SVGCircleElement>;
-let circleSelection: d3.Selection<SVGCircleElement, any, null, undefined> = d3.selectAll(xSVGCircleElementList);
+let circleSelection: d3Selection.Selection<SVGCircleElement, any, null, undefined> = d3Selection.selectAll(xSVGCircleElementList);
 
 // selectAll(...) accepts HTMLCollection, HTMLCollectionOf<...> argument
 
-let documentLinks: d3.Selection<HTMLAnchorElement | HTMLAreaElement, any, null, undefined> = d3.selectAll(document.links);
+let documentLinks: d3Selection.Selection<HTMLAnchorElement | HTMLAreaElement, any, null, undefined> = d3Selection.selectAll(document.links);
 
 
 
@@ -156,10 +156,10 @@ let documentLinks: d3.Selection<HTMLAnchorElement | HTMLAreaElement, any, null, 
 
 // Using select(...) sub-selection with a string argument. 
 
-let svgEl: d3.Selection<SVGSVGElement, SVGDatum, HTMLElement, any> = d3.select<SVGSVGElement, SVGDatum>('svg');
+let svgEl: d3Selection.Selection<SVGSVGElement, SVGDatum, HTMLElement, any> = d3Selection.select<SVGSVGElement, SVGDatum>('svg');
 
-let firstG: d3.Selection<SVGGElement, SVGDatum, HTMLElement, any> = svgEl.select<SVGGElement>('g');
-// let firstG_2: d3.Selection<SVGGElement, SVGDatum, SVGSVGElement, any> = svgEl.select<SVGGElement>('g'); // fails, parent element of selection does not change with .select(...)
+let firstG: d3Selection.Selection<SVGGElement, SVGDatum, HTMLElement, any> = svgEl.select<SVGGElement>('g');
+// let firstG_2: d3Selection.Selection<SVGGElement, SVGDatum, SVGSVGElement, any> = svgEl.select<SVGGElement>('g'); // fails, parent element of selection does not change with .select(...)
 // firstG = svgEl.select('g'); // fails, element type defaults to 'any', but SVGGElement expexted on left-hand side
 // firstG = svgEl.select<SVGSVGElement>('svg'); // fails, element type of SVGSVGElement provided, but SVGGElement expexted on left-hand side (silly test to begin with)
 
@@ -199,14 +199,14 @@ firstG = svgEl.select(function (d, i, group) {
 
 // selectAll(), selectAll(null) selectAll(undefined) return empty sub-selection
 
-let emptySubSelection: d3.Selection<undefined, undefined, SVGSVGElement, SVGDatum> = svgEl.selectAll();
+let emptySubSelection: d3Selection.Selection<undefined, undefined, SVGSVGElement, SVGDatum> = svgEl.selectAll();
 emptySubSelection = svgEl.selectAll(null);
 emptySubSelection = svgEl.selectAll(undefined);
 
 // Using selectAll(...) sub-selection with a string argument.
 
-let elementsUnknownData: d3.Selection<d3.BaseType, any, SVGSVGElement, SVGDatum> = svgEl.selectAll('g');
-let gElementsOldData: d3.Selection<SVGGElement, CircleDatum, SVGSVGElement, SVGDatum> = svgEl.selectAll<SVGGElement, CircleDatum>('g');
+let elementsUnknownData: d3Selection.Selection<d3Selection.BaseType, any, SVGSVGElement, SVGDatum> = svgEl.selectAll('g');
+let gElementsOldData: d3Selection.Selection<SVGGElement, CircleDatum, SVGSVGElement, SVGDatum> = svgEl.selectAll<SVGGElement, CircleDatum>('g');
 // gElementsOldData = svgEl.selectAll('g'); // fails default type parameters of selectAll for group element type and datum type do not match
 
 
@@ -257,17 +257,17 @@ elementsUnknownData = svgEl.selectAll(function () {
 // selector(...) and selectorAll(...) ----------------------------------------------------
 
 
-// d3.select<SVGGElement>(d3.selector<SVGGElement>('g')); // fails, selector as argument to top-level select not supported
+// d3Selection.select<SVGGElement>(d3Selection.selector<SVGGElement>('g')); // fails, selector as argument to top-level select not supported
 
 // supported on sub-selection
-firstG = svgEl.select(d3.selector<SVGGElement>('g')); // type parameter of select(...) inferred
-// firstG = svgEl.select<SVGGElement>(d3.selector<HTMLDivElement>('div')); // fails, select and selector mismatch
+firstG = svgEl.select(d3Selection.selector<SVGGElement>('g')); // type parameter of select(...) inferred
+// firstG = svgEl.select<SVGGElement>(d3Selection.selector<HTMLDivElement>('div')); // fails, select and selector mismatch
 
-gElementsOldData = svgEl.selectAll<SVGGElement, CircleDatum>(d3.selectorAll<SVGGElement>('g'));
+gElementsOldData = svgEl.selectAll<SVGGElement, CircleDatum>(d3Selection.selectorAll<SVGGElement>('g'));
 
 // filter() ------------------------------------------------------------------------------
 
-let filterdGElements: d3.Selection<SVGGElement, CircleDatum, SVGSVGElement, SVGDatum>;
+let filterdGElements: d3Selection.Selection<SVGGElement, CircleDatum, SVGSVGElement, SVGDatum>;
 
 filterdGElements = gElementsOldData.filter('.top-level');
 
@@ -281,7 +281,7 @@ filterdGElements = gElementsOldData.filter(function (d, i, group) {
 
 // matcher() -----------------------------------------------------------------------------
 
-filterdGElements = gElementsOldData.filter(d3.matcher('.top-level'));
+filterdGElements = gElementsOldData.filter(d3Selection.matcher('.top-level'));
 
 
 // ---------------------------------------------------------------------------------------
@@ -304,12 +304,12 @@ str = body.html();
 // Setters tests -------------------------------------------------------------------------
 
 
-let circles: d3.Selection<SVGCircleElement, CircleDatumAlternative, HTMLElement, any>;
-let divs: d3.Selection<HTMLDivElement, DivDatum, HTMLElement, any>;
+let circles: d3Selection.Selection<SVGCircleElement, CircleDatumAlternative, HTMLElement, any>;
+let divs: d3Selection.Selection<HTMLDivElement, DivDatum, HTMLElement, any>;
 
 // attr(...) Tests
 
-circles = d3.selectAll<SVGCircleElement, CircleDatumAlternative>('circle')
+circles = d3Selection.selectAll<SVGCircleElement, CircleDatumAlternative>('circle')
     .attr('cx', 10) // number
     .attr('stroke', 'blue'); // string
 
@@ -325,7 +325,7 @@ circles = circles // re-assignment test chaining return-type
         return d.color; // string return value
     });
 
-divs = d3.selectAll<HTMLDivElement, DivDatum>('div')
+divs = d3Selection.selectAll<HTMLDivElement, DivDatum>('div')
     .attr('contenteditable', false) // boolean
     .attr('contenteditable', function () {
         return false; // boolean return value
@@ -466,7 +466,7 @@ newBodyDatum = body.datum(function (d) {
 
 // object-based
 
-d3.select<SVGSVGElement, SVGDatum>('#svg-1')
+d3Selection.select<SVGSVGElement, SVGDatum>('#svg-1')
     .select<SVGGElement>('g.circles-group') // first matching element only
     .datum<CircleDatumAlternative[]>(data2)
     .classed('has-transform-property', function (d) {
@@ -476,7 +476,7 @@ d3.select<SVGSVGElement, SVGDatum>('#svg-1')
 
 // SCENARIO 2: Partially type-parameterized (To have DOM object type -> 'this' and datum-type in 'classed' method call)
 
-d3.select('#svg-1') // irrelevant typing to get contextual typing in last step of chain
+d3Selection.select('#svg-1') // irrelevant typing to get contextual typing in last step of chain
     .select<SVGGElement>('g.circles-group')
     .datum(data2) // new data type inferred
     .classed('has-transform-property', function (d) {
@@ -486,7 +486,7 @@ d3.select('#svg-1') // irrelevant typing to get contextual typing in last step o
 
 // below fails, as 'this' in .classed(...) will default to BaseType, which does not have 'transform' property
 
-// d3.select('#svg-1') // irrelevant typing to get contextual typing in last step of chain
+// d3Selection.select('#svg-1') // irrelevant typing to get contextual typing in last step of chain
 //     .select('g.circles-group') // missing typing of selected DOM element for use in .classed(...)
 //     .datum(data2) // new data type inferred
 //     .classed('has-transform-property', function (d) {
@@ -496,7 +496,7 @@ d3.select('#svg-1') // irrelevant typing to get contextual typing in last step o
 
 // SCENARIO 3: Only inferred typing (To have datum-type in 'classed' method call, no need for DOM object access)
 
-d3.select('#svg-1') // irrelevant typing to get contextual typing in last step of chain
+d3Selection.select('#svg-1') // irrelevant typing to get contextual typing in last step of chain
     .select('g.circles-group') // irrelevant typing to get contextual typing in last step of chain
     .datum(data2) // new data type inferred
     .classed('has-green-first-data-element', function (d) {
@@ -547,17 +547,17 @@ let size: number = gElementsOldData.size();
 
 circles.each(function (d, i, group) {
     if (this.r.baseVal.value < d.r) { // this of type SVGCircleElement, datum of type CircleDatumAlternative
-        d3.select(this).attr('r', d.r);
+        d3Selection.select(this).attr('r', d.r);
     }
     console.log(group[i].cx.baseVal.value); // group : Array<SVGCircleElement>
 });
 
 // call() -------------------------------------------------------------------------------
 
-function enforceMinRadius(selection: d3.Selection<SVGCircleElement, CircleDatumAlternative, any, any>, minRadius: number): void {
+function enforceMinRadius(selection: d3Selection.Selection<SVGCircleElement, CircleDatumAlternative, any, any>, minRadius: number): void {
 
     selection.attr('r', function (d) {
-        let r: number = +d3.select(this).attr('r');
+        let r: number = +d3Selection.select(this).attr('r');
         return Math.max(r, minRadius);
     });
 
@@ -565,11 +565,11 @@ function enforceMinRadius(selection: d3.Selection<SVGCircleElement, CircleDatumA
 
 circles.call(enforceMinRadius, 40);
 
-// circles.call(function (selection: d3.Selection<HTMLDivElement, CircleDatum, any, any>):void {
+// circles.call(function (selection: d3Selection.Selection<HTMLDivElement, CircleDatum, any, any>):void {
 //     // fails, group element types of selection not compatible: SVGCircleElement v HTMLDivElement
 // });
 
-// circles.call(function (selection: d3.Selection<SVGCircleElement, DivDatum, any, any>):void {
+// circles.call(function (selection: d3Selection.Selection<SVGCircleElement, DivDatum, any, any>):void {
 //     // fails, group datum types of selection not compatible: CircleDatumAlternative v DivDatum
 // });
 
@@ -598,7 +598,7 @@ body = body.on('click', null); // check chaining return type by re-assigning
 
 // dispatch(...) -------------------------------------------------------------------------
 
-let fooEventParam: d3.CustomEventParameters = {
+let fooEventParam: d3Selection.CustomEventParameters = {
     cancelable: true,
     bubbles: true,
     detail: [1, 2, 3, 4]
@@ -607,7 +607,7 @@ let fooEventParam: d3.CustomEventParameters = {
 body = body.dispatch('fooEvent', fooEventParam); // re-assign for chaining test;
 
 body = body.dispatch('fooEvent', function (d, i, group) { // re-assign for chaining test;
-    let eParam: d3.CustomEventParameters;
+    let eParam: d3Selection.CustomEventParameters;
     console.log('fooEvent dispatch body background color', this.bgColor);
     eParam = {
         cancelable: true,
@@ -631,36 +631,36 @@ let position: [number, number],
     h: HTMLElement,
     changedTouches: TouchList;
 
-position = d3.mouse(svg);
-position = d3.mouse(g);
-position = d3.mouse(h);
+position = d3Selection.mouse(svg);
+position = d3Selection.mouse(g);
+position = d3Selection.mouse(h);
 
 // touch() and touches() ---------------------------------------------------------------------
 
-position = d3.touch(svg, 0);
-position = d3.touch(g, 0);
-position = d3.touch(h, 0);
+position = d3Selection.touch(svg, 0);
+position = d3Selection.touch(g, 0);
+position = d3Selection.touch(h, 0);
 
-position = d3.touch(svg, changedTouches, 0);
-position = d3.touch(g, changedTouches, 0);
-position = d3.touch(h, changedTouches, 0);
+position = d3Selection.touch(svg, changedTouches, 0);
+position = d3Selection.touch(g, changedTouches, 0);
+position = d3Selection.touch(h, changedTouches, 0);
 
 let positions: Array<[number, number]>;
 
-positions = d3.touches(svg, changedTouches);
-positions = d3.touches(g, changedTouches);
-positions = d3.touches(h, changedTouches);
+positions = d3Selection.touches(svg, changedTouches);
+positions = d3Selection.touches(g, changedTouches);
+positions = d3Selection.touches(h, changedTouches);
 
-positions = d3.touches(svg, changedTouches);
-positions = d3.touches(g, changedTouches);
-positions = d3.touches(h, changedTouches);
+positions = d3Selection.touches(svg, changedTouches);
+positions = d3Selection.touches(g, changedTouches);
+positions = d3Selection.touches(h, changedTouches);
 
 // ---------------------------------------------------------------------------------------
 // Tests of Local
 // ---------------------------------------------------------------------------------------
 
 let xElement: Element;
-let foo: d3.Local = d3.local();
+let foo: d3Selection.Local = d3Selection.local();
 let propName: string = foo.toString();
 
 console.log('Local Property Name: %s', propName);
@@ -673,11 +673,11 @@ xElement = foo.set(xElement, 'test');
 // Tests of Namespace
 // ---------------------------------------------------------------------------------------
 
-let predefinedNamespaces: d3.NamespaceMap = d3.namespaces;
+let predefinedNamespaces: d3Selection.NamespaceMap = d3Selection.namespaces;
 
 const svgNamespace: string = predefinedNamespaces['svg'];
 
-const svgTextObject: d3.NamespaceLocalObject | string = d3.namespace('svg:text');
+const svgTextObject: d3Selection.NamespaceLocalObject | string = d3Selection.namespace('svg:text');
 
 predefinedNamespaces['dummy'] = 'http://www.w3.org/2020/dummynamespace';
 
@@ -685,7 +685,23 @@ predefinedNamespaces['dummy'] = 'http://www.w3.org/2020/dummynamespace';
 // Tests of Window
 // ---------------------------------------------------------------------------------------
 
-xWindow = d3.window(xElement);
-xWindow = d3.window(xDoc);
-xWindow = d3.window(xWindow);
+xWindow = d3Selection.window(xElement);
+xWindow = d3Selection.window(xDoc);
+xWindow = d3Selection.window(xWindow);
+
+// ---------------------------------------------------------------------------------------
+// TEST OF GITHUB ISSUE #4 (https://github.com/tomwanzek/d3-v4-definitelytyped/issues/4)
+// ---------------------------------------------------------------------------------------
+
+// fails as expected, as transition(...) method and Transition<...> interface are not defined on d3-selection
+// let transition : d3Selection.Transition<any,any,any,any> = d3Selection.transition('test');
+
+// UNEXPECTEDLY does NOT FAIL as module augmentation of Selection<...> interface in d3-transition bleeds into this test module,
+// although d3-transition has not been imported
+
+let ghostTransition = body.transition('test'); // SHOULD FAIL, method transition(...) SHOULD NOT BE AVAILABLE on body Selection<...> without d3-transition import
+
+ghostTransition.duration(500);  // SHOULD FAIL, ghostTransition has properties of Transition<...>
+
+body.interrupt('test'); // SHOULD FAIL, method interrupt(...) SHOULD NOT BE AVAILABLE on body Selection<...> without d3-transition import
 
