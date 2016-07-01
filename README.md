@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repo is intended as a staging area for typescript definitions related to the upcoming release of [D3js](https://github.com/d3/d3) version 4.x by [Mike Bostock](https://github.com/mbostock).
+This repo is intended as a staging area for typescript definitions related to the upcoming release of [D3js](https://github.com/d3/d3) version 4.0.x by [Mike Bostock](https://github.com/mbostock).
 
 Its content is _work in progress_ and intended to be rolled into a contribution to DefinitelyTyped or comparable community effort. The repo is **not intended** as a source for definition files to be used in the regular course of working with D3 in typescript.
 
@@ -10,21 +10,26 @@ The definitions are currently written on a per module basis in reference to the 
 
 ## General Status
 
-At the time of creating this repository **D3 version 4** is in **release candidate stage** and being finalized for full release. 
+**D3 version 4** has now been released. 
 
-By extension, any definition files contained herein are to be considered with care.
+The definition files contained in this repo are to be considered with care. Specifically, 
 
-Furthermore, where indicated, some features of the definition files may be considered experimental. Specifically, some definition files make use of the ability to type the `this` context of a function and depend on new features of the **typescript compiler** (currently typescript@next (1.9.0-dev)).
+* as long as a repo does not have a test file flagged as complete, the content is available for review and comment, but obviously not considered stable. Stability is obviously also conditioned on the stability of the just released **D3 v4**. 
 
-With respect to **D3**, this ability, may be of specific interest when working with [selections](https://github.com/d3/d3-selection) and [transitions](https://github.com/d3/d3-transition), where the current DOM element is provided through the this context.
+* where indicated, some features of the definition files may be considered experimental. Certain definition files make use of the ability to type the `this` context of a function and depend on new features of the **typescript compiler** (currently typescript@next (1.9.0-dev)). With respect to **D3**, this ability may be of specific interest when working with [selections](https://github.com/d3/d3-selection) and [transitions](https://github.com/d3/d3-transition), where the current DOM element is provided through the `this` context.
 
-A further separate consideration, is the question of flexibly using typescript definitions for *D3*, given the bundling scenarios contemplated by the D3 release.
+* the **D3 v4** release allows substantial flexibility with regard to _(un)bundling_ as well as the choice between _vanilla_ and _mondule import_ use. The definitions in this repo are written as external modules.
+Ambient declarations are only used, when required for module augmentation (e.g. **d3-transition** extending the `Selection` interface of **d3-selection**). The question of exporting to a `d3` **global** for _vanilla_ use, is somewhat related to the potential use of `export as namespace d3` in UMD module declarations.
 
+Please, note that the definition and test files in this repo are currently using relative paths.
+This was done as an interim step to focus on the D3-related aspects of this effort (including the experimental `this` typing). See issue #1.
 
 ## Module-Level Status
 
-**Note**: All references to "Test File" below should be read as typescript files that should compile without errors to indicated the consistency of the typescript definitions.
-They are not meant to be used with a test runner as functional tests.
+**Note**: All references to "Test File" below should be read as follows. The typescript files should compile without errors to indicate the internal consistency of the typescript definitions.
+I.e. they are only shape tests as is the DefinitelyTyped tradition. They are expressly not meant to be used with a test runner as functional tests.
+
+A grunt-task using the dev-dependency typescript@next version is currently used to perform the compilation tests.
 
 ### d3-array
 
@@ -71,7 +76,7 @@ respective generator with data. I.e. it can be global object, undefined or anyth
 ### d3-drag
 
 - [X] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-drag/index.d.ts)
-- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-drag/d3-drag-test.ts)
+- [X] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-drag/d3-drag-test.ts)
 
 **Note**: Utilizes `this`-typing (criticality: _high_)
 
@@ -143,8 +148,12 @@ respective generator with data. I.e. it can be global object, undefined or anyth
 
 ### d3-selection
 
-- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-selection/index.d.ts) (_draft_)
-- [ ] Test File
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-selection/index.d.ts)
+- [x] Test File
+
+See #2.
+
+See #3 if using **d3-selection** and **d3-transition** in the same compilation context, where a module imports _only_ **d3-selection**.
 
 **Note**: Utilizes `this`-typing (criticality: _high_)
 
