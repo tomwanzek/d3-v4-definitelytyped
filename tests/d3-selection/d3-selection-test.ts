@@ -609,7 +609,7 @@ let tr: d3Selection.Selection<HTMLTableRowElement, number[], HTMLTableElement, a
 tr = d3Selection.select("body")
     .append<HTMLTableElement>("table")
     .selectAll()
-   .data(matrix)
+    .data(matrix)
     // .data([{test: 1}, {test: 2}]) // fails, using this data statement instead, would fail assignment to tr due to the data type of tr Selection
     // .data<number[]>([{test: 1}, {test: 2}]) // fails, using this data statement instead, would fail because of its type parameter not being met by input
     .enter().append<HTMLTableRowElement>("tr");
@@ -620,8 +620,8 @@ let td: d3Selection.Selection<HTMLTableDataCellElement, number, HTMLTableRowElem
 td = tr.selectAll()
     .data(function (d) { return d; }) // d : Array<number> inferred (Array[4] of number per parent <tr>)
     .enter().append<HTMLTableDataCellElement>("td")
-    .text(function (d) { 
-        console.log('Abbreviated text for object',  this.abbr); // this-type HTMLTableDataCellElement (demonstration only)
+    .text(function (d) {
+        console.log('Abbreviated text for object', this.abbr); // this-type HTMLTableDataCellElement (demonstration only)
         return d;
     }); // d:number inferred
 
@@ -835,7 +835,30 @@ body = body.dispatch('fooEvent', function (d, i, group) { // re-assign for chain
 
 // TODO: Tests of event are related to issue #3 (https://github.com/tomwanzek/d3-v4-definitelytyped/issues/3)
 
+// No tests for event, as it now is of type any
 
+interface SuccessEvent {
+    type: string;
+    team: string;
+    sourceEvent?: any;
+}
+let successEvent = { type: 'wonEuro2016', team: 'Island' };
+
+let customListener: (this: HTMLBodyElement, finalOpponent: string) => string;
+
+customListener = function(finalOpponent) {
+    let e = <SuccessEvent>d3Selection.event;
+
+    return e.team + ' defeated ' + finalOpponent + ' in the EURO 2016 Cup. Who would have thought!!!';
+}
+
+let resultText: string = d3Selection.customEvent(successEvent, customListener, body.node(), 'Wales');
+
+// result = d3Selection.customEvent(successEvent, customListener, circles.nodes()[0], 'Wales'); // fails, incompatible 'this' context in call
+// let resultValue: number = d3Selection.customEvent(successEvent, customListener, body.node(), 'Wales'); // fails, incompatible return types
+// d3Selection.customEvent<SVGCircleElement, any>(successEvent, customListener, circles.nodes()[0], 'Wales'); // fails, incompatible 'this' context in type parameter and call
+// d3Selection.customEvent<HTMLBodyElement, any>(successEvent, customListener, circles.nodes()[0], 'Wales'); // fails, incompatible 'this' context in type parameter and call
+// d3Selection.customEvent<HTMLBodyElement, number>(successEvent, customListener, body.node(), 'Wales'); // fails, incompatible return types
 
 // mouse() ---------------------------------------------------------------------------------
 

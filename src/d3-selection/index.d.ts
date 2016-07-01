@@ -221,21 +221,16 @@ export var selection: selectionFn;
 // on.js event and customEvent related
 // ---------------------------------------------------------------------------
 
-// TODO: Review this section this is incorporated from D3js 3.x.x and had
-// some related issues like .pageX, .pageY
-// TODO: Review preferred approach to integration with D3DragEvent and D3ZoomEvent currently defined in d3-drag and d3-zoom, respectively
-// Need to consider module dependencency between definitions vs d3 source code (coupling minimization and module/definition resolution)
-interface BaseEvent extends Event {
+// See issue #3 (https://github.com/tomwanzek/d3-v4-definitelytyped/issues/3)
+interface BaseEvent {
     type: string;
-    sourceEvent?: Event | MouseEvent | TouchEvent;
+    sourceEvent?: any; // Could be of all sorts of types, too general: BaseEvent | Event | MouseEvent | TouchEvent | ... | OwnCustomEventType;
 }
 
-export var event: BaseEvent | Event | MouseEvent | TouchEvent;
+export var event: any; // Could be of all sorts of types, too general: BaseEvent | Event | MouseEvent | TouchEvent | ... | OwnCustomEventType;
 
-// TODO: Check signature w.r.t event
-export function customEvent<GElement extends BaseType, Datum, Result>(event: BaseEvent | Event, listener: (this: GElement, d: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Result,
-    that: GElement, d: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>): Result;
-export function customEvent<Context, Result>(event: BaseEvent | Event, listener: (this: Context, ...args: any[]) => Result, that: Context, ...args: any[]): Result;
+
+export function customEvent<Context, Result>(event: BaseEvent, listener: (this: Context, ...args: any[]) => Result, that: Context, ...args: any[]): Result;
 
 // ---------------------------------------------------------------------------
 // mouse.js related
