@@ -22,7 +22,7 @@ The definition files contained in this repo are to be considered with care. Spec
 Ambient declarations are only used, when required for module augmentation (e.g. **d3-transition** extending the `Selection` interface of **d3-selection**). The question of exporting to a `d3` **global** for _vanilla_ use, is somewhat related to the potential use of `export as namespace d3` in UMD module declarations.
 
 Please, note that the definition and test files in this repo are currently using relative paths.
-This was done as an interim step to focus on the D3-related aspects of this effort (including the experimental `this` typing). See issue #1.
+This was done as an interim step to focus on the D3-related aspects of this effort (including the experimental `this` typing). See [issue #1 regarding definitions discovery/deployment mechanism](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/1).
 
 ## Module-Level Status
 
@@ -149,11 +149,11 @@ respective generator with data. I.e. it can be global object, undefined or anyth
 ### d3-selection
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-selection/index.d.ts)
-- [x] Test File
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-selection/d3-selection-test.ts)
 
-See #2.
+See [issue 2 BaseType definition for selection/transition elements](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/2).
 
-See #3 if using **d3-selection** and **d3-transition** in the same compilation context, where a module imports _only_ **d3-selection**.
+See [issue 3 module augmentation bleed](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/3),  if using **d3-selection** and **d3-transition** in the same compilation context, where a module imports _only_ **d3-selection**.
 
 **Note**: Utilizes `this`-typing (criticality: _high_)
 
