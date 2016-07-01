@@ -592,7 +592,57 @@ circles2 = enterCircles.merge(circles2); // merge enter and update selections
 // FURTHER DATA-JOIN TESTs (function argument, changes in data type between old and new data)
 
 
-// TODO:
+const matrix = [
+    [11975, 5871, 8916, 2868],
+    [1951, 10048, 2060, 6171],
+    [8010, 16145, 8090, 8045],
+    [1013, 990, 940, 6907]
+];
+
+// SCENARIO 1 - Fully type parameterized, when there is a need for `this` typings in callbacks
+// and enforcement of type of data used in data join as input to data(...)
+
+let nMatrix: Array<number[]>,
+    nRow: Array<number>;
+
+let tr: d3Selection.Selection<HTMLTableRowElement, number[], HTMLTableElement, any>;
+tr = d3Selection.select("body")
+    .append<HTMLTableElement>("table")
+    .selectAll()
+   .data(matrix)
+    // .data([{test: 1}, {test: 2}]) // fails, using this data statement instead, would fail assignment to tr due to the data type of tr Selection
+    // .data<number[]>([{test: 1}, {test: 2}]) // fails, using this data statement instead, would fail because of its type parameter not being met by input
+    .enter().append<HTMLTableRowElement>("tr");
+
+nMatrix = tr.data(); // i.e. matrix 
+
+let td: d3Selection.Selection<HTMLTableDataCellElement, number, HTMLTableRowElement, number[]>;
+td = tr.selectAll()
+    .data(function (d) { return d; }) // d : Array<number> inferred (Array[4] of number per parent <tr>)
+    .enter().append<HTMLTableDataCellElement>("td")
+    .text(function (d) { 
+        console.log('Abbreviated text for object',  this.abbr); // this-type HTMLTableDataCellElement (demonstration only)
+        return d;
+    }); // d:number inferred
+
+nRow = td.data(); // flattened matrix (Array[16] of number)
+
+// SCENARIO 2 - Completely inferred types, when there is no need for `this` typings
+
+let tr2 = d3Selection.select("body")
+    .append("table")
+    .selectAll("tr")
+    .data(matrix)
+    .enter().append("tr");
+
+nMatrix = tr2.data(); // i.e. matrix 
+
+let td2 = tr2.selectAll("td")
+    .data(function (d) { return d; }) // d : Array<number> inferred (Array[4] of number per parent <tr>)
+    .enter().append("td")
+    .text(function (d) { return d; }); // d:number inferred
+
+nRow = td2.data(); // flattened matrix (Array[16] of number)
 
 // ---------------------------------------------------------------------------------------
 // Tests of Alternative DOM Manipulation
@@ -781,9 +831,10 @@ body = body.dispatch('fooEvent', function (d, i, group) { // re-assign for chain
 });
 
 
-// event and customEvent ------------------------------------------------------------------
+// event and customEvent() ----------------------------------------------------------------
 
-// TODO: Complete this section
+// TODO: Tests of event are related to issue #3 (https://github.com/tomwanzek/d3-v4-definitelytyped/issues/3)
+
 
 
 // mouse() ---------------------------------------------------------------------------------
