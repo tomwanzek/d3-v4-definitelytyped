@@ -14,7 +14,7 @@ The definitions are currently written on a per module basis in reference to the 
 
 The definition files contained in this repo are to be considered with care. Specifically, 
 
-* as long as a repo does not have a test file flagged as complete, the content is available for review and comment, but obviously not considered stable. Stability is obviously also conditioned on the stability of the just released **D3 v4**. 
+* as long as a repo does not have a test file flagged as complete, the content is available for review and comment, but not considered stable. Stability is obviously also conditioned on the API stability of the just released **D3 v4**. 
 
 * where indicated, some features of the definition files may be considered experimental. Certain definition files make use of the ability to type the `this` context of a function and depend on new features of the **typescript compiler** (currently typescript@next (1.9.0-dev)). With respect to **D3**, this ability may be of specific interest when working with [selections](https://github.com/d3/d3-selection) and [transitions](https://github.com/d3/d3-transition), where the current DOM element is provided through the `this` context.
 
