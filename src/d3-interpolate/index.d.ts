@@ -13,7 +13,7 @@ import { ColorSpaceObject } from '../d3-color';
 // --------------------------------------------------------------------------
 
 
-export interface ZoomInterpolationFn extends Function{
+export interface ZoomInterpolator extends Function{
     (t: number): ZoomView;
     /**
      * Recommended duration of zoom transition in ms
@@ -40,23 +40,29 @@ export type ZoomView = [number, number, number];
 // --------------------------------------------------------------------------
 
 export function interpolate(a: any, b: null): ((t: number) => null);
-export function interpolate(a: any, b: number): ((t: number) => number);
+export function interpolate(a: number | {valueOf(): number}, b: number): ((t: number) => number);
 export function interpolate(a: any, b: ColorSpaceObject): ((t: number) => string);
-export function interpolate(a: any, b: string): ((t: number) => string);
-export function interpolate<U>(a: any, b: Array<U>): ((t: number) => Array<U>);
-export function interpolate(a: any, b: { [key: string]: any }): ((t: number) => { [key: string]: any });
+export function interpolate(a: Date, b: Date): ((t:number) => Date); 
+export function interpolate(a: string | {toString(): string}, b: string): ((t: number) => string);
+export function interpolate<U extends Array<any>>(a: Array<any>, b: U): ((t: number) => U);
+export function interpolate(a: number | {valueOf(): number}, b: {valueOf(): number}): ((t: number) => number);
 export function interpolate<U extends Object>(a: any, b: U): ((t: number) => U);
+export function interpolate(a: any, b: { [key: string]: any }): ((t: number) => { [key: string]: any });
 
-export function interpolateNumber(a: number, b: number): ((t: number) => number);
 
-export function interpolateRound(a: number, b: number): ((t: number) => number);
+export function interpolateNumber(a: number |  {valueOf(): number}, b: number |  {valueOf(): number}): ((t: number) => number);
 
-export function interpolateString(a: string, b: string): ((t: number) => string);
+export function interpolateRound(a: number |  {valueOf(): number}, b: number |  {valueOf(): number}): ((t: number) => number);
 
-export function interpolateArray<U>(a: Array<any>, b: Array<U>): ((t: number) => Array<U>);
+export function interpolateString(a: string | {toString(): string}, b: string| {toString(): string}): ((t: number) => string);
 
-export function interpolateObject(a: { [key: string]: any }, b: { [key: string]: any }): ((t: number) => { [key: string]: any });
+export function interpolateDate(a: Date, b: Date): ((t: number) => Date);
+
+export function interpolateArray<A extends Array<any>>(a: Array<any>, b: A): ((t: number) => A);
+
 export function interpolateObject<U extends Object>(a: any, b: U): ((t: number) => U);
+export function interpolateObject(a: { [key: string]: any }, b: { [key: string]: any }): ((t: number) => { [key: string]: any });
+
 
 
 export function interpolateTransformCss(a: string, b: string): ((t: number) => string);
@@ -65,7 +71,7 @@ export function interpolateTransformSvg(a: string, b: string): ((t: number) => s
 /**
  * Create Interpolator for zoom views
  */
-export function interpolateZoom(a: ZoomView, b: ZoomView): ZoomInterpolationFn;
+export function interpolateZoom(a: ZoomView, b: ZoomView): ZoomInterpolator;
 
 
 export function quantize<T>(interpolator: ((t: number) => T), n :number): Array<T>;

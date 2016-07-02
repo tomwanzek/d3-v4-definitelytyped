@@ -11,17 +11,44 @@ import * as d3Interpolate from '../../src/d3-interpolate';
 
 // Preparatory steps -------------------------------------------------------------------
 
-interface InterpolationFn<T> {
+interface Interpolator<T> {
     (t: number): T;
 }
 
-let iNum: InterpolationFn<number>,
-    iString: InterpolationFn<string>,
-    iArrayNum: InterpolationFn<Array<number>>,
-    iArrayStr: InterpolationFn<Array<string>>,
-    iKeyVal: InterpolationFn<{ [key: string]: any }>,
-    iRGBColorObj: InterpolationFn<d3Color.RGBColor>,
-    iZoom: d3Interpolate.ZoomInterpolationFn;
+class NumCoercible {
+    public a: number;
+
+    constructor (a: number){
+        this.a = a;
+    }
+    public valueOf() {
+        return this.a;
+    }
+}
+
+class StringCoercible {
+    public a: string;
+
+    constructor (a: string){
+        this.a = a;
+    }
+
+    public toString() {
+        return this.a;
+    }
+}
+
+
+let iNum: Interpolator<number>,
+    iString: Interpolator<string>,
+    iDate: Interpolator<Date>,
+    iArrayNum: Interpolator<Array<number>>,
+    iArrayStr: Interpolator<Array<string>>,
+    iArrayDate: Interpolator<Array<Date>>,
+    iArrayMixed: Interpolator<[Date, string]>,
+    iKeyVal: Interpolator<{ [key: string]: any }>,
+    iRGBColorObj: Interpolator<d3Color.RGBColor>,
+    iZoom: d3Interpolate.ZoomInterpolator;
 
 let num: number,
     str: string,
@@ -40,23 +67,41 @@ iNum = d3Interpolate.interpolate('1', 5);
 iString = d3Interpolate.interpolate('seagreen', d3Color.rgb(100, 100, 100));
 iString = d3Interpolate.interpolate('seagreen', 'steelblue'); // as used with valid color name string
 
+// date interpolator
+iDate = d3Interpolate.interpolate(new Date(2016, 6, 1), new Date(2016, 6, 31));
+
 // regular string interpolator interpolating number strings (as the strings are not valid color strings)
 iString = d3Interpolate.interpolate(1, '5');
+iString = d3Interpolate.interpolate('a: 1', 'a: 5');
+iString = d3Interpolate.interpolate(new StringCoercible('a: 1'), 'a: 5');
 
 iArrayNum = d3Interpolate.interpolate(['1', '2'], [4, 8]);
 iArrayStr = d3Interpolate.interpolate(['1', '2'], ['4', '8']);
+// two element array with first element date and second element string
+iArrayMixed = d3Interpolate.interpolate<[Date, string]>([new Date(2016, 6, 1), 'b: 2'], [new Date(2016, 6, 31), 'b: 8']);
+
+// Coercible to number
+
+iNum = d3Interpolate.interpolate(12, new NumCoercible(20));
+iNum = d3Interpolate.interpolate(new NumCoercible(2), new NumCoercible(20));
+
+// Key Value
 
 iKeyVal = d3Interpolate.interpolate({ x: 0, y: 1 }, { x: 1, y: 10, z: 100 });
 
+d3Interpolate.interpolate<NumCoercible>(new NumCoercible(1), new NumCoercible(5));
+d3Interpolate.interpolate<NumCoercible>({a: 1}, new NumCoercible(5));
 
 // test interpolateNumber(a, b) signature ----------------------------------------------------
 
 iNum = d3Interpolate.interpolateNumber(0, 100);
+iNum = d3Interpolate.interpolateNumber(new NumCoercible(0), new NumCoercible(100));
 num = iNum(0.5);
 
 // test interpolateNumber(a, b) signature ----------------------------------------------------
 
 iNum = d3Interpolate.interpolateRound(0, 100);
+iNum = d3Interpolate.interpolateRound(new NumCoercible(0), new NumCoercible(100));
 num = iNum(0.5);
 
 // test interpolateString(a, b) signature ----------------------------------------------------
@@ -64,19 +109,26 @@ num = iNum(0.5);
 iString = d3Interpolate.interpolateString('-1', '2');
 str = iString(0.5);
 
+// test interpolateDate(a, b) signature ----------------------------------------------------
+
+iDate = d3Interpolate.interpolateDate(new Date(2016, 6, 1), new Date(2016, 6, 31));
+
 // test interpolateArray(a, b) signature ----------------------------------------------------
 
-iArrayNum = d3Interpolate.interpolateArray<number>([1, 2], [4, 8]); // explicit typing
+iArrayNum = d3Interpolate.interpolateArray<Array<number>>([1, 2], [4, 8]); // explicit typing
 arrNum = iArrayNum(0.5);
 
-iArrayNum = d3Interpolate.interpolateArray<number>(['1', '2'], [4, 8]); // explicit typing
+iArrayNum = d3Interpolate.interpolateArray<[number, number]>(['1', '2'], [4, 8]); // explicit typing
 arrNum = iArrayNum(0.5);
 
-iArrayStr = d3Interpolate.interpolateArray<string>(['1', '2'], ['4', '8']); // explicit typing
+iArrayStr = d3Interpolate.interpolateArray<Array<string>>(['1', '2'], ['4', '8']); // explicit typing
 arrStr = iArrayStr(0.5);
 
 iArrayStr = d3Interpolate.interpolateArray([1, 2], ['4', '8']); // infered typing <string>
 arrStr = iArrayStr(0.5);
+
+// two element array with first element date and second element string
+iArrayMixed = d3Interpolate.interpolateArray<[Date, string]>([new Date(2016,  6, 1), 'b: 1'], [new Date(2016,  6, 31), 'b: 8'])
 
 // test interpolateObject(a, b) signature ----------------------------------------------------
 
