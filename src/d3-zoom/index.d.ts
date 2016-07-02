@@ -5,8 +5,7 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
-import { Selection } from '../d3-selection';
-import { Transition } from '../d3-transition';
+import { Selection, TransitionLike } from '../d3-selection';
 
 
 // --------------------------------------------------------------------------
@@ -14,11 +13,11 @@ import { Transition } from '../d3-transition';
 // --------------------------------------------------------------------------
 
 /**
- * BaseType serves as an alias for the 'minimal' data type which can be selected
- * without 'd3-selection' trying to use properties internally which would otherwise not
+ * ZoomedElementBaseType serves as an alias for the 'minimal' data type which can be selected
+ * without 'd3-zoom' (and related code in 'd3-selection') trying to use properties internally which would otherwise not
  * be supported.
  */
-type BaseType = Element;
+type ZoomedElementBaseType = Element;
 
 /**
  * Minimal interface for a continuous scale.
@@ -39,27 +38,27 @@ export interface ZoomScale {
 // --------------------------------------------------------------------------
 
 
-export interface ZoomBehavior<GElement extends BaseType, Datum> extends Function {
+export interface ZoomBehavior<GElement extends ZoomedElementBaseType, Datum> extends Function {
     (selection: Selection<GElement, Datum, any, any>, ...args: any[]): void;
     transform(selection: Selection<GElement, Datum, any, any>, transform: ZoomTransform): void;
     transform(selection: Selection<GElement, Datum, any, any>, transform: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => ZoomTransform): void;
-    transform(transition: Transition<GElement, Datum, any, any>, transform: ZoomTransform): void;
-    transform(transition: Transition<GElement, Datum, any, any>, transform: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => ZoomTransform): void;
+    transform(transition: TransitionLike<GElement, Datum>, transform: ZoomTransform): void;
+    transform(transition: TransitionLike<GElement, Datum>, transform: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => ZoomTransform): void;
 
     translateBy(selection: Selection<GElement, Datum, any, any>, x: number, y: number): void;
     translateBy(selection: Selection<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: number): void;
     translateBy(selection: Selection<GElement, Datum, any, any>, x: number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
     translateBy(selection: Selection<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
-    translateBy(transition: Transition<GElement, Datum, any, any>, x: number, y: number): void;
-    translateBy(transition: Transition<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: number): void;
-    translateBy(transition: Transition<GElement, Datum, any, any>, x: number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
-    translateBy(transition: Transition<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    translateBy(transition: TransitionLike<GElement, Datum>, x: number, y: number): void;
+    translateBy(transition: TransitionLike<GElement, Datum>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: number): void;
+    translateBy(transition: TransitionLike<GElement, Datum>, x: number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    translateBy(transition: TransitionLike<GElement, Datum>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
 
     scaleBy(selection: Selection<GElement, Datum, any, any>, k: number): void;
-    scaleBy(transition: Transition<GElement, Datum, any, any>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    scaleBy(transition: TransitionLike<GElement, Datum>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
 
     scaleTo(selection: Selection<GElement, Datum, any, any>, k: number): void;
-    scaleTo(transition: Transition<GElement, Datum, any, any>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    scaleTo(transition: TransitionLike<GElement, Datum>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
 
     filter(): (this: GElement, datum: Datum, index: number, group: Array<GElement>) => boolean;
     filter(filterFn: (this: GElement, d?: Datum, index?: number, group?: Array<GElement>) => boolean): ZoomBehavior<GElement, Datum>;
@@ -83,14 +82,14 @@ export interface ZoomBehavior<GElement extends BaseType, Datum> extends Function
 }
 
 
-export function zoom<GElement extends BaseType, Datum>(): ZoomBehavior<GElement, Datum>;
+export function zoom<GElement extends ZoomedElementBaseType, Datum>(): ZoomBehavior<GElement, Datum>;
 
 // --------------------------------------------------------------------------
 // Zoom Event
 // --------------------------------------------------------------------------
 
 
-export interface D3ZoomEvent<GElement extends BaseType, Datum> {
+export interface D3ZoomEvent<GElement extends ZoomedElementBaseType, Datum> {
     target: ZoomBehavior<GElement, Datum>;
     type: 'start' | 'zoom' | 'end' | string; // Leave failsafe string type for cases like 'zoom.foo'
     transform: ZoomTransform;
@@ -119,7 +118,7 @@ export interface ZoomTransform {
     translate(x: number, y: number): ZoomTransform;
 }
 
-export function zoomTransform(node: BaseType): ZoomTransform;
+export function zoomTransform(node: ZoomedElementBaseType): ZoomTransform;
 
 
 export const zoomIdentity: ZoomTransform;

@@ -67,6 +67,26 @@ export type CustomEventParameters = {
 }
 
 
+/**
+ * TransitionLike is a helper interface to represent a quasi-Transition, without specifying the full Transition  interface in this file.
+ * For example, whereever d3-zoom allows a Transition to be passed in as an argument, it internally immediately invokes its `selection()`
+ * method to retrieve the underlying Selection object before proceeding.
+ * d3-brush uses a subset of Transition methods internally.
+ * The use of this interface instead of the full imported Transition interface is [referred] to achieve
+ * two things:
+ * (1) the d3-transition module may not be required by a projects use case,
+ * (2) it avoid avoids possible complications from 'module augmentation' from d3-transition to Selection.
+ */
+export interface TransitionLike<GElement extends BaseType, Datum> {
+    selection(): Selection<GElement, Datum, any, any>;
+    on(type: string, listener: null): TransitionLike<GElement, Datum>;
+    on(type: string, listener: (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any): TransitionLike<GElement, Datum>;
+    tween(name: string, tweenFn: null): TransitionLike<GElement, Datum>;
+    tween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => void)): TransitionLike<GElement, Datum>;
+}
+
+
+
 // --------------------------------------------------------------------------
 // All Selection related interfaces and function
 // --------------------------------------------------------------------------

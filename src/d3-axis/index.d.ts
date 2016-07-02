@@ -5,9 +5,8 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
-// TODO: Clarify dependencies, axis relies on d3-selection (and optionally d3-transition)
-import { Selection } from '../d3-selection';
-import { Transition } from '../d3-transition';
+
+import { Selection, TransitionLike } from '../d3-selection';
 
 
 // --------------------------------------------------------------------------
@@ -34,7 +33,7 @@ export type AxisContainerElement = SVGSVGElement | SVGGElement;
 
 export interface Axis<Domain> {
     (context: Selection<AxisContainerElement, any, any, any>): void;
-    (context: Transition<AxisContainerElement, any, any, any>): void;
+    (context: TransitionLike<AxisContainerElement, any>): void;
 
     scale(): AxisScale<Domain>;
     scale(scale: AxisScale<Domain>): Axis<Domain>;

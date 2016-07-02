@@ -5,8 +5,7 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
-import { Selection } from '../d3-selection';
-import { Transition } from '../d3-transition';
+import { Selection, TransitionLike } from '../d3-selection';
 
 /**
  * Type alias for a BrushSelection. For a two-dimensional brush, it must be defined as [[x0, y0], [x1, y1]], 
@@ -20,8 +19,8 @@ export interface BrushBehavior<Datum> {
     (group: Selection<SVGGElement, Datum, any, any>, ...args: any[]): void;
     move(group: Selection<SVGGElement, Datum, any, any>, selection: BrushSelection): BrushBehavior<Datum>;
     move(group: Selection<SVGGElement, Datum, any, any>, selection: (this: SVGGElement, d?:Datum, i?: number, group?: Array<SVGGElement> | NodeListOf<SVGGElement>) => BrushSelection): BrushBehavior<Datum>;
-    move(group: Transition<SVGGElement, Datum, any, any>, selection: BrushSelection): BrushBehavior<Datum>;
-    move(group: Transition<SVGGElement, Datum, any, any>, selection: (this: SVGGElement, d?:Datum, i?: number, group?: Array<SVGGElement> | NodeListOf<SVGGElement>) => BrushSelection): BrushBehavior<Datum>;
+    move(group: TransitionLike<SVGGElement, Datum>, selection: BrushSelection): BrushBehavior<Datum>;
+    move(group: TransitionLike<SVGGElement, Datum>, selection: (this: SVGGElement, d?:Datum, i?: number, group?: Array<SVGGElement> | NodeListOf<SVGGElement>) => BrushSelection): BrushBehavior<Datum>;
     extent(): (this: SVGGElement, d: Datum, i:number, group:Array<SVGGElement> | NodeListOf<SVGGElement>) => [[number, number], [number, number]];
     extent(extent: [[number, number], [number, number]]): BrushBehavior<Datum>;
     extent(extent: (this: SVGGElement, d: Datum, i:number, group:Array<SVGGElement> | NodeListOf<SVGGElement>) => [[number, number], [number, number]]): BrushBehavior<Datum>;
