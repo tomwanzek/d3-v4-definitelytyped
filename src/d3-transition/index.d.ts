@@ -48,13 +48,12 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
     attr(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive): Transition<GElement, Datum, PElement, PDatum>;
     attrTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive)): Transition<GElement, Datum, PElement, PDatum>;
 
-    style(name: string, value: Primitive | null, priority?: string): Transition<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive, priority?: string): Transition<GElement, Datum, PElement, PDatum>;
-    styleTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive)): Transition<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: Primitive | null, priority?:  null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive, priority?:  null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
+    styleTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive), priority?:  null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
 
     text(value: Primitive | null): Transition<GElement, Datum, PElement, PDatum>;
     text(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive): Transition<GElement, Datum, PElement, PDatum>;
-    text(tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive)): Transition<GElement, Datum, PElement, PDatum>;
 
     tween(name: string): (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => void);
     tween(name: string, tweenFn: null): Transition<GElement, Datum, PElement, PDatum>;
@@ -64,8 +63,8 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
 
     merge(other: Transition<GElement, Datum, PElement, PDatum>): Transition<GElement, Datum, PElement, PDatum>;
 
-    filter(selector: string): Transition<GElement, Datum, PElement, PDatum>;
-    filter(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => boolean): Transition<GElement, Datum, PElement, PDatum>;
+    filter(filter: string): Transition<GElement, Datum, PElement, PDatum>;
+    filter(filter: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => boolean): Transition<GElement, Datum, PElement, PDatum>;
 
     // Event Handling -------------------
 
