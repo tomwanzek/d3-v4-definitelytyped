@@ -136,17 +136,41 @@ easingFn = enterTransition.ease();
 // Test sub-selection from transition
 // --------------------------------------------------------------------------
 
-// select() ------------------------------------------------------------------
-// TODO: select()
+interface BodyDatum {
+    foo: string;
+    bar: number;
+}
 
-// select<DescElement extends BaseType>(selector: string): Transition<DescElement, Datum, PElement, PDatum>;
-// select<DescElement extends BaseType>(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => DescElement): Transition<DescElement, Datum, PElement, PDatum>;
+interface ParagraphDatum {
+    text: string;
+}
+
+// assume body was previously selected and its data were set to BodyDatum type using .datum()
+let bodyTransition: d3Transition.Transition<HTMLBodyElement, BodyDatum, HTMLElement, any> = select<HTMLBodyElement, BodyDatum>('body').transition();
+
+// select() ------------------------------------------------------------------
+
+// assume body was previously selected and its data were set to BodyDatum type using .datum()
+
+let firstDivTransition: d3Transition.Transition<HTMLDivElement, BodyDatum, HTMLElement, any> = bodyTransition.select<HTMLDivElement>('div');
+
+firstDivTransition = bodyTransition.select(function (d, i) {
+    console.log('Body Datum foo', d.foo); // d is of type BodyDatum
+    return this.querySelector('div'); // 'this' type is HTMLElement, return type is HTMLDivElement
+});
+
+
 
 // selectAll() ---------------------------------------------------------------
-// TODO: selectAll()
 
-// selectAll<DescElement extends BaseType, OldDatum>(selector: string): Transition<DescElement, OldDatum, GElement, Datum>;
-// selectAll<DescElement extends BaseType, OldDatum>(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (Array<DescElement> | NodeListOf<DescElement>)): Transition<DescElement, OldDatum, GElement, Datum>;
+// assume paragraphs were previously selected and their data were set to ParagraphDatum type
+
+let paragraphsTransition: d3Transition.Transition<HTMLParagraphElement, ParagraphDatum, HTMLDivElement, BodyDatum> = firstDivTransition.selectAll<HTMLParagraphElement, ParagraphDatum>('p');
+
+paragraphsTransition = firstDivTransition.selectAll<HTMLParagraphElement, ParagraphDatum>(function (d, i) {
+    console.log('Body Datum foo', d.foo); // d is of type BodyDatum
+    return this.querySelectorAll('p'); // 'this' type is HTMLElement, return type is HTMLParagraphElement
+});
 
 // filter () -----------------------------------------------------------------
 
@@ -241,28 +265,68 @@ exitTransition.remove();
 // Test Event Handling
 // --------------------------------------------------------------------------
 
-// TODO: on()
-// on(type: string): (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any;
-// on(type: string, listener: null): Transition<GElement, Datum, PElement, PDatum>;
-// on(type: string, listener: (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any): Transition<GElement, Datum, PElement, PDatum>;
+let listener: (this: SVGCircleElement, datum: CircleDatum, index: number, group: Array<SVGCircleElement> | NodeListOf<SVGCircleElement>) => void;
+
+// returns 'this' transition
+enterTransition = enterTransition.on('end', listener); // check chaining return type by re-assigning
+
+enterTransition = enterTransition.on('end', function (d) {
+    console.log('transition end radius: ', this.r.baseVal.value); // SVGCircleElement
+    console.log('end event datum color property: ', d.color); // CircleDatum type
+});
+
+// get current listener
+listener = enterTransition.on('end');
+
+// remove listener
+enterTransition = enterTransition.on('end', null); // check chaining return type by re-assigning
 
 // --------------------------------------------------------------------------
 // Test Control Flow
 // --------------------------------------------------------------------------
 
 
-// TODO: each(valueFn: (this: GElement, datum ?: Datum, index ?: number, group ?: Array<GElement> | NodeListOf<GElement>) => void): Transition<GElement, Datum, PElement, PDatum>;
+// each() -------------------------------------------------------------------------------
 
 // each(valueFn: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => void): Transition<GElement, Datum, PElement, PDatum>;
 
-// TODO: call(func: (transition: Transition<GElement, Datum, PElement, PDatum>, ...args: any[]) => any, ...args: any[]): Transition<GElement, Datum, PElement, PDatum>;
+// returns 'this' transition
+enterTransition = enterTransition.each(function (d, i, group) {  // check chaining return type by re-assigning
+    if (this.r.baseVal.value < d.r) { // this of type SVGCircleElement, datum of type CircleDatum
+        console.log('Color of circles with current radius smaller than data radius: ', d.color);
+    }
+    console.log(group[i].cx.baseVal.value); // group : Array<SVGCircleElement>
+});
 
-// call(func: (transition: Transition<GElement, Datum, PElement, PDatum>, ...args: any[]) => any, ...args: any[]): Transition<GElement, Datum, PElement, PDatum>;
+// call() -------------------------------------------------------------------------------
+
+function changeExitColor(transition: d3Transition.Transition<SVGCircleElement, CircleDatum, any, any>, fill: string, stroke: string) {
+    transition
+        .style('fill', function (d) { return (d.r < 10) ? fill : 'black'; }) // datum type is CircleDatum
+        .style('stroke',  function (d) { return (this.r.baseVal.value < 10) ? stroke : 'black'; }); // this type is SVGCircleElement
+}
+
+// returns 'this' transition
+exitTransition = exitTransition.call(changeExitColor, 'midnightblue', 'black'); // check chaining return type by re-assigning 
+
+// exitTransition.call(function (transition: d3Transition.Transition<HTMLDivElement, CircleDatum, any, any>): void {
+//     // fails, group element types of selection not compatible: SVGCircleElement v HTMLDivElement
+// });
+
+// exitTransition.call(function (transition: d3Transition.Transition<SVGCircleElement, DivDatum, any, any>): void {
+//     // fails, group datum types of selection not compatible: CircleDatum v DivDatum
+// });
+
+// empty() -------------------------------------------------------------------------------
 
 let empty: boolean = enterTransition.empty();
 
+// node() and nodes() --------------------------------------------------------------------
+
 let firstCircleNode: SVGCircleElement = enterTransition.node();
 let circleNodes: Array<SVGCircleElement> = enterTransition.nodes();
+
+// size() --------------------------------------------------------------------------------
 
 let size: number = enterTransition.size();
 

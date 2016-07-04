@@ -187,7 +187,7 @@ respective generator with data. I.e. it can be global object, undefined or anyth
 ### d3-transition
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-transition/index.d.ts)
-- [ ] Test File
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-transition/d3-transition-test.ts)
 
 **Note**: Utilizes `this`-typing (criticality: _high_)
 
