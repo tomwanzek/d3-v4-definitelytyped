@@ -15,6 +15,7 @@ import {
 
 import * as d3Transition from '../../src/d3-transition';
 import {
+    interpolateNumber,
     interpolateRgb
 } from '../../src/d3-interpolate';
 
@@ -238,14 +239,34 @@ select<HTMLBodyElement, { test: string }>('body')
 
 // Tweening Function Use =====================================================
 
-// TODO: complete
+enterTransition = enterTransition.attrTween('r', function (d, i, group) {
+    console.log(this.r.baseVal.value); // this type is SVGCircleElement
+    return interpolateNumber(0, d.r); // datum type is CircleDatum
+});
 
-// attrTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive)): Transition<GElement, Datum, PElement, PDatum>;
-// styleTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive)): Transition<GElement, Datum, PElement, PDatum>;
+exitTransition = exitTransition.styleTween('fill', function (d, i, group) {
+    console.log(this.r.baseVal.value); // this type is SVGCircleElement
+    let c: string = select(this).style('fill');
+    return interpolateRgb(c, d.color); // datum type is CircleDatum
+});
 
-// tween(name: string): (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => void);
-// tween(name: string, tweenFn: null): Transition<GElement, Datum, PElement, PDatum>;
-// tween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => void)): Transition<GElement, Datum, PElement, PDatum>;
+let tweenFnAccessor: (this: SVGCircleElement, datum?: CircleDatum, i?: number, group?: SVGCircleElement[] | NodeListOf<SVGCircleElement>) => ((t: number) => void);
+
+
+// chainable
+updateTransition = updateTransition.tween('fillColor', null); // remove named tween
+
+// chainable
+updateTransition = updateTransition.tween('fillColor', function (d, i, group) {
+    let circle = this;
+    let interpolator = interpolateRgb(circle.getAttribute('fill'), d.color); // datum type CircleDatum
+    console.log('Radius ', this.r.baseVal.value); // this type SVGCircleElement
+    return function (t) {
+        circle.setAttribute('fill', interpolator(t));
+    };
+});
+
+tweenFnAccessor = updateTransition.tween('fillColor');
 
 // --------------------------------------------------------------------------
 // Merge Transitions
@@ -303,7 +324,7 @@ enterTransition = enterTransition.each(function (d, i, group) {  // check chaini
 function changeExitColor(transition: d3Transition.Transition<SVGCircleElement, CircleDatum, any, any>, fill: string, stroke: string) {
     transition
         .style('fill', function (d) { return (d.r < 10) ? fill : 'black'; }) // datum type is CircleDatum
-        .style('stroke',  function (d) { return (this.r.baseVal.value < 10) ? stroke : 'black'; }); // this type is SVGCircleElement
+        .style('stroke', function (d) { return (this.r.baseVal.value < 10) ? stroke : 'black'; }); // this type is SVGCircleElement
 }
 
 // returns 'this' transition
