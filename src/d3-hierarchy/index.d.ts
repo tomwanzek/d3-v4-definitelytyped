@@ -295,7 +295,7 @@ export interface PackLayout<Datum> {
     padding(padding: (node: HierarchyCircularNode<Datum>) => number): this;
 }
 
-export function pack<Datum>():PackLayout<Datum>;
+export function pack<Datum>(): PackLayout<Datum>;
 
 
 // -----------------------------------------------------------------------
@@ -313,6 +313,6 @@ export interface PackCircle {
 // For invocation of packEnclose the x and y coordinates are mandatory. It seems easier to just comment
 // on the mandatory nature, then to create separate interfaces and having to deal with recasting.
 
-export function packSiblings<Datum extends PackCircle>(circles: Array<Datum>):Array<Datum>;
+export function packSiblings<Datum extends PackCircle>(circles: Array<Datum>): Array<Datum>;
 
-export function packEnclose<Datum extends PackCircle>(circles: Array<Datum>): {r: number, x: number, y: number};
+export function packEnclose<Datum extends PackCircle>(circles: Array<Datum>): { r: number, x: number, y: number };

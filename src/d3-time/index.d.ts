@@ -19,7 +19,7 @@ export interface TimeInterval {
     filter(test: (date: Date) => boolean): TimeInterval;
 }
 
-export interface CountableTimeInterval extends TimeInterval{
+export interface CountableTimeInterval extends TimeInterval {
     count(start: Date, end: Date): number;
     every(step: number): TimeInterval | null;
 }

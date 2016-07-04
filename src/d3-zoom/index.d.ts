@@ -78,7 +78,7 @@ export interface ZoomBehavior<GElement extends ZoomedElementBaseType, Datum> ext
 
     on(typenames: string): (this: GElement, datum: Datum, index: number, group: Array<GElement>) => void;
     on(typenames: string, callback: null): ZoomBehavior<GElement, Datum>;
-    on(typenames: string, callback: (this: GElement, datum: Datum, index: number, group: Array<GElement>) => void): ZoomBehavior<GElement, Datum>;    
+    on(typenames: string, callback: (this: GElement, datum: Datum, index: number, group: Array<GElement>) => void): ZoomBehavior<GElement, Datum>;
 }
 
 
@@ -110,7 +110,7 @@ export interface ZoomTransform {
     applyY(y: number): number;
     invert(point: [number, number]): [number, number];
     invertX(x: number): number;
-    invertY(y: number): number
+    invertY(y: number): number;
     rescaleX<S extends ZoomScale>(xScale: S): S;
     rescaleY<S extends ZoomScale>(yScale: S): S;
     scale(k: number): ZoomTransform;

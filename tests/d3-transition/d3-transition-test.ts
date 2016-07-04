@@ -11,7 +11,7 @@ import {
     select,
     selectAll,
     Selection
-}  from '../../src/d3-selection';
+} from '../../src/d3-selection';
 
 import * as d3Transition from '../../src/d3-transition';
 import {
@@ -74,7 +74,7 @@ circles = circles
 let enterCircles = circles
     .enter()
     .append<SVGCircleElement>('circle')
-    .classed('big', function(d) {return d.r > 10;})
+    .classed('big', function (d) { return d.r > 10; })
     .attr('cx', function (d) { return d.cx; })
     .attr('cy', function (d) { return d.cy; })
     .attr('r', function (d) { return d.r; })
@@ -101,8 +101,8 @@ exitTransition = exitCircles.transition('exit');
 let newEnterTransition: d3Transition.Transition<SVGCircleElement, CircleDatum, SVGSVGElement, SVGDatum>;
 newEnterTransition = enterCircles.transition(enterTransition);
 
-let wrongElementTypeTransition : d3Transition.Transition<HTMLDivElement, CircleDatum, HTMLBodyElement, any>;
-let wrongDatumTypeTransition : d3Transition.Transition<SVGCircleElement, {wrong: string}, SVGSVGElement, any>;
+let wrongElementTypeTransition: d3Transition.Transition<HTMLDivElement, CircleDatum, HTMLBodyElement, any>;
+let wrongDatumTypeTransition: d3Transition.Transition<SVGCircleElement, { wrong: string }, SVGSVGElement, any>;
 
 newEnterTransition = enterCircles.transition(enterTransition);
 // newEnterTransition = enterCircles.transition(wrongElementTypeTransition);// fails, wrong group element type
@@ -125,9 +125,9 @@ let delay: number = enterTransition.delay();
 
 // ease() ---------------------------------------------------------------
 
-let easingFn:(normalizedTime: number) => number;
+let easingFn: (normalizedTime: number) => number;
 
-enterTransition = enterTransition.ease(function(t) {
+enterTransition = enterTransition.ease(function (t) {
     return t;
 }); // settable and chainable
 easingFn = enterTransition.ease();
@@ -152,10 +152,10 @@ easingFn = enterTransition.ease();
 
 enterTransition = enterTransition.filter('.big');
 
-exitTransition = exitTransition.filter(function(d,i) {
+exitTransition = exitTransition.filter(function (d, i) {
     // console.log(this.x) // fails, x property not defined on SVGCircleElement
     return this.r.baseVal.value < i * d.r; // this-type SVGCircleElement, datum tpye CircleDatum
-})
+});
 
 // --------------------------------------------------------------------------
 // Obtain Selection underlying a transition
@@ -188,7 +188,7 @@ enterTransition = enterTransition // re-assignment test chaining return-type
 enterTransition = enterTransition
     .style('fill', 'blue') // string
     .style('hidden', false) // boolean
-    //.style('stroke', 'green', 'test') // fails, invalid priority value
+    // .style('stroke', 'green', 'test') // fails, invalid priority value
     .style('stroke', 'green', 'important');
 
 enterTransition = enterTransition
@@ -202,26 +202,26 @@ enterTransition = enterTransition
     .style('hidden', function () {
         return true;
     }, null) // boolean return + test: priority = null
-     //   .style('stroke', function () { return 'green'; }, 'test') // fails, test: invalid priority value
+    //   .style('stroke', function () { return 'green'; }, 'test') // fails, test: invalid priority value
     .style('stroke', function () { return 'green'; }, 'important'); // string return + test: priority = 'important';
 
-select<HTMLBodyElement, {test: string}>('body')
-    .datum({test: 'New text.'})
+select<HTMLBodyElement, { test: string }>('body')
+    .datum({ test: 'New text.' })
     .transition().duration(500)
     .text('Let us start with this transition text.')
     .transition().duration(100)
-    .text(function(d){ return d.test; }); // selection datum type
+    .text(function (d) { return d.test; }); // selection datum type
 
 // Tweening Function Use =====================================================
 
 // TODO: complete
 
-    // attrTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive)): Transition<GElement, Datum, PElement, PDatum>;
-    // styleTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive)): Transition<GElement, Datum, PElement, PDatum>;
+// attrTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive)): Transition<GElement, Datum, PElement, PDatum>;
+// styleTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive)): Transition<GElement, Datum, PElement, PDatum>;
 
-    // tween(name: string): (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => void);
-    // tween(name: string, tweenFn: null): Transition<GElement, Datum, PElement, PDatum>;
-    // tween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => void)): Transition<GElement, Datum, PElement, PDatum>;
+// tween(name: string): (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => void);
+// tween(name: string, tweenFn: null): Transition<GElement, Datum, PElement, PDatum>;
+// tween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => void)): Transition<GElement, Datum, PElement, PDatum>;
 
 // --------------------------------------------------------------------------
 // Merge Transitions
@@ -242,9 +242,9 @@ exitTransition.remove();
 // --------------------------------------------------------------------------
 
 // TODO: on()
-    // on(type: string): (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any;
-    // on(type: string, listener: null): Transition<GElement, Datum, PElement, PDatum>;
-    // on(type: string, listener: (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any): Transition<GElement, Datum, PElement, PDatum>;
+// on(type: string): (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any;
+// on(type: string, listener: null): Transition<GElement, Datum, PElement, PDatum>;
+// on(type: string, listener: (this: GElement, datum: Datum, index: number, group: Array<GElement> | NodeListOf<GElement>) => any): Transition<GElement, Datum, PElement, PDatum>;
 
 // --------------------------------------------------------------------------
 // Test Control Flow
@@ -252,17 +252,17 @@ exitTransition.remove();
 
 
 // TODO: each(valueFn: (this: GElement, datum ?: Datum, index ?: number, group ?: Array<GElement> | NodeListOf<GElement>) => void): Transition<GElement, Datum, PElement, PDatum>;
-    
-    // each(valueFn: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => void): Transition<GElement, Datum, PElement, PDatum>;
+
+// each(valueFn: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => void): Transition<GElement, Datum, PElement, PDatum>;
 
 // TODO: call(func: (transition: Transition<GElement, Datum, PElement, PDatum>, ...args: any[]) => any, ...args: any[]): Transition<GElement, Datum, PElement, PDatum>;
 
-    // call(func: (transition: Transition<GElement, Datum, PElement, PDatum>, ...args: any[]) => any, ...args: any[]): Transition<GElement, Datum, PElement, PDatum>;
+// call(func: (transition: Transition<GElement, Datum, PElement, PDatum>, ...args: any[]) => any, ...args: any[]): Transition<GElement, Datum, PElement, PDatum>;
 
 let empty: boolean = enterTransition.empty();
 
 let firstCircleNode: SVGCircleElement = enterTransition.node();
-let circleNodes: Array<SVGCircleElement>  = enterTransition.nodes();
+let circleNodes: Array<SVGCircleElement> = enterTransition.nodes();
 
 let size: number = enterTransition.size();
 
@@ -271,12 +271,12 @@ let size: number = enterTransition.size();
 // --------------------------------------------------------------------------
 
 exitTransition = exitTransition
-        .duration(200)
-        .style('fill', 'red')
+    .duration(200)
+    .style('fill', 'red')
     .transition() // sequenced transition on exiting circles.
-        .duration(1000)
-        .attr('r', 0)
-        .remove();
+    .duration(1000)
+    .attr('r', 0)
+    .remove();
 // --------------------------------------------------------------------------
 // Tests of Top-Level Transition Functions
 // --------------------------------------------------------------------------

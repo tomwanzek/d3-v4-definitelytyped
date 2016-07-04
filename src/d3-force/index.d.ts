@@ -21,38 +21,48 @@ export interface SimulationNodeDatum {
     fy?: number;
 }
 
-export interface Simulation<NodeDatum extends SimulationNodeDatum> {
-    restart(): Simulation<NodeDatum>;
-    stop(): Simulation<NodeDatum>;
-    tick(): Simulation<NodeDatum>;
-    nodes(): Array<NodeDatum>;
-    nodes(nodesData: Array<NodeDatum>): Simulation<NodeDatum>;
-    alpha(): number;
-    alpha(alpha: number): Simulation<NodeDatum>;
-    alphaMin(): number;
-    alphaMin(min: number): Simulation<NodeDatum>;
-    alphaDecay(): number;
-    alphaDecay(decay: number): Simulation<NodeDatum>;
-    alphaTarget(): number;
-    alphaTarget(target: number): Simulation<NodeDatum>;
-    velocityDecay(): number;
-    velocityDecay(decay: number): Simulation<NodeDatum>;
-    force(name: string): Force<NodeDatum>;
-    force(name: string, force: Force<NodeDatum>): Simulation<NodeDatum>;
-    find(x: number, y: number, radius?: number): NodeDatum | undefined;
-    on(typenames: 'tick' | 'end' | string): (this: Simulation<NodeDatum>) => void;
-    on(typenames: 'tick' | 'end' | string, listener: null): Simulation<NodeDatum>;
-    on(typenames: 'tick' | 'end' | string, listener: (this: Simulation<NodeDatum>) => void): Simulation<NodeDatum>;
+export interface SimulationLinkDatum<NodeDatum extends SimulationNodeDatum> {
+    // TODO: Strictly speaking, the string or number typing of source and target is only used when (re)initializing links
+    // Once initialized, links' source and target fields will be of type NodeDatum
+    source: NodeDatum | string | number;
+    target: NodeDatum | string | number;
+    // NB: index is assigned internally by force, once initialized it is defined
+    index?: number;
 }
 
-export function forceSimulation<NodeDatum extends SimulationNodeDatum>(nodesData?: Array<NodeDatum>): Simulation<NodeDatum>;
+export interface Simulation<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum>> {
+    restart(): Simulation<NodeDatum, LinkDatum>;
+    stop(): Simulation<NodeDatum, LinkDatum>;
+    tick(): Simulation<NodeDatum, LinkDatum>;
+    nodes(): Array<NodeDatum>;
+    nodes(nodesData: Array<NodeDatum>): Simulation<NodeDatum, LinkDatum>;
+    alpha(): number;
+    alpha(alpha: number): Simulation<NodeDatum, LinkDatum>;
+    alphaMin(): number;
+    alphaMin(min: number): Simulation<NodeDatum, LinkDatum>;
+    alphaDecay(): number;
+    alphaDecay(decay: number): Simulation<NodeDatum, LinkDatum>;
+    alphaTarget(): number;
+    alphaTarget(target: number): Simulation<NodeDatum, LinkDatum>;
+    velocityDecay(): number;
+    velocityDecay(decay: number): Simulation<NodeDatum, LinkDatum>;
+    force(name: string): Force<NodeDatum, LinkDatum>;
+    force(name: string, force: Force<NodeDatum, LinkDatum>): Simulation<NodeDatum, LinkDatum>;
+    find(x: number, y: number, radius?: number): NodeDatum | undefined;
+    on(typenames: 'tick' | 'end' | string): (this: Simulation<NodeDatum, LinkDatum>) => void;
+    on(typenames: 'tick' | 'end' | string, listener: null): Simulation<NodeDatum, LinkDatum>;
+    on(typenames: 'tick' | 'end' | string, listener: (this: this) => void): Simulation<NodeDatum, LinkDatum>;
+}
+
+export function forceSimulation<NodeDatum extends SimulationNodeDatum>(nodesData?: Array<NodeDatum>): Simulation<NodeDatum, undefined>;
+export function forceSimulation<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum>>(nodesData?: Array<NodeDatum>): Simulation<NodeDatum, LinkDatum>;
 
 // ----------------------------------------------------------------------
 // Forces
 // ----------------------------------------------------------------------
 
 
-export interface Force<NodeDatum extends SimulationNodeDatum> {
+export interface Force<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum>> {
     (alpha: number): void;
     initialize(nodes: Array<NodeDatum>): void;
 }
@@ -60,7 +70,7 @@ export interface Force<NodeDatum extends SimulationNodeDatum> {
 
 // Centering ------------------------------------------------------------
 
-export interface ForceCenter<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum> {
+export interface ForceCenter<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
     x(): number;
     x(x: number): ForceCenter<NodeDatum>;
     y(): number;
@@ -71,7 +81,7 @@ export function forceCenter<NodeDatum extends SimulationNodeDatum>(x?: number, y
 
 // Collision ------------------------------------------------------------
 
-export interface ForceCollide<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum> {
+export interface ForceCollide<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
     radius(): (node: NodeDatum, i: number, nodes: Array<NodeDatum>) => number;
     radius(radius: number): ForceCollide<NodeDatum>;
     radius(radius: (node: NodeDatum, i?: number, nodes?: Array<NodeDatum>) => number): ForceCollide<NodeDatum>;
@@ -87,27 +97,17 @@ export function forceCollide<NodeDatum extends SimulationNodeDatum>(radius: (nod
 
 // Link ----------------------------------------------------------------
 
-export interface SimulationLinkDatum<NodeDatum extends SimulationNodeDatum> {
-    // TODO: Strictly speaking, the string or number typing of source and target is only used when (re)initializing links
-    // Once initialized, links' source and target fields will be of type NodeDatum
-    source: NodeDatum | string | number;
-    target: NodeDatum | string | number;
-    // NB: index is assigned internally by force, once initialized it is defined
-    index?: number;
-}
-
-
-export interface ForceLink<NodeDatum extends SimulationNodeDatum, LinksDatum extends SimulationLinkDatum<NodeDatum>> extends Force<NodeDatum> {
-    links(): Array<LinksDatum>;
-    links(links: Array<LinksDatum>): ForceLink<NodeDatum, LinksDatum>;
-    id(): (d: LinksDatum, i: number, linksData: Array<LinksDatum>) => (string | number);
-    id(id: (d: LinksDatum, i?: number, linksData?: Array<LinksDatum>) => string): ForceLink<NodeDatum, LinksDatum>;
-    distance(): (d: LinksDatum, i: number, linksData: Array<LinksDatum>) => number;
-    distance(distance: (d: LinksDatum, i: number, linksData: Array<LinksDatum>) => number): ForceLink<NodeDatum, LinksDatum>;
-    strength(): (d: LinksDatum, i: number, linksData: Array<LinksDatum>) => number;
-    strength(strength: (d: LinksDatum, i: number, linksData: Array<LinksDatum>) => number): ForceLink<NodeDatum, LinksDatum>;
+export interface ForceLink<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum>> extends Force<NodeDatum, LinkDatum> {
+    links(): Array<LinkDatum>;
+    links(links: Array<LinkDatum>): ForceLink<NodeDatum, LinkDatum>;
+    id(): (d: NodeDatum, i: number, nodesData: Array<NodeDatum>) => (string | number);
+    id(id: (d: NodeDatum, i?: number, nodesData?: Array<NodeDatum>) => string): ForceLink<NodeDatum, LinkDatum>;
+    distance(): (d: LinkDatum, i: number, linksData: Array<LinkDatum>) => number;
+    distance(distance: (d: LinkDatum, i: number, linksData: Array<LinkDatum>) => number): ForceLink<NodeDatum, LinkDatum>;
+    strength(): (d: LinkDatum, i: number, linksData: Array<LinkDatum>) => number;
+    strength(strength: (d: LinkDatum, i: number, linksData: Array<LinkDatum>) => number): ForceLink<NodeDatum, LinkDatum>;
     iterations(): number;
-    iterations(iterations: number): ForceLink<NodeDatum, LinksDatum>;
+    iterations(iterations: number): ForceLink<NodeDatum, LinkDatum>;
 }
 
 export function forceLink<NodeDatum extends SimulationNodeDatum, LinksDatum extends SimulationLinkDatum<NodeDatum>>(): ForceLink<NodeDatum, LinksDatum>;
@@ -115,7 +115,7 @@ export function forceLink<NodeDatum extends SimulationNodeDatum, LinksDatum exte
 
 // Many Body ----------------------------------------------------------------
 
-export interface ForceManyBody<NodeDatum extends SimulationNodeDatum> {
+export interface ForceManyBody<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
     strength(): (d: NodeDatum, i: number, data: Array<NodeDatum>) => number;
     strength(strength: number): ForceManyBody<NodeDatum>;
     strength(strength: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForceManyBody<NodeDatum>;
@@ -131,7 +131,7 @@ export function forceManyBody<NodeDatum extends SimulationNodeDatum>(): ForceMan
 
 // Positioning ----------------------------------------------------------------
 
-export interface ForcePositionX<NodeDatum extends SimulationNodeDatum> {
+export interface ForcePositionX<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
     strength(): (d: NodeDatum, i: number, data: Array<NodeDatum>) => number;
     strength(strength: number): ForcePositionX<NodeDatum>;
     strength(strength: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionX<NodeDatum>;
@@ -140,11 +140,11 @@ export interface ForcePositionX<NodeDatum extends SimulationNodeDatum> {
     x(x: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionX<NodeDatum>;
 }
 
-export function forceX<NodeDatum extends SimulationNodeDatum>():ForcePositionX<NodeDatum>;
-export function forceX<NodeDatum extends SimulationNodeDatum>(x: number):ForcePositionX<NodeDatum>;
-export function forceX<NodeDatum extends SimulationNodeDatum>(x: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number):ForcePositionX<NodeDatum>;
+export function forceX<NodeDatum extends SimulationNodeDatum>(): ForcePositionX<NodeDatum>;
+export function forceX<NodeDatum extends SimulationNodeDatum>(x: number): ForcePositionX<NodeDatum>;
+export function forceX<NodeDatum extends SimulationNodeDatum>(x: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionX<NodeDatum>;
 
-export interface ForcePositionY<NodeDatum extends SimulationNodeDatum> {
+export interface ForcePositionY<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
     strength(): (d: NodeDatum, i: number, data: Array<NodeDatum>) => number;
     strength(strength: number): ForcePositionY<NodeDatum>;
     strength(strength: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionY<NodeDatum>;
@@ -153,6 +153,6 @@ export interface ForcePositionY<NodeDatum extends SimulationNodeDatum> {
     y(y: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionY<NodeDatum>;
 }
 
-export function forceY<NodeDatum extends SimulationNodeDatum>():ForcePositionY<NodeDatum>;
-export function forceY<NodeDatum extends SimulationNodeDatum>(y: number):ForcePositionY<NodeDatum>;
-export function forceY<NodeDatum extends SimulationNodeDatum>(y: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number):ForcePositionY<NodeDatum>;
+export function forceY<NodeDatum extends SimulationNodeDatum>(): ForcePositionY<NodeDatum>;
+export function forceY<NodeDatum extends SimulationNodeDatum>(y: number): ForcePositionY<NodeDatum>;
+export function forceY<NodeDatum extends SimulationNodeDatum>(y: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionY<NodeDatum>;

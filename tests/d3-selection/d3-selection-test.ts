@@ -514,7 +514,7 @@ d3Selection.select('#svg-1') // irrelevant typing to get contextual typing in la
 let dimensions: SVGDatum = {
     width: 500,
     height: 300
-}
+};
 
 let startCircleData: Array<CircleDatumAlternative>,
     endCircleData: Array<CircleDatumAlternative>;
@@ -606,20 +606,20 @@ let nMatrix: Array<number[]>,
     nRow: Array<number>;
 
 let tr: d3Selection.Selection<HTMLTableRowElement, number[], HTMLTableElement, any>;
-tr = d3Selection.select("body")
-    .append<HTMLTableElement>("table")
+tr = d3Selection.select('body')
+    .append<HTMLTableElement>('table')
     .selectAll()
     .data(matrix)
     // .data([{test: 1}, {test: 2}]) // fails, using this data statement instead, would fail assignment to tr due to the data type of tr Selection
     // .data<number[]>([{test: 1}, {test: 2}]) // fails, using this data statement instead, would fail because of its type parameter not being met by input
-    .enter().append<HTMLTableRowElement>("tr");
+    .enter().append<HTMLTableRowElement>('tr');
 
 nMatrix = tr.data(); // i.e. matrix 
 
 let td: d3Selection.Selection<HTMLTableDataCellElement, number, HTMLTableRowElement, number[]>;
 td = tr.selectAll()
     .data(function (d) { return d; }) // d : Array<number> inferred (Array[4] of number per parent <tr>)
-    .enter().append<HTMLTableDataCellElement>("td")
+    .enter().append<HTMLTableDataCellElement>('td')
     .text(function (d) {
         console.log('Abbreviated text for object', this.abbr); // this-type HTMLTableDataCellElement (demonstration only)
         return d;
@@ -629,17 +629,17 @@ nRow = td.data(); // flattened matrix (Array[16] of number)
 
 // SCENARIO 2 - Completely inferred types, when there is no need for `this` typings
 
-let tr2 = d3Selection.select("body")
-    .append("table")
-    .selectAll("tr")
+let tr2 = d3Selection.select('body')
+    .append('table')
+    .selectAll('tr')
     .data(matrix)
-    .enter().append("tr");
+    .enter().append('tr');
 
 nMatrix = tr2.data(); // i.e. matrix 
 
-let td2 = tr2.selectAll("td")
+let td2 = tr2.selectAll('td')
     .data(function (d) { return d; }) // d : Array<number> inferred (Array[4] of number per parent <tr>)
-    .enter().append("td")
+    .enter().append('td')
     .text(function (d) { return d; }); // d:number inferred
 
 nRow = td2.data(); // flattened matrix (Array[16] of number)
@@ -708,7 +708,7 @@ newParagraph2 = body.insert(
         console.log('Body element foo property: ', d.foo); // data of type BodyDatum
         return this.ownerDocument.createElement('p'); // this-type HTMLParagraphElement
     },
-    //before
+    // before
     function (d, i, group) {
         console.log('Body element foo property: ', d.foo); // data of type BodyDatum
         return this.children[0]; // this type HTMLBodyElement
@@ -791,10 +791,10 @@ circles = circles.call(enforceMinRadius, 40); // check chaining return type by r
 
 // on(...) -------------------------------------------------------------------------------
 
-let listener: (this: HTMLBodyElement, datum: BodyDatum, index: number, group: Array<HTMLBodyElement> | NodeListOf<HTMLBodyElement>) => void
+let listener: (this: HTMLBodyElement, datum: BodyDatum, index: number, group: Array<HTMLBodyElement> | NodeListOf<HTMLBodyElement>) => void;
 
 // returns 'this' selection
-body = body.on('click', listener) // check chaining return type by re-assigning
+body = body.on('click', listener); // check chaining return type by re-assigning
 
 body = body.on('click', function (d) {
     console.log('onclick print body background color: ', this.bgColor); // HTMLBodyElement
@@ -826,7 +826,7 @@ body = body.dispatch('fooEvent', function (d, i, group) { // re-assign for chain
         cancelable: true,
         bubbles: true,
         detail: d.foo // d is of type BodyDatum
-    }
+    };
     return eParam;
 });
 
@@ -846,11 +846,11 @@ let successEvent = { type: 'wonEuro2016', team: 'Island' };
 
 let customListener: (this: HTMLBodyElement, finalOpponent: string) => string;
 
-customListener = function(finalOpponent) {
+customListener = function (finalOpponent) {
     let e = <SuccessEvent>d3Selection.event;
 
     return e.team + ' defeated ' + finalOpponent + ' in the EURO 2016 Cup. Who would have thought!!!';
-}
+};
 
 let resultText: string = d3Selection.customEvent(successEvent, customListener, body.node(), 'Wales');
 

@@ -109,7 +109,7 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     // Sub-selection -------------------------
 
     select<DescElement extends BaseType>(selector: string): Selection<DescElement, Datum, PElement, PDatum>;
-    select<DescElement extends BaseType>(selector: null): Selection<null, undefined, PElement, PDatum>;// _groups are set to empty array, first generic type is set to null by convention
+    select<DescElement extends BaseType>(selector: null): Selection<null, undefined, PElement, PDatum>; // _groups are set to empty array, first generic type is set to null by convention
     select<DescElement extends BaseType>(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => DescElement): Selection<DescElement, Datum, PElement, PDatum>;
 
     selectAll(): Selection<null, undefined, GElement, Datum>; // _groups are set to empty array, first generic type is set to null by convention
@@ -131,7 +131,7 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     style(name: string): string;
     style(name: string, value: Primitive, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
     style(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive, priority?:  null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
 
     property(name: string): any;
     property(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => any): Selection<GElement, Datum, PElement, PDatum>;
@@ -223,7 +223,7 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     empty(): boolean;
 
     node(): GElement;
-    nodes(): Array<GElement>
+    nodes(): Array<GElement>;
 
     size(): number;
 
@@ -231,10 +231,10 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 }
 
 
-interface selectionFn extends Function {
+interface SelectionFn extends Function {
     (): Selection<HTMLElement, any, null, undefined>;
 }
-export var selection: selectionFn;
+export var selection: SelectionFn;
 
 
 // ---------------------------------------------------------------------------

@@ -16,7 +16,7 @@ export type ColorSpaceObject = RGBColor | HSLColor | LabColor | HCLColor | Cubeh
 
 
 export interface Color {
-    displayable(): boolean // Note: While this method is used in prototyping for colors of specific colorspaces, it should not be called directly, as 'this.rgb' would not be implemented on Color
+    displayable(): boolean; // Note: While this method is used in prototyping for colors of specific colorspaces, it should not be called directly, as 'this.rgb' would not be implemented on Color
     toString(): string; // Note: While this method is used in prototyping for colors of specific colorspaces, it should not be called directly, as 'this.rgb' would not be implemented on Color
 }
 
@@ -33,7 +33,7 @@ export interface RGBColor extends Color {
     opacity: number;
     brighter(k?: number): RGBColor;
     darker(k?: number): RGBColor;
-    displayable(): boolean
+    displayable(): boolean;
     rgb(): RGBColor;
     toString(): string;
 }
@@ -52,7 +52,7 @@ export interface HSLColor extends Color {
     opacity: number;
     brighter(k?: number): HSLColor;
     darker(k?: number): HSLColor;
-    displayable(): boolean
+    displayable(): boolean;
     rgb(): RGBColor;
 }
 

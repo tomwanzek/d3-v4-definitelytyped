@@ -12,21 +12,21 @@ import { Selection, TransitionLike } from '../d3-selection';
  * where x0 is the minimum x-value, y0 is the minimum y-value, x1 is the maximum x-value, and y1 is the maximum y-value. 
  * For an x-brush, it must be defined as [x0, x1]; for a y-brush, it must be defined as [y0, y1].
  */
-export type BrushSelection = [[number, number],[number, number]] | [number, number];
+export type BrushSelection = [[number, number], [number, number]] | [number, number];
 
 
 export interface BrushBehavior<Datum> {
     (group: Selection<SVGGElement, Datum, any, any>, ...args: any[]): void;
     move(group: Selection<SVGGElement, Datum, any, any>, selection: BrushSelection): BrushBehavior<Datum>;
-    move(group: Selection<SVGGElement, Datum, any, any>, selection: (this: SVGGElement, d?:Datum, i?: number, group?: Array<SVGGElement> | NodeListOf<SVGGElement>) => BrushSelection): BrushBehavior<Datum>;
+    move(group: Selection<SVGGElement, Datum, any, any>, selection: (this: SVGGElement, d?: Datum, i?: number, group?: Array<SVGGElement> | NodeListOf<SVGGElement>) => BrushSelection): BrushBehavior<Datum>;
     move(group: TransitionLike<SVGGElement, Datum>, selection: BrushSelection): BrushBehavior<Datum>;
-    move(group: TransitionLike<SVGGElement, Datum>, selection: (this: SVGGElement, d?:Datum, i?: number, group?: Array<SVGGElement> | NodeListOf<SVGGElement>) => BrushSelection): BrushBehavior<Datum>;
-    extent(): (this: SVGGElement, d: Datum, i:number, group:Array<SVGGElement> | NodeListOf<SVGGElement>) => [[number, number], [number, number]];
+    move(group: TransitionLike<SVGGElement, Datum>, selection: (this: SVGGElement, d?: Datum, i?: number, group?: Array<SVGGElement> | NodeListOf<SVGGElement>) => BrushSelection): BrushBehavior<Datum>;
+    extent(): (this: SVGGElement, d: Datum, i: number, group: Array<SVGGElement> | NodeListOf<SVGGElement>) => [[number, number], [number, number]];
     extent(extent: [[number, number], [number, number]]): BrushBehavior<Datum>;
-    extent(extent: (this: SVGGElement, d: Datum, i:number, group:Array<SVGGElement> | NodeListOf<SVGGElement>) => [[number, number], [number, number]]): BrushBehavior<Datum>;
+    extent(extent: (this: SVGGElement, d: Datum, i: number, group: Array<SVGGElement> | NodeListOf<SVGGElement>) => [[number, number], [number, number]]): BrushBehavior<Datum>;
     filter(): (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => boolean;
     filter(filterFn: (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => boolean): BrushBehavior<SVGGElement>;
-    handleSize():number;
+    handleSize(): number;
     handleSize(size: number): BrushBehavior<Datum>;
     on(typenames: string): (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => void;
     on(typenames: string, callback: null): BrushBehavior<SVGGElement>;

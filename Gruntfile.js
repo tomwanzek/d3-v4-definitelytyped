@@ -9,7 +9,18 @@ module.exports = function (grunt) {
         clean: {
             source: ['tests/**/*.js', 'tests/**/*.js.map']
         },
-
+        // Linting Tasks -------------------------------
+        tslint: {
+            options: {
+                configuration: 'tslint.json'
+            },
+            files: {
+                src: [
+                    'tests/**/*.ts',
+                    'src/**/*.d.ts'
+                ]
+            }
+        },
         // Compile Tasks -------------------------------
         ts: {
             compileService: {
@@ -38,13 +49,13 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-ts');
-
+    grunt.loadNpmTasks('grunt-tslint');
 
     // -----------------------------------------------------------------
     // Transpile from Typescript to target format JS
     // -----------------------------------------------------------------
 
-    grunt.registerTask('compile', ['clean:source', 'ts:compileService']);
+    grunt.registerTask('compile', ['clean:source', 'ts:compileService', 'tslint']);
 
 
 };

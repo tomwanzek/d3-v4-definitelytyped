@@ -18,7 +18,7 @@ interface Interpolator<T> {
 class NumCoercible {
     public a: number;
 
-    constructor (a: number){
+    constructor(a: number) {
         this.a = a;
     }
     public valueOf() {
@@ -29,7 +29,7 @@ class NumCoercible {
 class StringCoercible {
     public a: string;
 
-    constructor (a: string){
+    constructor(a: string) {
         this.a = a;
     }
 
@@ -90,7 +90,7 @@ iNum = d3Interpolate.interpolate(new NumCoercible(2), new NumCoercible(20));
 iKeyVal = d3Interpolate.interpolate({ x: 0, y: 1 }, { x: 1, y: 10, z: 100 });
 
 d3Interpolate.interpolate<NumCoercible>(new NumCoercible(1), new NumCoercible(5));
-d3Interpolate.interpolate<NumCoercible>({a: 1}, new NumCoercible(5));
+d3Interpolate.interpolate<NumCoercible>({ a: 1 }, new NumCoercible(5));
 
 // test interpolateNumber(a, b) signature ----------------------------------------------------
 
@@ -128,7 +128,7 @@ iArrayStr = d3Interpolate.interpolateArray([1, 2], ['4', '8']); // infered typin
 arrStr = iArrayStr(0.5);
 
 // two element array with first element date and second element string
-iArrayMixed = d3Interpolate.interpolateArray<[Date, string]>([new Date(2016,  6, 1), 'b: 1'], [new Date(2016,  6, 31), 'b: 8'])
+iArrayMixed = d3Interpolate.interpolateArray<[Date, string]>([new Date(2016, 6, 1), 'b: 1'], [new Date(2016, 6, 31), 'b: 8']);
 
 // test interpolateObject(a, b) signature ----------------------------------------------------
 
@@ -171,7 +171,7 @@ iString = d3Interpolate.interpolateRgb(d3Color.rgb('seagreen'), d3Color.hcl('ste
 str = iString(0.5);
 
 // with gamma correction
-iString = d3Interpolate.interpolateRgb.gamma(2.2)("purple", "orange");
+iString = d3Interpolate.interpolateRgb.gamma(2.2)('purple', 'orange');
 
 // test interpolateRgbBasis(color) and  interpolateRgbBasisClosed(color) signatures -------------------------
 
@@ -207,7 +207,7 @@ iString = d3Interpolate.interpolateCubehelix(d3Color.rgb('seagreen'), d3Color.hc
 str = iString(0.5);
 
 // with gamma correction
-iString = d3Interpolate.interpolateCubehelix.gamma(2.2)("purple", "orange");
+iString = d3Interpolate.interpolateCubehelix.gamma(2.2)('purple', 'orange');
 
 // without gamma correction
 iString = d3Interpolate.interpolateCubehelixLong('seagreen', 'steelblue');
@@ -215,7 +215,7 @@ iString = d3Interpolate.interpolateCubehelixLong(d3Color.rgb('seagreen'), d3Colo
 str = iString(0.5);
 
 // with gamma correction
-iString = d3Interpolate.interpolateCubehelixLong.gamma(2.2)("purple", "orange");
+iString = d3Interpolate.interpolateCubehelixLong.gamma(2.2)('purple', 'orange');
 
 
 

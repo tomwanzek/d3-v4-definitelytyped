@@ -8,7 +8,7 @@
 
 import * as d3Ease from '../../src/d3-ease';
 
-var t_in: number, t_out: number;
+let t_in: number, t_out: number;
 
 t_out = d3Ease.easeLinear(t_in);
 

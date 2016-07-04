@@ -31,7 +31,7 @@ export interface D3Map<T> {
     clear(): void;
     keys(): Array<string>;
     values(): Array<T>;
-    entries(): Array<{ key: string, value: T }>
+    entries(): Array<{ key: string, value: T }>;
     each(func: (value: T, key: string, map: D3Map<T>) => void): undefined;
     empty(): boolean;
     size(): number;

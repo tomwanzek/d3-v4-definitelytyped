@@ -55,7 +55,7 @@ export interface VoronoiLinks<T> {
 export interface VoronoiLayout<T> {
     (data: Array<T>): VoronoiDiagram<T>;
     x(): (d: T) => number;
-    x(x: (d: T) => number):VoronoiLayout<T>; 
+    x(x: (d: T) => number): VoronoiLayout<T>;
     y(): (d: T) => number;
     y(y: (d: T) => number): VoronoiLayout<T>;
     extent(): [[number, number], [number, number]] | null;
@@ -79,5 +79,5 @@ export interface VoronoiDiagram<T> {
 // voronoi Export
 // --------------------------------------------------------------------------
 
-export function voronoi(): VoronoiLayout<[number, number]>; 
+export function voronoi(): VoronoiLayout<[number, number]>;
 export function voronoi<T>(): VoronoiLayout<T>;

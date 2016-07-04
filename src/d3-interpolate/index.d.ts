@@ -13,7 +13,7 @@ import { ColorSpaceObject } from '../d3-color';
 // --------------------------------------------------------------------------
 
 
-export interface ZoomInterpolator extends Function{
+export interface ZoomInterpolator extends Function {
     (t: number): ZoomView;
     /**
      * Recommended duration of zoom transition in ms
@@ -40,21 +40,21 @@ export type ZoomView = [number, number, number];
 // --------------------------------------------------------------------------
 
 export function interpolate(a: any, b: null): ((t: number) => null);
-export function interpolate(a: number | {valueOf(): number}, b: number): ((t: number) => number);
+export function interpolate(a: number | { valueOf(): number }, b: number): ((t: number) => number);
 export function interpolate(a: any, b: ColorSpaceObject): ((t: number) => string);
-export function interpolate(a: Date, b: Date): ((t:number) => Date); 
-export function interpolate(a: string | {toString(): string}, b: string): ((t: number) => string);
+export function interpolate(a: Date, b: Date): ((t: number) => Date);
+export function interpolate(a: string | { toString(): string }, b: string): ((t: number) => string);
 export function interpolate<U extends Array<any>>(a: Array<any>, b: U): ((t: number) => U);
-export function interpolate(a: number | {valueOf(): number}, b: {valueOf(): number}): ((t: number) => number);
+export function interpolate(a: number | { valueOf(): number }, b: { valueOf(): number }): ((t: number) => number);
 export function interpolate<U extends Object>(a: any, b: U): ((t: number) => U);
 export function interpolate(a: any, b: { [key: string]: any }): ((t: number) => { [key: string]: any });
 
 
-export function interpolateNumber(a: number |  {valueOf(): number}, b: number |  {valueOf(): number}): ((t: number) => number);
+export function interpolateNumber(a: number | { valueOf(): number }, b: number | { valueOf(): number }): ((t: number) => number);
 
-export function interpolateRound(a: number |  {valueOf(): number}, b: number |  {valueOf(): number}): ((t: number) => number);
+export function interpolateRound(a: number | { valueOf(): number }, b: number | { valueOf(): number }): ((t: number) => number);
 
-export function interpolateString(a: string | {toString(): string}, b: string| {toString(): string}): ((t: number) => string);
+export function interpolateString(a: string | { toString(): string }, b: string | { toString(): string }): ((t: number) => string);
 
 export function interpolateDate(a: Date, b: Date): ((t: number) => Date);
 
@@ -74,7 +74,7 @@ export function interpolateTransformSvg(a: string, b: string): ((t: number) => s
 export function interpolateZoom(a: ZoomView, b: ZoomView): ZoomInterpolator;
 
 
-export function quantize<T>(interpolator: ((t: number) => T), n :number): Array<T>;
+export function quantize<T>(interpolator: ((t: number) => T), n: number): Array<T>;
 
 // Color interpolation related
 

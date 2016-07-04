@@ -5,16 +5,6 @@
 
 // TODO: Clean-up header for proper referencing of new project/module information
 
-// ---------------------------------------------------------------
-// Shared Types and Interfaces
-// ---------------------------------------------------------------
-
-/**
- * Administrivia: anything with a valueOf(): number method is comparable, so we allow it in numeric operations
- */
-interface Numeric {
-    valueOf(): number;
-}
 
 // -----------------------------------------------------------------------------------
 // Arc Generator
@@ -25,7 +15,7 @@ export interface DefaultArcObject {
     outerRadius: number;
     startAngle: number;
     endAngle: number;
-    padAngle: number
+    padAngle: number;
 }
 
 export interface Arc<Datum> {
@@ -83,18 +73,18 @@ export interface Pie<Datum> {
     sortValues(): ((a: number, b: number) => number) | null;
     sortValues(comparator: (a: number, b: number) => number): Pie<Datum>;
     sortValues(comparator: null): Pie<Datum>;
-    startAngle(): (this:any, data: Array<Datum>, ...args: any[]) => number;
+    startAngle(): (this: any, data: Array<Datum>, ...args: any[]) => number;
     startAngle(angle: number): Pie<Datum>;
-    startAngle(angle: (this:any, data: Array<Datum>, ...args: any[]) => number): Pie<Datum>;
-    endAngle(): (this:any, ...args: any[]) => number;
+    startAngle(angle: (this: any, data: Array<Datum>, ...args: any[]) => number): Pie<Datum>;
+    endAngle(): (this: any, ...args: any[]) => number;
     endAngle(angle: number): Pie<Datum>;
-    endAngle(angle: (this:any, data: Array<Datum>, ...args: any[]) => number): Pie<Datum>;
-    padAngle(): (this:any, data: Array<Datum>, ...args: any[]) => number;
+    endAngle(angle: (this: any, data: Array<Datum>, ...args: any[]) => number): Pie<Datum>;
+    padAngle(): (this: any, data: Array<Datum>, ...args: any[]) => number;
     padAngle(angle: number): Pie<Datum>;
-    padAngle(angle: (this:any, data: Array<Datum>, ...args: any[]) => number): Pie<Datum>;
+    padAngle(angle: (this: any, data: Array<Datum>, ...args: any[]) => number): Pie<Datum>;
 }
 
-export function pie(): Pie<Numeric>;
+export function pie(): Pie<number | { valueOf(): number }>;
 export function pie<Datum>(): Pie<Datum>;
 
 // -----------------------------------------------------------------------------------
@@ -248,13 +238,13 @@ export var curveBasisOpen: CurveFactory;
 
 export var curveBasisClosed: CurveFactory;
 
-export interface CurveBundleFactory extends CurveFactoryLineOnly{
+export interface CurveBundleFactory extends CurveFactoryLineOnly {
     beta(beta: number): CurveBundleFactory;
 }
 
 export var curveBundle: CurveBundleFactory;
 
-export interface CurveCardinalFactory extends CurveFactory{
+export interface CurveCardinalFactory extends CurveFactory {
     tension(tension: number): CurveCardinalFactory;
 }
 
@@ -262,7 +252,7 @@ export var curveCardinal: CurveCardinalFactory;
 export var curveCardinalOpen: CurveCardinalFactory;
 export var curveCardinalClosed: CurveCardinalFactory;
 
-export interface CurveCatmullRomFactory extends CurveFactory{
+export interface CurveCatmullRomFactory extends CurveFactory {
     alpha(alpha: number): CurveCatmullRomFactory;
 }
 
