@@ -925,20 +925,3 @@ predefinedNamespaces['dummy'] = 'http://www.w3.org/2020/dummynamespace';
 xWindow = d3Selection.window(xElement);
 xWindow = d3Selection.window(xDoc);
 xWindow = d3Selection.window(xWindow);
-
-// ---------------------------------------------------------------------------------------
-// TEST OF GITHUB ISSUE #4 (https://github.com/tomwanzek/d3-v4-definitelytyped/issues/4)
-// ---------------------------------------------------------------------------------------
-
-// fails as expected, as transition(...) method and Transition<...> interface are not defined on d3-selection
-// let transition : d3Selection.Transition<any,any,any,any> = d3Selection.transition('test');
-
-// UNEXPECTEDLY does NOT FAIL as module augmentation of Selection<...> interface in d3-transition bleeds into this test module,
-// although d3-transition has not been imported
-
-let ghostTransition = body.transition('test'); // SHOULD FAIL, method transition(...) SHOULD NOT BE AVAILABLE on body Selection<...> without d3-transition import
-
-ghostTransition.duration(500);  // SHOULD FAIL, ghostTransition has properties of Transition<...>
-
-body.interrupt('test'); // SHOULD FAIL, method interrupt(...) SHOULD NOT BE AVAILABLE on body Selection<...> without d3-transition import
-

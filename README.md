@@ -153,8 +153,6 @@ respective generator with data. I.e. it can be global object, undefined or anyth
 
 See [issue 2 BaseType definition for selection/transition elements](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/2).
 
-See [issue 3 module augmentation bleed](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/3),  if using **d3-selection** and **d3-transition** in the same compilation context, where a module imports _only_ **d3-selection**.
-
 **Note**: Utilizes `this`-typing (criticality: _high_)
 
 `this`-typing is used for context-binding to DOM element.
