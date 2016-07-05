@@ -19,7 +19,12 @@ The definition files contained in this repo are to be considered with care. Spec
 * where indicated, some features of the definition files may be considered experimental. Certain definition files make use of the ability to type the `this` context of a function and depend on new features of the **typescript compiler** (currently typescript@next (2.0.0-dev)). With respect to **D3**, this ability may be of specific interest when working with [selections](https://github.com/d3/d3-selection) and [transitions](https://github.com/d3/d3-transition), where the current DOM element is provided through the `this` context.
 
 * the **D3 v4** release allows substantial flexibility with regard to _(un)bundling_ as well as the choice between _vanilla_ and _mondule import_ use. The definitions in this repo are written as external modules.
-Ambient declarations are only used, when required for module augmentation (e.g. **d3-transition** extending the `Selection` interface of **d3-selection**). The question of exporting to a `d3` **global** for _vanilla_ use, is somewhat related to the potential use of `export as namespace d3` in UMD module declarations.
+Ambient declarations are only used, when required for module augmentation (e.g. **d3-transition** extending the `Selection` interface of **d3-selection**).
+
+The question of exporting to a `d3` **global** for _vanilla_ use, is somewhat related to the potential use of `export as namespace d3` in UMD module declarations.
+The [D3 standard bundle definitions file](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3/index.d.ts) contained in this repo currently re-exports the modules, as stated in
+the next section. It also exposes `d3` **global** which can be used, where the module is not imported, but definitions are included by reference. The global is exposed using `export as namespace d3`.
+Note that, this is _currently_ not possible at module level, as it creates a duplicate identifier error for `d3`.
 
 Please, note that the definition and test files in this repo are currently using relative paths.
 This was done as an interim step to focus on the D3-related aspects of this effort (including the experimental `this` typing). See [issue #1 regarding definitions discovery/deployment mechanism](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/1).
@@ -30,6 +35,7 @@ This was done as an interim step to focus on the D3-related aspects of this effo
 I.e. they are only shape tests as is the DefinitelyTyped tradition. They are expressly not meant to be used with a test runner as functional tests.
 
 A grunt-task using the dev-dependency typescript@next version is currently used to perform the compilation tests.
+
 
 ### d3-array
 
@@ -92,7 +98,7 @@ respective generator with data. I.e. it can be global object, undefined or anyth
 
 ### d3-force
 
-- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-force/index.d.ts)
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-force/index.d.ts) (*draft*)
 - [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-ease/d3-ease-test.ts)
 
 **Note**: Utilizes `this`-typing (criticality: _medium_)

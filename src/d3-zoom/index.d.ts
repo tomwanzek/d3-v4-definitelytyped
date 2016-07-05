@@ -101,8 +101,8 @@ export function zoom<ZoomRefElement extends ZoomedElementBaseType, ZoomRefDatum>
 // --------------------------------------------------------------------------
 
 
-export interface D3ZoomEvent<ZoomRefElement extends ZoomedElementBaseType, Datum> {
-    target: ZoomBehavior<ZoomRefElement, Datum>;
+export interface D3ZoomEvent<ZoomRefElement extends ZoomedElementBaseType, ZoomRefDatum> {
+    target: ZoomBehavior<ZoomRefElement, ZoomRefDatum>;
     type: 'start' | 'zoom' | 'end' | string; // Leave failsafe string type for cases like 'zoom.foo'
     transform: ZoomTransform;
     sourceEvent: MouseEvent | TouchEvent;
