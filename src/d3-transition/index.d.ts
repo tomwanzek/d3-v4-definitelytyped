@@ -7,7 +7,7 @@
 
 // HACK: For development purposes only: '../' relative paths to resolve modules in absence of @types support (including for module augmentation below)
 
-import { BaseType, Primitive, Selection } from '../d3-selection';
+import { BaseType, Selection } from '../d3-selection';
 
 /**
  * Extend interface 'Selection' by declaration merging with 'd3-selection'
@@ -44,16 +44,19 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
 
     // Modifying -------------------------------
 
-    attr(name: string, value: Primitive | null): Transition<GElement, Datum, PElement, PDatum>;
-    attr(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive): Transition<GElement, Datum, PElement, PDatum>;
-    attrTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive)): Transition<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: null): Transition<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | { toString(): string })): Transition<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: string | { toString(): string }): Transition<GElement, Datum, PElement, PDatum>;
+    attrTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => (string | { toString(): string }))): Transition<GElement, Datum, PElement, PDatum>;
 
-    style(name: string, value: Primitive | null, priority?: null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive, priority?: null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
-    styleTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => Primitive), priority?: null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: null): Transition<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | { toString(): string }), priority?: null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: string | { toString(): string }, priority?: null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
+    styleTween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => (string | { toString(): string })), priority?: null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
 
-    text(value: Primitive | null): Transition<GElement, Datum, PElement, PDatum>;
-    text(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive): Transition<GElement, Datum, PElement, PDatum>;
+    text(value: null): Transition<GElement, Datum, PElement, PDatum>;
+    text(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | { toString(): string })): Transition<GElement, Datum, PElement, PDatum>;
+    text(value: string | { toString(): string }): Transition<GElement, Datum, PElement, PDatum>;
 
     tween(name: string): (this: GElement, datum?: Datum, i?: number, group?: GElement[] | NodeListOf<GElement>) => ((t: number) => void);
     tween(name: string, tweenFn: null): Transition<GElement, Datum, PElement, PDatum>;

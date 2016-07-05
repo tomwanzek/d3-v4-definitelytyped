@@ -18,11 +18,6 @@
 // --------------------------------------------------------------------------
 
 /**
- * JavaScript primitive types, or "things that toString() predictably".
- */
-export type Primitive = number | string | boolean;
-
-/**
  * BaseType serves as an alias for the 'minimal' data type which can be selected
  * without 'd3-selection' trying to use properties internally which would otherwise not
  * be supported.
@@ -120,18 +115,18 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     // Modifying -------------------------------
 
     attr(name: string): string;
-    attr(name: string, value: Primitive): Selection<GElement, Datum, PElement, PDatum>;
     attr(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
-    attr(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive): Selection<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | { toString(): string })): Selection<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: string | { toString(): string }): Selection<GElement, Datum, PElement, PDatum>;
 
     classed(name: string): boolean;
-    classed(name: string, value: boolean): Selection<GElement, Datum, PElement, PDatum>;
     classed(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => boolean): Selection<GElement, Datum, PElement, PDatum>;
+    classed(name: string, value: boolean): Selection<GElement, Datum, PElement, PDatum>;
 
     style(name: string): string;
-    style(name: string, value: Primitive, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
     style(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | { toString(): string }), priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: string | { toString(): string }, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
 
     property(name: string): any;
     property(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => any): Selection<GElement, Datum, PElement, PDatum>;
@@ -139,8 +134,8 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     property(name: string, value: any): Selection<GElement, Datum, PElement, PDatum>;
 
     text(): string;
-    text(value: Primitive): Selection<GElement, Datum, PElement, PDatum>;
-    text(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => Primitive): Selection<GElement, Datum, PElement, PDatum>;
+    text(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | { toString(): string })): Selection<GElement, Datum, PElement, PDatum>;
+    text(value: string | { toString(): string }): Selection<GElement, Datum, PElement, PDatum>;
 
     html(): string;
     html(value: string): Selection<GElement, Datum, PElement, PDatum>;
