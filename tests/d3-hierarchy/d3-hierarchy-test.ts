@@ -15,14 +15,14 @@ import * as d3Hierarchy from '../../src/d3-hierarchy';
 // Pack Siblings and Enclosure
 // -----------------------------------------------------------------------
 
-interface CircleData extends d3Hierarchy.PackCircle{
+interface CircleData extends d3Hierarchy.PackCircle {
     v: string;
 }
 
-let circles : Array<CircleData> = [
-    {r: 10, v: 'a'},
-    {r: 1, v: 'b'},
-    {r: 20, v: 'c'}
+let circles: Array<CircleData> = [
+    { r: 10, v: 'a' },
+    { r: 1, v: 'b' },
+    { r: 20, v: 'c' }
 ];
 
 // packSiblings
@@ -31,6 +31,6 @@ circles = d3Hierarchy.packSiblings(circles);
 
 // packEnclose
 
-let enclosure: {r: number, x: number, y: number};
+let enclosure: { r: number, x: number, y: number };
 
 enclosure = d3Hierarchy.packEnclose(circles);

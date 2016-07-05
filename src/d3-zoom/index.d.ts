@@ -38,59 +38,71 @@ export interface ZoomScale {
 // --------------------------------------------------------------------------
 
 
-export interface ZoomBehavior<GElement extends ZoomedElementBaseType, Datum> extends Function {
-    (selection: Selection<GElement, Datum, any, any>, ...args: any[]): void;
-    transform(selection: Selection<GElement, Datum, any, any>, transform: ZoomTransform): void;
-    transform(selection: Selection<GElement, Datum, any, any>, transform: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => ZoomTransform): void;
-    transform(transition: TransitionLike<GElement, Datum>, transform: ZoomTransform): void;
-    transform(transition: TransitionLike<GElement, Datum>, transform: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => ZoomTransform): void;
+export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, ZoomRefDatum> extends Function {
+    (selection: Selection<ZoomRefElement, ZoomRefDatum, any, any>, ...args: any[]): void;
+    transform<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>, transform: ZoomTransform): void;
+    transform<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>, transform: (this: GElement, d?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => ZoomTransform): void;
+    transform<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>, transform: ZoomTransform): void;
+    transform<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>, transform: (this: GElement, d?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => ZoomTransform): void;
 
-    translateBy(selection: Selection<GElement, Datum, any, any>, x: number, y: number): void;
-    translateBy(selection: Selection<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: number): void;
-    translateBy(selection: Selection<GElement, Datum, any, any>, x: number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
-    translateBy(selection: Selection<GElement, Datum, any, any>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
-    translateBy(transition: TransitionLike<GElement, Datum>, x: number, y: number): void;
-    translateBy(transition: TransitionLike<GElement, Datum>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: number): void;
-    translateBy(transition: TransitionLike<GElement, Datum>, x: number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
-    translateBy(transition: TransitionLike<GElement, Datum>, x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number, y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    translateBy<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>, x: number, y: number): void;
+    translateBy<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>,
+        x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => number,
+        y: number): void;
+    translateBy<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>,
+        x: number,
+        y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => number): void;
+    translateBy<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>,
+        x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => number,
+        y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    translateBy<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>, x: number, y: number): void;
+    translateBy<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>,
+        x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => number,
+        y: number): void;
+    translateBy<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>,
+        x: number,
+        y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => number): void;
+    translateBy<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>,
+        x: (this: GElement, d?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => number,
+        y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => number): void;
 
-    scaleBy(selection: Selection<GElement, Datum, any, any>, k: number): void;
-    scaleBy(transition: TransitionLike<GElement, Datum>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    scaleBy<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>, k: number): void;
+    scaleBy<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
 
-    scaleTo(selection: Selection<GElement, Datum, any, any>, k: number): void;
-    scaleTo(transition: TransitionLike<GElement, Datum>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    scaleTo<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>, k: number): void;
+    scaleTo<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
 
-    filter(): (this: GElement, datum: Datum, index: number, group: Array<GElement>) => boolean;
-    filter(filterFn: (this: GElement, d?: Datum, index?: number, group?: Array<GElement>) => boolean): ZoomBehavior<GElement, Datum>;
+    filter(): (this: ZoomRefElement, datum: ZoomRefDatum, index: number, group: Array<ZoomRefElement>) => boolean;
+    filter(filterFn: (this: ZoomRefElement, d?: ZoomRefDatum, index?: number, group?: Array<ZoomRefElement>) => boolean): ZoomBehavior<ZoomRefElement, ZoomRefDatum>;
 
-    extent(): (this: GElement, d: Datum, index: number, group: Array<GElement>) => [[number, number], [number, number]];
-    extent(extent: [[number, number], [number, number]]): ZoomBehavior<GElement, Datum>;
-    extent(extent: (this: GElement, d?: Datum, index?: number, group?: Array<GElement>) => [[number, number], [number, number]]): ZoomBehavior<GElement, Datum>;
+    extent(): (this: ZoomRefElement, d: ZoomRefDatum, index: number, group: Array<ZoomRefElement>) => [[number, number], [number, number]];
+    extent(extent: [[number, number], [number, number]]): ZoomBehavior<ZoomRefElement, ZoomRefDatum>;
+    extent(extent: (this: ZoomRefElement, d?: ZoomRefDatum, index?: number, group?: Array<ZoomRefElement>) => [[number, number], [number, number]]): ZoomBehavior<ZoomRefElement, ZoomRefDatum>;
 
     scaleExtent(): [number, number];
-    scaleExtent(extent: [number, number]): ZoomBehavior<GElement, Datum>;
+    scaleExtent(extent: [number, number]): ZoomBehavior<ZoomRefElement, ZoomRefDatum>;
 
     translateExtent(): [[number, number], [number, number]];
-    translateExtent(extent: [[number, number], [number, number]]): ZoomBehavior<GElement, Datum>;
+    translateExtent(extent: [[number, number], [number, number]]): ZoomBehavior<ZoomRefElement, ZoomRefDatum>;
 
     duration(): number;
-    duration(duration: number): ZoomBehavior<GElement, Datum>;
+    duration(duration: number): ZoomBehavior<ZoomRefElement, ZoomRefDatum>;
 
-    on(typenames: string): (this: GElement, datum: Datum, index: number, group: Array<GElement>) => void;
-    on(typenames: string, callback: null): ZoomBehavior<GElement, Datum>;
-    on(typenames: string, callback: (this: GElement, datum: Datum, index: number, group: Array<GElement>) => void): ZoomBehavior<GElement, Datum>;
+    on(typenames: string): (this: ZoomRefElement, datum: ZoomRefDatum, index: number, group: Array<ZoomRefElement> | NodeListOf<ZoomRefElement>) => void;
+    on(typenames: string, callback: null): ZoomBehavior<ZoomRefElement, ZoomRefDatum>;
+    on(typenames: string, callback: (this: ZoomRefElement, datum: ZoomRefDatum, index: number, group: Array<ZoomRefElement> | NodeListOf<ZoomRefElement>) => void): ZoomBehavior<ZoomRefElement, ZoomRefDatum>;
 }
 
 
-export function zoom<GElement extends ZoomedElementBaseType, Datum>(): ZoomBehavior<GElement, Datum>;
+export function zoom<ZoomRefElement extends ZoomedElementBaseType, ZoomRefDatum>(): ZoomBehavior<ZoomRefElement, ZoomRefDatum>;
 
 // --------------------------------------------------------------------------
 // Zoom Event
 // --------------------------------------------------------------------------
 
 
-export interface D3ZoomEvent<GElement extends ZoomedElementBaseType, Datum> {
-    target: ZoomBehavior<GElement, Datum>;
+export interface D3ZoomEvent<ZoomRefElement extends ZoomedElementBaseType, Datum> {
+    target: ZoomBehavior<ZoomRefElement, Datum>;
     type: 'start' | 'zoom' | 'end' | string; // Leave failsafe string type for cases like 'zoom.foo'
     transform: ZoomTransform;
     sourceEvent: MouseEvent | TouchEvent;
