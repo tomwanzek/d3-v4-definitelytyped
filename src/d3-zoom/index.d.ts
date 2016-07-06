@@ -67,9 +67,13 @@ export interface ZoomBehavior<ZoomRefElement extends ZoomedElementBaseType, Zoom
         y: (this: GElement, d?: Datum, i?: number, group?: Array<GElement> | NodeListOf<GElement>) => number): void;
 
     scaleBy<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>, k: number): void;
+    scaleBy<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    scaleBy<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>, k: number): void;
     scaleBy<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
 
     scaleTo<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>, k: number): void;
+    scaleTo<GElement extends ZoomedElementBaseType, Datum>(selection: Selection<GElement, Datum, any, any>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
+    scaleTo<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>, k: number): void;
     scaleTo<GElement extends ZoomedElementBaseType, Datum>(transition: TransitionLike<GElement, Datum>, k: (this: GElement, d?: Datum, i?: number, group?: Array<GElement>) => number): void;
 
     filter(): (this: ZoomRefElement, datum: ZoomRefDatum, index: number, group: Array<ZoomRefElement>) => boolean;
@@ -105,7 +109,7 @@ export interface D3ZoomEvent<ZoomRefElement extends ZoomedElementBaseType, ZoomR
     target: ZoomBehavior<ZoomRefElement, ZoomRefDatum>;
     type: 'start' | 'zoom' | 'end' | string; // Leave failsafe string type for cases like 'zoom.foo'
     transform: ZoomTransform;
-    sourceEvent: MouseEvent | TouchEvent;
+    sourceEvent: any;
 }
 
 // --------------------------------------------------------------------------

@@ -63,7 +63,7 @@ export interface D3DragEvent<GElement extends DraggedElementBaseType, Datum, Sub
     dy: number;
     identifier: 'mouse' | number;
     active: number;
-    sourceEvent: MouseEvent | TouchEvent;
+    sourceEvent: any;
     on(typenames: string): (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => void;
     on(typenames: string, callback: null): D3DragEvent<GElement, Datum, Subject>;
     on(typenames: string, callback: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => void): D3DragEvent<GElement, Datum, Subject>;

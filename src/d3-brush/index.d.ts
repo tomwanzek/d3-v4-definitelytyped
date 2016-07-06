@@ -44,5 +44,5 @@ export interface D3BrushEvent<Datum> {
     target: BrushBehavior<Datum>;
     type: 'start' | 'brush' | 'end' | string; // Leave failsafe string type for cases like 'brush.foo'
     selection: BrushSelection;
-    sourceEvent: MouseEvent | TouchEvent;
+    sourceEvent: any;
 }

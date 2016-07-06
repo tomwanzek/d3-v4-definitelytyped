@@ -201,7 +201,7 @@ let dx: number = e.dx;
 let dy: number = e.dy;
 let identified: 'mouse' | number = e.identifier;
 let active: number = e.active;
-let sourceEvent: MouseEvent | TouchEvent = e.sourceEvent;
+let sourceEvent: any = e.sourceEvent;
 
 // register temporary event listeners (i.e. for current drag gesture in progress only)
 // As always, the below tests are for signature only, no functional purpose
