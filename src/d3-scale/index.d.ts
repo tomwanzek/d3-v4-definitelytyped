@@ -14,7 +14,7 @@ import { CountableTimeInterval } from '../d3-time';
 // -------------------------------------------------------------------------------
 
 
-interface InterpolatorFactory<T, U> {
+export interface InterpolatorFactory<T, U> {
     (a: T, b: T): ((t: number) => U);
 }
 
@@ -24,7 +24,7 @@ interface InterpolatorFactory<T, U> {
 // -------------------------------------------------------------------------------
 
 
-interface ScaleLinear<Range, Output> {
+export interface ScaleLinear<Range, Output> {
     (value: number | { valueOf(): number }): Output;
     /**
      * Important: While value should come out of range R, this is method is only applicable to
@@ -142,7 +142,7 @@ export function scaleLog<Range, Output>(): ScaleLogarithmic<Range, Output>;
 // -------------------------------------------------------------------------------
 
 
-interface ScaleIdentity {
+export interface ScaleIdentity {
     (value: number | { valueOf(): number }): number;
     /**
      * Important: While value should come out of range R, this is method is only applicable to
@@ -166,7 +166,7 @@ export function scaleIdentity(): ScaleIdentity;
 // Time Scale Factories
 // -------------------------------------------------------------------------------
 
-interface ScaleTime<Range, Output> {
+export interface ScaleTime<Range, Output> {
     (value: Date): Output;
     /**
      * Important: While value should come out of range R, this is method is only applicable to
@@ -208,7 +208,7 @@ export function scaleUtc<Range, Output>(): ScaleTime<Range, Output>;
 // -------------------------------------------------------------------------------
 
 
-interface ScaleSequential<Output> {
+export interface ScaleSequential<Output> {
     (value: number): Output;
     domain(): Array<number>;
     domain(domain: Array<number>): ScaleSequential<Output>;
@@ -247,7 +247,7 @@ export function interpolateCubehelixDefault(): ((t: number) => string);
 // Quantize Scale Factory
 // -------------------------------------------------------------------------------
 
-interface ScaleQuantize<Range> {
+export interface ScaleQuantize<Range> {
     (value: number | { valueOf(): number }): Range;
     /**
      * Important: While value should come out of range R, this is method is only applicable to
@@ -271,7 +271,7 @@ export function scaleQuantize<Range>(): ScaleQuantize<Range>;
 // Quantile Scale Factory
 // -------------------------------------------------------------------------------
 
-interface ScaleQuantile<Range> {
+export interface ScaleQuantile<Range> {
     (value: number | { valueOf(): number }): Range;
     invertExtent(value: Range): [number, number];
     domain(): Array<number>;
@@ -290,7 +290,7 @@ export function scaleQuantile<Range>(): ScaleQuantile<Range>;
 // -------------------------------------------------------------------------------
 
 // TODO: review Domain Type, should be naturally orderable
-interface ScaleThreshold<Domain extends number | string | Date, Range> {
+export interface ScaleThreshold<Domain extends number | string | Date, Range> {
     (value: Domain): Range;
     /**
      * Important: While value should come out of range R, this is method is only applicable to
@@ -312,7 +312,7 @@ export function scaleThreshold<Domain extends number | string | Date, Range>(): 
 // -------------------------------------------------------------------------------
 
 
-interface ScaleOrdinal<Domain extends { toString(): string }, Range> {
+export interface ScaleOrdinal<Domain extends { toString(): string }, Range> {
     (x: Domain): Range;
     domain(): Array<Domain>;
     domain(domain: Array<Domain>): ScaleOrdinal<Domain, Range>;
@@ -333,7 +333,7 @@ export const scaleImplicit: { name: 'implicit' };
 // Band Scale Factory
 // -------------------------------------------------------------------------------
 
-interface ScaleBand<Domain extends { toString(): string }> {
+export interface ScaleBand<Domain extends { toString(): string }> {
     (x: Domain): number | undefined;
     domain(): Array<Domain>;
     domain(domain: Array<Domain>): ScaleBand<Domain>;
@@ -368,7 +368,7 @@ export function scaleBand<Domain extends { toString(): string }>(): ScaleBand<Do
 // Point Scale Factory
 // -------------------------------------------------------------------------------
 
-interface ScalePoint<Domain extends { toString(): string }> {
+export interface ScalePoint<Domain extends { toString(): string }> {
     (x: Domain): number | undefined;
     domain(): Array<Domain>;
     domain(domain: Array<Domain>): ScalePoint<Domain>;
