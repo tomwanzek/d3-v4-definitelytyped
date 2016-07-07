@@ -540,6 +540,42 @@ let copiedTimeScale: d3Scale.ScaleTime<number, string> = localTimeScaleNumString
 // Sequential Scale Factory
 // -------------------------------------------------------------------------------
 
+// scaleSequential() -----------------------------------------------------------------
+
+let sequentialScaleColorString: d3Scale.ScaleSequential<string>;
+
+sequentialScaleColorString = d3Scale.scaleSequential<string>(d3Scale.interpolateRainbow);
+sequentialScaleColorString = d3Scale.scaleSequential(d3Scale.interpolateCool); // inferred Output type string
+
+// ScaleSequential Interface ========================================================
+
+// domain(...) -----------------------------------------------------------------
+
+sequentialScaleColorString = sequentialScaleColorString.domain([0, 1]);
+sequentialScaleColorString = sequentialScaleColorString.domain([new NumCoercible(0), new NumCoercible(100)]);
+let domainSequential: [number, number] = sequentialScaleColorString.domain();
+
+// clamp(...) -----------------------------------------------------------------
+
+sequentialScaleColorString = sequentialScaleColorString.clamp(true);
+clampFlag = sequentialScaleColorString.clamp();
+
+// interpolate(...) -----------------------------------------------------------------
+
+sequentialScaleColorString = sequentialScaleColorString.interpolator(d3Scale.interpolateInferno);
+
+let sequentialInterpolator: (t: number) => string;
+sequentialInterpolator = sequentialScaleColorString.interpolator();
+
+// (...) value mapping from domain to output -----------------------------------
+
+outputString = sequentialScaleColorString(10);
+
+// copy(...) -----------------------------------------------------------------
+
+let copiedSequentialScale: d3Scale.ScaleSequential<string> = sequentialScaleColorString.copy();
+
+
 
 // -------------------------------------------------------------------------------
 // Color Interpolators for Sequential Scale Factory
@@ -547,21 +583,21 @@ let copiedTimeScale: d3Scale.ScaleTime<number, string> = localTimeScaleNumString
 
 let colorInterpolator: ((t: number) => string);
 
-colorInterpolator = d3Scale.interpolateViridis();
+colorInterpolator = d3Scale.interpolateViridis;
 
-colorInterpolator = d3Scale.interpolateMagma();
+colorInterpolator = d3Scale.interpolateMagma;
 
-colorInterpolator = d3Scale.interpolateInferno();
+colorInterpolator = d3Scale.interpolateInferno;
 
-colorInterpolator = d3Scale.interpolatePlasma();
+colorInterpolator = d3Scale.interpolatePlasma;
 
-colorInterpolator = d3Scale.interpolateRainbow();
+colorInterpolator = d3Scale.interpolateRainbow;
 
-colorInterpolator = d3Scale.interpolateWarm();
+colorInterpolator = d3Scale.interpolateWarm;
 
-colorInterpolator = d3Scale.interpolateCool();
+colorInterpolator = d3Scale.interpolateCool;
 
-colorInterpolator = d3Scale.interpolateCubehelixDefault();
+colorInterpolator = d3Scale.interpolateCubehelixDefault;
 
 
 // -------------------------------------------------------------------------------
