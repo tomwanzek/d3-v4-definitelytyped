@@ -214,8 +214,8 @@ export function scaleUtc<Range, Output>(): ScaleTime<Range, Output>;
 
 export interface ScaleSequential<Output> {
     (value: number): Output;
-    domain(): Array<number>;
-    domain(domain: Array<number>): ScaleSequential<Output>;
+    domain(): [number, number];
+    domain(domain: [number | { valueOf(): number }, number | { valueOf(): number }]): ScaleSequential<Output>;
     clamp(): boolean;
     clamp(clamp: boolean): ScaleSequential<Output>;
     interpolator(): ((t: number) => Output);
@@ -231,21 +231,21 @@ export function scaleSequential<Output>(interpolator: ((t: number) => Output)): 
 // -------------------------------------------------------------------------------
 
 
-export function interpolateViridis(): ((t: number) => string);
+export function interpolateViridis(t: number): string;
 
-export function interpolateMagma(): ((t: number) => string);
+export function interpolateMagma(t: number): string;
 
-export function interpolateInferno(): ((t: number) => string);
+export function interpolateInferno(t: number): string;
 
-export function interpolatePlasma(): ((t: number) => string);
+export function interpolatePlasma(t: number): string;
 
-export function interpolateRainbow(): ((t: number) => string);
+export function interpolateRainbow(t: number): string;
 
-export function interpolateWarm(): ((t: number) => string);
+export function interpolateWarm(t: number): string;
 
-export function interpolateCool(): ((t: number) => string);
+export function interpolateCool(t: number): string;
 
-export function interpolateCubehelixDefault(): ((t: number) => string);
+export function interpolateCubehelixDefault(t: number): string;
 
 // -------------------------------------------------------------------------------
 // Quantize Scale Factory
