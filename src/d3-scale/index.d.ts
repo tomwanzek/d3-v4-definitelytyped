@@ -7,7 +7,7 @@
 
 
 
-import { CountableTimeInterval } from '../d3-time';
+import { CountableTimeInterval, TimeInterval } from '../d3-time';
 
 // -------------------------------------------------------------------------------
 // Shared Types and Interfaces
@@ -149,10 +149,10 @@ export interface ScaleIdentity {
      * values that can be coerced to numeric. Otherwise, returns NaN
      */
     invert(value: number | { valueOf(): number }): number;
-    domain(): Array<number | { valueOf(): number }>;
+    domain(): Array<number>;
     domain(domain: Array<number | { valueOf(): number }>): ScaleIdentity;
-    range(): Array<Range>;
-    range(range: Array<Range>): ScaleIdentity;
+    range(): Array<number>;
+    range(range: Array<Range | { valueOf(): number }>): ScaleIdentity;
     ticks(count?: number): Array<number>;
     tickFormat(count?: number, specifier?: string): ((d: number | { valueOf(): number }) => string);
     nice(count?: number): ScaleIdentity;
@@ -187,11 +187,15 @@ export interface ScaleTime<Range, Output> {
     interpolate(): InterpolatorFactory<any, any>;
     interpolate(interpolate: InterpolatorFactory<Range, Output>): ScaleTime<Range, Output>;
     interpolate<NewOutput>(interpolate: InterpolatorFactory<Range, NewOutput>): ScaleTime<Range, NewOutput>;
-    ticks(count?: number): Array<Date>;
-    ticks(interval?: CountableTimeInterval, step?: number): Array<Date>;
-    tickFormat(count?: number, specifier?: string): ((d: Date) => string);
-    nice(count?: number): ScaleTime<Range, Output>;
-    nice(interval?: CountableTimeInterval, step?: number): ScaleTime<Range, Output>;
+    ticks(): Array<Date>;
+    ticks(count: number): Array<Date>;
+    ticks(interval: TimeInterval): Array<Date>;
+    tickFormat(): ((d: Date) => string);
+    tickFormat(count: number, specifier?: string): ((d: Date) => string);
+    tickFormat(interval: TimeInterval, specifier?: string): ((d: Date) => string);
+    nice(): ScaleTime<Range, Output>;
+    nice(count: number): ScaleTime<Range, Output>;
+    nice(interval: CountableTimeInterval, step?: number): ScaleTime<Range, Output>;
     copy(): ScaleTime<Range, Output>;
 }
 

@@ -8,6 +8,7 @@
 
 import * as d3Scale from '../../src/d3-scale';
 import { interpolateCubehelix } from '../../src/d3-interpolate';
+import { timeHour } from '../../src/d3-time';
 
 // -------------------------------------------------------------------------------
 // Preparatory Steps
@@ -38,8 +39,10 @@ let domainStrings: Array<string>;
 let domainDates: Array<Date>;
 
 let ticksNumbers: Array<number>;
+let ticksDates: Array<Date>;
 
 let tickFormatNumberFn: ((d: number | { valueOf(): number }) => string);
+let tickFormatDateFn: ((d: Date) => string);
 
 let rangeNumbers: Array<number>;
 let roundRangeNumbers: Array<number>;
@@ -118,15 +121,20 @@ linearScaleNumString = linearScaleNumString.interpolate(function(a, b){
 
 // nice(...) -----------------------------------------------------------------------
 
+
 // chainable
+linearScaleNumber = linearScaleNumber.nice();
 linearScaleNumber = linearScaleNumber.nice(5);
 
 // ticks(...) -----------------------------------------------------------------
 
+ticksNumbers = linearScaleNumber.ticks();
 ticksNumbers = linearScaleNumber.ticks(5);
 
 // tickFormat(...) -----------------------------------------------------------------
 
+tickFormatNumberFn = linearScaleNumber.tickFormat();
+tickFormatNumberFn = linearScaleNumber.tickFormat(5);
 tickFormatNumberFn = linearScaleNumber.tickFormat(5, '+%');
 
 // (...) value mapping from domain to output -----------------------------------
@@ -229,14 +237,18 @@ powerScaleNumString = powerScaleNumString.interpolate(function(a, b){
 // nice(...) -----------------------------------------------------------------------
 
 // chainable
+powerScaleNumber = powerScaleNumber.nice();
 powerScaleNumber = powerScaleNumber.nice(5);
 
 // ticks(...) -----------------------------------------------------------------
 
+ticksNumbers = powerScaleNumber.ticks();
 ticksNumbers = powerScaleNumber.ticks(5);
 
 // tickFormat(...) -----------------------------------------------------------------
 
+tickFormatNumberFn = powerScaleNumber.tickFormat();
+tickFormatNumberFn = powerScaleNumber.tickFormat(5);
 tickFormatNumberFn = powerScaleNumber.tickFormat(5, '+%');
 
 // (...) value mapping from domain to output -----------------------------------
@@ -256,7 +268,7 @@ let copiedPowerScale: d3Scale.ScalePower<number, string> = powerScaleNumString.c
 // -------------------------------------------------------------------------------
 
 
-// scaleLog() and scaleSqrt() ----------------------------------------------------
+// scaleLog() ---------------------------------------------------------------------
 
 let logScaleNumber: d3Scale.ScaleLogarithmic<number, number>;
 let logScaleString: d3Scale.ScaleLogarithmic<string, string>;
@@ -269,7 +281,7 @@ logScaleNumString = d3Scale.scaleLog<number, string>();
 
 // ScaleLogarithmic Interface ========================================================
 
-// exponent --------------------------------------------------------------------
+// base --------------------------------------------------------------------
 
 let base: number = logScaleNumber.base();
 
@@ -332,14 +344,18 @@ logScaleNumString = logScaleNumString.interpolate(function(a, b){
 // nice(...) -----------------------------------------------------------------------
 
 // chainable
+logScaleNumber = logScaleNumber.nice();
 logScaleNumber = logScaleNumber.nice(5);
 
 // ticks(...) -----------------------------------------------------------------
 
+ticksNumbers = logScaleNumber.ticks();
 ticksNumbers = logScaleNumber.ticks(5);
 
 // tickFormat(...) -----------------------------------------------------------------
 
+tickFormatNumberFn = logScaleNumber.tickFormat();
+tickFormatNumberFn = logScaleNumber.tickFormat(5);
 tickFormatNumberFn = logScaleNumber.tickFormat(5, '+%');
 
 // (...) value mapping from domain to output -----------------------------------
@@ -358,11 +374,167 @@ let copiedLogScale: d3Scale.ScaleLogarithmic<number, string> = logScaleNumString
 // Identity Scale Factory
 // -------------------------------------------------------------------------------
 
+// scaleIdentity -----------------------------------------------------------------
+
+let identityScale: d3Scale.ScaleIdentity;
+
+identityScale = d3Scale.scaleIdentity();
+
+
+// ScaleIdentity Interface ========================================================
+
+
+// domain(...) -----------------------------------------------------------------
+
+identityScale = identityScale.domain(domainNumeric);
+identityScale = identityScale.domain(domainNumbers);
+domainNumbers = identityScale.domain();
+
+// range(...) -----------------------------------------------------------------
+
+identityScale = identityScale.range(rangeNumbers);
+rangeNumbers = identityScale.range();
+
+// invert(...) -----------------------------------------------------------------
+
+num = identityScale.invert(500); // has number range, so inversion is possible
+num = identityScale.invert(new NumCoercible(500)); // has number range, so inversion is possible
+
+// nice(...) -----------------------------------------------------------------------
+
+// chainable
+identityScale = identityScale.nice();
+identityScale = identityScale.nice(5);
+
+// ticks(...) -----------------------------------------------------------------
+
+ticksNumbers = identityScale.ticks();
+ticksNumbers = identityScale.ticks(5);
+
+// tickFormat(...) -----------------------------------------------------------------
+
+tickFormatNumberFn = identityScale.tickFormat();
+tickFormatNumberFn = identityScale.tickFormat(5);
+tickFormatNumberFn = identityScale.tickFormat(5, '+%');
+
+// (...) value mapping from domain to output -----------------------------------
+
+outputNumber = identityScale(10);
+
+
+// copy(...) -----------------------------------------------------------------
+
+let copiedIdentityScale: d3Scale.ScaleIdentity = identityScale.copy();
+
 
 // -------------------------------------------------------------------------------
 // Time Scale Factories
 // -------------------------------------------------------------------------------
 
+// scaleTime() and scaleUtc() ----------------------------------------------------
+
+let localTimeScaleNumber: d3Scale.ScaleTime<number, number>;
+let localTimeScaleString: d3Scale.ScaleTime<string, string>;
+let localTimeScaleNumString: d3Scale.ScaleTime<number, string>;
+
+localTimeScaleNumber = d3Scale.scaleTime();
+localTimeScaleString = d3Scale.scaleTime<string>();
+localTimeScaleNumString = d3Scale.scaleTime<number, string>();
+
+
+let utcScaleNumber: d3Scale.ScaleTime<number, number>;
+let utcScaleString: d3Scale.ScaleTime<string, string>;
+let utcScaleNumString: d3Scale.ScaleTime<number, string>;
+
+utcScaleNumber = d3Scale.scaleUtc();
+utcScaleString = d3Scale.scaleUtc<string>();
+utcScaleNumString = d3Scale.scaleUtc<number, string>();
+
+// domain(...) -----------------------------------------------------------------
+
+localTimeScaleNumber = localTimeScaleNumber.domain(domainDates);
+domainDates = localTimeScaleNumber.domain();
+
+localTimeScaleString = localTimeScaleString.domain([new Date(2016, 6, 1), new Date(2016, 6, 6)]);
+domainDates = localTimeScaleString.domain();
+
+localTimeScaleNumString = localTimeScaleNumString.domain(domainDates);
+domainDates = localTimeScaleNumString.domain();
+
+
+// range(...) -----------------------------------------------------------------
+
+localTimeScaleNumber = localTimeScaleNumber.range(rangeNumbers);
+rangeNumbers = localTimeScaleNumber.range();
+
+localTimeScaleString = localTimeScaleString.range(['steelblue', 'brown']);
+rangeStrings = localTimeScaleString.range();
+
+localTimeScaleNumString = localTimeScaleNumString.range(rangeNumbers);
+rangeNumbers = localTimeScaleNumString.range();
+
+// invert(...) -----------------------------------------------------------------
+
+date = localTimeScaleNumber.invert(500); // has number range, so inversion is possible
+date = localTimeScaleNumber.invert(new NumCoercible(500)); // has number range, so inversion is possible
+
+date = localTimeScaleNumString.invert(500); // has number range, so inversion is possible
+date = localTimeScaleNumString.invert(new NumCoercible(500)); // has number range, so inversion is possible
+
+// rangeRound(...) -----------------------------------------------------------------
+
+localTimeScaleNumber = localTimeScaleNumber.rangeRound(roundRangeNumbers);
+
+// clamp(...) -----------------------------------------------------------------
+
+localTimeScaleNumber = localTimeScaleNumber.clamp(true);
+clampFlag = localTimeScaleNumber.clamp();
+
+// interpolate(...) -----------------------------------------------------------------
+
+localTimeScaleString = localTimeScaleString.interpolate(interpolateCubehelix.gamma(3));
+
+localTimeScaleNumString = localTimeScaleNumString.interpolate(function(a, b){
+    // take two numbers
+    return function(t: number) {
+        return (a * (1 - t) + b * t) + 'px'; // a and b are numbers based on Range Type, return value of interpolator is string based on Output type
+    };
+});
+
+// nice(...) -----------------------------------------------------------------------
+
+// chainable
+localTimeScaleNumber = localTimeScaleNumber.nice();
+localTimeScaleNumber = localTimeScaleNumber.nice(5);
+localTimeScaleNumber = localTimeScaleNumber.nice(timeHour);
+localTimeScaleNumber = localTimeScaleNumber.nice(timeHour, 5);
+
+// localTimeScaleNumber = localTimeScaleNumber.nice(timeHour.every(5)); // fails, requires CountableTimeInterval
+
+// ticks(...) -----------------------------------------------------------------
+
+ticksDates = localTimeScaleNumber.ticks();
+ticksDates = localTimeScaleNumber.ticks(50);
+ticksDates = localTimeScaleNumString.ticks(timeHour.every(5));
+
+// tickFormat(...) -----------------------------------------------------------------
+
+tickFormatDateFn = localTimeScaleNumber.tickFormat();
+tickFormatDateFn = localTimeScaleNumber.tickFormat(50, '%I %p');
+tickFormatDateFn = localTimeScaleNumber.tickFormat(timeHour.every(5), '%I %p');
+
+
+// (...) value mapping from domain to output -----------------------------------
+
+outputNumber = localTimeScaleNumber(new Date(2016, 6, 4));
+
+outputString = localTimeScaleString(new Date(2016, 6, 4));
+
+outputString = localTimeScaleNumString(new Date(2016, 6, 4));
+
+// copy(...) -----------------------------------------------------------------
+
+let copiedTimeScale: d3Scale.ScaleTime<number, string> = localTimeScaleNumString.copy();
 
 // -------------------------------------------------------------------------------
 // Sequential Scale Factory
