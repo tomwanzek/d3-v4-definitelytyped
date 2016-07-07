@@ -25,12 +25,12 @@ export interface BrushBehavior<Datum> {
     extent(extent: [[number, number], [number, number]]): BrushBehavior<Datum>;
     extent(extent: (this: SVGGElement, d: Datum, i: number, group: Array<SVGGElement> | NodeListOf<SVGGElement>) => [[number, number], [number, number]]): BrushBehavior<Datum>;
     filter(): (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => boolean;
-    filter(filterFn: (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => boolean): BrushBehavior<SVGGElement>;
+    filter(filterFn: (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => boolean): BrushBehavior<Datum>;
     handleSize(): number;
     handleSize(size: number): BrushBehavior<Datum>;
     on(typenames: string): (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => void;
-    on(typenames: string, callback: null): BrushBehavior<SVGGElement>;
-    on(typenames: string, callback: (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => void): BrushBehavior<SVGGElement>;
+    on(typenames: string, callback: null): BrushBehavior<Datum>;
+    on(typenames: string, callback: (this: SVGGElement, datum: Datum, index: number, group: Array<SVGGElement>) => void): BrushBehavior<Datum>;
 
 }
 
