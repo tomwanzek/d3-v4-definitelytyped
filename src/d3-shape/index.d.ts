@@ -76,7 +76,7 @@ export interface Pie<Datum> {
     startAngle(): (this: any, data: Array<Datum>, ...args: any[]) => number;
     startAngle(angle: number): Pie<Datum>;
     startAngle(angle: (this: any, data: Array<Datum>, ...args: any[]) => number): Pie<Datum>;
-    endAngle(): (this: any, ...args: any[]) => number;
+    endAngle(): (this: any, data: Array<Datum>, ...args: any[]) => number;
     endAngle(angle: number): Pie<Datum>;
     endAngle(angle: (this: any, data: Array<Datum>, ...args: any[]) => number): Pie<Datum>;
     padAngle(): (this: any, data: Array<Datum>, ...args: any[]) => number;
