@@ -24,6 +24,18 @@ class NumCoercible {
         return this.a;
     }
 }
+
+class StringCoercible {
+    public txt: string;
+
+    constructor(txt: string) {
+        this.txt = txt;
+    }
+    public toString() {
+        return this.txt;
+    }
+}
+
 let num: number;
 let str: string;
 let date: Date;
@@ -824,11 +836,153 @@ let copiedOrdinalScale: d3Scale.ScaleOrdinal<string, number> = ordinalScaleStrin
 // Band Scale Factory
 // -------------------------------------------------------------------------------
 
+// scaleBand() -----------------------------------------------------------------
+
+let bandScaleString: d3Scale.ScaleBand<string>;
+let bandScaleCoercible: d3Scale.ScaleBand<StringCoercible>;
+
+bandScaleString = d3Scale.scaleBand();
+bandScaleCoercible = d3Scale.scaleBand<StringCoercible>();
+
+
+// ScaleBand Interface ========================================================
+
+// domain(...) -----------------------------------------------------------------
+
+bandScaleString = bandScaleString.domain(['negative', 'neutral', 'positive']);
+domainStrings = bandScaleString.domain();
+
+bandScaleCoercible = bandScaleCoercible.domain([new StringCoercible('negative'), new StringCoercible('neutral'), new StringCoercible('positive')]);
+
+// range(...) -----------------------------------------------------------------
+
+bandScaleString = bandScaleString.range([0, 300]);
+let rangeExtent: [number, number] = bandScaleString.range();
+
+bandScaleCoercible = bandScaleCoercible.range([0, 300]);
+rangeExtent = bandScaleCoercible.range();
+
+
+// rangeRound(...) -----------------------------------------------------------------
+
+bandScaleString = bandScaleString.rangeRound([0, 300]);
+
+
+// round(...) -----------------------------------------------------------------
+
+bandScaleCoercible = bandScaleCoercible.round(true);
+let roundingFlag: boolean = bandScaleCoercible.round();
+
+// paddingInner(...) -----------------------------------------------------------------
+
+bandScaleString = bandScaleString.paddingInner(0.1);
+num = bandScaleString.paddingInner();
+
+// paddingOuter(...) -----------------------------------------------------------------
+
+bandScaleString = bandScaleString.paddingOuter(0.1);
+num = bandScaleString.paddingOuter();
+
+
+// padding(...) -----------------------------------------------------------------
+
+bandScaleString = bandScaleString.padding(0.1);
+num = bandScaleString.padding();
+
+// align(...) -----------------------------------------------------------------
+
+bandScaleString = bandScaleString.align(0.5);
+num = bandScaleString.align();
+
+// bandwidth(...) -----------------------------------------------------------------
+
+num = bandScaleString.bandwidth();
+
+// step(...) -----------------------------------------------------------------
+
+num = bandScaleString.step();
+
+
+// (...) value mapping from domain to output -----------------------------------
+
+outputNumber = bandScaleString('neutral');
+
+outputNumber = bandScaleCoercible(new StringCoercible('negative'));
+
+// copy(...) -----------------------------------------------------------------
+
+let copiedBandScale: d3Scale.ScaleBand<StringCoercible> = bandScaleCoercible.copy();
+
 
 // -------------------------------------------------------------------------------
 // Point Scale Factory
 // -------------------------------------------------------------------------------
 
+// scalePoint() -----------------------------------------------------------------
+
+let pointScaleString: d3Scale.ScalePoint<string>;
+let pointScaleCoercible: d3Scale.ScalePoint<StringCoercible>;
+
+pointScaleString = d3Scale.scalePoint();
+pointScaleCoercible = d3Scale.scalePoint<StringCoercible>();
+
+
+// ScalePoint Interface ========================================================
+
+// domain(...) -----------------------------------------------------------------
+
+pointScaleString = pointScaleString.domain(['negative', 'neutral', 'positive']);
+domainStrings = pointScaleString.domain();
+
+pointScaleCoercible = pointScaleCoercible.domain([new StringCoercible('negative'), new StringCoercible('neutral'), new StringCoercible('positive')]);
+
+// range(...) -----------------------------------------------------------------
+
+pointScaleString = pointScaleString.range([0, 300]);
+rangeExtent = pointScaleString.range();
+
+pointScaleCoercible = pointScaleCoercible.range([0, 300]);
+rangeExtent = pointScaleCoercible.range();
+
+
+// rangeRound(...) -----------------------------------------------------------------
+
+pointScaleString = pointScaleString.rangeRound([0, 300]);
+
+
+// round(...) -----------------------------------------------------------------
+
+pointScaleCoercible = pointScaleCoercible.round(true);
+roundingFlag = pointScaleCoercible.round();
+
+
+// padding(...) -----------------------------------------------------------------
+
+pointScaleString = pointScaleString.padding(0.1);
+num = pointScaleString.padding();
+
+// align(...) -----------------------------------------------------------------
+
+pointScaleString = pointScaleString.align(0.5);
+num = pointScaleString.align();
+
+// bandwidth(...) -----------------------------------------------------------------
+
+num = pointScaleString.bandwidth();
+
+// step(...) -----------------------------------------------------------------
+
+num = pointScaleString.step();
+
+// (...) value mapping from domain to output -----------------------------------
+
+outputNumber = pointScaleString('neutral');
+
+outputNumber = pointScaleCoercible(new StringCoercible('negative'));
+
+// copy(...) -----------------------------------------------------------------
+
+let copiedPointScale: d3Scale.ScalePoint<StringCoercible> = pointScaleCoercible.copy();
 
 // -------------------------------------------------------------------------------
 // Categorical Color Schemas for Ordinal Scales
