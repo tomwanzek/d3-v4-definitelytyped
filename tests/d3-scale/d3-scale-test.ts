@@ -667,6 +667,53 @@ let copiedQuantizeScale: d3Scale.ScaleQuantize<number> = quantizeScaleNumber.cop
 // -------------------------------------------------------------------------------
 
 
+// scaleQuantile() -----------------------------------------------------------------
+
+let quantileScaleNumber: d3Scale.ScaleQuantile<number>;
+let quantileScaleString: d3Scale.ScaleQuantile<string>;
+
+quantileScaleNumber = d3Scale.scaleQuantile();
+quantileScaleString = d3Scale.scaleQuantile<string>();
+
+
+// ScaleQuantile Interface ========================================================
+
+// domain(...) -----------------------------------------------------------------
+
+quantileScaleNumber = quantileScaleNumber.domain(domainNumbers);
+
+domainNumbers = quantileScaleNumber.domain();
+
+quantileScaleString = quantileScaleString.domain(domainNumeric);
+
+// range(...) -----------------------------------------------------------------
+
+quantileScaleNumber = quantileScaleNumber.range([1, 2, 3, 4]);
+rangeNumbers = quantileScaleNumber.range();
+
+quantileScaleString = quantileScaleString.range(['q25', 'q50', 'q75']);
+rangeStrings = quantileScaleString.range();
+
+
+// invertExtent(...) -----------------------------------------------------------------
+
+numExtent = quantileScaleNumber.invertExtent(2);
+
+numExtent = quantileScaleString.invertExtent('q50');
+
+// quantile() -----------------------------------------------------------------------
+
+let quantiles: Array<number> = quantileScaleNumber.quantiles();
+
+// (...) value mapping from domain to output -----------------------------------
+
+outputNumber = quantileScaleNumber(0.51);
+
+// copy(...) -----------------------------------------------------------------
+
+let copiedQuantileScale: d3Scale.ScaleQuantile<number> = quantileScaleNumber.copy();
+
+
 // -------------------------------------------------------------------------------
 // Threshold Scale Factory
 // -------------------------------------------------------------------------------
