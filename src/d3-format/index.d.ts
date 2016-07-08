@@ -25,7 +25,7 @@ export interface FormatLocaleDefinition {
     /**
      * The currency prefix and suffix (e.g., ["$", ""])
      */
-    currrency: [string, string];
+    currency: [string, string];
 }
 
 
@@ -76,7 +76,7 @@ export function formatLocale(locale: FormatLocaleDefinition): FormatLocaleObject
  * methods for the specified locale definition. The specified locale definition will be
  * set as the new default locale definition.
  */
-export function formatLocale(defaultLocale: FormatLocaleDefinition): FormatLocaleObject;
+export function formatDefaultLocale(defaultLocale: FormatLocaleDefinition): FormatLocaleObject;
 
 /**
  * Returns a new format function for the given string specifier. The returned function 
