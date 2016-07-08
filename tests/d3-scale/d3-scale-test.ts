@@ -766,6 +766,59 @@ let copiedThresholdScale: d3Scale.ScaleThreshold<number, string> = thresholdScal
 // Ordinal Scale Factory
 // -------------------------------------------------------------------------------
 
+// scaleOrdinal() -----------------------------------------------------------------
+
+let ordinalScaleStringString: d3Scale.ScaleOrdinal<string, string>;
+let ordinalScaleStringNumber: d3Scale.ScaleOrdinal<string, number>;
+
+ordinalScaleStringString = d3Scale.scaleOrdinal<string>();
+ordinalScaleStringNumber = d3Scale.scaleOrdinal<string, number>();
+
+
+// ScaleOrdinal Interface ========================================================
+
+// domain(...) -----------------------------------------------------------------
+
+ordinalScaleStringString = ordinalScaleStringString.domain(['negative', 'neutral', 'positive']);
+domainStrings = ordinalScaleStringString.domain();
+
+ordinalScaleStringNumber = ordinalScaleStringNumber.domain(['negative', 'neutral', 'positive']);
+
+// range(...) -----------------------------------------------------------------
+
+ordinalScaleStringString = ordinalScaleStringString.range(['crimson', 'midnightblue', 'seagreen']);
+rangeStrings = ordinalScaleStringString.range();
+
+ordinalScaleStringNumber = ordinalScaleStringNumber.range([-1, 0, 1]);
+rangeNumbers = ordinalScaleStringNumber.range();
+
+
+// unknown(...) and d3Scale.scaleImplicit --------------------------------------
+
+let implicit: { name: 'implicit' } = d3Scale.scaleImplicit;
+
+ordinalScaleStringString = ordinalScaleStringString.unknown(d3Scale.scaleImplicit);
+
+ordinalScaleStringNumber = ordinalScaleStringNumber.unknown(0);
+
+let unknownValue: string | { name: 'implicit' } = ordinalScaleStringString.unknown();
+
+if (typeof unknownValue === 'string') {
+    console.log(unknownValue);
+} else {
+    console.log(unknownValue.name);
+}
+
+// (...) value mapping from domain to output -----------------------------------
+
+outputString = ordinalScaleStringString('neutral');
+
+outputNumber = ordinalScaleStringNumber('negative');
+
+// copy(...) -----------------------------------------------------------------
+
+let copiedOrdinalScale: d3Scale.ScaleOrdinal<string, number> = ordinalScaleStringNumber.copy();
+
 
 // -------------------------------------------------------------------------------
 // Band Scale Factory
