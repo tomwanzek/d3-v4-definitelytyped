@@ -112,9 +112,9 @@ clampFlag = linearScaleNumber.clamp();
 
 linearScaleString = linearScaleString.interpolate(interpolateCubehelix.gamma(3));
 
-linearScaleNumString = linearScaleNumString.interpolate(function(a, b){
+linearScaleNumString = linearScaleNumString.interpolate(function (a, b) {
     // take two numbers
-    return function(t: number) {
+    return function (t: number) {
         return (a * (1 - t) + b * t) + 'px'; // a and b are numbers based on Range Type, return value of interpolator is string based on Output type
     };
 });
@@ -227,9 +227,9 @@ clampFlag = powerScaleNumber.clamp();
 
 powerScaleString = powerScaleString.interpolate(interpolateCubehelix.gamma(3));
 
-powerScaleNumString = powerScaleNumString.interpolate(function(a, b){
+powerScaleNumString = powerScaleNumString.interpolate(function (a, b) {
     // take two numbers
-    return function(t: number) {
+    return function (t: number) {
         return (a * (1 - t) + b * t) + 'px'; // a and b are numbers based on Range Type, return value of interpolator is string based on Output type
     };
 });
@@ -334,9 +334,9 @@ clampFlag = logScaleNumber.clamp();
 
 logScaleString = logScaleString.interpolate(interpolateCubehelix.gamma(3));
 
-logScaleNumString = logScaleNumString.interpolate(function(a, b){
+logScaleNumString = logScaleNumString.interpolate(function (a, b) {
     // take two numbers
-    return function(t: number) {
+    return function (t: number) {
         return (a * (1 - t) + b * t) + 'px'; // a and b are numbers based on Range Type, return value of interpolator is string based on Output type
     };
 });
@@ -494,9 +494,9 @@ clampFlag = localTimeScaleNumber.clamp();
 
 localTimeScaleString = localTimeScaleString.interpolate(interpolateCubehelix.gamma(3));
 
-localTimeScaleNumString = localTimeScaleNumString.interpolate(function(a, b){
+localTimeScaleNumString = localTimeScaleNumString.interpolate(function (a, b) {
     // take two numbers
-    return function(t: number) {
+    return function (t: number) {
         return (a * (1 - t) + b * t) + 'px'; // a and b are numbers based on Range Type, return value of interpolator is string based on Output type
     };
 });
@@ -717,6 +717,49 @@ let copiedQuantileScale: d3Scale.ScaleQuantile<number> = quantileScaleNumber.cop
 // -------------------------------------------------------------------------------
 // Threshold Scale Factory
 // -------------------------------------------------------------------------------
+
+// scaleThreshold() -----------------------------------------------------------------
+
+let thresholdScaleNumberNumber: d3Scale.ScaleThreshold<number, number>;
+let thresholdScaleNumberString: d3Scale.ScaleThreshold<number, string>;
+
+thresholdScaleNumberNumber = d3Scale.scaleThreshold();
+thresholdScaleNumberString = d3Scale.scaleThreshold<number, string>();
+
+
+// ScaleThreshold Interface ========================================================
+
+// domain(...) -----------------------------------------------------------------
+
+thresholdScaleNumberNumber = thresholdScaleNumberNumber.domain([0.5]);
+domainNumbers = thresholdScaleNumberNumber.domain();
+
+thresholdScaleNumberString = thresholdScaleNumberString.domain([0.2, 0.8]);
+
+// range(...) -----------------------------------------------------------------
+
+thresholdScaleNumberNumber = thresholdScaleNumberNumber.range([100, 200]);
+rangeNumbers = thresholdScaleNumberNumber.range();
+
+thresholdScaleNumberString = thresholdScaleNumberString.range(['steelblue', 'seagreen', 'brown']);
+rangeStrings = thresholdScaleNumberString.range();
+
+
+// invertExtent(...) -----------------------------------------------------------------
+
+numExtent = thresholdScaleNumberNumber.invertExtent(100);
+
+numExtent = thresholdScaleNumberString.invertExtent('seagreen');
+
+// (...) value mapping from domain to output -----------------------------------
+
+outputNumber = thresholdScaleNumberNumber(0.51);
+
+outputString = thresholdScaleNumberString(0.9);
+
+// copy(...) -----------------------------------------------------------------
+
+let copiedThresholdScale: d3Scale.ScaleThreshold<number, string> = thresholdScaleNumberString.copy();
 
 
 // -------------------------------------------------------------------------------
