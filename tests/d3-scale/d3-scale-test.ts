@@ -604,6 +604,63 @@ colorInterpolator = d3Scale.interpolateCubehelixDefault;
 // Quantize Scale Factory
 // -------------------------------------------------------------------------------
 
+// scaleQuantize() -----------------------------------------------------------------
+
+let quantizeScaleNumber: d3Scale.ScaleQuantize<number>;
+let quantizeScaleString: d3Scale.ScaleQuantize<string>;
+
+quantizeScaleNumber = d3Scale.scaleQuantize();
+quantizeScaleString = d3Scale.scaleQuantize<string>();
+
+
+// ScaleQuantize Interface ========================================================
+
+// domain(...) -----------------------------------------------------------------
+
+quantizeScaleNumber = quantizeScaleNumber.domain([0, 1]);
+quantizeScaleNumber = quantizeScaleNumber.domain([new NumCoercible(0), new NumCoercible(100)]);
+let domainQuantize: [number, number] = quantizeScaleNumber.domain();
+
+// range(...) -----------------------------------------------------------------
+
+quantizeScaleNumber = quantizeScaleNumber.range(rangeNumbers);
+rangeNumbers = quantizeScaleNumber.range();
+
+quantizeScaleString = quantizeScaleString.range(['steelblue', 'brown']);
+rangeStrings = quantizeScaleString.range();
+
+
+// invertExtent(...) -----------------------------------------------------------------
+
+let numExtent: [number, number] = quantizeScaleNumber.invertExtent(500);
+
+numExtent = quantizeScaleString.invertExtent('steelblue');
+
+// nice(...) -----------------------------------------------------------------------
+
+// chainable
+quantizeScaleNumber = quantizeScaleNumber.nice();
+quantizeScaleNumber = quantizeScaleNumber.nice(5);
+
+// ticks(...) -----------------------------------------------------------------
+
+ticksNumbers = quantizeScaleNumber.ticks();
+ticksNumbers = quantizeScaleNumber.ticks(5);
+
+// tickFormat(...) -----------------------------------------------------------------
+
+tickFormatNumberFn = quantizeScaleNumber.tickFormat();
+tickFormatNumberFn = quantizeScaleNumber.tickFormat(5);
+tickFormatNumberFn = quantizeScaleNumber.tickFormat(5, '+%');
+
+// (...) value mapping from domain to output -----------------------------------
+
+outputNumber = quantizeScaleNumber(0.51);
+
+// copy(...) -----------------------------------------------------------------
+
+let copiedQuantizeScale: d3Scale.ScaleQuantize<number> = quantizeScaleNumber.copy();
+
 
 // -------------------------------------------------------------------------------
 // Quantile Scale Factory

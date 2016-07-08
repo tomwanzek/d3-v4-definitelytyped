@@ -257,14 +257,14 @@ export interface ScaleQuantize<Range> {
      * Important: While value should come out of range R, this is method is only applicable to
      * values that can be coerced to numeric. Otherwise, returns NaN
      */
-    invertExtent(value: number | { valueOf(): number }): [number, number];
+    invertExtent(value: Range): [number, number];
     domain(): [number, number];
     domain(domain: [number | { valueOf(): number }, number | { valueOf(): number }]): ScaleQuantize<Range>;
     range(): Array<Range>;
     range(range: Array<Range>): ScaleQuantize<Range>;
     ticks(count?: number): Array<number>;
     tickFormat(count?: number, specifier?: string): ((d: number | { valueOf(): number }) => string);
-    nice(): ScaleQuantize<Range>;
+    nice(count?: number): ScaleQuantize<Range>;
     copy(): ScaleQuantize<Range>;
 }
 
