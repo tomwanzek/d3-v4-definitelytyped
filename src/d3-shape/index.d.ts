@@ -19,7 +19,7 @@ export interface DefaultArcObject {
 }
 
 export interface Arc<Datum> {
-    (d: Datum, ...args: any[]): string | void;
+    (d: Datum, ...args: any[]): string | undefined;
     centroid(d: Datum, ...args: any[]): [number, number];
     innerRadius(): (this: any, d: Datum, ...args: any[]) => number;
     innerRadius(radius: number): Arc<Datum>;
@@ -34,7 +34,7 @@ export interface Arc<Datum> {
     startAngle(angle: number): Arc<Datum>;
     startAngle(angle: (this: any, d: Datum, ...args: any[]) => number): Arc<Datum>;
     endAngle(): (this: any, d: Datum, ...args: any[]) => number;
-    endAngle(angle: number): Datum;
+    endAngle(angle: number): Arc<Datum>;
     endAngle(angle: (this: any, d: Datum, ...args: any[]) => number): Arc<Datum>;
     padAngle(): (this: any, d: Datum, ...args: any[]) => number;
     padAngle(angle: number): Arc<Datum>;
@@ -93,7 +93,7 @@ export function pie<Datum>(): Pie<Datum>;
 
 
 export interface Line<T> {
-    (data: Array<T>): string | void;
+    (data: Array<T>): string | undefined;
     x(): (d: T, index?: number, data?: Array<T>) => number;
     x(x: number): Line<T>;
     x(x: (d: T, index?: number, data?: Array<T>) => number): Line<T>;
@@ -112,7 +112,7 @@ export function line(): Line<[number, number]>;
 export function line<T>(): Line<T>;
 
 export interface RadialLine<T> {
-    (data: Array<T>): string | void;
+    (data: Array<T>): string | undefined;
     angle(): (d: T, index?: number, data?: Array<T>) => number;
     angle(angle: number): RadialLine<T>;
     angle(angle: (d: T, index?: number, data?: Array<T>) => number): RadialLine<T>;
@@ -137,7 +137,7 @@ export function radialLine<T>(): RadialLine<T>;
 
 
 export interface Area<T> {
-    (data: Array<T>): string | void;
+    (data: Array<T>): string | undefined;
     x(): (d: T, index?: number, data?: Array<T>) => number;
     x(x: number): Area<T>;
     x(x: (d: T, index?: number, data?: Array<T>) => number): Area<T>;
@@ -174,7 +174,7 @@ export function area<T>(): Area<T>;
 
 
 export interface RadialArea<T> {
-    (data: Array<T>): string | void;
+    (data: Array<T>): string | undefined;
     angle(): (d: T, index?: number, data?: Array<T>) => number;
     angle(angle: number): RadialArea<T>;
     angle(angle: (d: T, index?: number, data?: Array<T>) => number): RadialArea<T>;
@@ -287,7 +287,7 @@ export interface SymbolType {
 
 
 export interface Symbol<Datum> {
-    (d?: Datum, ...args: any[]): void | string;
+    (d?: Datum, ...args: any[]): undefined | string;
     size(): (this: any, d?: Datum, ...args: any[]) => number;
     size(size: number): Symbol<Datum>;
     size(size: (this: any, d?: Datum, ...args: any[]) => number): Symbol<Datum>;
