@@ -101,6 +101,7 @@ export interface Line<T> {
     y(y: number): Line<T>;
     y(y: (d: T, index?: number, data?: Array<T>) => number): Line<T>;
     defined(): (d: T, index?: number, data?: Array<T>) => boolean;
+    defined(defined: boolean): Line<T>;
     defined(defined: (d: T, index?: number, data?: Array<T>) => boolean): Line<T>;
     curve(): CurveFactory | CurveFactoryLineOnly;
     curve(curve: CurveFactory | CurveFactoryLineOnly): Line<T>;
@@ -120,6 +121,7 @@ export interface RadialLine<T> {
     radius(radius: number): RadialLine<T>;
     radius(radius: (d: T, index?: number, data?: Array<T>) => number): RadialLine<T>;
     defined(): (d: T, index?: number, data?: Array<T>) => boolean;
+    defined(defined: boolean): RadialLine<T>;
     defined(defined: (d: T, index?: number, data?: Array<T>) => boolean): RadialLine<T>;
     curve(): CurveFactory | CurveFactoryLineOnly;
     curve(curve: CurveFactory | CurveFactoryLineOnly): RadialLine<T>;

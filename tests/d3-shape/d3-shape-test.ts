@@ -262,7 +262,164 @@ pieChart = pie(pieData);
 // Test Line Generators
 // -----------------------------------------------------------------------------------
 
-// TODO: complete
+interface LineDatum {
+    x: number;
+    y: number;
+    missing: boolean;
+}
+
+let lineXYAccessorFn: (d: LineDatum, index?: number, data?: Array<LineDatum>) => number;
+let lineDefAccessorFn: (d: LineDatum, index?: number, data?: Array<LineDatum>) => boolean;
+
+interface RadialLineDatum {
+    angle: number;
+    radius: number;
+    missing: boolean;
+}
+
+let radialLineAngRAccessorFn: (d: RadialLineDatum, index?: number, data?: Array<RadialLineDatum>) => number;
+let radialLineDefAccessorFn: (d: RadialLineDatum, index?: number, data?: Array<RadialLineDatum>) => boolean;
+
+// line(...) create Line generator =====================================================
+
+let defaultLine: d3Shape.Line<[number, number]> = d3Shape.line();
+let line: d3Shape.Line<LineDatum> = d3Shape.line<LineDatum>();
+
+// configure Line(...) generator ======================================================
+
+// context(...) ----------------------------------------------------------------------
+
+defaultLine = defaultLine.context(context); // draw to canvas
+context = defaultLine.context();
+
+line = line.context(null); // use as path string generator for SVG
+
+// x(...) ----------------------------------------------------------------------------
+
+defaultLine = defaultLine.x(30);
+
+line = line.x(function(d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('X-Coordinate of first point: ', data[0].x); // data type is Array<LineDatum>
+    return d.x; // d type is LineDatum
+});
+
+lineXYAccessorFn = line.x();
+
+// y(...) ----------------------------------------------------------------------------
+
+defaultLine = defaultLine.y(10);
+
+line = line.y(function(d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Y-Coordinate of first point: ', data[0].y); // data type is Array<LineDatum>
+    return d.y; // d type is LineDatum
+});
+
+lineXYAccessorFn = line.y();
+
+// defined(...) ----------------------------------------------------------------------
+
+defaultLine = defaultLine.defined(true);
+
+line = line.defined(function(d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Y-Coordinate of first point: ', data[0].y); // data type is Array<LineDatum>
+    return !d.missing; // d type is LineDatum
+});
+
+lineDefAccessorFn = line.defined();
+
+// curve(...) ------------------------------------------------------------------------
+
+defaultLine = defaultLine.curve(d3Shape.curveLinear);
+
+line = line.curve(d3Shape.curveBundle.beta(0.5));
+
+let currentCurveFactory: d3Shape.CurveFactory | d3Shape.CurveFactoryLineOnly = line.curve();
+
+// use Line generator ===============================================================
+
+defaultLine([[10, 10], [20, 10], [20, 20]]);
+
+let lineData: Array<LineDatum> = [
+    {x: 10, y: 10, missing: false},
+    {x: 20, y: 10, missing: false},
+    {x: 20, y: 20, missing: false}
+];
+
+let linePathString: string = line(lineData);
+
+// radialLine(...) create Line generator =====================================================
+
+let defaultRadialLine: d3Shape.RadialLine<[number, number]> = d3Shape.radialLine();
+let radialLine: d3Shape.RadialLine<RadialLineDatum> = d3Shape.radialLine<RadialLineDatum>();
+
+// configure RadialLine(...) generator ======================================================
+
+// context(...) ----------------------------------------------------------------------
+
+defaultRadialLine = defaultRadialLine.context(context); // draw to canvas
+context = defaultRadialLine.context();
+
+radialLine = radialLine.context(null); // use as path string generator for SVG
+
+// angle(...) ----------------------------------------------------------------------------
+
+defaultRadialLine = defaultRadialLine.angle(Math.PI);
+
+radialLine = radialLine.angle(function(d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Angle of first point: ', data[0].angle); // data type is Array<RadialLineDatum>
+    return d.angle; // d type is RadialLineDatum
+});
+
+radialLineAngRAccessorFn = radialLine.angle();
+
+// radius(...) ----------------------------------------------------------------------------
+
+defaultRadialLine = defaultRadialLine.radius(30);
+
+radialLine = radialLine.radius(function(d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Angle of first point: ', data[0].angle); // data type is Array<RadialLineDatum>
+    return d.radius; // d type is RadialLineDatum
+});
+
+radialLineAngRAccessorFn = radialLine.radius();
+
+// defined(...) ----------------------------------------------------------------------
+
+defaultRadialLine = defaultRadialLine.defined(true);
+
+radialLine = radialLine.defined(function(d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Angle of first point: ', data[0].angle); // data type is Array<RadialLineDatum>
+    return !d.missing; // d type is RadialLineDatum
+});
+
+radialLineDefAccessorFn = radialLine.defined();
+
+// curve(...) ------------------------------------------------------------------------
+
+defaultRadialLine = defaultRadialLine.curve(d3Shape.curveLinear);
+
+radialLine = radialLine.curve(d3Shape.curveBundle.beta(0.5));
+
+currentCurveFactory = radialLine.curve();
+
+// use RadialLine generator ===============================================================
+
+defaultRadialLine([[10, 10], [20, 10], [20, 20]]);
+
+let radialLineData: Array<RadialLineDatum> = [
+    {angle: 0, radius: 10, missing: false},
+    {angle: Math.PI / 2, radius: 20, missing: false},
+    {angle: 2 * Math.PI, radius: 10, missing: false}
+];
+
+let radialLinePathString: string = radialLine(radialLineData);
+
 
 // -----------------------------------------------------------------------------------
 // Test Area Generators
@@ -274,7 +431,7 @@ pieChart = pie(pieData);
 // Test Curve Factories
 // -----------------------------------------------------------------------------------
 
-// Test General interfaces -------------------------------------------------------------------
+// Test General interfaces -----------------------------------------------------------
 
 let lineOnlyGenerator: d3Shape.CurveGeneratorLineOnly;
 
