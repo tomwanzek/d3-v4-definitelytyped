@@ -159,6 +159,7 @@ export interface Area<T> {
     y1(y: number): Area<T>;
     y1(y: (d: T, index?: number, data?: Array<T>) => number): Area<T>;
     defined(): (d: T, index?: number, data?: Array<T>) => boolean;
+    defined(defined: boolean): Area<T>;
     defined(defined: (d: T, index?: number, data?: Array<T>) => boolean): Area<T>;
     curve(): CurveFactory;
     curve(curve: CurveFactory): Area<T>;
@@ -196,6 +197,7 @@ export interface RadialArea<T> {
     outerRadius(radius: number): RadialArea<T>;
     outerRadius(radius: (d: T, index?: number, data?: Array<T>) => number): RadialArea<T>;
     defined(): (d: T, index?: number, data?: Array<T>) => boolean;
+    defined(defined: boolean): RadialArea<T>;
     defined(defined: (d: T, index?: number, data?: Array<T>) => boolean): RadialArea<T>;
     curve(): CurveFactory;
     curve(curve: CurveFactory): RadialArea<T>;

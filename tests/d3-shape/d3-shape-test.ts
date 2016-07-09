@@ -179,7 +179,7 @@ defaultPieValueAccessor = defaultPie.value();
 
 let pieValueAccessor: (d: PieDatum, i?: number, data?: Array<PieDatum>) => number;
 
-pie = pie.value(function(d, i, data) {
+pie = pie.value(function (d, i, data) {
     console.log(data.length > 0 ? data[0].val : 'no data'); // data type is Array<PieDatum>
     return d.val; // d type is PieDatum
 });
@@ -192,7 +192,7 @@ pieValueAccessor = pie.value();
 let pieSorter: ((a: PieDatum, b: PieDatum) => number) | null;
 
 pie = pie.sort(function (a, b) {
-    return  b.val - a.val; // type of a and b is PieDatum
+    return b.val - a.val; // type of a and b is PieDatum
 });
 
 pieSorter = pie.sort();
@@ -204,7 +204,7 @@ pie = pie.sort(null);
 let pieValuesSorter: ((a: number, b: number) => number) | null;
 
 pie = pie.sortValues(function (a, b) {
-    return  b - a; // type of a and b is number
+    return b - a; // type of a and b is number
 });
 
 pieValuesSorter = pie.sortValues();
@@ -246,12 +246,12 @@ accessorPieDatumNumber = pie.padAngle();
 
 let defaultPieChart: Array<d3Shape.PieArcDatum<number | { valueOf(): number }>>;
 
-defaultPieChart  = defaultPie([20, 10, 30, 40]);
+defaultPieChart = defaultPie([20, 10, 30, 40]);
 
 let pieData: Array<PieDatum> = [
-    {name: 'John',  val: 20},
-    {name: 'Jill',  val: 10},
-    {name: 'Rodrigo',  val: 30}
+    { name: 'John', val: 20 },
+    { name: 'Jill', val: 10 },
+    { name: 'Rodrigo', val: 30 }
 ];
 let pieChart: Array<d3Shape.PieArcDatum<PieDatum>>;
 
@@ -298,7 +298,7 @@ line = line.context(null); // use as path string generator for SVG
 
 defaultLine = defaultLine.x(30);
 
-line = line.x(function(d, t, data) {
+line = line.x(function (d, t, data) {
     console.log('Number of Points: ', data.length);
     console.log('X-Coordinate of first point: ', data[0].x); // data type is Array<LineDatum>
     return d.x; // d type is LineDatum
@@ -310,7 +310,7 @@ lineXYAccessorFn = line.x();
 
 defaultLine = defaultLine.y(10);
 
-line = line.y(function(d, t, data) {
+line = line.y(function (d, t, data) {
     console.log('Number of Points: ', data.length);
     console.log('Y-Coordinate of first point: ', data[0].y); // data type is Array<LineDatum>
     return d.y; // d type is LineDatum
@@ -322,7 +322,7 @@ lineXYAccessorFn = line.y();
 
 defaultLine = defaultLine.defined(true);
 
-line = line.defined(function(d, t, data) {
+line = line.defined(function (d, t, data) {
     console.log('Number of Points: ', data.length);
     console.log('Y-Coordinate of first point: ', data[0].y); // data type is Array<LineDatum>
     return !d.missing; // d type is LineDatum
@@ -343,9 +343,9 @@ let currentCurveFactory: d3Shape.CurveFactory | d3Shape.CurveFactoryLineOnly = l
 defaultLine([[10, 10], [20, 10], [20, 20]]);
 
 let lineData: Array<LineDatum> = [
-    {x: 10, y: 10, missing: false},
-    {x: 20, y: 10, missing: false},
-    {x: 20, y: 20, missing: false}
+    { x: 10, y: 10, missing: false },
+    { x: 20, y: 10, missing: false },
+    { x: 20, y: 20, missing: false }
 ];
 
 let linePathString: string = line(lineData);
@@ -368,7 +368,7 @@ radialLine = radialLine.context(null); // use as path string generator for SVG
 
 defaultRadialLine = defaultRadialLine.angle(Math.PI);
 
-radialLine = radialLine.angle(function(d, t, data) {
+radialLine = radialLine.angle(function (d, t, data) {
     console.log('Number of Points: ', data.length);
     console.log('Angle of first point: ', data[0].angle); // data type is Array<RadialLineDatum>
     return d.angle; // d type is RadialLineDatum
@@ -380,7 +380,7 @@ radialLineAngRAccessorFn = radialLine.angle();
 
 defaultRadialLine = defaultRadialLine.radius(30);
 
-radialLine = radialLine.radius(function(d, t, data) {
+radialLine = radialLine.radius(function (d, t, data) {
     console.log('Number of Points: ', data.length);
     console.log('Angle of first point: ', data[0].angle); // data type is Array<RadialLineDatum>
     return d.radius; // d type is RadialLineDatum
@@ -392,7 +392,7 @@ radialLineAngRAccessorFn = radialLine.radius();
 
 defaultRadialLine = defaultRadialLine.defined(true);
 
-radialLine = radialLine.defined(function(d, t, data) {
+radialLine = radialLine.defined(function (d, t, data) {
     console.log('Number of Points: ', data.length);
     console.log('Angle of first point: ', data[0].angle); // data type is Array<RadialLineDatum>
     return !d.missing; // d type is RadialLineDatum
@@ -413,9 +413,9 @@ currentCurveFactory = radialLine.curve();
 defaultRadialLine([[10, 10], [20, 10], [20, 20]]);
 
 let radialLineData: Array<RadialLineDatum> = [
-    {angle: 0, radius: 10, missing: false},
-    {angle: Math.PI / 2, radius: 20, missing: false},
-    {angle: 2 * Math.PI, radius: 10, missing: false}
+    { angle: 0, radius: 10, missing: false },
+    { angle: Math.PI / 2, radius: 20, missing: false },
+    { angle: 2 * Math.PI, radius: 10, missing: false }
 ];
 
 let radialLinePathString: string = radialLine(radialLineData);
@@ -425,7 +425,265 @@ let radialLinePathString: string = radialLine(radialLineData);
 // Test Area Generators
 // -----------------------------------------------------------------------------------
 
-// TODO: complete
+interface AreaDatum {
+    x0: number;
+    y0: number;
+    x1: number;
+    y1: number;
+    missing: boolean;
+}
+
+let areaXYAccessorFn: (d: AreaDatum, index?: number, data?: Array<AreaDatum>) => number;
+let areaDefAccessorFn: (d: AreaDatum, index?: number, data?: Array<AreaDatum>) => boolean;
+
+interface RadialAreaDatum {
+    startAngle: number;
+    endAngle: number;
+    innerRadius: number;
+    outerRadius: number;
+    missing: boolean;
+}
+
+let radialAreaAngRAccessorFn: (d: RadialAreaDatum, index?: number, data?: Array<RadialAreaDatum>) => number;
+let radialAreaDefAccessorFn: (d: RadialAreaDatum, index?: number, data?: Array<RadialAreaDatum>) => boolean;
+
+// area(...) create Area generator =====================================================
+
+let defaultArea: d3Shape.Area<[number, number]> = d3Shape.area();
+let area: d3Shape.Area<AreaDatum> = d3Shape.area<AreaDatum>();
+
+// configure Area(...) generator ======================================================
+
+// context(...) ----------------------------------------------------------------------
+
+defaultArea = defaultArea.context(context); // draw to canvas
+context = defaultArea.context();
+
+area = area.context(null); // use as path string generator for SVG
+
+// x(...) ----------------------------------------------------------------------------
+
+defaultArea = defaultArea.x(30);
+
+area = area.x(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('X0-Coordinate of first point: ', data[0].x0); // data type is Array<AreaDatum>
+    return d.x0; // d type is AreaDatum
+});
+
+areaXYAccessorFn = area.x();
+
+// x0(...) ----------------------------------------------------------------------------
+
+defaultArea = defaultArea.x0(30);
+
+area = area.x0(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('X0-Coordinate of first point: ', data[0].x0); // data type is Array<AreaDatum>
+    return d.x0; // d type is AreaDatum
+});
+
+areaXYAccessorFn = area.x0();
+
+// x1(...) ----------------------------------------------------------------------------
+
+defaultArea = defaultArea.x1(30);
+
+area = area.x1(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('X1-Coordinate of first point: ', data[0].x1); // data type is Array<AreaDatum>
+    return d.x1; // d type is AreaDatum
+});
+
+areaXYAccessorFn = area.x1();
+
+// y(...) ----------------------------------------------------------------------------
+
+defaultArea = defaultArea.y(10);
+
+area = area.y(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Y0-Coordinate of first point: ', data[0].y0); // data type is Array<AreaDatum>
+    return d.y0; // d type is AreaDatum
+});
+
+areaXYAccessorFn = area.y();
+
+// y0(...) ----------------------------------------------------------------------------
+
+defaultArea = defaultArea.y0(10);
+
+area = area.y0(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Y0-Coordinate of first point: ', data[0].y0); // data type is Array<AreaDatum>
+    return d.y0; // d type is AreaDatum
+});
+
+areaXYAccessorFn = area.y0();
+
+// y1(...) ----------------------------------------------------------------------------
+
+defaultArea = defaultArea.y1(10);
+
+area = area.y1(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Y1-Coordinate of first point: ', data[0].y1); // data type is Array<AreaDatum>
+    return d.y1; // d type is AreaDatum
+});
+
+areaXYAccessorFn = area.y1();
+
+// defined(...) ----------------------------------------------------------------------
+
+defaultArea = defaultArea.defined(true);
+
+area = area.defined(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Y0-Coordinate of first point: ', data[0].y0); // data type is Array<AreaDatum>
+    return !d.missing; // d type is AreaDatum
+});
+
+areaDefAccessorFn = area.defined();
+
+// curve(...) ------------------------------------------------------------------------
+
+defaultArea = defaultArea.curve(d3Shape.curveLinear);
+
+area = area.curve(d3Shape.curveCardinal.tension(0.5));
+// area = area.curve(d3Shape.curveBundle.beta(0.5)); // fails, as curveBundle-based line generator does not support area-related methods
+
+currentCurveFactory = area.curve();
+
+// use Area generator ===============================================================
+
+defaultArea([[10, 10], [20, 10], [20, 20]]);
+
+let areaData: Array<AreaDatum> = [
+    { x0: 10, y0: 10, x1: 10, y1: 30, missing: false },
+    { x0: 20, y0: 20, x1: 20, y1: 40, missing: false },
+    { x0: 30, y0: 30, x1: 30, y1: 30, missing: false }
+];
+
+let areaPathString: string = area(areaData);
+
+// radialArea(...) create RadialArea generator =====================================================
+
+let defaultRadialArea: d3Shape.RadialArea<[number, number]> = d3Shape.radialArea();
+let radialArea: d3Shape.RadialArea<RadialAreaDatum> = d3Shape.radialArea<RadialAreaDatum>();
+
+// configure Area(...) generator ======================================================
+
+// context(...) ----------------------------------------------------------------------
+
+defaultRadialArea = defaultRadialArea.context(context); // draw to canvas
+context = defaultRadialArea.context();
+
+radialArea = radialArea.context(null); // use as path string generator for SVG
+
+// angle(...) ----------------------------------------------------------------------------
+
+defaultRadialArea = defaultRadialArea.angle(Math.PI);
+
+radialArea = radialArea.angle(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Start angle of first point: ', data[0].startAngle); // data type is Array<RadialAreaDatum>
+    return d.startAngle; // d type is RadialAreaDatum
+});
+
+radialAreaAngRAccessorFn = radialArea.angle();
+
+// startAngle(...) ----------------------------------------------------------------------------
+
+defaultRadialArea = defaultRadialArea.startAngle(Math.PI);
+
+radialArea = radialArea.startAngle(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Start angle of first point: ', data[0].startAngle); // data type is Array<RadialAreaDatum>
+    return d.startAngle; // d type is RadialAreaDatum
+});
+
+radialAreaAngRAccessorFn = radialArea.startAngle();
+
+// endAngle(...) ----------------------------------------------------------------------------
+
+defaultRadialArea = defaultRadialArea.endAngle(Math.PI);
+
+radialArea = radialArea.endAngle(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('End angle of first point: ', data[0].endAngle); // data type is Array<RadialAreaDatum>
+    return d.endAngle; // d type is RadialAreaDatum
+});
+
+radialAreaAngRAccessorFn = radialArea.endAngle();
+
+// radius(...) ----------------------------------------------------------------------------
+
+defaultRadialArea = defaultRadialArea.radius(10);
+
+radialArea = radialArea.radius(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Inner radius of first point: ', data[0].innerRadius); // data type is Array<RadialAreaDatum>
+    return d.innerRadius; // d type is RadialAreaDatum
+});
+
+radialAreaAngRAccessorFn = radialArea.radius();
+
+// innerRadius(...) ----------------------------------------------------------------------------
+
+defaultRadialArea = defaultRadialArea.innerRadius(10);
+
+radialArea = radialArea.innerRadius(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Inner radius of first point: ', data[0].innerRadius); // data type is Array<RadialAreaDatum>
+    return d.innerRadius; // d type is RadialAreaDatum
+});
+
+radialAreaAngRAccessorFn = radialArea.innerRadius();
+
+// outerRadius(...) ----------------------------------------------------------------------------
+
+defaultRadialArea = defaultRadialArea.outerRadius(20);
+
+radialArea = radialArea.outerRadius(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Outer radius of first point: ', data[0].outerRadius); // data type is Array<RadialAreaDatum>
+    return d.outerRadius; // d type is RadialAreaDatum
+});
+
+radialAreaAngRAccessorFn = radialArea.outerRadius();
+
+// defined(...) ----------------------------------------------------------------------
+
+defaultRadialArea = defaultRadialArea.defined(true);
+
+radialArea = radialArea.defined(function (d, t, data) {
+    console.log('Number of Points: ', data.length);
+    console.log('Inner radius of first point: ', data[0].innerRadius); // data type is Array<RadialAreaDatum>
+    return !d.missing; // d type is RadialAreaDatum
+});
+
+radialAreaDefAccessorFn = radialArea.defined();
+
+// curve(...) ------------------------------------------------------------------------
+
+defaultRadialArea = defaultRadialArea.curve(d3Shape.curveLinear);
+
+radialArea = radialArea.curve(d3Shape.curveCardinal.tension(0.5));
+// radialArea = radialArea.curve(d3Shape.curveBundle.beta(0.5)); // fails, as curveBundle-based line generator does not support area-related methods
+
+currentCurveFactory = radialArea.curve();
+
+// use Area generator ===============================================================
+
+defaultRadialArea([[10, 10], [20, 10], [20, 20]]);
+
+let radialAreaData: Array<RadialAreaDatum> = [
+    { startAngle: 0, innerRadius: 10, endAngle: 0, outerRadius: 30, missing: false },
+    { startAngle: Math.PI / 2, innerRadius: 20, endAngle: Math.PI / 2, outerRadius: 40, missing: false },
+    { startAngle: Math.PI, innerRadius: 30, endAngle: Math.PI, outerRadius: 30, missing: false }
+];
+
+let radialAreaPathString: string = radialArea(radialAreaData);
 
 // -----------------------------------------------------------------------------------
 // Test Curve Factories
