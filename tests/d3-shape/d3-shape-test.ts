@@ -143,6 +143,7 @@ pathString = arc(arcDatum);
 
 interface PieDatum {
     val: number;
+    name: string;
 }
 
 
@@ -243,7 +244,18 @@ accessorPieDatumNumber = pie.padAngle();
 
 // use Pie(...) generator ============================================================
 
+let defaultPieChart: Array<d3Shape.PieArcDatum<number | { valueOf(): number }>>;
 
+defaultPieChart  = defaultPie([20, 10, 30, 40]);
+
+let pieData: Array<PieDatum> = [
+    {name: 'John',  val: 20},
+    {name: 'Jill',  val: 10},
+    {name: 'Rodrigo',  val: 30}
+];
+let pieChart: Array<d3Shape.PieArcDatum<PieDatum>>;
+
+pieChart = pie(pieData);
 
 
 // -----------------------------------------------------------------------------------
@@ -262,13 +274,103 @@ accessorPieDatumNumber = pie.padAngle();
 // Test Curve Factories
 // -----------------------------------------------------------------------------------
 
-// TODO: complete
+// Test General interfaces -------------------------------------------------------------------
+
+let lineOnlyGenerator: d3Shape.CurveGeneratorLineOnly;
+
+let lineOnlyFactory: d3Shape.CurveFactoryLineOnly;
+
+lineOnlyGenerator = lineOnlyFactory(null);
+lineOnlyGenerator = lineOnlyFactory(context);
+
+lineOnlyGenerator.lineStart();
+lineOnlyGenerator.lineEnd();
+lineOnlyGenerator.point(10, 20);
+
+let curveGenerator: d3Shape.CurveGenerator;
+
+let curveFactory: d3Shape.CurveFactory;
+
+curveGenerator = curveFactory(null);
+curveGenerator = curveFactory(context);
+
+curveGenerator.lineStart();
+curveGenerator.lineEnd();
+curveGenerator.point(10, 20);
+curveGenerator.areaStart();
+curveGenerator.areaEnd();
+
+// Test factories --------------------------------------------------------------------
+
+curveFactory = d3Shape.curveBasis;
+curveFactory = d3Shape.curveBasisOpen;
+curveFactory = d3Shape.curveBasisClosed;
+
+let curveBundleFactory: d3Shape.CurveBundleFactory;
+
+curveBundleFactory = d3Shape.curveBundle;
+curveBundleFactory = d3Shape.curveBundle.beta(0.5);
+
+lineOnlyGenerator = d3Shape.curveBundle.beta(0.5)(context);
+// curveGenerator = d3Shape.curveBundle.beta(0.5)(context); // fails, no area related methods
+
+let curveCardinalFactory: d3Shape.CurveCardinalFactory;
+
+curveCardinalFactory = d3Shape.curveCardinal;
+curveCardinalFactory = d3Shape.curveCardinal.tension(0.5);
+
+curveGenerator = d3Shape.curveCardinal.tension(0.5)(context);
+
+curveCardinalFactory = d3Shape.curveCardinalOpen;
+curveCardinalFactory = d3Shape.curveCardinalOpen.tension(0.5);
+
+curveGenerator = d3Shape.curveCardinalOpen.tension(0.5)(context);
+
+curveCardinalFactory = d3Shape.curveCardinalClosed;
+curveCardinalFactory = d3Shape.curveCardinalClosed.tension(0.5);
+
+curveGenerator = d3Shape.curveCardinalClosed.tension(0.5)(context);
+
+let curveCatmullRomFactory: d3Shape.CurveCatmullRomFactory;
+
+curveCatmullRomFactory = d3Shape.curveCatmullRom;
+curveCatmullRomFactory = d3Shape.curveCatmullRom.alpha(0.5);
+
+curveGenerator = d3Shape.curveCatmullRom.alpha(0.5)(context);
+
+curveCatmullRomFactory = d3Shape.curveCatmullRomOpen;
+curveCatmullRomFactory = d3Shape.curveCatmullRomOpen.alpha(0.5);
+
+curveGenerator = d3Shape.curveCatmullRomOpen.alpha(0.5)(context);
+
+curveCatmullRomFactory = d3Shape.curveCatmullRomClosed;
+curveCatmullRomFactory = d3Shape.curveCatmullRomClosed.alpha(0.5);
+
+curveGenerator = d3Shape.curveCatmullRomClosed.alpha(0.5)(context);
+
+curveFactory = d3Shape.curveLinear;
+
+curveFactory = d3Shape.curveLinearClosed;
+
+curveFactory = d3Shape.curveMonotoneX;
+
+curveFactory = d3Shape.curveMonotoneY;
+
+curveFactory = d3Shape.curveNatural;
+
+curveFactory = d3Shape.curveStep;
+
+curveFactory = d3Shape.stepAfter;
+
+curveFactory = d3Shape.curveStepBefore;
 
 // -----------------------------------------------------------------------------------
 // Test Symbols
 // -----------------------------------------------------------------------------------
 
-// TODO: complete
+// test interfaces -------------------------------------------------------------------
+
+
 
 // -----------------------------------------------------------------------------------
 // Test Stacks
