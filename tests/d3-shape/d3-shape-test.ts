@@ -783,9 +783,96 @@ curveFactory = d3Shape.curveStepBefore;
 // Test Symbols
 // -----------------------------------------------------------------------------------
 
-// test interfaces -------------------------------------------------------------------
+interface SymbolDatum {
+    size: number;
+    type: 'circle' | 'square';
+}
 
+// Test Symbol Type ==================================================================
 
+let customSymbol: d3Shape.SymbolType;
+
+customSymbol = {
+    draw: function (context: CanvasPathMethods, size: number): void {
+        // draw custom symbol using canvas path methods
+    }
+};
+
+// Symbol() create Symbol Generator ===================================================
+
+let defaultSymbol: d3Shape.Symbol<any>;
+
+let symbol: d3Shape.Symbol<SymbolDatum>;
+
+defaultSymbol = d3Shape.symbol();
+
+symbol = d3Shape.symbol<SymbolDatum>();
+
+// Configure Symbol Generator =========================================================
+
+// context() --------------------------------------------------------------------------
+
+defaultSymbol = defaultSymbol.context(context); // draw to canvas
+context = defaultSymbol.context();
+
+symbol = symbol.context(null); // use as path string generator for SVG
+
+// size() ----------------------------------------------------------------------------
+
+defaultSymbol = defaultSymbol.size(30);
+
+symbol = symbol.size(function (d) {
+    return d.size; // datum type is SymbolDatum
+});
+
+let sizeAccessorFn: (d: SymbolDatum) => number;
+sizeAccessorFn = symbol.size();
+
+// type() ----------------------------------------------------------------------------
+
+defaultSymbol = defaultSymbol.type(d3Shape.symbolDiamond);
+
+symbol = symbol.type(function (d) {
+    let t: d3Shape.SymbolType;
+    switch (d.type) { // datum type is SymbolDatum
+        case 'circle':
+            t = d3Shape.symbolCircle;
+            break;
+        case 'square':
+            t = d3Shape.symbolSquare;
+            break;
+        default:
+            t = d3Shape.symbolCircle;
+            break;
+    }
+    return t;
+});
+
+let typeAccessorFn: (d: SymbolDatum) => d3Shape.SymbolType;
+typeAccessorFn = symbol.type();
+
+// Use Symbol Generator ===============================================================
+
+defaultSymbol();
+
+let symbolDatum: SymbolDatum = {
+    size: 30,
+    type: 'circle'
+};
+
+let symbolPathString: string = symbol(symbolDatum);
+
+// Test pre-fab symbols ===============================================================
+
+let symbolArray: Array<d3Shape.SymbolType> = d3Shape.symbols;
+
+customSymbol = d3Shape.symbolCircle;
+customSymbol = d3Shape.symbolCross;
+customSymbol = d3Shape.symbolDiamond;
+customSymbol = d3Shape.symbolSquare;
+customSymbol = d3Shape.symbolStar;
+customSymbol = d3Shape.symbolTriangle;
+customSymbol = d3Shape.symbolWye;
 
 // -----------------------------------------------------------------------------------
 // Test Stacks

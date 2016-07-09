@@ -297,7 +297,7 @@ export interface Symbol<Datum> {
     size(size: (this: any, d?: Datum, ...args: any[]) => number): Symbol<Datum>;
     type(): (this: any, d?: Datum, ...args: any[]) => SymbolType;
     type(type: SymbolType): Symbol<Datum>;
-    type(type: (this: any, d?: Datum, ...args: any[]) => number): Symbol<Datum>;
+    type(type: (this: any, d?: Datum, ...args: any[]) => SymbolType): Symbol<Datum>;
     context(): CanvasRenderingContext2D | null;
     context(context: CanvasRenderingContext2D): Symbol<Datum>;
     context(context: null): Symbol<Datum>;
