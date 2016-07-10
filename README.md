@@ -166,12 +166,13 @@ See [issue 2 BaseType definition for selection/transition elements](https://gith
 ### d3-shape
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-shape/index.d.ts)
-- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-shape/d3-shape-test.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-shape/d3-shape-test.ts)
 
-**Note**: Utilizes `this`-typing (criticality: _low_)
+**Note**: Utilizes `this`-typing (criticality: _medium_)
 
-`this`-typing is used accessor functions in Arc, Pie, Symbol, Stack. The semantic value is limited. The `this` context depends on the context bound when invoking the
-respective generator with data. I.e. it can be global object, undefined or anything explicitly bound using `.call(...)` et al.  
+`this`-typing is used for accessor functions in Arc, Pie, Symbol, Stack. The `this` context depends on the context bound when invoking the
+respective generator with data. I.e. it can be global object, undefined, a custom object or anything explicitly bound using `.call(...)` et al.
+The latter is the case e.g. when using `symbol` or `arc` to create the path string in conjunction with a `Selection` or `Transition` for SVGPathElements' `attr(...)` callbacks.  
 
 ### d3-time
 

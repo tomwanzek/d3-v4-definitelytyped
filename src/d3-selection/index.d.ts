@@ -116,17 +116,17 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 
     attr(name: string): string;
     attr(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
-    attr(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | { toString(): string })): Selection<GElement, Datum, PElement, PDatum>;
-    attr(name: string, value: string | { toString(): string }): Selection<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: string | number | boolean): Selection<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | number | boolean)): Selection<GElement, Datum, PElement, PDatum>;
 
     classed(name: string): boolean;
-    classed(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => boolean): Selection<GElement, Datum, PElement, PDatum>;
     classed(name: string, value: boolean): Selection<GElement, Datum, PElement, PDatum>;
+    classed(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => boolean): Selection<GElement, Datum, PElement, PDatum>;
 
     style(name: string): string;
     style(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | { toString(): string }), priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: string | { toString(): string }, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: string | number | boolean, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | number | boolean), priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
 
     property(name: string): any;
     property(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => any): Selection<GElement, Datum, PElement, PDatum>;
@@ -134,8 +134,8 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     property(name: string, value: any): Selection<GElement, Datum, PElement, PDatum>;
 
     text(): string;
-    text(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | { toString(): string })): Selection<GElement, Datum, PElement, PDatum>;
-    text(value: string | { toString(): string }): Selection<GElement, Datum, PElement, PDatum>;
+    text(value: string | number | boolean): Selection<GElement, Datum, PElement, PDatum>;
+    text(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | NodeListOf<GElement>) => (string | number | boolean)): Selection<GElement, Datum, PElement, PDatum>;
 
     html(): string;
     html(value: string): Selection<GElement, Datum, PElement, PDatum>;

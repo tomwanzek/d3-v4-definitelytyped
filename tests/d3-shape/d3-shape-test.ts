@@ -7,6 +7,7 @@
  */
 
 import * as d3Shape from '../../src/d3-shape';
+import { Selection } from '../../src/d3-selection';
 
 // -----------------------------------------------------------------------------------
 // Preparatory Steps (General)
@@ -58,84 +59,144 @@ num = defaultArcObject.padAngle;
 
 // arc(...) create Arc generator =====================================================
 
-let defaultArc: d3Shape.Arc<d3Shape.DefaultArcObject> = d3Shape.arc();
-let arc: d3Shape.Arc<ArcDatum> = d3Shape.arc<ArcDatum>();
+let canvasArc: d3Shape.Arc<any, d3Shape.DefaultArcObject> = d3Shape.arc();
+let svgArc: d3Shape.Arc<SVGPathElement, ArcDatum> = d3Shape.arc<SVGPathElement, ArcDatum>();
 
 // configure Arc(...) generator ======================================================
 
 // context(...) ----------------------------------------------------------------------
 
-defaultArc = defaultArc.context(context); // draw to canvas
-context = defaultArc.context();
+canvasArc = canvasArc.context(context); // draw to canvas
+context = canvasArc.context();
 
-arc = arc.context(null); // use as path string generator for SVG
+svgArc = svgArc.context(null); // use as path string generator for SVG
 
 // innerRadius(...) -------------------------------------------------------------------
 
-defaultArc = defaultArc.innerRadius(40);
+canvasArc = canvasArc.innerRadius(40);
 
-arc = arc.innerRadius(function (d) {
+svgArc = svgArc.innerRadius(function (d) {
     return d.iRadius; // datum type is ArcDatum
 });
-accessorArcDatumNumber = arc.innerRadius();
+accessorArcDatumNumber = svgArc.innerRadius();
 
 // outerRadius(...) --------------------------------------------------------------------
 
-defaultArc = defaultArc.outerRadius(60);
+canvasArc = canvasArc.outerRadius(60);
 
-arc = arc.outerRadius(function (d) {
+svgArc = svgArc.outerRadius(function (d) {
     return d.oRadius; // datum type is ArcDatum
 });
-accessorArcDatumNumber = arc.outerRadius();
+accessorArcDatumNumber = svgArc.outerRadius();
 
 // cornerRadius(...) ------------------------------------------------------------------
 
-defaultArc = defaultArc.cornerRadius(4);
+canvasArc = canvasArc.cornerRadius(4);
 
-arc = arc.cornerRadius(function (d) {
+svgArc = svgArc.cornerRadius(function (d) {
     return d.oRadius / 10; // datum type is ArcDatum
 });
-accessorArcDatumNumber = arc.cornerRadius();
+accessorArcDatumNumber = svgArc.cornerRadius();
 
 // startAngle(...) --------------------------------------------------------------------
 
-defaultArc = defaultArc.startAngle(0);
+canvasArc = canvasArc.startAngle(0);
 
-arc = arc.startAngle(function (d) {
+svgArc = svgArc.startAngle(function (d) {
     return d.sAngle; // datum type is ArcDatum
 });
-accessorArcDatumNumber = arc.startAngle();
+accessorArcDatumNumber = svgArc.startAngle();
 
 // endAngle(...) ----------------------------------------------------------------------
 
-defaultArc = defaultArc.endAngle(Math.PI / 2);
+canvasArc = canvasArc.endAngle(Math.PI / 2);
 
-arc = arc.endAngle(function (d) {
+svgArc = svgArc.endAngle(function (d) {
     return d.eAngle; // datum type is ArcDatum
 });
-accessorArcDatumNumber = arc.endAngle();
+accessorArcDatumNumber = svgArc.endAngle();
 
 // padAngle(...) ----------------------------------------------------------------------
 
-defaultArc = defaultArc.padAngle(0);
+canvasArc = canvasArc.padAngle(0);
 
-arc = arc.padAngle(function (d) {
+svgArc = svgArc.padAngle(function (d) {
     return d.pAngle; // datum type is ArcDatum
 });
-accessorArcDatumNumber = arc.padAngle();
+accessorArcDatumNumber = svgArc.padAngle();
 
 // use Arc(...) generator ============================================================
 
 // centroid(...) ---------------------------------------------------------------------
 
-let centroid: [number, number] = arc.centroid(arcDatum);
+let centroid: [number, number] = svgArc.centroid(arcDatum);
 // centroid = arc.centroid(arcDefaultDatum); // fails, wrong datum type
 
 // generate arc ----------------------------------------------------------------------
 
-defaultArc(arcDefaultDatum);
+// use with canvas
+canvasArc(arcDefaultDatum);
 
-pathString = arc(arcDatum);
+
+// use with svg
+
+let pArc: Selection<SVGPathElement, ArcDatum, any, any>;
+let wrongArc1: Selection<SVGCircleElement, ArcDatum, any, any>;
+let wrongArc2: Selection<SVGPathElement, { test: string }, any, any>;
+
+pArc.attr('d', svgArc);
+// wrongArc1.attr('d', svgArc); // fails, incompatible this contexts
+// wrongArc2.attr('d', svgArc); // fails, incompatible datum types
+
+
+// pathString = svgArc(arcDatum); // fails, wrong this type for invocation
+
+// Use with custom object
+
+interface ArcerDatum {
+    innerRadius: number;
+    outerRadius: number;
+}
+
+class Arcer {
+    constructor(innerRadius: number, outerRadius: number) {
+        this.startAngle = 0;
+        this.endAngle = Math.PI / 2;
+        this.padAngle = 0;
+        this.innerRadius = innerRadius;
+        this.outerRadius = outerRadius;
+        this.cornerRadius = 3;
+
+        this.arc = d3Shape.arc<Arcer, ArcerDatum>()
+            .innerRadius(function (d) {
+                return Math.min(d.innerRadius, this.innerRadius);
+            })
+            .outerRadius(function (d) {
+                return Math.min(d.outerRadius, this.outerRadius);
+            })
+            .cornerRadius(this.cornerRadius)
+            .startAngle(this.startAngle)
+            .endAngle(this.endAngle)
+            .padAngle(this.padAngle);
+    }
+    private startAngle: number;
+    private endAngle: number;
+    private padAngle: number;
+    private innerRadius: number;
+    private outerRadius: number;
+    private cornerRadius: number;
+
+    private arc: d3Shape.Arc<Arcer, ArcerDatum>;
+
+    public getPathString(d?: ArcerDatum) {
+        return d ? this.arc(d) : this.arc({ innerRadius: this.innerRadius, outerRadius: this.outerRadius });
+    }
+}
+
+let arcer = new Arcer(100, 120);
+
+pathString = arcer.getPathString();
+pathString = arcer.getPathString({ innerRadius: 10, outerRadius: 20 });
 
 // -----------------------------------------------------------------------------------
 // Test Pie Generator
@@ -163,9 +224,9 @@ num = pieArcObject.padAngle;
 
 // pie(...) create Pie generator =====================================================
 
-let defaultPie: d3Shape.Pie<number | { valueOf(): number }> = d3Shape.pie();
+let defaultPie: d3Shape.Pie<any, number | { valueOf(): number }> = d3Shape.pie();
 
-let pie: d3Shape.Pie<PieDatum> = d3Shape.pie<PieDatum>();
+let pie: d3Shape.Pie<any, PieDatum> = d3Shape.pie<PieDatum>();
 
 // configure Pie(...) generator ======================================================
 
@@ -566,12 +627,21 @@ let areaData: Array<AreaDatum> = [
 
 let areaPathString: string = area(areaData);
 
+// Get Line Generators from Area generator ========================================================
+
+let areaLineGenerator: d3Shape.Line<AreaDatum>;
+
+areaLineGenerator = area.lineX0();
+areaLineGenerator = area.lineY0();
+areaLineGenerator = area.lineX1();
+areaLineGenerator = area.lineY1();
+
 // radialArea(...) create RadialArea generator =====================================================
 
 let defaultRadialArea: d3Shape.RadialArea<[number, number]> = d3Shape.radialArea();
 let radialArea: d3Shape.RadialArea<RadialAreaDatum> = d3Shape.radialArea<RadialAreaDatum>();
 
-// configure Area(...) generator ======================================================
+// configure RadialArea(...) generator ======================================================
 
 // context(...) ----------------------------------------------------------------------
 
@@ -673,7 +743,7 @@ radialArea = radialArea.curve(d3Shape.curveCardinal.tension(0.5));
 
 currentCurveFactory = radialArea.curve();
 
-// use Area generator ===============================================================
+// use RadialArea generator ===============================================================
 
 defaultRadialArea([[10, 10], [20, 10], [20, 20]]);
 
@@ -684,6 +754,16 @@ let radialAreaData: Array<RadialAreaDatum> = [
 ];
 
 let radialAreaPathString: string = radialArea(radialAreaData);
+
+// Get RadialLine Generators from RadialArea generator ========================================================
+
+let areaRadialLineGenerator: d3Shape.RadialLine<RadialAreaDatum>;
+
+areaRadialLineGenerator = radialArea.lineStartAngle();
+areaRadialLineGenerator = radialArea.lineInnerRadius();
+areaRadialLineGenerator = radialArea.lineEndAngle();
+areaRadialLineGenerator = radialArea.lineOuterRadius();
+
 
 // -----------------------------------------------------------------------------------
 // Test Curve Factories
@@ -800,39 +880,39 @@ customSymbol = {
 
 // Symbol() create Symbol Generator ===================================================
 
-let defaultSymbol: d3Shape.Symbol<any>;
+let canvasSymbol: d3Shape.Symbol<any, any>;
 
-let symbol: d3Shape.Symbol<SymbolDatum>;
+let svgSymbol: d3Shape.Symbol<SVGPathElement, SymbolDatum>;
 
-defaultSymbol = d3Shape.symbol();
+canvasSymbol = d3Shape.symbol();
 
-symbol = d3Shape.symbol<SymbolDatum>();
+svgSymbol = d3Shape.symbol<SymbolDatum>();
 
 // Configure Symbol Generator =========================================================
 
 // context() --------------------------------------------------------------------------
 
-defaultSymbol = defaultSymbol.context(context); // draw to canvas
-context = defaultSymbol.context();
+canvasSymbol = canvasSymbol.context(context); // draw to canvas
+context = canvasSymbol.context();
 
-symbol = symbol.context(null); // use as path string generator for SVG
+svgSymbol = svgSymbol.context(null); // use as path string generator for SVG
 
 // size() ----------------------------------------------------------------------------
 
-defaultSymbol = defaultSymbol.size(30);
+canvasSymbol = canvasSymbol.size(30);
 
-symbol = symbol.size(function (d) {
+svgSymbol = svgSymbol.size(function (d) {
     return d.size; // datum type is SymbolDatum
 });
 
 let sizeAccessorFn: (d: SymbolDatum) => number;
-sizeAccessorFn = symbol.size();
+sizeAccessorFn = svgSymbol.size();
 
 // type() ----------------------------------------------------------------------------
 
-defaultSymbol = defaultSymbol.type(d3Shape.symbolDiamond);
+canvasSymbol = canvasSymbol.type(d3Shape.symbolDiamond);
 
-symbol = symbol.type(function (d) {
+svgSymbol = svgSymbol.type(function (d) {
     let t: d3Shape.SymbolType;
     switch (d.type) { // datum type is SymbolDatum
         case 'circle':
@@ -849,18 +929,78 @@ symbol = symbol.type(function (d) {
 });
 
 let typeAccessorFn: (d: SymbolDatum) => d3Shape.SymbolType;
-typeAccessorFn = symbol.type();
+typeAccessorFn = svgSymbol.type();
 
 // Use Symbol Generator ===============================================================
 
-defaultSymbol();
+// use with canvas
+canvasSymbol();
 
 let symbolDatum: SymbolDatum = {
     size: 30,
     type: 'circle'
 };
 
-let symbolPathString: string = symbol(symbolDatum);
+let pSymbol: Selection<SVGPathElement, SymbolDatum, any, any>;
+let wrongSymbol1: Selection<SVGCircleElement, SymbolDatum, any, any>;
+let wrongSymbol2: Selection<SVGPathElement, { test: string }, any, any>;
+
+pSymbol.attr('d', svgSymbol);
+// wrongSymbol1.attr('d', svgSymbol); // fails, incompatible this contexts
+// wrongSymbol2.attr('d', svgSymbol); // fails, incompatible datum types
+
+
+// pathString = svgSymbol(symbolDatum); // fails, wrong this type for invocation
+
+// Use with custom object
+
+class Symbolizer {
+    constructor(size: number, type: 'circle' | 'square') {
+        this.size = size;
+        switch (type) {
+            case 'circle':
+                this.type = d3Shape.symbolCircle;
+                break;
+            case 'square':
+                this.type = d3Shape.symbolSquare;
+                break;
+            default:
+                this.type = d3Shape.symbolCircle;
+                break;
+        }
+        this.symbol = d3Shape.symbol<Symbolizer, SymbolDatum>()
+            .size(function (this: Symbolizer, d?: SymbolDatum) {
+                return d ? d.size : this.size;
+            })
+            .type(function (this: Symbolizer, d?: SymbolDatum) {
+                let type = this.type;
+                if (d && d.type) {
+                    switch (d.type) {
+                        case 'circle':
+                            type = d3Shape.symbolCircle;
+                            break;
+                        case 'square':
+                            type = d3Shape.symbolSquare;
+                            break;
+                    }
+                }
+                return type;
+            });
+    }
+    private size: number;
+    private type: d3Shape.SymbolType;
+    private symbol: d3Shape.Symbol<Symbolizer, SymbolDatum>;
+
+    public getPathString(d?: SymbolDatum) {
+        return d ? this.symbol(d) : this.symbol();
+    }
+}
+
+let sym = new Symbolizer(100, 'square');
+
+pathString = sym.getPathString();
+pathString = sym.getPathString({ size: 10, type: 'circle' });
+
 
 // Test pre-fab symbols ===============================================================
 
@@ -878,4 +1018,131 @@ customSymbol = d3Shape.symbolWye;
 // Test Stacks
 // -----------------------------------------------------------------------------------
 
-// TODO: complete
+interface StackDatum {
+    values: { [name: string]: number; };
+}
+
+let seriesDatum: StackDatum;
+
+interface StackKey {
+    name: string;
+    label: string;
+}
+
+let key: StackKey;
+
+let keys: Array<StackKey> = [
+    { name: 'bananas', label: 'Bananas' },
+    { name: 'apples', label: 'Apples' },
+    { name: 'oranges', label: 'Oranges' }
+];
+
+let stackData: Array<StackDatum> = [
+    { values: { bananas: 10, apples: 20, oranges: 10 } },
+    { values: { bananas: 10, apples: 25, oranges: 0 } },
+    { values: { bananas: 20, apples: 20, oranges: 30 } },
+    { values: { bananas: 12, apples: 10, oranges: 50 } }
+];
+
+// Test SeriesPoint and Series interfaces ============================================
+
+let seriesPoint: d3Shape.SeriesPoint<StackDatum>;
+
+num = seriesPoint[0];
+num = seriesPoint[1];
+num = seriesPoint.index;
+seriesDatum = seriesPoint.data;
+
+let series: d3Shape.Series<StackDatum, StackKey>;
+
+seriesPoint = series[0];
+key = series.key;
+
+
+// Create stack generator ==========================================================
+
+let defaultStack: d3Shape.Stack<any, { [key: string]: number }, string>;
+
+defaultStack = d3Shape.stack();
+
+let overlyComplicatedStack: d3Shape.Stack<any, StackDatum, StackKey>;
+
+overlyComplicatedStack = d3Shape.stack<StackDatum, StackKey>();
+
+
+// Configure stack generator =======================================================
+
+// keys(...) ----------------------------------------------------------------------
+
+defaultStack = defaultStack.keys(['bananas', 'apples', 'oranges']);
+
+overlyComplicatedStack = overlyComplicatedStack.keys(function (data: Array<StackDatum>, keys: Array<StackKey>) {
+    return keys;
+});
+
+let keysAccessor: (this: any, data: Array<StackDatum>, keys: Array<StackKey>) => Array<StackKey>;
+keysAccessor = overlyComplicatedStack.keys();
+
+// values(...) ----------------------------------------------------------------------
+
+defaultStack = defaultStack.value(30);
+
+overlyComplicatedStack = overlyComplicatedStack.value(function (d, key, j, data) {
+    return d.values[key.name];
+});
+
+let valueAccessorFn: (this: any, d: StackDatum, key: StackKey, j?: number, data?: Array<StackDatum>) => number;
+valueAccessorFn = overlyComplicatedStack.value();
+
+// order(...) ----------------------------------------------------------------------
+
+defaultStack = defaultStack.order([2, 3, 1]);
+defaultStack = defaultStack.order(null);
+
+overlyComplicatedStack = overlyComplicatedStack.order(d3Shape.stackOrderAscending);
+
+let orderStackDatumSeries: (series: d3Shape.Series<StackDatum, StackKey>) => Array<number>;
+orderStackDatumSeries = overlyComplicatedStack.order();
+
+// TODO: other signatures
+
+// offset(...) ----------------------------------------------------------------------
+
+defaultStack = defaultStack.offset(null);
+
+overlyComplicatedStack = overlyComplicatedStack.offset(d3Shape.stackOffsetWiggle);
+
+let offsetStackDatumSeries: (series: d3Shape.Series<StackDatum, StackKey>, order: Array<number>) => void;
+offsetStackDatumSeries = overlyComplicatedStack.offset();
+
+// Use stack generator ============================================================
+
+let defaultSeriesArray: Array<d3Shape.Series<{ [key: string]: number }, string>>;
+defaultSeriesArray = defaultStack([
+    {bananas: 10, apples: 20, oranges: 10},
+    {bananas: 30, apples: 10, oranges: 30},
+    {bananas: 80, apples: 20, oranges: 40}
+]);
+
+let seriesArray: Array<d3Shape.Series<StackDatum, StackKey>>;
+
+seriesArray = overlyComplicatedStack(stackData, keys);
+
+
+// Test stack orders ===============================================================
+
+let order: Array<number>;
+let seriesAnyAny: d3Shape.Series<any, any>;
+
+order = d3Shape.stackOrderAscending(seriesAnyAny);
+order = d3Shape.stackOrderDescending(seriesAnyAny);
+order = d3Shape.stackOrderInsideOut(seriesAnyAny);
+order = d3Shape.stackOrderNone(seriesAnyAny);
+order = d3Shape.stackOrderReverse(seriesAnyAny);
+
+// Test stack offsets ===============================================================
+
+d3Shape.stackOffsetExpand(seriesAnyAny, order);
+d3Shape.stackOffsetNone(seriesAnyAny, order);
+d3Shape.stackOffsetSilhouette(seriesAnyAny, order);
+d3Shape.stackOffsetWiggle(seriesAnyAny, order);
