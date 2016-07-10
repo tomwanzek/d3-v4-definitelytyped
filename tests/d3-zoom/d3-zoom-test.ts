@@ -117,7 +117,7 @@ function zoomedSVGOverlay(this: SVGRectElement) {
     // Cast d3 event to D3ZoomEvent to be used in zoom event handler
     let e = <d3Zoom.D3ZoomEvent<HTMLCanvasElement, any>>event;
 
-    g.attr('transform', event.transform);
+    g.attr('transform', e.transform.toString());
 }
 
 let svgZoom: d3Zoom.ZoomBehavior<SVGRectElement, SVGDatum>;
