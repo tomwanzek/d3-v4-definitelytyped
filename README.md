@@ -55,12 +55,13 @@ A grunt-task using the dev-dependency typescript@next version is currently used 
 ### d3-chord
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-chord/index.d.ts)
-- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-chord/d3-chord-test.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-chord/d3-chord-test.ts)
 
-**Note**: Utilizes `this`-typing (criticality: _low_)
+**Note**: Utilizes `this`-typing (criticality: _medium_)
 
-`this`-typing is used accessor functions in RibbonGenerator. The semantic value is limited. The `this` context depends on the context bound when invoking the
-respective generator with data. I.e. it can be global object, undefined or anything explicitly bound using `.call(...)` et al.
+`this`-typing is used accessor functions in RibbonGenerator. The `this` context depends on the context bound when invoking the
+RibbonGenerator with data. I.e. it can be global object, undefined, a custom object or anything explicitly bound using `.call(...)` et al.
+The latter is the case e.g. when using RibbonGenerator to create the path string in conjunction with a `Selection` or `Transition` for SVGPathElements' `attr(...)` callbacks.
 
 ### d3-collection
 
