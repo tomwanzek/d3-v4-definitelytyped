@@ -59,6 +59,8 @@ let hierarchyPointNode: d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentI
 let hierarchyRectangularNodeArray: Array<d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>>;
 let hierarchyRectangularNode: d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>;
 
+let hierarchyCircularNodeArray: Array<d3Hierarchy.HierarchyCircularNode<HierarchyDatumWithParentId>>;
+let hierarchyCircularNode: d3Hierarchy.HierarchyCircularNode<HierarchyDatumWithParentId>;
 
 // Create Hierarchy Layout Root Node =====================================
 
@@ -185,7 +187,7 @@ stratificatorizer = d3Hierarchy.stratify<TabularHierarchyDatum>();
 
 // id(...)
 
-stratificatorizer = stratificatorizer.id(function(d, i, data) {
+stratificatorizer = stratificatorizer.id(function (d, i, data) {
     console.log('Length of tabular array: ', data.length);
     console.log('Name of first entry in tabular array: ', data[0].name); // data of type Array<TabularHierarchyDatum>
     return d.name; // d is of type TabularHierarchyDatum
@@ -195,7 +197,7 @@ idStringAccessor = stratificatorizer.id();
 
 // parentId(...)
 
-stratificatorizer = stratificatorizer.parentId(function(d, i, data) {
+stratificatorizer = stratificatorizer.parentId(function (d, i, data) {
     console.log('Length of tabular array: ', data.length);
     console.log('Name of first entry in tabular array: ', data[0].name); // data of type Array<TabularHierarchyDatum>
     return d.parentId; // d is of type TabularHierarchyDatum
@@ -235,7 +237,7 @@ size = clusterLayout.nodeSize();
 // separation() ----------------------------------------------------------
 
 clusterLayout = clusterLayout.separation(function separation(a, b) {
-  return a.data.parentId === b.data.parentId ? 1 : 2; // a and b are nodes of type HierarchyPointNode<HierarchyDatumWithParentId>
+    return a.data.parentId === b.data.parentId ? 1 : 2; // a and b are nodes of type HierarchyPointNode<HierarchyDatumWithParentId>
 });
 
 let separationAccessor: (a: d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>, b: d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>) => number;
@@ -363,7 +365,7 @@ size = treeLayout.nodeSize();
 // separation() ----------------------------------------------------------
 
 treeLayout = treeLayout.separation(function separation(a, b) {
-  return a.data.parentId === b.data.parentId ? 1 : 2; // a and b are nodes of type HierarchyPointNode<HierarchyDatumWithParentId>
+    return a.data.parentId === b.data.parentId ? 1 : 2; // a and b are nodes of type HierarchyPointNode<HierarchyDatumWithParentId>
 });
 
 separationAccessor = treeLayout.separation();
@@ -390,7 +392,7 @@ treemapLayout = d3Hierarchy.treemap<HierarchyDatumWithParentId>();
 
 // tile() ----------------------------------------------------------------
 
-treemapLayout = treemapLayout.tile(function(node, x0, y0, x1, y1) {
+treemapLayout = treemapLayout.tile(function (node, x0, y0, x1, y1) {
     let n: number;
     console.log('x0 coordinate of node: ', node.x0);
     console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
@@ -422,7 +424,7 @@ let roundFlag: boolean = treemapLayout.round();
 // padding() ----------------------------------------------------------------
 
 treemapLayout = treemapLayout.padding(1);
-treemapLayout = treemapLayout.padding(function(node) {
+treemapLayout = treemapLayout.padding(function (node) {
     console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
     return node.x0 > 10 ? 2 : 1;
 });
@@ -432,7 +434,7 @@ numberRectangularNodeAccessor = treemapLayout.padding();
 // paddingInner() ----------------------------------------------------------------
 
 treemapLayout = treemapLayout.paddingInner(1);
-treemapLayout = treemapLayout.paddingInner(function(node) {
+treemapLayout = treemapLayout.paddingInner(function (node) {
     console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
     return node.x0 > 10 ? 2 : 1;
 });
@@ -442,7 +444,7 @@ numberRectangularNodeAccessor = treemapLayout.paddingInner();
 // paddingOuter() ----------------------------------------------------------------
 
 treemapLayout = treemapLayout.paddingOuter(1);
-treemapLayout = treemapLayout.paddingOuter(function(node) {
+treemapLayout = treemapLayout.paddingOuter(function (node) {
     console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
     return node.x0 > 10 ? 2 : 1;
 });
@@ -452,7 +454,7 @@ numberRectangularNodeAccessor = treemapLayout.paddingOuter();
 // paddingTop() ----------------------------------------------------------------
 
 treemapLayout = treemapLayout.paddingTop(1);
-treemapLayout = treemapLayout.paddingTop(function(node) {
+treemapLayout = treemapLayout.paddingTop(function (node) {
     console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
     return node.x0 > 10 ? 2 : 1;
 });
@@ -462,7 +464,7 @@ numberRectangularNodeAccessor = treemapLayout.paddingTop();
 // paddingRight() ----------------------------------------------------------------
 
 treemapLayout = treemapLayout.paddingRight(1);
-treemapLayout = treemapLayout.paddingRight(function(node) {
+treemapLayout = treemapLayout.paddingRight(function (node) {
     console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
     return node.x0 > 10 ? 2 : 1;
 });
@@ -472,7 +474,7 @@ numberRectangularNodeAccessor = treemapLayout.paddingRight();
 // paddingBottom() ----------------------------------------------------------------
 
 treemapLayout = treemapLayout.paddingBottom(1);
-treemapLayout = treemapLayout.paddingBottom(function(node) {
+treemapLayout = treemapLayout.paddingBottom(function (node) {
     console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
     return node.x0 > 10 ? 2 : 1;
 });
@@ -482,7 +484,7 @@ numberRectangularNodeAccessor = treemapLayout.paddingBottom();
 // paddingLeft() ----------------------------------------------------------------
 
 treemapLayout = treemapLayout.paddingLeft(1);
-treemapLayout = treemapLayout.paddingLeft(function(node) {
+treemapLayout = treemapLayout.paddingLeft(function (node) {
     console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
     return node.x0 > 10 ? 2 : 1;
 });
@@ -657,7 +659,143 @@ partitionRootNode = partitionLayout(stratifiedRootNode);
 // Pack
 // -----------------------------------------------------------------------
 
-// TODO: Complete
+let numberCircularNodeAccessor: (node: d3Hierarchy.HierarchyCircularNode<HierarchyDatumWithParentId>) => number;
+
+// Create pack layout generator =======================================
+
+let packLayout: d3Hierarchy.PackLayout<HierarchyDatumWithParentId>;
+
+packLayout = d3Hierarchy.pack<HierarchyDatumWithParentId>();
+
+// Configure pack layout generator ====================================
+
+
+// size() ----------------------------------------------------------------
+
+packLayout = packLayout.size(null);
+packLayout = packLayout.size([400, 400]);
+
+size = packLayout.size();
+
+// radius() ------------------------------------------------------------
+
+packLayout = packLayout.radius(function (node) {
+    console.log('Radius property of node before completing accessor: ', node.r); // node is of type HierarchyCircularNode<HierarchyDatumWithParentId>
+    console.log('Parent id of node: ', node.data.parentId); // node is of type HierarchyCircularNode<HierarchyDatumWithParentId>
+    return node.value;
+});
+
+numberCircularNodeAccessor = packLayout.radius();
+
+// padding() ----------------------------------------------------------------
+
+packLayout = packLayout.padding(1);
+
+packLayout = packLayout.padding(function (node) {
+    console.log('Radius property of node: ', node.r); // node is of type HierarchyCircularNode<HierarchyDatumWithParentId>
+    console.log('Parent id of node: ', node.data.parentId); // node is of type HierarchyCircularNode<HierarchyDatumWithParentId>
+    return node.value > 10 ? 2 : 1;
+});
+
+numberCircularNodeAccessor = packLayout.padding();
+
+
+// Use partition layout generator ==========================================
+
+let packRootNode: d3Hierarchy.HierarchyCircularNode<HierarchyDatumWithParentId>;
+
+packRootNode = packLayout(stratifiedRootNode);
+
+
+// Use HierarchyCircularNode ================================================
+
+// x and y coordinates and radius r ------------------------------------------
+
+num = packRootNode.x;
+num = packRootNode.y;
+num = packRootNode.r;
+
+// data, depth, height ---------------------------------------------------
+
+let packDatum: HierarchyDatumWithParentId = packRootNode.data;
+num = packRootNode.depth;
+num = packRootNode.height;
+
+// children, parent ------------------------------------------------------
+
+
+hierarchyCircularNodeArray = packRootNode.children;
+
+let parentCircularNode: d3Hierarchy.HierarchyCircularNode<HierarchyDatumWithParentId>;
+parentCircularNode = hierarchyCircularNodeArray.length ? hierarchyCircularNodeArray[0].parent : null;
+
+// id --------------------------------------------------------------------
+
+idString = packRootNode.id;
+
+// ancestors(), descendants() --------------------------------------------
+
+let circularNodeAncestors: Array<d3Hierarchy.HierarchyCircularNode<HierarchyDatumWithParentId>> = packRootNode.ancestors();
+let circularNodeDescendants: Array<d3Hierarchy.HierarchyCircularNode<HierarchyDatumWithParentId>> = packRootNode.descendants();
+
+// leaves() ---------------------------------------------------------------
+
+hierarchyCircularNodeArray = packRootNode.leaves();
+
+// path() -------------------------------------------------------------------
+
+hierarchyCircularNode = circularNodeDescendants[circularNodeDescendants.length - 1];
+
+let packPath: Array<d3Hierarchy.HierarchyCircularNode<HierarchyDatumWithParentId>> = packRootNode.path(hierarchyCircularNode);
+
+// links() and HierarchyRectangulerLink<...> ------------------------------------------
+
+let circularLinks: Array<d3Hierarchy.HierarchyCircularLink<HierarchyDatumWithParentId>>;
+
+circularLinks = packRootNode.links();
+
+let circularLink: d3Hierarchy.HierarchyCircularLink<HierarchyDatumWithParentId>;
+circularLink = circularLinks[0];
+
+hierarchyCircularNode = circularLink.source;
+hierarchyCircularNode = circularLink.target;
+
+// sum() and value ----------------------------------------------------------
+
+packRootNode = packRootNode.sum(function (d) { return d.val; });
+
+num = packRootNode.value;
+
+// sort ---------------------------------------------------------------------
+
+packRootNode = packRootNode.sort(function (a, b) {
+    console.log('radius of a:', a.r, ' and b:', b.r); // a and b are of type HierarchyCircularNode<HierarchyDatumWithParentId>
+    console.log(' Raw values in data of a and b:', a.data.val, ' and ', b.data.val); // a and b are of type HierarchyCircularNode<HierarchyDatumWithParentId>
+    return b.height - a.height || b.value - a.value;
+});
+
+// each(), eachAfter(), eachBefore() ----------------------------------------
+
+packRootNode = packRootNode.each(function (node) {
+    console.log('ParentId:', node.data.parentId); // node type is HierarchyCircularNode<HierarchyDatumWithParentId>
+    console.log('Radius of node:', node.r); // node type is HierarchyCircularNode<HierarchyDatumWithParentId>
+});
+
+packRootNode = packRootNode.eachAfter(function (node) {
+    console.log('ParentId:', node.data.parentId); // node type is HierarchyCircularNode<HierarchyDatumWithParentId>
+    console.log('Radius of node:', node.r); // node type is HierarchyCircularNode<HierarchyDatumWithParentId>
+});
+
+packRootNode = packRootNode.eachBefore(function (node) {
+    console.log('ParentId:', node.data.parentId); // node type is HierarchyCircularNode<HierarchyDatumWithParentId>
+    console.log('Radius of node:', node.r); // node type is HierarchyCircularNode<HierarchyDatumWithParentId>
+});
+
+// copy() --------------------------------------------------------------------
+
+let copiedPackNode: d3Hierarchy.HierarchyCircularNode<HierarchyDatumWithParentId>;
+copiedPackNode = packRootNode.copy();
+
 
 // -----------------------------------------------------------------------
 // Pack Siblings and Enclosure
