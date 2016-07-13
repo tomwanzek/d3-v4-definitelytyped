@@ -34,7 +34,7 @@ This was done as an interim step to focus on the D3-related aspects of this effo
 **Note**: All references to "Test File" below should be read as follows. The typescript files should compile without errors to indicate the internal consistency of the typescript definitions.
 I.e. they are only shape tests as is the DefinitelyTyped tradition. They are expressly not meant to be used with a test runner as functional tests.
 
-A grunt-task using the dev-dependency typescript@next version is currently used to perform the compilation tests.
+A grunt-task using the dev-dependency typescript@2.0.0 version is currently used to perform the compilation tests.
 
 
 ### d3-array
@@ -115,7 +115,7 @@ The latter is the case e.g. when using RibbonGenerator to create the path string
 ### d3-hierarchy
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-hierarchy/index.d.ts)
-- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-hierarchy/d3-hierarchy-test.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-hierarchy/d3-hierarchy-test.ts)
 
 ### d3-interpolate
 
