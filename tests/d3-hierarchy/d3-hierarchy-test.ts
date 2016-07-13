@@ -14,6 +14,8 @@ import * as d3Hierarchy from '../../src/d3-hierarchy';
 // -----------------------------------------------------------------------
 
 let num: number;
+let size: [number, number];
+let idString: string;
 
 // -----------------------------------------------------------------------
 // Hierarchy
@@ -51,6 +53,9 @@ let hierarchyRootDatum: HierarchyDatum = {
 let hierarchyNodeArray: Array<d3Hierarchy.HierarchyNode<HierarchyDatum>>;
 let hierarchyNode: d3Hierarchy.HierarchyNode<HierarchyDatum>;
 
+let hierarchyPointNodeArray: Array<d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>>;
+let hierarchyPointNode: d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>;
+
 // Create Hierarchy Layout Root Node =====================================
 
 let hierarchyRootNode: d3Hierarchy.HierarchyNode<HierarchyDatum>;
@@ -79,7 +84,7 @@ parentNode = hierarchyNodeArray.length ? hierarchyNodeArray[0].parent : null;
 
 // id --------------------------------------------------------------------
 
-// TODO: complete
+idString = hierarchyRootNode.id;
 
 // ancestors(), descendants() --------------------------------------------
 
@@ -202,13 +207,168 @@ let stratifiedRootNode: d3Hierarchy.HierarchyNode<HierarchyDatumWithParentId> = 
 // Cluster
 // -----------------------------------------------------------------------
 
-// TODO: Complete
+// Create cluster layout generator =======================================
+
+let clusterLayout: d3Hierarchy.ClusterLayout<HierarchyDatumWithParentId>;
+
+clusterLayout = d3Hierarchy.cluster<HierarchyDatumWithParentId>();
+
+// Configure cluster layout generator ====================================
+
+// size() ----------------------------------------------------------------
+
+clusterLayout = clusterLayout.size(null);
+clusterLayout = clusterLayout.size([200, 200]);
+
+size = clusterLayout.size();
+
+// nodeSize() ------------------------------------------------------------
+
+clusterLayout = clusterLayout.nodeSize(null);
+clusterLayout = clusterLayout.nodeSize([10, 10]);
+size = clusterLayout.nodeSize();
+
+// separation() ----------------------------------------------------------
+
+clusterLayout = clusterLayout.separation(function separation(a, b) {
+  return a.data.parentId === b.data.parentId ? 1 : 2; // a and b are nodes of type HierarchyPointNode<HierarchyDatumWithParentId>
+});
+
+let separationAccessor: (a: d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>, b: d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>) => number;
+separationAccessor = clusterLayout.separation();
+
+// Use cluster layout generator ==========================================
+
+let clusterRootNode: d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>;
+
+clusterRootNode = clusterLayout(stratifiedRootNode);
+
+// Use HierarchyPointNode ================================================
+
+// x and y coordinates ---------------------------------------------------
+
+num = clusterRootNode.x;
+num = clusterRootNode.y;
+
+// data, depth, height ---------------------------------------------------
+
+let clusterDatum: HierarchyDatumWithParentId = clusterRootNode.data;
+num = clusterRootNode.depth;
+num = clusterRootNode.height;
+
+// children, parent ------------------------------------------------------
+
+
+hierarchyPointNodeArray = clusterRootNode.children;
+
+let parentPointNode: d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>;
+parentPointNode = hierarchyPointNodeArray.length ? hierarchyPointNodeArray[0].parent : null;
+
+// id --------------------------------------------------------------------
+
+idString = clusterRootNode.id;
+
+// ancestors(), descendants() --------------------------------------------
+
+let pointNodeAncestors: Array<d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>> = clusterRootNode.ancestors();
+let pointNodeDescendants: Array<d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>> = clusterRootNode.descendants();
+
+// leaves() ---------------------------------------------------------------
+
+hierarchyPointNodeArray = clusterRootNode.leaves();
+
+// path() -------------------------------------------------------------------
+
+hierarchyPointNode = pointNodeDescendants[pointNodeDescendants.length - 1];
+
+let clusterPath: Array<d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>> = clusterRootNode.path(hierarchyPointNode);
+
+// links() and HierarchyPointLink<...> ------------------------------------------
+
+let pointLinks: Array<d3Hierarchy.HierarchyPointLink<HierarchyDatumWithParentId>>;
+
+pointLinks = clusterRootNode.links();
+
+let pointLink: d3Hierarchy.HierarchyPointLink<HierarchyDatumWithParentId>;
+pointLink = pointLinks[0];
+
+hierarchyPointNode = pointLink.source;
+hierarchyPointNode = pointLink.target;
+
+// sum() and value ----------------------------------------------------------
+
+clusterRootNode = clusterRootNode.sum(function (d) { return d.val; });
+
+num = clusterRootNode.value;
+
+// sort ---------------------------------------------------------------------
+
+clusterRootNode = clusterRootNode.sort(function (a, b) {
+    console.log(' x-coordinates of a:', a.x, ' and b:', b.x); // a and b are of type HierarchyPointNode<HierarchyDatumWithParentId>
+    console.log(' Raw values in data of a and b:', a.data.val, ' and ', b.data.val); // a and b are of type HierarchyPointNode<HierarchyDatumWithParentId>
+    return b.height - a.height || b.value - a.value;
+});
+
+// each(), eachAfter(), eachBefore() ----------------------------------------
+
+clusterRootNode = clusterRootNode.each(function (node) {
+    console.log('ParentId:', node.data.parentId); // node type is HierarchyPointNode<HierarchyDatumWithParentId>
+    console.log('X-coordinate of node:', node.x); // node type is HierarchyPointNode<HierarchyDatumWithParentId>
+});
+
+clusterRootNode = clusterRootNode.eachAfter(function (node) {
+    console.log('ParentId:', node.data.parentId); // node type is HierarchyPointNode<HierarchyDatumWithParentId>
+    console.log('X-coordinate of node:', node.x); // node type is HierarchyPointNode<HierarchyDatumWithParentId>
+});
+
+clusterRootNode = clusterRootNode.eachBefore(function (node) {
+    console.log('ParentId:', node.data.parentId); // node type is HierarchyPointNode<HierarchyDatumWithParentId>
+    console.log('X-coordinate of node:', node.x); // node type is HierarchyPointNode<HierarchyDatumWithParentId>
+});
+
+// copy() --------------------------------------------------------------------
+
+let copiedClusterNode: d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>;
+copiedClusterNode = clusterRootNode.copy();
 
 // -----------------------------------------------------------------------
 // Tree
 // -----------------------------------------------------------------------
 
-// TODO: Complete
+// Create tree layout generator =======================================
+
+let treeLayout: d3Hierarchy.TreeLayout<HierarchyDatumWithParentId>;
+
+treeLayout = d3Hierarchy.tree<HierarchyDatumWithParentId>();
+
+// Configure tree layout generator ====================================
+
+// size() ----------------------------------------------------------------
+
+treeLayout = treeLayout.size(null);
+treeLayout = treeLayout.size([200, 200]);
+
+size = treeLayout.size();
+
+// nodeSize() ------------------------------------------------------------
+
+treeLayout = treeLayout.nodeSize(null);
+treeLayout = treeLayout.nodeSize([10, 10]);
+size = treeLayout.nodeSize();
+
+// separation() ----------------------------------------------------------
+
+treeLayout = treeLayout.separation(function separation(a, b) {
+  return a.data.parentId === b.data.parentId ? 1 : 2; // a and b are nodes of type HierarchyPointNode<HierarchyDatumWithParentId>
+});
+
+separationAccessor = treeLayout.separation();
+
+// Use cluster layout generator ==========================================
+
+let treeRootNode: d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>;
+
+treeRootNode = treeLayout(stratifiedRootNode);
 
 // -----------------------------------------------------------------------
 // Treemap
