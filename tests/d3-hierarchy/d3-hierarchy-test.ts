@@ -25,6 +25,8 @@ interface HierarchyDatum {
     children?: Array<HierarchyDatum>;
 }
 
+
+
 let hierarchyRootDatum: HierarchyDatum = {
     name: 'n0',
     val: 10,
@@ -121,17 +123,17 @@ hierarchyRootNode = hierarchyRootNode.sort(function (a, b) {
 
 // each(), eachAfter(), eachBefore() ----------------------------------------
 
-hierarchyRootNode = hierarchyRootNode.each(function(node) {
+hierarchyRootNode = hierarchyRootNode.each(function (node) {
     console.log(' Raw value of node:', node.data.val); // node type is HierarchyNode<HierarchyDatum>
     console.log(' Aggregated value of node:', node.value); // node type is HierarchyNode<HierarchyDatum>
 });
 
-hierarchyRootNode = hierarchyRootNode.eachAfter(function(node) {
+hierarchyRootNode = hierarchyRootNode.eachAfter(function (node) {
     console.log(' Raw value of node:', node.data.val); // node type is HierarchyNode<HierarchyDatum>
     console.log(' Aggregated value of node:', node.value); // node type is HierarchyNode<HierarchyDatum>
 });
 
-hierarchyRootNode = hierarchyRootNode.eachBefore(function(node) {
+hierarchyRootNode = hierarchyRootNode.eachBefore(function (node) {
     console.log(' Raw value of node:', node.data.val); // node type is HierarchyNode<HierarchyDatum>
     console.log(' Aggregated value of node:', node.value); // node type is HierarchyNode<HierarchyDatum>
 });
@@ -145,7 +147,56 @@ copiedHierarchyNode = hierarchyRootNode.copy();
 // Stratify
 // -----------------------------------------------------------------------
 
-// TODO: Complete
+interface HierarchyDatumWithParentId extends HierarchyDatum {
+    parentId: string;
+}
+
+interface TabularHierarchyDatum {
+    name: string;
+    parentId: string;
+    val: number;
+}
+
+let tabularData: Array<TabularHierarchyDatum>;
+tabularData = [
+    { name: 'n0', parentId: null, val: 10 },
+    { name: 'n11', parentId: 'n0', val: 5 },
+    { name: 'n12', parentId: 'n0', val: 4 },
+    { name: 'n121', parentId: 'n12', val: 30 }
+];
+
+let idStringAccessor: (d: TabularHierarchyDatum, i?: number, data?: Array<TabularHierarchyDatum>) => (string | null | '' | undefined);
+
+// Create Stratify Operator  ---------------------------------------------
+
+let stratificatorizer: d3Hierarchy.StratifyOperator<TabularHierarchyDatum>;
+stratificatorizer = d3Hierarchy.stratify<TabularHierarchyDatum>();
+
+// Configure Stratify Operator  ------------------------------------------
+
+// id(...)
+
+stratificatorizer = stratificatorizer.id(function(d, i, data) {
+    console.log('Length of tabular array: ', data.length);
+    console.log('Name of first entry in tabular array: ', data[0].name); // data of type Array<TabularHierarchyDatum>
+    return d.name; // d is of type TabularHierarchyDatum
+});
+
+idStringAccessor = stratificatorizer.id();
+
+// parentId(...)
+
+stratificatorizer = stratificatorizer.parentId(function(d, i, data) {
+    console.log('Length of tabular array: ', data.length);
+    console.log('Name of first entry in tabular array: ', data[0].name); // data of type Array<TabularHierarchyDatum>
+    return d.parentId; // d is of type TabularHierarchyDatum
+});
+
+idStringAccessor = stratificatorizer.parentId();
+
+// Use Stratify Operator  ------------------------------------------------
+
+let stratifiedRootNode: d3Hierarchy.HierarchyNode<HierarchyDatumWithParentId> = stratificatorizer(tabularData);
 
 // -----------------------------------------------------------------------
 // Cluster
