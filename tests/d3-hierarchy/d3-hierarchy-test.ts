@@ -56,6 +56,10 @@ let hierarchyNode: d3Hierarchy.HierarchyNode<HierarchyDatum>;
 let hierarchyPointNodeArray: Array<d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>>;
 let hierarchyPointNode: d3Hierarchy.HierarchyPointNode<HierarchyDatumWithParentId>;
 
+let hierarchyRectangularNodeArray: Array<d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>>;
+let hierarchyRectangularNode: d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>;
+
+
 // Create Hierarchy Layout Root Node =====================================
 
 let hierarchyRootNode: d3Hierarchy.HierarchyNode<HierarchyDatum>;
@@ -374,17 +378,280 @@ treeRootNode = treeLayout(stratifiedRootNode);
 // Treemap
 // -----------------------------------------------------------------------
 
-// TODO: Complete
+let numberRectangularNodeAccessor: (node: d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>) => number;
+
+// Create treemap layout generator =======================================
+
+let treemapLayout: d3Hierarchy.TreemapLayout<HierarchyDatumWithParentId>;
+
+treemapLayout = d3Hierarchy.treemap<HierarchyDatumWithParentId>();
+
+// Configure treemap layout generator ====================================
+
+// tile() ----------------------------------------------------------------
+
+treemapLayout = treemapLayout.tile(function(node, x0, y0, x1, y1) {
+    let n: number;
+    console.log('x0 coordinate of node: ', node.x0);
+    console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
+    num = x0; // number
+    num = y0; // number
+    num = x1; // number
+    num = y1; // number
+    // tile away
+});
+
+treemapLayout = treemapLayout.tile(d3Hierarchy.treemapDice);
+
+let tilingFn: (node: d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>, x0: number, y0: number, x1: number, y1: number) => void;
+tilingFn = treemapLayout.tile();
+
+// size() ----------------------------------------------------------------
+
+treemapLayout = treemapLayout.size(null);
+treemapLayout = treemapLayout.size([400, 200]);
+
+size = treemapLayout.size();
+
+// round() ------------------------------------------------------------
+
+treemapLayout = treemapLayout.round(true);
+
+let roundFlag: boolean = treemapLayout.round();
+
+// padding() ----------------------------------------------------------------
+
+treemapLayout = treemapLayout.padding(1);
+treemapLayout = treemapLayout.padding(function(node) {
+    console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
+    return node.x0 > 10 ? 2 : 1;
+});
+
+numberRectangularNodeAccessor = treemapLayout.padding();
+
+// paddingInner() ----------------------------------------------------------------
+
+treemapLayout = treemapLayout.paddingInner(1);
+treemapLayout = treemapLayout.paddingInner(function(node) {
+    console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
+    return node.x0 > 10 ? 2 : 1;
+});
+
+numberRectangularNodeAccessor = treemapLayout.paddingInner();
+
+// paddingOuter() ----------------------------------------------------------------
+
+treemapLayout = treemapLayout.paddingOuter(1);
+treemapLayout = treemapLayout.paddingOuter(function(node) {
+    console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
+    return node.x0 > 10 ? 2 : 1;
+});
+
+numberRectangularNodeAccessor = treemapLayout.paddingOuter();
+
+// paddingTop() ----------------------------------------------------------------
+
+treemapLayout = treemapLayout.paddingTop(1);
+treemapLayout = treemapLayout.paddingTop(function(node) {
+    console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
+    return node.x0 > 10 ? 2 : 1;
+});
+
+numberRectangularNodeAccessor = treemapLayout.paddingTop();
+
+// paddingRight() ----------------------------------------------------------------
+
+treemapLayout = treemapLayout.paddingRight(1);
+treemapLayout = treemapLayout.paddingRight(function(node) {
+    console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
+    return node.x0 > 10 ? 2 : 1;
+});
+
+numberRectangularNodeAccessor = treemapLayout.paddingRight();
+
+// paddingBottom() ----------------------------------------------------------------
+
+treemapLayout = treemapLayout.paddingBottom(1);
+treemapLayout = treemapLayout.paddingBottom(function(node) {
+    console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
+    return node.x0 > 10 ? 2 : 1;
+});
+
+numberRectangularNodeAccessor = treemapLayout.paddingBottom();
+
+// paddingLeft() ----------------------------------------------------------------
+
+treemapLayout = treemapLayout.paddingLeft(1);
+treemapLayout = treemapLayout.paddingLeft(function(node) {
+    console.log('Node parent id: ', node.data.parentId); // type of node is HierarchyRectangularNode<HierarchyDatumWithParentId>
+    return node.x0 > 10 ? 2 : 1;
+});
+
+numberRectangularNodeAccessor = treemapLayout.paddingLeft();
+
+
+// Use treemap layout generator ==========================================
+
+let treemapRootNode: d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>;
+
+treemapRootNode = treemapLayout(stratifiedRootNode);
+
 
 // Tiling functions ======================================================
 
-// TODO: Complete
+tilingFn = d3Hierarchy.treemapBinary;
+
+tilingFn = d3Hierarchy.treemapDice;
+
+tilingFn = d3Hierarchy.treemapSlice;
+
+tilingFn = d3Hierarchy.treemapSliceDice;
+
+// Tiling Factory functions treemapSquarify() and treemapResquarify() ====
+
+let tilingFactoryFn: d3Hierarchy.RatioSquarifyTilingFactory;
+
+tilingFactoryFn = d3Hierarchy.treemapSquarify;
+tilingFactoryFn = d3Hierarchy.treemapSquarify.ratio(2);
+
+treemapLayout.tile(d3Hierarchy.treemapSquarify.ratio(2));
+
+tilingFactoryFn = d3Hierarchy.treemapResquarify;
+tilingFactoryFn = d3Hierarchy.treemapResquarify.ratio(2);
+
+treemapLayout.tile(d3Hierarchy.treemapResquarify.ratio(2));
+
+
+// Use HierarchyRectangularNode ================================================
+
+// x and y coordinates ---------------------------------------------------
+
+num = treemapRootNode.x0;
+num = treemapRootNode.y0;
+num = treemapRootNode.x1;
+num = treemapRootNode.y1;
+
+// data, depth, height ---------------------------------------------------
+
+let treemapDatum: HierarchyDatumWithParentId = treemapRootNode.data;
+num = treemapRootNode.depth;
+num = treemapRootNode.height;
+
+// children, parent ------------------------------------------------------
+
+
+hierarchyRectangularNodeArray = treemapRootNode.children;
+
+let parentRectangularNode: d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>;
+parentRectangularNode = hierarchyRectangularNodeArray.length ? hierarchyRectangularNodeArray[0].parent : null;
+
+// id --------------------------------------------------------------------
+
+idString = treemapRootNode.id;
+
+// ancestors(), descendants() --------------------------------------------
+
+let rectangularNodeAncestors: Array<d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>> = treemapRootNode.ancestors();
+let rectangularNodeDescendants: Array<d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>> = treemapRootNode.descendants();
+
+// leaves() ---------------------------------------------------------------
+
+hierarchyRectangularNodeArray = treemapRootNode.leaves();
+
+// path() -------------------------------------------------------------------
+
+hierarchyRectangularNode = rectangularNodeDescendants[rectangularNodeDescendants.length - 1];
+
+let treemapPath: Array<d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>> = treemapRootNode.path(hierarchyRectangularNode);
+
+// links() and HierarchyRectangulerLink<...> ------------------------------------------
+
+let rectangularLinks: Array<d3Hierarchy.HierarchyRectangularLink<HierarchyDatumWithParentId>>;
+
+rectangularLinks = treemapRootNode.links();
+
+let rectangularLink: d3Hierarchy.HierarchyRectangularLink<HierarchyDatumWithParentId>;
+rectangularLink = rectangularLinks[0];
+
+hierarchyRectangularNode = rectangularLink.source;
+hierarchyRectangularNode = rectangularLink.target;
+
+// sum() and value ----------------------------------------------------------
+
+treemapRootNode = treemapRootNode.sum(function (d) { return d.val; });
+
+num = treemapRootNode.value;
+
+// sort ---------------------------------------------------------------------
+
+treemapRootNode = treemapRootNode.sort(function (a, b) {
+    console.log(' x0-coordinates of a:', a.x0, ' and b:', b.x0); // a and b are of type HierarchyRectangularNode<HierarchyDatumWithParentId>
+    console.log(' Raw values in data of a and b:', a.data.val, ' and ', b.data.val); // a and b are of type HierarchyRectangularNode<HierarchyDatumWithParentId>
+    return b.height - a.height || b.value - a.value;
+});
+
+// each(), eachAfter(), eachBefore() ----------------------------------------
+
+treemapRootNode = treemapRootNode.each(function (node) {
+    console.log('ParentId:', node.data.parentId); // node type is HierarchyRectangularNode<HierarchyDatumWithParentId>
+    console.log('X0-coordinate of node:', node.x0); // node type is HierarchyRectangularNode<HierarchyDatumWithParentId>
+});
+
+treemapRootNode = treemapRootNode.eachAfter(function (node) {
+    console.log('ParentId:', node.data.parentId); // node type is HierarchyRectangularNode<HierarchyDatumWithParentId>
+    console.log('X0-coordinate of node:', node.x0); // node type is HierarchyRectangularNode<HierarchyDatumWithParentId>
+});
+
+treemapRootNode = treemapRootNode.eachBefore(function (node) {
+    console.log('ParentId:', node.data.parentId); // node type is HierarchyRectangularNode<HierarchyDatumWithParentId>
+    console.log('X0-coordinate of node:', node.x0); // node type is HierarchyRectangularNode<HierarchyDatumWithParentId>
+});
+
+// copy() --------------------------------------------------------------------
+
+let copiedTreemapNode: d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>;
+copiedTreemapNode = treemapRootNode.copy();
+
+
 
 // -----------------------------------------------------------------------
 // Partition
 // -----------------------------------------------------------------------
 
-// TODO: Complete
+// Create partition layout generator =======================================
+
+let partitionLayout: d3Hierarchy.PartitionLayout<HierarchyDatumWithParentId>;
+
+partitionLayout = d3Hierarchy.partition<HierarchyDatumWithParentId>();
+
+// Configure partition layout generator ====================================
+
+
+// size() ----------------------------------------------------------------
+
+partitionLayout = partitionLayout.size(null);
+partitionLayout = partitionLayout.size([400, 200]);
+
+size = partitionLayout.size();
+
+// round() ------------------------------------------------------------
+
+partitionLayout = partitionLayout.round(true);
+
+roundFlag = partitionLayout.round();
+
+// padding() ----------------------------------------------------------------
+
+partitionLayout = partitionLayout.padding(1);
+
+num = partitionLayout.padding();
+
+
+// Use partition layout generator ==========================================
+
+let partitionRootNode: d3Hierarchy.HierarchyRectangularNode<HierarchyDatumWithParentId>;
+
+partitionRootNode = partitionLayout(stratifiedRootNode);
 
 // -----------------------------------------------------------------------
 // Pack

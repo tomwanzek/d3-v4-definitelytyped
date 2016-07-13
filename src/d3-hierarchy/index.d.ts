@@ -230,7 +230,7 @@ export var treemapResquarify: RatioSquarifyTilingFactory;
 // Partition
 // -----------------------------------------------------------------------
 
-export interface PartitonLayout<Datum> {
+export interface PartitionLayout<Datum> {
     (root: HierarchyNode<Datum>): HierarchyRectangularNode<Datum>;
     size(): [number, number];
     size(size: [number, number]): this;
@@ -240,7 +240,7 @@ export interface PartitonLayout<Datum> {
     padding(padding: number): this;
 }
 
-export function partition<Datum>(): PartitonLayout<Datum>;
+export function partition<Datum>(): PartitionLayout<Datum>;
 
 // -----------------------------------------------------------------------
 // Pack
