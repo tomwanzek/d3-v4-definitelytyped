@@ -15,14 +15,14 @@
  * for x and y coordinates. However, it is used as a base for interface definitions, and [number, number]
  * cannot be extended. 
  */
-type Point = Array<number>;
+export type VoronoiPoint = Array<number>;
 
 /**
  * The PointPair type is defined as a cue that the array is strictly of type [[number, number], [number, number]] with two elements, one
  * for each point containing the respective x and y coordinates. However, it is used as a base for interface definitions, and 
  * [[number, number], [number, number]]cannot be extended. 
  */
-type PointPair = Array<[number, number]> // [Point, Point];
+export type VoronoiPointPair = Array<[number, number]> // [Point, Point];
 
 export interface VoronoiPolygon<T> extends Array<[number, number]> {
     data: T;
@@ -30,7 +30,7 @@ export interface VoronoiPolygon<T> extends Array<[number, number]> {
 
 export type VoronoiTriangle<T> = [T, T, T];
 
-export interface VoronoiSite<T> extends Point {
+export interface VoronoiSite<T> extends VoronoiPoint {
     index: number;
     data: T;
 }
@@ -42,12 +42,12 @@ export interface VoronoiCell<T> {
 
 
 
-export interface VoronoiEdge<T> extends PointPair {
+export interface VoronoiEdge<T> extends VoronoiPointPair {
     left: VoronoiSite<T>;
     right: VoronoiSite<T> | null;
 }
 
-export interface VoronoiLinks<T> {
+export interface VoronoiLink<T> {
     source: T;
     target: T;
 }
@@ -60,19 +60,19 @@ export interface VoronoiLayout<T> {
     y(y: (d: T) => number): VoronoiLayout<T>;
     extent(): [[number, number], [number, number]] | null;
     extent(extent: [[number, number], [number, number]]): VoronoiLayout<T>;
-    size(): [[number, number], [number, number]] | null;
-    size(siz: [number, number]): VoronoiLayout<T>;
+    size(): [number, number] | null;
+    size(size: [number, number]): VoronoiLayout<T>;
     polygons(data: Array<T>): Array<VoronoiPolygon<T>>;
     triangles(data: Array<T>): Array<VoronoiTriangle<T>>;
-    links(data: Array<T>): Array<VoronoiLinks<T>>;
+    links(data: Array<T>): Array<VoronoiLink<T>>;
 }
 
 export interface VoronoiDiagram<T> {
     edges: Array<VoronoiEdge<T>>;
     cells: Array<VoronoiCell<T> | null>;
-    polygon(): Array<VoronoiPolygon<T>>;
+    polygons(): Array<VoronoiPolygon<T>>;
     triangles(): Array<VoronoiTriangle<T>>;
-    links(): Array<VoronoiLinks<T>>;
+    links(): Array<VoronoiLink<T>>;
 }
 
 // --------------------------------------------------------------------------
