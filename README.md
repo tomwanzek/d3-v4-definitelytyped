@@ -134,8 +134,8 @@ The latter is the case e.g. when using RibbonGenerator to create the path string
 
 ### d3-quadtree
 
-- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-quadtree/index.d.ts) (_draft_)
-- [ ] Test File
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-quadtree/index.d.ts)
+- [x] Test File
 
 ### d3-queue
 
