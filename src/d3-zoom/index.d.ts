@@ -1,9 +1,7 @@
 // Type definitions for d3JS d3-zoom module
-// Project: http://d3js.org/
+// Project: https://github.com/d3/d3-zoom/
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek <https://github.com/tomwanzek>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-
-// TODO: Clean-up header for proper referencing of new project/module information
 
 import { Selection, TransitionLike } from '../d3-selection';
 

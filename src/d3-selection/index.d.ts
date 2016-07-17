@@ -1,17 +1,7 @@
-// Type definitions for d3JS d3-selection module
-// Project: http://d3js.org/
+// Type definitions for D3JS d3-selection module
+// Project: https://github.com/d3/d3-selection/
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek <https://github.com/tomwanzek>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-
-// TODO: Clean-up header for proper referencing of new project/module information
-
-
-// IMPORTANT: This typescript definitions file is intended for use with typescript version 1.9.0 or up. It uses
-// a new compiler feature that allows the typing of 'this' context in functions, which is not supported in earlier
-// versions of the compiler.
-// The primary use case is for D3 selection related functions which are passed a DOM element
-// as their 'this' context, e.g. attr(...), style(...) and prop(...).
-
 
 // --------------------------------------------------------------------------
 // Shared Type Definitions and Interfaces

@@ -1,5 +1,5 @@
-// Type definitions for d3JS d3-force module
-// Project: http://d3js.org/
+// Type definitions for D3JS d3-force module
+// Project: https://github.com/d3/d3-force/
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek <https://github.com/tomwanzek>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 

@@ -1,10 +1,7 @@
-// Type definitions for d3JS d3-hierarchy module
-// Project: http://d3js.org/
+// Type definitions for D3JS d3-hierarchy module
+// Project: https://github.com/d3/d3-hierarchy/
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek <https://github.com/tomwanzek>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-
-// TODO: Clean-up header for proper referencing of new project/module information
-
 
 // -----------------------------------------------------------------------
 // Hierarchy
