@@ -1,10 +1,7 @@
-// Type definitions for d3JS d3-array module
-// Project: http://d3js.org/
+// Type definitions for D3JS d3-array module
+// Project: https://github.com/d3/d3-array
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek <https://github.com/tomwanzek>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-
-// TODO: Clean-up header for proper referencing of new project/module information
-
 
 // --------------------------------------------------------------------------
 // Shared Types and Interfaces
@@ -12,7 +9,7 @@
 
 
 /**
- * Administrivia: JavaScript primitive types, or "things that toString() predictably".
+ * Administrivia: JavaScript primitive types and Date
  */
 export type Primitive = number | string | boolean | Date;
 
@@ -22,16 +19,6 @@ export type Primitive = number | string | boolean | Date;
 interface Numeric {
     valueOf(): number;
 }
-
-/**
- * Type definition for threshold generator which returns the count of recommended thresholds
- */
-type ThresholdCountGenerator = (values: number[], min?: number, max?: number) => number;
-
-/**
- * Type definition for threshold generator which returns an array of recommended thresholds
- */
-type ThresholdArrayGenerator = (values: number[], min?: number, max?: number) => number[];
 
 
 // --------------------------------------------------------------------------------------
@@ -294,28 +281,67 @@ export function zip<T>(...arrays: T[][]): T[][];
 // Histogram
 // --------------------------------------------------------------------------------------
 
-// TODO: Review recent change to not coerce ordinal values to numbers (issue #34: https://github.com/d3/d3-array/issues/34)
-
-export interface Bin<T> extends Array<T> {
-    x0: number;
-    x1: number;
+export interface Bin<Datum, Value extends number | Date> extends Array<Datum> {
+    x0: Value;
+    x1: Value;
 }
 
-export interface HistogramGenerator<T> {
-    (data: T[]): Array<Bin<T>>;
-    value(): (d: T, i: number, data: T[]) => number;
-    value(valueAccessor: (d: T, i: number, data: T[]) => number): HistogramGenerator<T>;
-    domain(): (values: number[]) => [number, number];
-    domain(domainAccessor: (values: number[]) => [number, number]): HistogramGenerator<T>;
-    thresholds(): ThresholdCountGenerator | ThresholdArrayGenerator;
-    thresholds(count: number): HistogramGenerator<T>;
-    thresholds(thresholds: number[]): HistogramGenerator<T>;
-    thresholds(thresholds: ThresholdCountGenerator): HistogramGenerator<T>;
-    thresholds(thresholds: ThresholdArrayGenerator): HistogramGenerator<T>;
+/**
+ * Type definition for threshold generator which returns the count of recommended thresholds
+ */
+export type ThresholdCountGenerator = (values: number[], min?: number, max?: number) => number;
+
+/**
+ * Type definition for threshold generator which returns an array of recommended thresholds
+ */
+export type ThresholdArrayGenerator<Value extends number | Date> = (values: Value[], min?: Value, max?: Value) => Value[];
+
+
+
+export interface HistogramGenerator<Datum, Value extends number | Date> {
+    (data: Datum[]): Array<Bin<Datum, Value>>;
+    value(): (d: Datum, i: number, data: Datum[]) => Value;
+    value(valueAccessor: (d: Datum, i: number, data: Datum[]) => Value): this;
+    domain(): (values: Value[]) => [Value, Value];
+    domain(domain: [Value,Value]):  this;
+    domain(domainAccessor: (values: Value[]) => [Value, Value]): this;
+    thresholds(): ThresholdCountGenerator | ThresholdArrayGenerator<Value>;
+    /**
+     * Divide the domain uniformly into approximately count bins. IMPORTANT: This threshold
+     * setting approach only works, when the materialized values are numbers!
+     * 
+     * @param count The desired number of uniform bins.
+     */
+    thresholds(count: number): this;
+    /**
+     * Set a threshold accessor function, which returns the desired number of bins.
+     * Divides the domain uniformly into approximately count bins. IMPORTANT: This threshold
+     * setting approach only works, when the materialized values are numbers!
+     * 
+     * @param count A function which accepts as arguments the array of materialized values, and
+     * optionally the domain minimum and maximum. The function calcutates and returns the suggested
+     * number of bins. 
+     */
+    thresholds(count: ThresholdCountGenerator): this;
+    /**
+     * Set the array of values to be used as thresholds in determining the bins.
+     * @param thresholds Array of threshold values used for binning. The elements must
+     * be of the same type as the materialized values of the histogram.
+     */
+    thresholds(thresholds: Value[]): this;
+    /**
+     * Set a threshold accessor function, which returns the array of values to be used as 
+     * thresholds in determining the bins.
+     * 
+     * @param thresholds A function which accepts as arguments the array of materialized values, and
+     * optionally the domain minimum and maximum. The function calcutates and returns the array of values to be used as 
+     * thresholds in determining the bins. 
+     */
+    thresholds(thresholds: ThresholdArrayGenerator<Value>): this;
 }
 
-export function histogram(): HistogramGenerator<number>;
-export function histogram<T>(): HistogramGenerator<T>;
+export function histogram(): HistogramGenerator<number, number>;
+export function histogram<Datum, Value extends number | Date>(): HistogramGenerator<Datum, Value>;
 
 // --------------------------------------------------------------------------------------
 // Histogram Thresholds

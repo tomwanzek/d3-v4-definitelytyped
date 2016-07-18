@@ -7,6 +7,8 @@
  */
 
 import * as d3 from '../../src/d3-array';
+import { scaleTime } from '../../src/d3-scale';
+import { timeYear } from '../../src/d3-time';
 
 // -----------------------------------------------------------------------------
 // Preparatory Steps
@@ -395,10 +397,102 @@ testArrays = d3.zip(
 // Test Histogram
 // -----------------------------------------------------------------------------
 
-// Histogram ===================================================================
+let tScale = scaleTime();
 
-// TODO: Complete
+// Create histogram generator ==================================================
+
+let defaultHistogram: d3.HistogramGenerator<number, number>;
+defaultHistogram = d3.histogram();
+
+let testHistogram: d3.HistogramGenerator<MixedObject, Date>;
+testHistogram = d3.histogram<MixedObject, Date>();
+
+// Configure histogram generator ===============================================
+
+// value(...) ------------------------------------------------------------------
+
+testHistogram = testHistogram.value(function (d, i, data) {
+    let datum: MixedObject = d; // d is of type MixedObject
+    let index: number = i; // i is number
+    let array: MixedObject[] = data; // data is of type MixedObject[]
+    return datum.date;
+});
+
+let valueAccessorFn: (d: MixedObject, i: number, data: MixedObject[]) => Date;
+valueAccessorFn = testHistogram.value();
+
+// domain(...) -----------------------------------------------------------------
+
+// test with array
+testHistogram = testHistogram.domain([new Date(2014, 3, 15), new Date(2017, 4, 15)]);
+
+// usage with scale domain:
+let domain = tScale.domain();
+
+testHistogram = testHistogram.domain([domain[0], domain[domain.length]]);
+
+// testHistogram = testHistogram.domain(tScale.domain()); // fails, as scale domain is an array with possibly more than the two elements expected by histogram
+
+// use with accessor function
+testHistogram = testHistogram.domain(function (values) {
+    return [values[0], values[values.length]];
+});
+
+// get current domain accessor function
+let domainAccessorFn: (values: Date[]) => [Date, Date];
+domainAccessorFn = testHistogram.domain();
+
+// thresholds(...) -------------------------------------------------------------
+
+// with count constant
+defaultHistogram = defaultHistogram.thresholds(3);
+
+// with threshold count generator
+defaultHistogram = defaultHistogram.thresholds(d3.thresholdScott);
+
+// with thresholds value array
+
+testHistogram = testHistogram.thresholds([new Date(2015, 11, 15), new Date(2016, 6, 1), new Date(2016, 8, 30)]);
+
+// with thresholds value array accessors
+testHistogram = testHistogram.thresholds(function (values: Date[], min: Date, max: Date) {
+    let thresholds: Date[];
+    thresholds = [values[0], values[2], values[4]];
+    return thresholds;
+});
+
+testHistogram = testHistogram.thresholds(tScale.ticks(timeYear));
+
+// Use histogram generator =====================================================
+
+let defaultBins: Array<d3.Bin<number, number>>;
+defaultBins = defaultHistogram([-1, 0, 1, 1, 3, 20, 234]);
+
+let defaultBin: d3.Bin<number, number>;
+defaultBin = defaultBins[0];
+
+num = defaultBin.length; // defaultBin is array
+num = defaultBin[0]; // with element type number
+num = defaultBin.x0; // bin lower bound is number
+num = defaultBin.x1; // bin upper bound is number
+
+let testBins: Array<d3.Bin<MixedObject, Date>>;
+testBins = testHistogram(mixedObjectArray);
+
+let testBin: d3.Bin<MixedObject, Date>;
+testBin = testBins[0];
+
+num = testBin.length; // defaultBin is array
+let mixedObject: MixedObject = testBin[0]; // with element type MixedObject
+date = testBin.x0; // bin lower bound is Date
+date = testBin.x1; // bin upper bound is Date
+
+
 
 // Histogram Tresholds =========================================================
 
-// TODO: Complete
+num = d3.thresholdFreedmanDiaconis([-1, 0, 1, 1, 3, 20, 234], -1 , 234);
+
+num = d3.thresholdScott([-1, 0, 1, 1, 3, 20, 234], -1 , 234);
+
+num = d3.thresholdSturges([-1, 0, 1, 1, 3, 20, 234]);
