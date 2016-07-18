@@ -175,27 +175,29 @@ export function variance<T>(array: T[], accessor: (datum: T, index: number, arra
 
 
 // --------------------------------------------------------------------------------------
-// Searching Arrrays
+// Searching Arrays
 // --------------------------------------------------------------------------------------
 
 export function scan<T>(array: T[], comparator: (a: T, b: T) => number): number;
 
 export function bisectLeft(array: number[], x: number, lo?: number, hi?: number): number;
 export function bisectLeft(array: string[], x: string, lo?: number, hi?: number): number;
+export function bisectLeft(array: Date[], x: Date, lo?: number, hi?: number): number;
+
+export function bisectRight(array: number[], x: number, lo?: number, hi?: number): number;
+export function bisectRight(array: string[], x: string, lo?: number, hi?: number): number;
+export function bisectRight(array: Date[], x: Date, lo?: number, hi?: number): number;
 
 export var bisect: typeof bisectRight;
 
-export function bisectRight<T>(array: T[], x: T, lo?: number, hi?: number): number;
-
-export function bisector<T, U>(accessor: (x: T) => U): {
+export interface Bisector<T, U> {
     left: (array: T[], x: U, lo?: number, hi?: number) => number;
     right: (array: T[], x: U, lo?: number, hi?: number) => number;
 }
 
-export function bisector<T, U>(comparator: (a: T, b: U) => number): {
-    left: (array: T[], x: U, lo?: number, hi?: number) => number;
-    right: (array: T[], x: U, lo?: number, hi?: number) => number;
-}
+export function bisector<T, U>(accessor: (x: T) => U): Bisector<T, U>;
+
+export function bisector<T, U>(comparator: (a: T, b: U) => number): Bisector<T, U>
 
 // NB. this is limited to primitive values due to D3's use of the <, >, and >= operators. Results get weird for object instances.
 /**
@@ -303,7 +305,7 @@ export interface HistogramGenerator<Datum, Value extends number | Date> {
     value(): (d: Datum, i: number, data: Datum[]) => Value;
     value(valueAccessor: (d: Datum, i: number, data: Datum[]) => Value): this;
     domain(): (values: Value[]) => [Value, Value];
-    domain(domain: [Value,Value]):  this;
+    domain(domain: [Value, Value]): this;
     domain(domainAccessor: (values: Value[]) => [Value, Value]): this;
     thresholds(): ThresholdCountGenerator | ThresholdArrayGenerator<Value>;
     /**

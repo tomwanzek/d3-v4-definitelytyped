@@ -254,7 +254,7 @@ num = d3.variance(mixedObjectArray, function (datum, index, array) {
 });
 
 // -----------------------------------------------------------------------------
-// Test Searching Arrrays
+// Test Searching Arrays
 // -----------------------------------------------------------------------------
 
 // scan() ----------------------------------------------------------------------
@@ -265,19 +265,72 @@ num = d3.scan(mixedObjectArray, function (a, b) {
 
 // bisectLeft() ----------------------------------------------------------------
 
-// TODO: complete
+num = d3.bisectLeft([0, 2, 3, 4, 7, 8], 4);
+num = d3.bisectLeft([0, 2, 3, 4, 7, 8], 4, 1);
+num = d3.bisectLeft([0, 2, 3, 4, 7, 8], 4, 1, 4);
 
-// bisect() --------------------------------------------------------------------
+num = d3.bisectLeft(['0', '2', '3', '4', '7', '8'], '21');
+num = d3.bisectLeft(['0', '2', '3', '4', '7', '8'], '21', 1);
+num = d3.bisectLeft(['0', '2', '3', '4', '7', '8'], '21', 1, 4);
 
-// TODO: complete
+num = d3.bisectLeft([new Date(2010, 1, 1), new Date(2011, 1, 1), new Date(2012, 1, 1), new Date(2013, 1, 1)], new Date(2011, 2, 1));
+num = d3.bisectLeft([new Date(2010, 1, 1), new Date(2011, 1, 1), new Date(2012, 1, 1), new Date(2013, 1, 1)], new Date(2011, 2, 1), 1);
+num = d3.bisectLeft([new Date(2010, 1, 1), new Date(2011, 1, 1), new Date(2012, 1, 1), new Date(2013, 1, 1)], new Date(2011, 2, 1), 1, 2);
 
 // bisectRight() ---------------------------------------------------------------
 
-// TODO: complete
+num = d3.bisectRight([0, 2, 3, 4, 7, 8], 4);
+num = d3.bisectRight([0, 2, 3, 4, 7, 8], 4, 1);
+num = d3.bisectRight([0, 2, 3, 4, 7, 8], 4, 1, 4);
+
+num = d3.bisectRight(['0', '2', '3', '4', '7', '8'], '21');
+num = d3.bisectRight(['0', '2', '3', '4', '7', '8'], '21', 1);
+num = d3.bisectRight(['0', '2', '3', '4', '7', '8'], '21', 1, 4);
+
+num = d3.bisectRight([new Date(2010, 1, 1), new Date(2011, 1, 1), new Date(2012, 1, 1), new Date(2013, 1, 1)], new Date(2011, 2, 1));
+num = d3.bisectRight([new Date(2010, 1, 1), new Date(2011, 1, 1), new Date(2012, 1, 1), new Date(2013, 1, 1)], new Date(2011, 2, 1), 1);
+num = d3.bisectRight([new Date(2010, 1, 1), new Date(2011, 1, 1), new Date(2012, 1, 1), new Date(2013, 1, 1)], new Date(2011, 2, 1), 1, 2);
+
+// bisect() --------------------------------------------------------------------
+
+num = d3.bisect([0, 2, 3, 4, 7, 8], 4);
+num = d3.bisect([0, 2, 3, 4, 7, 8], 4, 1);
+num = d3.bisect([0, 2, 3, 4, 7, 8], 4, 1, 4);
+
+num = d3.bisect(['0', '2', '3', '4', '7', '8'], '21');
+num = d3.bisect(['0', '2', '3', '4', '7', '8'], '21', 1);
+num = d3.bisect(['0', '2', '3', '4', '7', '8'], '21', 1, 4);
+
+num = d3.bisect([new Date(2010, 1, 1), new Date(2011, 1, 1), new Date(2012, 1, 1), new Date(2013, 1, 1)], new Date(2011, 2, 1));
+num = d3.bisect([new Date(2010, 1, 1), new Date(2011, 1, 1), new Date(2012, 1, 1), new Date(2013, 1, 1)], new Date(2011, 2, 1), 1);
+num = d3.bisect([new Date(2010, 1, 1), new Date(2011, 1, 1), new Date(2012, 1, 1), new Date(2013, 1, 1)], new Date(2011, 2, 1), 1, 2);
 
 // bisector() ------------------------------------------------------------------
 
-// TODO: complete
+mixedObjectArray.sort(function (a, b) { return a.date.valueOf() - b.date.valueOf(); });
+
+let mixedObjectDateBisectorObject: d3.Bisector<MixedObject, Date>;
+
+// define using accessor
+mixedObjectDateBisectorObject = d3.bisector<MixedObject, Date>(function (el) {
+    return el.date;
+});
+
+// define using comparator
+mixedObjectDateBisectorObject = d3.bisector<MixedObject, Date>(function (el, x) {
+    return el.date.valueOf() - x.valueOf();
+});
+
+// bisect left
+num = mixedObjectDateBisectorObject.left(mixedObjectArray, new Date(2015, 3, 14));
+num = mixedObjectDateBisectorObject.left(mixedObjectArray, new Date(2015, 3, 14), 1);
+num = mixedObjectDateBisectorObject.left(mixedObjectArray, new Date(2015, 3, 14), 3, 4);
+
+// bisect right
+num = mixedObjectDateBisectorObject.right(mixedObjectArray, new Date(2015, 3, 14));
+num = mixedObjectDateBisectorObject.right(mixedObjectArray, new Date(2015, 3, 14), 1);
+num = mixedObjectDateBisectorObject.right(mixedObjectArray, new Date(2015, 3, 14), 3, 4);
+
 
 // ascending() -----------------------------------------------------------------
 
@@ -491,8 +544,8 @@ date = testBin.x1; // bin upper bound is Date
 
 // Histogram Tresholds =========================================================
 
-num = d3.thresholdFreedmanDiaconis([-1, 0, 1, 1, 3, 20, 234], -1 , 234);
+num = d3.thresholdFreedmanDiaconis([-1, 0, 1, 1, 3, 20, 234], -1, 234);
 
-num = d3.thresholdScott([-1, 0, 1, 1, 3, 20, 234], -1 , 234);
+num = d3.thresholdScott([-1, 0, 1, 1, 3, 20, 234], -1, 234);
 
 num = d3.thresholdSturges([-1, 0, 1, 1, 3, 20, 234]);
