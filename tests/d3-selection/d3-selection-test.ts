@@ -139,7 +139,9 @@ let circleSelection: d3Selection.Selection<SVGCircleElement, any, null, undefine
 
 // selectAll(...) accepts HTMLCollection, HTMLCollectionOf<...> argument
 
-let documentLinks: d3Selection.Selection<HTMLAnchorElement | HTMLAreaElement, any, null, undefined> = d3Selection.selectAll(document.links);
+// NB: The below line compiles with target ES5, but not with target ES6!!!
+
+// let documentLinks: d3Selection.Selection<HTMLAnchorElement | HTMLAreaElement, any, null, undefined> = d3Selection.selectAll(document.links); // fails, as HTMLCollectionOf cannot be passed to NodeListOf
 
 
 

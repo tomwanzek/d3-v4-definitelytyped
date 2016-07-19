@@ -1,9 +1,11 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es5",
+        "target": "es6",
         "noImplicitAny": true,
-        "sourceMap": false
+        "strictNullChecks": false,
+        "noEmit": true,
+        "forceConsistentCasingInFileNames": true
     },
     "exclude": [
         "src",

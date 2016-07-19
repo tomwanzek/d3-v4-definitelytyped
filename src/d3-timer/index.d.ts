@@ -1,9 +1,7 @@
 // Type definitions for d3JS d3-timer module
-// Project: http://d3js.org/
+// Project: https://github.com/d3/d3-timer/
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek<https://github.com/tomwanzek>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-
-// TODO: Clean-up header for proper referencing of new project/module information
 
 /**
  * Returns the current time as defined by performance.now if available, and Date.now if not. 
