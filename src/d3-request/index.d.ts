@@ -7,14 +7,13 @@ export interface Request {
     get<T, U>(data: T, callback: (error: any, d: U) => void): this;
 
     header(name: string): string;
-    header(name: string, value: null): this;
-    header(name: string, value: string): this;
+    header(name: string, value: string | null): this;
 
     mimeType(): string | null;
-    mimeType(value: null): this;
-    mimeType(value: string): this;
+    mimeType(value: string | null): this;
 
     on(type: 'beforesend' | 'progress' | 'load' | 'error'): (data: any) => void;
+    on(type: 'beforesend' | 'progress' | 'load' | 'error', listener: (data: any) => void): this;
 
     password(): string | null;
     password(value: string): this;
