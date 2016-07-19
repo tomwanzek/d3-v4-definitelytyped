@@ -1,76 +1,66 @@
-declare module '~d3-request/index' {
-    export interface Request {
-        abort(): this;
+export interface Request {
+    abort(): this;
 
-        get(): this;
-        get<T>(data: T): this;
-        get<T, U>(data: T, callback: (error: any, d: U) => void): this;
+    get(): this;
+    get<T>(data: T): this;
+    get<T, U>(data: T, callback: (error: any, d: U) => void): this;
 
-        header(name: string): string;
-        header(name: string, value: string): this;
+    header(name: string): string;
+    header(name: string, value: string): this;
 
-        mimeType(): string | null;
-        mimeType(value: null): null;
-        mimeType(value: string): this;
+    mimeType(): string | null;
+    mimeType(value: null): null;
+    mimeType(value: string): this;
 
-        on(type: 'beforesend' | 'progress' | 'load' | 'error'): (...data) => void;
+    on(type: 'beforesend' | 'progress' | 'load' | 'error'): (...data) => void;
 
-        password(): string | null;
-        password(value: string): this;
+    password(): string | null;
+    password(value: string): this;
 
-        post(): this;
-        post<T>(data: T): this;
-        post<T, U>(data: T, callback: (error: any, d: U) => void): this;
+    post(): this;
+    post<T>(data: T): this;
+    post<T, U>(data: T, callback: (error: any, d: U) => void): this;
 
-        response<T>(callback: (data: XMLHttpRequest) => T): this;
+    response<T>(callback: (data: XMLHttpRequest) => T): this;
 
-        responseType(): string | null;
-        responseType(value: string): this;
+    responseType(): string | null;
+    responseType(value: string): this;
 
-        send(method: string): this;
-        send<T>(method: string, data: T): this;
-        send<T>(method: string, callback: (error: any, d: T) => void): this;
-        send<T, U>(method: string, data: T, callback: (error: any, d: U) => void): this;
+    send(method: string): this;
+    send<T>(method: string, data: T): this;
+    send<T>(method: string, callback: (error: any, d: T) => void): this;
+    send<T, U>(method: string, data: T, callback: (error: any, d: U) => void): this;
 
-        timeout(): number;
-        timeout(value: number): this;
+    timeout(): number;
+    timeout(value: number): this;
 
-        user(): string | null;
-        user(value: string): this;
-    }
-
-    export interface dsvRequest extends Request {
-        row<T, U>(value: (d: T) => U): dsvRequest;
-    }
-
-    export function csv(url: string): dsvRequest;
-    export function csv<T>(url: string, callback: (error: any, d: T) => void): dsvRequest;
-    export function csv<T, U>(url: string, row: (d: T) => U, callback: (error: any, d: U) => void): dsvRequest;
-
-    export function html(url: string): Request;
-    export function html(url: string, callback: (error: any, d: DocumentFragment) => void): Request;
-
-    export function json(url: string): Request;
-    export function json<T>(url: string, callback: (error: any, d: T) => void): Request;
-
-    export function request(url: string): Request;
-    export function request<T>(url: string, callback: (error: any, d: T) => void): Request;
-    
-    export function text(url: string): Request;
-    export function text(url: string, callback: (error: any, d: String) => void): Request;
-    
-    export function tsv(url: string): dsvRequest;
-    export function tsv<T>(url: string, callback: (error: any, d: T) => void): dsvRequest;
-    export function tsv<T, U>(url: string, row: (d: T) => U, callback: (error: any, d: U) => void): dsvRequest;
-    
-    export function xml(url: string): Request;
-    export function xml(url: string, callback: (error: any, d: any) => void): Request;
+    user(): string | null;
+    user(value: string): this;
 }
 
+export interface dsvRequest extends Request {
+    row<T, U>(value: (d: T) => U): dsvRequest;
+}
 
-declare module 'd3-request/index' {
-    export * from '~d3-request/index';
-}
-declare module 'd3-request' {
-    export * from '~d3-request/index';
-}
+export function csv(url: string): dsvRequest;
+export function csv<T>(url: string, callback: (error: any, d: T) => void): dsvRequest;
+export function csv<T, U>(url: string, row: (d: T) => U, callback: (error: any, d: U) => void): dsvRequest;
+
+export function html(url: string): Request;
+export function html(url: string, callback: (error: any, d: DocumentFragment) => void): Request;
+
+export function json(url: string): Request;
+export function json<T>(url: string, callback: (error: any, d: T) => void): Request;
+
+export function request(url: string): Request;
+export function request<T>(url: string, callback: (error: any, d: T) => void): Request;
+
+export function text(url: string): Request;
+export function text(url: string, callback: (error: any, d: String) => void): Request;
+
+export function tsv(url: string): dsvRequest;
+export function tsv<T>(url: string, callback: (error: any, d: T) => void): dsvRequest;
+export function tsv<T, U>(url: string, row: (d: T) => U, callback: (error: any, d: U) => void): dsvRequest;
+
+export function xml(url: string): Request;
+export function xml(url: string, callback: (error: any, d: any) => void): Request;
