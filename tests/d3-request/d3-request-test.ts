@@ -1,52 +1,68 @@
 import * as d3Request from '../../src/d3-request';
 
-const url: string = 'http://api.reddit.com';
+const url: string = 'http:// api.reddit.com';
 
 let request = d3Request.request(url);
-let requestWithCallback = d3Request.request<apiData>(url, callback);
+let requestWithCallback = d3Request.request<ApiData>(url, callback);
 
-//Abort
+// Abort
 request.abort();
 
-//Get
+// Get
 d3Request.request(url)
     .get();
 d3Request.request(url)
-    .get<apiData>({ kind: "Listing" });
+    .get<ApiData>({ kind: 'Listing' });
 d3Request.request(url)
-    .get<apiData>(callback);
+    .get<ApiData>(callback);
 d3Request.request(url)
-    .get<apiData, apiData>({ kind: "Listing" }, callback);
+    .get<ApiData, ApiData>({ kind: 'Listing' }, callback);
 
-//Headers
-//get
+// Headers
+// get
 let acceptEncoding = request.header('Accept-Encoding');
-//set
+// set
 request.header('Accept-Encoding', 'gzip');
-//remove
+// remove
 request.header('Accept-Encoding', null);
 
-//Mime Type
-//get
+// Mime Type
+// get
 let mimeType = request.mimeType();
-//set
+// set
 request.mimeType('application/json');
-//remove
+// remove
 request.mimeType(null);
 
-//Events - on
-//get
-var loadListener = d3Request.request(url)
+// Events - on
+// get
+let loadListener = d3Request.request(url)
     .on('load');
-//set
+// set
 d3Request.request(url)
     .on('beforesend', (data) => console.log(data))
     .on('progress', (data) => console.log(data))
     .on('load', (data) => console.log(data))
     .on('error', (data) => console.error(data));
 
+// Password
+// get
+let password = request.password();
+// set
+request.password('MyPassword');
 
-function callback(error: any, data: apiData) {
+// Post
+d3Request.request(url)
+    .post();
+d3Request.request(url)
+    .post<ApiData>({ kind: 'Listing' });
+d3Request.request(url)
+    .post<ApiData>(callback);
+d3Request.request(url)
+    .post<ApiData, ApiData>({ kind: 'Listing' }, callback);
+
+
+function callback(error: any, data: ApiData) {
     if (error) {
         console.error(error);
     }
@@ -57,6 +73,6 @@ function callback(error: any, data: apiData) {
 }
 
 
-interface apiData {
+interface ApiData {
     kind: String;
 }
