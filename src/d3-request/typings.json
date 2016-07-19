@@ -1,0 +1,14 @@
+{
+  "name": "d3-request",
+  "homepage": "https://github.com/d3/d3-request",
+  "version": "1.0.1",
+  "global": false,
+  "main": "index.d.ts",
+  "files": [
+    "index.d.ts"
+  ],
+  "dependencies": {
+    
+  },
+  "globalDependencies": {}
+}
