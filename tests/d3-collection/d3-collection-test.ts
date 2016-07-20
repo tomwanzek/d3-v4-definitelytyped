@@ -96,10 +96,10 @@ basicMap = d3Collection.map(basicMap);
 
 // from object
 let objectMap: d3Collection.Map<any>;
-objectMap  = d3Collection.map(keyValueObj);
+objectMap = d3Collection.map(keyValueObj);
 
 let objectMap2: d3Collection.Map<string>;
-objectMap2  = d3Collection.map(keyValueObj2);
+objectMap2 = d3Collection.map(keyValueObj2);
 
 
 // Use Map ===========================================================
@@ -171,7 +171,7 @@ basicSet = d3Collection.set(); // empty set
 basicSet = d3Collection.set(['foo', 'bar', 42]); // last element is coerced
 
 // from array without accessor
-basicSet = d3Collection.set(testObjArray, function(value, index, array) {
+basicSet = d3Collection.set(testObjArray, function (value, index, array) {
     let v: TestObject = value;
     let i: number = index;
     let a: Array<TestObject> = array;
@@ -191,9 +191,9 @@ booleanFlag = basicSet.has('foo');
 // add(...) ------------------------------------------------------------
 
 basicSet = basicSet
-            .add('foo')
-            .add('bar')
-            .add(42); // will be coerced to string
+    .add('foo')
+    .add('bar')
+    .add(42); // will be coerced to string
 
 // remove(...) ---------------------------------------------------------
 
@@ -230,7 +230,66 @@ num = basicSet.size();
 // nest / Nest
 // ---------------------------------------------------------------------
 
+interface Yield {
+    yield: number;
+    variety: string;
+    year: number;
+    site: string;
+}
+
+let raw: Array<Yield> = [
+    { yield: 27.00, variety: 'Manchuria', year: 1931, site: 'University Farm' },
+    { yield: 48.87, variety: 'Manchuria', year: 1931, site: 'Waseca' },
+    { yield: 27.43, variety: 'Manchuria', year: 1931, site: 'Morris' },
+    { yield: 43.07, variety: 'Glabron', year: 1931, site: 'University Farm' },
+    { yield: 55.20, variety: 'Glabron', year: 1931, site: 'Waseca' },
+    { yield: 26.00, variety: 'Manchuria', year: 1932, site: 'University Farm' },
+    { yield: 47.87, variety: 'Manchuria', year: 1932, site: 'Waseca' },
+    { yield: 26.43, variety: 'Manchuria', year: 1932, site: 'Morris' },
+    { yield: 42.07, variety: 'Glabron', year: 1932, site: 'University Farm' },
+    { yield: 54.20, variety: 'Glabron', year: 1932, site: 'Waseca' }
+];
+
 // Create Nest ========================================================
+
+let nest: d3Collection.Nest<Yield>;
+nest = d3Collection.nest<Yield>();
+
+// Configure Nest =====================================================
+
+// key(...) -----------------------------------------------------------
+
+nest = nest
+    .key(function (d) {
+        return d.year.toString();
+    })
+    .key(function (d) {
+        return d.variety;
+    });
+
+// sortKeys(...) ------------------------------------------------------
+
+// TODO: complete
+
+// sortValues(...) ----------------------------------------------------
+
+// TODO: complete
+
+// rollup(...) --------------------------------------------------------
 
 
 // Use Nest ===========================================================
+
+// TODO: complete
+
+// map(...) -----------------------------------------------------------
+
+// TODO: complete
+
+// object(...) --------------------------------------------------------
+
+// TODO: complete
+
+// entries(...) -------------------------------------------------------
+
+// TODO: complete
