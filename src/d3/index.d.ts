@@ -1,5 +1,11 @@
+// Type definitions for D3JS d3 standard bundle 4.1.1
+// Project: https://github.com/d3/d3
+// Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek <https://github.com/tomwanzek>
+// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+
 export as namespace d3;
 
+// See TODOs below for modules that are not yet supported by definitions for version 4.0
 
 export * from '../d3-array';
 export * from '../d3-axis';
@@ -9,15 +15,23 @@ export * from '../d3-collection';
 export * from '../d3-color';
 export * from '../d3-dispatch';
 export * from '../d3-drag';
+// TODO: Updated D3 version 4 module for d3-dsv
+// export * from '../d3-dsv';
 export * from '../d3-ease';
 export * from '../d3-force';
 export * from '../d3-format';
+// TODO: d3-geo
+// export * from '../d3-geo';
 export * from '../d3-hierarchy';
 export * from '../d3-interpolate';
 export * from '../d3-path';
 export * from '../d3-polygon';
 export * from '../d3-quadtree';
+// TODO: d3-queue
+// export * from '../d3-request';
 export * from '../d3-random';
+// TODO: complete of and merge PR #52 for d3-request typings
+// export * from '../d3-request';
 export * from '../d3-scale';
 export * from '../d3-selection';
 export * from '../d3-shape';

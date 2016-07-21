@@ -24,8 +24,17 @@ let keyValueObj2 = {
 
 let stringArray: string[],
     anyArray: any[],
-    stringKVArray: Array<{key: string, value: string}>,
-    anyKVArray: Array<{key: string, value: any}>;
+    stringKVArray: Array<{ key: string, value: string }>,
+    anyKVArray: Array<{ key: string, value: any }>;
+
+
+let num: number;
+let str: string;
+let booleanFlag: boolean;
+
+// ---------------------------------------------------------------------
+// Test Objects
+// ---------------------------------------------------------------------
 
 
 // test keys(...) signatures ------------------------------------------------------
@@ -54,6 +63,233 @@ stringKVArray = d3Collection.entries<string>(keyValueObj2);
 
 anyKVArray = d3Collection.entries(document); // purely for the fun of it
 
-// test D3Map signatures ------------------------------------------------------------
+// ---------------------------------------------------------------------
+// map / Map
+// ---------------------------------------------------------------------
 
-let map1: d3Collection.D3Map<any>;
+interface TestObject {
+    name: string;
+    val: number;
+}
+
+let testObject: TestObject;
+let testObjArray: Array<TestObject>;
+let testObjKVArray: Array<{ key: string, value: TestObject }>;
+
+// Create Map ========================================================
+
+let basicMap: d3Collection.Map<string>;
+basicMap = d3Collection.map<string>(); // empty map
+
+// from array with accessor without accessor
+basicMap = d3Collection.map(['foo', 'bar']); // map with key-value pairs { '0': 'foo' } and { '1': 'bar'}
+
+// from array with accessor
+let testObjMap: d3Collection.Map<TestObject>;
+testObjMap = d3Collection.map<TestObject>([{ name: 'foo', val: 10 }, { name: 'bar', val: 42 }], function (value, i, array) {
+    return value.name;
+});
+
+// from existing map
+basicMap = d3Collection.map(basicMap);
+// basicMap = d3Collection.map(testObjMap); // fails, as maps have different value type
+
+// from object
+let objectMap: d3Collection.Map<any>;
+objectMap = d3Collection.map(keyValueObj);
+
+let objectMap2: d3Collection.Map<string>;
+objectMap2 = d3Collection.map(keyValueObj2);
+
+
+// Use Map ===========================================================
+
+// has(...) ------------------------------------------------------------
+
+booleanFlag = basicMap.has('foo');
+
+// get(...) ------------------------------------------------------------
+
+testObject = testObjMap.get('foo');
+
+// set(...) ------------------------------------------------------------
+
+basicMap = basicMap.set('foo', '42');
+
+// remove(...) ---------------------------------------------------------
+
+booleanFlag = testObjMap.remove('bar');
+
+// clear() -------------------------------------------------------------
+
+basicMap.clear();
+
+// keys() --------------------------------------------------------------
+
+stringArray = testObjMap.keys();
+
+// values() ------------------------------------------------------------
+
+testObjArray = testObjMap.values();
+
+
+// entries() -----------------------------------------------------------
+
+testObjKVArray = testObjMap.entries();
+
+// each() --------------------------------------------------------------
+
+testObjMap.each(function (value, key, map) {
+    let v: TestObject = value;
+    let k: string = key;
+    let m: d3Collection.Map<TestObject> = map;
+    console.log(v.val);
+});
+
+// empty() -------------------------------------------------------------
+
+booleanFlag = testObjMap.empty();
+
+// size() --------------------------------------------------------------
+
+num = testObjMap.size();
+
+// ---------------------------------------------------------------------
+// set / Set
+// ---------------------------------------------------------------------
+
+// Create Set ========================================================
+
+// TODO:
+// - from set
+// - from array with/without accessor
+
+let basicSet: d3Collection.Set;
+basicSet = d3Collection.set(); // empty set
+
+// from array without accessor
+basicSet = d3Collection.set(['foo', 'bar', 42]); // last element is coerced
+
+// from array without accessor
+basicSet = d3Collection.set(testObjArray, function (value, index, array) {
+    let v: TestObject = value;
+    let i: number = index;
+    let a: Array<TestObject> = array;
+    return v.name;
+});
+
+// from existing set 
+
+basicSet = d3Collection.set(basicSet);
+
+// Use Set ===========================================================
+
+// has(...) ------------------------------------------------------------
+
+booleanFlag = basicSet.has('foo');
+
+// add(...) ------------------------------------------------------------
+
+basicSet = basicSet
+    .add('foo')
+    .add('bar')
+    .add(42); // will be coerced to string
+
+// remove(...) ---------------------------------------------------------
+
+booleanFlag = basicSet.remove('bar');
+booleanFlag = basicSet.remove(42);
+
+// clear() -------------------------------------------------------------
+
+basicSet.clear();
+
+// values() ------------------------------------------------------------
+
+stringArray = basicSet.values();
+
+// each() --------------------------------------------------------------
+
+basicSet.each(function (value, valueRepeat, set) {
+    let v: string = value;
+    let vr: string = valueRepeat;
+    let s: d3Collection.Set = set;
+    console.log(v);
+});
+
+// empty() -------------------------------------------------------------
+
+booleanFlag = basicSet.empty();
+
+// size() --------------------------------------------------------------
+
+num = basicSet.size();
+
+
+// ---------------------------------------------------------------------
+// nest / Nest
+// ---------------------------------------------------------------------
+
+interface Yield {
+    yield: number;
+    variety: string;
+    year: number;
+    site: string;
+}
+
+let raw: Array<Yield> = [
+    { yield: 27.00, variety: 'Manchuria', year: 1931, site: 'University Farm' },
+    { yield: 48.87, variety: 'Manchuria', year: 1931, site: 'Waseca' },
+    { yield: 27.43, variety: 'Manchuria', year: 1931, site: 'Morris' },
+    { yield: 43.07, variety: 'Glabron', year: 1931, site: 'University Farm' },
+    { yield: 55.20, variety: 'Glabron', year: 1931, site: 'Waseca' },
+    { yield: 26.00, variety: 'Manchuria', year: 1932, site: 'University Farm' },
+    { yield: 47.87, variety: 'Manchuria', year: 1932, site: 'Waseca' },
+    { yield: 26.43, variety: 'Manchuria', year: 1932, site: 'Morris' },
+    { yield: 42.07, variety: 'Glabron', year: 1932, site: 'University Farm' },
+    { yield: 54.20, variety: 'Glabron', year: 1932, site: 'Waseca' }
+];
+
+// Create Nest ========================================================
+
+let nest: d3Collection.Nest<Yield>;
+nest = d3Collection.nest<Yield>();
+
+// Configure Nest =====================================================
+
+// key(...) -----------------------------------------------------------
+
+nest = nest
+    .key(function (d) {
+        return d.year.toString();
+    })
+    .key(function (d) {
+        return d.variety;
+    });
+
+// sortKeys(...) ------------------------------------------------------
+
+// TODO: complete
+
+// sortValues(...) ----------------------------------------------------
+
+// TODO: complete
+
+// rollup(...) --------------------------------------------------------
+
+
+// Use Nest ===========================================================
+
+// TODO: complete
+
+// map(...) -----------------------------------------------------------
+
+// TODO: complete
+
+// object(...) --------------------------------------------------------
+
+// TODO: complete
+
+// entries(...) -------------------------------------------------------
+
+// TODO: complete
