@@ -2,8 +2,71 @@ import * as d3Request from '../../src/d3-request';
 
 const url: string = 'http:// api.reddit.com';
 
+// -------------------------------------------------------------------------------
+// Public API
+// -------------------------------------------------------------------------------
+
+// csv
+let csvRequest: d3Request.DsvRequest = d3Request.csv(url);
+let csvRequestWithCallback: d3Request.DsvRequest = d3Request.csv<ApiData>(url, (error: any, data: ApiData[]) => {
+    console.log(data);
+});
+let csvRequestWithRowWithCallback: d3Request.DsvRequest = d3Request.csv<{ test: string }, ApiData>(url,
+    (d: { test: string }) => {
+        return {
+            kind: d.test
+        };
+    },
+    (error: any, data: ApiData[]) => {
+        console.log(data);
+    });
+
+// html
+let html: d3Request.Request = d3Request.html(url);
+let htmlWithCallback: d3Request.Request = d3Request.html(url, (error: any, data: DocumentFragment) => {
+    console.log(data);
+});
+
+// json
+let json: d3Request.Request = d3Request.json(url);
+let jsonWithCallback: d3Request.Request = d3Request.json<ApiData>(url, (error: any, data: ApiData) => {
+    console.log(data);
+});
+
+// request
 let request: d3Request.Request = d3Request.request(url);
 let requestWithCallback: d3Request.Request = d3Request.request<ApiData>(url, callback);
+
+// text
+let text: d3Request.Request = d3Request.text(url);
+let textWithCallback: d3Request.Request = d3Request.text(url, (error: any, data: string) => {
+    console.log(data);
+});
+
+// tsv
+let tsvRequest: d3Request.DsvRequest = d3Request.tsv(url);
+let tsvRequestWithCallback: d3Request.DsvRequest = d3Request.tsv<ApiData>(url, (error: any, data: ApiData[]) => {
+    console.log(data);
+});
+let tsvRequestWithRowWithCallback: d3Request.DsvRequest = d3Request.tsv<{ test: string }, ApiData>(url,
+    (d: { test: string }) => {
+        return {
+            kind: d.test
+        };
+    },
+    (error: any, data: ApiData[]) => {
+        console.log(data);
+    });
+
+// xml
+let xml: d3Request.Request = d3Request.xml(url);
+let xmlWithCallback: d3Request.Request = d3Request.text(url, (error: any, data: string) => {
+    console.log(data);
+});
+
+// -------------------------------------------------------------------------------
+// Request interface
+// -------------------------------------------------------------------------------
 
 // Abort
 let r1: d3Request.Request = request.abort();
@@ -87,6 +150,34 @@ let r20: d3Request.Request = d3Request.request(url)
     .send<ApiData>('POST', callback);
 let r21: d3Request.Request = d3Request.request(url)
     .send<ApiData, ApiData>('POST', { kind: 'Listing' }, callback);
+
+
+// Tiemout
+// get
+let timeout: number = d3Request.request(url)
+    .timeout();
+// set
+let r22: d3Request.Request = d3Request.request(url)
+    .timeout(500);
+
+// User
+// get
+let user: string = request.user();
+// set
+let r23: d3Request.Request = request.user('User');
+
+// -------------------------------------------------------------------------------
+// DsvRequest interface
+// -------------------------------------------------------------------------------
+let dsvRequest: d3Request.DsvRequest = d3Request.csv(url)
+    .row<{ test: string }, ApiData>((d: { test: string }) => {
+        return {
+            kind: d.test
+        };
+    });
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 function callback(error: any, data: ApiData) {
     if (error) {

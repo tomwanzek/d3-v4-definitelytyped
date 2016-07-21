@@ -45,7 +45,7 @@ export interface DsvRequest extends Request {
 }
 
 export function csv(url: string): DsvRequest;
-export function csv<T>(url: string, callback: (error: any, d: T[]) => void): DsvRequest;
+export function csv<U>(url: string, callback: (error: any, d: U[]) => void): DsvRequest;
 export function csv<T, U>(url: string, row: (d: T) => U, callback: (error: any, d: U[]) => void): DsvRequest;
 
 export function html(url: string): Request;
@@ -58,11 +58,11 @@ export function request(url: string): Request;
 export function request<T>(url: string, callback: (error: any, d: T) => void): Request;
 
 export function text(url: string): Request;
-export function text(url: string, callback: (error: any, d: String) => void): Request;
+export function text(url: string, callback: (error: any, d: string) => void): Request;
 
 export function tsv(url: string): DsvRequest;
-export function tsv<T>(url: string, callback: (error: any, d: T) => void): DsvRequest;
-export function tsv<T, U>(url: string, row: (d: T) => U, callback: (error: any, d: U) => void): DsvRequest;
+export function tsv<U>(url: string, callback: (error: any, d: U[]) => void): DsvRequest;
+export function tsv<T, U>(url: string, row: (d: T) => U, callback: (error: any, d: U[]) => void): DsvRequest;
 
 export function xml(url: string): Request;
 export function xml(url: string, callback: (error: any, d: any) => void): Request;
