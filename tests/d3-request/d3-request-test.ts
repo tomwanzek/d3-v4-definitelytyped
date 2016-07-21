@@ -2,8 +2,8 @@ import * as d3Request from '../../src/d3-request';
 
 const url: string = 'http:// api.reddit.com';
 
-let request = d3Request.request(url);
-let requestWithCallback = d3Request.request<ApiData>(url, callback);
+let request: d3Request.Request = d3Request.request(url);
+let requestWithCallback: d3Request.Request = d3Request.request<ApiData>(url, callback);
 
 // Abort
 let r1: d3Request.Request = request.abort();
@@ -61,6 +61,32 @@ let r14: d3Request.Request = d3Request.request(url)
 let r15: d3Request.Request = d3Request.request(url)
     .post<ApiData, ApiData>({ kind: 'Listing' }, callback);
 
+// Response
+let r16: d3Request.Request = d3Request.request(url)
+    .response<ApiData>((d: XMLHttpRequest) => {
+        console.log(d.responseText);
+        return {
+            kind: 'Listing'
+        };
+    });
+
+// ResponseType
+// get
+let responseType: string = d3Request.request(url)
+    .responseType();
+// set
+let r17: d3Request.Request = d3Request.request(url)
+    .responseType('application/json');
+
+// Send
+let r18: d3Request.Request = d3Request.request(url)
+    .send('GET');
+let r19: d3Request.Request = d3Request.request(url)
+    .send<ApiData>('POST', { kind: 'Listing' });
+let r20: d3Request.Request = d3Request.request(url)
+    .send<ApiData>('POST', callback);
+let r21: d3Request.Request = d3Request.request(url)
+    .send<ApiData, ApiData>('POST', { kind: 'Listing' }, callback);
 
 function callback(error: any, data: ApiData) {
     if (error) {
