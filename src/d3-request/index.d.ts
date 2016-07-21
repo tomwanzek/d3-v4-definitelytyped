@@ -45,8 +45,8 @@ export interface DsvRequest extends Request {
 }
 
 export function csv(url: string): DsvRequest;
-export function csv<T>(url: string, callback: (error: any, d: T) => void): DsvRequest;
-export function csv<T, U>(url: string, row: (d: T) => U, callback: (error: any, d: U) => void): DsvRequest;
+export function csv<T>(url: string, callback: (error: any, d: T[]) => void): DsvRequest;
+export function csv<T, U>(url: string, row: (d: T) => U, callback: (error: any, d: U[]) => void): DsvRequest;
 
 export function html(url: string): Request;
 export function html(url: string, callback: (error: any, d: DocumentFragment) => void): Request;

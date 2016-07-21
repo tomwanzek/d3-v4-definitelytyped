@@ -6,40 +6,40 @@ let request = d3Request.request(url);
 let requestWithCallback = d3Request.request<ApiData>(url, callback);
 
 // Abort
-request.abort();
+let r1: d3Request.Request = request.abort();
 
 // Get
-d3Request.request(url)
+let r2: d3Request.Request = d3Request.request(url)
     .get();
-d3Request.request(url)
+let r3: d3Request.Request = d3Request.request(url)
     .get<ApiData>({ kind: 'Listing' });
-d3Request.request(url)
+let r4: d3Request.Request = d3Request.request(url)
     .get<ApiData>(callback);
-d3Request.request(url)
+let r5: d3Request.Request = d3Request.request(url)
     .get<ApiData, ApiData>({ kind: 'Listing' }, callback);
 
 // Headers
 // get
-let acceptEncoding = request.header('Accept-Encoding');
+let acceptEncoding: string = request.header('Accept-Encoding');
 // set
-request.header('Accept-Encoding', 'gzip');
+let r6: d3Request.Request = request.header('Accept-Encoding', 'gzip');
 // remove
-request.header('Accept-Encoding', null);
+let r7: d3Request.Request = request.header('Accept-Encoding', null);
 
 // Mime Type
 // get
-let mimeType = request.mimeType();
+let mimeType: string = request.mimeType();
 // set
-request.mimeType('application/json');
+let r8: d3Request.Request = request.mimeType('application/json');
 // remove
-request.mimeType(null);
+let r9: d3Request.Request = request.mimeType(null);
 
 // Events - on
 // get
-let loadListener = d3Request.request(url)
+let loadListener: (d: any) => void = d3Request.request(url)
     .on('load');
 // set
-d3Request.request(url)
+let r10: d3Request.Request = d3Request.request(url)
     .on('beforesend', (data) => console.log(data))
     .on('progress', (data) => console.log(data))
     .on('load', (data) => console.log(data))
@@ -47,18 +47,18 @@ d3Request.request(url)
 
 // Password
 // get
-let password = request.password();
+let password: string = request.password();
 // set
-request.password('MyPassword');
+let r11: d3Request.Request = request.password('MyPassword');
 
 // Post
-d3Request.request(url)
+let r12: d3Request.Request = d3Request.request(url)
     .post();
-d3Request.request(url)
+let r13: d3Request.Request = d3Request.request(url)
     .post<ApiData>({ kind: 'Listing' });
-d3Request.request(url)
+let r14: d3Request.Request = d3Request.request(url)
     .post<ApiData>(callback);
-d3Request.request(url)
+let r15: d3Request.Request = d3Request.request(url)
     .post<ApiData, ApiData>({ kind: 'Listing' }, callback);
 
 
