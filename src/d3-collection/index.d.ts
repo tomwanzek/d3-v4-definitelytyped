@@ -80,14 +80,38 @@ export function set<T>(array: Array<T>, key: (value: T, index?: number, array?: 
 // nest / Nest
 // ---------------------------------------------------------------------
 
-interface Nest<T> {
-    key(func: (datum: T) => string): Nest<T>;
-    sortKeys(comparator: (a: string, b: string) => number): Nest<T>;
-    sortValues(comparator: (a: T, b: T) => number): Nest<T>;
-    rollup<U>(func: (values: T[]) => U): Nest<T>;
-    map(array: T[]): Map<any>;
-    object(array: T[]): { [key: string]: any};
-    entries(array: T[]): { key: string; values: any }[];
+// NB: the following three interfaces NestedArray, NestedMap and NestedObject provide a more formal definitions
+// of the return values provided by Nest.entries(...), Nest.map(...) and Nest.object(...), respectively. However,
+// the union types cannot be ex ante simplified without knowledge of the nesting level (number of key(...) operations)
+// and whether the data were rolled-up. The latter question also determins whether NestedArray has the 'values' property
+// with an array of type Datum at leaf level, or has a rolled-up 'value' property.
+// The interfaces are not used as return types, as they are cumbersome to work with on the consuming side (Determining the
+// applicable type from the respective union, i. p. for array elements).
+// It is preferable to carefully define appropriate use-case-specific interfaces for the variables that
+// are assigned the return values of the Nest.entries(...), Nest.map(...) and Nest.object(...) operations. The downside
+// is an overly permissive return type.
+
+// Also note, that the below return types for Nest.entries(...), Nest.map(...) and Nest.object(...) strictly only work,
+// if AT LEAST ONE KEY was set. This seems a reasonable constraint in practice, given the intent of the nest operator.
+// Otherwise, an additional '| Array<Datum> | RollupType` would have to be added to the union type. This would cover
+// cases (a) without key or rollup (b) without key but with rollup. However, again, the union types make it cumbersome
+// without much gain. 
+
+export interface NestedArray<Datum, RollupType> extends Array<{ key: string, values: NestedArray<Datum, RollupType> | Array<Datum> | undefined, value: RollupType | undefined }> { }
+export interface NestedMap<Datum, RollupType> extends Map<NestedMap<Datum, RollupType> | Array<Datum> | RollupType> { }
+export interface NestedObject<Datum, RollupType> {
+    [key: string]: NestedObject<Datum, RollupType> | Array<Datum> | RollupType;
 }
 
-export function nest<T>(): Nest<T>;
+interface Nest<Datum, RollupType> {
+    key(func: (datum: Datum) => string): Nest<Datum, RollupType>;
+    sortKeys(comparator: (a: string, b: string) => number): Nest<Datum, RollupType>;
+    sortValues(comparator: (a: Datum, b: Datum) => number): Nest<Datum, RollupType>;
+    rollup(func: (values: Datum[]) => RollupType): Nest<Datum, RollupType>;
+    map(array: Datum[]): Map<any>; // more specifically it returns NestedMap<Datum, RollupType>
+    object(array: Datum[]): { [key: string]: any };  // more specifically it returns NestedObject<Datum, RollupType>
+    entries(array: Datum[]): Array<{ key: string; values: any; value: RollupType | undefined }>;  // more specifically it returns NestedArray<Datum, RollupType>
+}
+
+export function nest<Datum>(): Nest<Datum, undefined>;
+export function nest<Datum, RollupType>(): Nest<Datum, RollupType>;
