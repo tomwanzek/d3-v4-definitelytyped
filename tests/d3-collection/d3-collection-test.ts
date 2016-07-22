@@ -7,6 +7,7 @@
  */
 
 import * as d3Collection from '../../src/d3-collection';
+import { ascending } from '../../src/d3-array';
 
 // Preparatory steps --------------------------------------------------------------
 
@@ -252,44 +253,117 @@ let raw: Array<Yield> = [
 
 // Create Nest ========================================================
 
-let nest: d3Collection.Nest<Yield>;
-nest = d3Collection.nest<Yield>();
+let nestL2: d3Collection.Nest<Yield, undefined>;
+nestL2 = d3Collection.nest<Yield>();
+
+let nestL1Rollup: d3Collection.Nest<Yield, number>;
+nestL1Rollup = d3Collection.nest<Yield, number>();
+
 
 // Configure Nest =====================================================
 
-// key(...) -----------------------------------------------------------
+// key(...) and sortKeys(...) -----------------------------------------
 
-nest = nest
+nestL2 = nestL2
     .key(function (d) {
         return d.year.toString();
-    })
-    .key(function (d) {
-        return d.variety;
     });
 
-// sortKeys(...) ------------------------------------------------------
+// with 2nd key with sortkey(...)
+nestL2 = nestL2
+    .key(function (d) {
+        return d.variety;
+    })
+    .sortKeys(ascending);
 
-// TODO: complete
+nestL1Rollup = nestL1Rollup
+    .key(function (d) {
+        return d.year.toString();
+    });
 
 // sortValues(...) ----------------------------------------------------
 
-// TODO: complete
+nestL2 = nestL2
+    .sortValues(function (a, b) {
+        let val1: Yield = a; // data type Yield
+        let val2: Yield = b; // data type Yield
+        return a.yield - b.yield;
+    });
+
 
 // rollup(...) --------------------------------------------------------
 
+nestL1Rollup = nestL1Rollup
+    .rollup(function (values) {
+        let vs: Array<Yield> = values; // correct data array type
+        return vs.length;
+    });
 
 // Use Nest ===========================================================
 
-// TODO: complete
 
 // map(...) -----------------------------------------------------------
 
-// TODO: complete
+type TestL2NestedMap = d3Collection.Map<d3Collection.Map<Array<Yield>>>;
+
+type TestL1NestedMapRollup = d3Collection.Map<number>;
+
+let testL2NestedMap: TestL2NestedMap;
+let testL1NestedMapRollup: TestL1NestedMapRollup;
+
+testL2NestedMap = nestL2.map(raw);
+
+num = testL2NestedMap.get('1931').get('Manchuria')[0].yield; // access chain to leaf property
+
+testL1NestedMapRollup = nestL1Rollup.map(raw);
+
+num = testL1NestedMapRollup.get('1931'); // get rollup value
 
 // object(...) --------------------------------------------------------
 
-// TODO: complete
+interface TestL2NestedObject {
+    [keyL1: string]: {
+        [keyL2: string]: Array<Yield>;
+    };
+}
+
+interface TestL1NestedObjectRollup {
+    [keyL1: string]: number;
+}
+
+let testL2NestedObject: TestL2NestedObject;
+let testL1NestedObjectRollup: TestL1NestedObjectRollup;
+
+testL2NestedObject = nestL2.object(raw);
+
+num = testL2NestedObject['1931']['Manchuria'][0].yield; // access chain to leaf property
+
+testL1NestedObjectRollup = nestL1Rollup.object(raw);
+
+num = testL1NestedObjectRollup['1931']; // get rollup value
 
 // entries(...) -------------------------------------------------------
 
-// TODO: complete
+type TestL2NestedArray = Array<{
+    key: string;
+    values: Array<{
+        key: string;
+        values: Array<Yield>;
+    }>
+}>
+
+type TestL1NestedArrayRollup = Array<{
+    key: string;
+    value: number;
+}>
+
+let testL2NestedArray: TestL2NestedArray;
+let testL1NestedArrayRollup: TestL1NestedArrayRollup;
+
+testL2NestedArray = nestL2.entries(raw);
+
+num = testL2NestedArray[0].values[0].values[0].yield; // access chain to leaf property
+
+testL1NestedArrayRollup = nestL1Rollup.entries(raw);
+
+num = testL1NestedArrayRollup[0].value; // get rollup value
