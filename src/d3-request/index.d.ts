@@ -2,9 +2,9 @@ export interface Request {
     abort(): this;
 
     get(): this;
-    get<T>(data: T): this;
-    get<U>(callback: (error: any, d: U) => void): this;
-    get<T, U>(data: T, callback: (error: any, d: U) => void): this;
+    get<RequestType>(data: RequestType): this;
+    get<ResponseType>(callback: (error: any, d: ResponseType) => void): this;
+    get<RequestType, ResponseType>(data: RequestType, callback: (error: any, d: ResponseType) => void): this;
 
     header(name: string): string;
     header(name: string, value: string | null): this;
@@ -19,19 +19,19 @@ export interface Request {
     password(value: string): this;
 
     post(): this;
-    post<T>(data: T): this;
-    post<U>(callback: (error: any, d: U) => void): this;
-    post<T, U>(data: T, callback: (error: any, d: U) => void): this;
+    post<RequestType>(data: RequestType): this;
+    post<ResponseType>(callback: (error: any, d: ResponseType) => void): this;
+    post<RequestType, ResponseType>(data: RequestType, callback: (error: any, d: ResponseType) => void): this;
 
-    response<T>(callback: (data: XMLHttpRequest) => T): this;
+    response<ResponseType>(callback: (data: XMLHttpRequest) => ResponseType): this;
 
     responseType(): string | null;
     responseType(value: string): this;
 
     send(method: string): this;
-    send<T>(method: string, data: T): this;
-    send<U>(method: string, callback: (error: any, d: U) => void): this;
-    send<T, U>(method: string, data: T, callback: (error: any, d: U) => void): this;
+    send<RequestType>(method: string, data: RequestType): this;
+    send<ResponseType>(method: string, callback: (error: any, d: ResponseType) => void): this;
+    send<RequestType, ResponseType>(method: string, data: RequestType, callback: (error: any, d: ResponseType) => void): this;
 
     timeout(): number;
     timeout(value: number): this;
@@ -41,28 +41,28 @@ export interface Request {
 }
 
 export interface DsvRequest extends Request {
-    row<T, U>(value: (d: T) => U): DsvRequest;
+    row<RequestType, ResponseType>(value: (d: RequestType) => ResponseType): DsvRequest;
 }
 
 export function csv(url: string): DsvRequest;
-export function csv<U>(url: string, callback: (error: any, d: U[]) => void): DsvRequest;
-export function csv<T, U>(url: string, row: (d: T) => U, callback: (error: any, d: U[]) => void): DsvRequest;
+export function csv<ResponseType>(url: string, callback: (error: any, d: ResponseType[]) => void): DsvRequest;
+export function csv<RequestType, ResponseType>(url: string, row: (d: RequestType) => ResponseType, callback: (error: any, d: ResponseType[]) => void): DsvRequest;
 
 export function html(url: string): Request;
 export function html(url: string, callback: (error: any, d: DocumentFragment) => void): Request;
 
 export function json(url: string): Request;
-export function json<T>(url: string, callback: (error: any, d: T) => void): Request;
+export function json<RequestType>(url: string, callback: (error: any, d: RequestType) => void): Request;
 
 export function request(url: string): Request;
-export function request<T>(url: string, callback: (error: any, d: T) => void): Request;
+export function request<RequestType>(url: string, callback: (error: any, d: RequestType) => void): Request;
 
 export function text(url: string): Request;
 export function text(url: string, callback: (error: any, d: string) => void): Request;
 
 export function tsv(url: string): DsvRequest;
-export function tsv<U>(url: string, callback: (error: any, d: U[]) => void): DsvRequest;
-export function tsv<T, U>(url: string, row: (d: T) => U, callback: (error: any, d: U[]) => void): DsvRequest;
+export function tsv<ResponseType>(url: string, callback: (error: any, d: ResponseType[]) => void): DsvRequest;
+export function tsv<RequestType, ResponseType>(url: string, row: (d: RequestType) => ResponseType, callback: (error: any, d: ResponseType[]) => void): DsvRequest;
 
 export function xml(url: string): Request;
 export function xml(url: string, callback: (error: any, d: any) => void): Request;
