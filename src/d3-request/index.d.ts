@@ -30,8 +30,8 @@ export interface Request {
 
     send(method: string): this;
     send<RequestType>(method: string, data: RequestType): this;
-    send<ResponseType>(method: string, callback: (error: any, d: ResponseType) => void): this;
-    send<RequestType, ResponseType>(method: string, data: RequestType, callback: (error: any, d: ResponseType) => void): this;
+    send<ResponseType>(method: string, callback: (error: any | null, d: ResponseType | null) => void): this;
+    send<RequestType, ResponseType>(method: string, data: RequestType, callback: (error: any | null, d: ResponseType | null) => void): this;
 
     timeout(): number;
     timeout(value: number): this;
