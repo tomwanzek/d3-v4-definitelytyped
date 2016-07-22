@@ -107,6 +107,8 @@ let r10: d3Request.Request = d3Request.request(url)
     .on('progress', (data) => console.log(data))
     .on('load', (data) => console.log(data))
     .on('error', (data) => console.error(data));
+let r100: d3Request.Request = d3Request.request(url)
+    .on('error.foo', (data) => console.error(data));
 
 // Password
 // get

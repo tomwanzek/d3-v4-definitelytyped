@@ -12,8 +12,8 @@ export interface Request {
     mimeType(): string | null;
     mimeType(value: string | null): this;
 
-    on(type: 'beforesend' | 'progress' | 'load' | 'error'): (data: any) => void;
-    on(type: 'beforesend' | 'progress' | 'load' | 'error', listener: (data: any) => void): this;
+    on(type: 'beforesend' | 'progress' | 'load' | 'error' | string): (data: any) => void;
+    on(type: 'beforesend' | 'progress' | 'load' | 'error' | string, listener: (data: any) => void): this;
 
     password(): string | null;
     password(value: string): this;
