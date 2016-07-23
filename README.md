@@ -91,6 +91,8 @@ The latter is the case e.g. when using RibbonGenerator to create the path string
 
 ### d3-dsv
 
+- [ ]
+- [ ]
 
 ### d3-ease
 
@@ -111,6 +113,11 @@ The latter is the case e.g. when using RibbonGenerator to create the path string
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-format/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-format/d3-format-test.ts)
+
+### d3-geo
+
+- [ ]
+- [ ]
 
 ### d3-hierarchy
 
@@ -139,6 +146,8 @@ The latter is the case e.g. when using RibbonGenerator to create the path string
 
 ### d3-queue
 
+- [ ]
+- [ ]
 
 ### d3-random
 
@@ -147,6 +156,8 @@ The latter is the case e.g. when using RibbonGenerator to create the path string
 
 ### d3-request
 
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-request/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-request/d3-random-test.ts)
 
 ### d3-scale
 
