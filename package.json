@@ -1,7 +1,7 @@
 {
   "name": "d3-v4-definitelytyped",
-  "version": "1.13.0",
-  "description": "Staged and partially experimental typescript definition files related to D3.",
+  "version": "1.13.1",
+  "description": "Staged typescript definition files related to D3 version 4.1.x for contribution to DefinitelyTyped.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
