@@ -8,14 +8,14 @@ The definitions are written on a per module basis in reference to the now separa
 In particular, they make use of a new feature which allows the typing of the `this` context of functions. This ability is particulary beneficial for D3, as D3 frequently binds the `this` context of
 functions to the _DOM Element_ being manipulated. The definition files are written as external modules/UMD modules.
 
-The intended complete scope of this project covers the modules which are part of the **standard D3 bundle** as defined by Mike Bostock. On a best efforts basis, consideration may be given to small number of D3 modules which are
-not part of the standard bundle but are  maintained by Mike Bostock. Specifically, this optional scope may include **d3-selection-multi** and **d3-scale-chromatic**.
+The intended complete scope of this project covers the modules which are part of the **standard D3 bundle** as defined by Mike Bostock. On a best efforts basis, consideration may be given to a small number of D3 modules which are
+not part of the standard bundle, but are  maintained by Mike Bostock. Specifically, this optional scope may include **d3-selection-multi** and **d3-scale-chromatic**.
 
 The content is _work in progress_ as detailed in the section **Module-Level Status** below.
 
-The migration of completed definitions and their supporting shape tests to **[DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)** has started. See the section **Roadmap** below, which also addresses the considered strategy to addressing TypeScript 1.8.x compatible definitions.
+The migration of completed definitions and their supporting shape tests to **[DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)** has started. See the section **Roadmap** below, which also lines out the considered strategy to addressing TypeScript 1.8.x compatible definitions.
 
-For added clarity, this repo is _not intended_ as a permanent source for definition files to be used in the regular course of working with D3 in TypeScript. The plan is to retire this repo after successful migration to DefinitelyTyped and keep it only for historic reference.
+For added clarity, this repo is _not intended_ as a permanent source for definition files to be used in the regular course of working with D3 in TypeScript. As a result, this repo currently does not contain instructions for definitions acquisition using **@types**, **typings**, or **tsd**. The plan is to retire this repo after successful migration to DefinitelyTyped and keep it only for historic reference.
 
 ## Roadmap
 
@@ -47,8 +47,8 @@ First of,
 Ambient declarations are only used, when required for module augmentation (e.g. **d3-transition** extending the `Selection` interface of **d3-selection**).
 
 The question of exporting to a `d3` **global** for _vanilla_ use, is somewhat related to the potential use of `export as namespace d3` in UMD module definitions.
-The [D3 standard bundle definitions file](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3/index.d.ts) contained in this repo currently re-exports the modules, listed in
-the next section. It also exposes `d3` **global** which can be used, where the module is not imported, but definitions are included by reference. The global is exposed using `export as namespace d3`.
+The [D3 standard bundle definitions file](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3/index.d.ts) contained in this repo re-exports the modules listed in
+the next section. It also exposes a `d3` **global** which can be used, where the module is not imported, but definitions are included by reference. The global is exposed using `export as namespace d3`.
 Note that, this is _currently_ not possible at module level, as it creates a duplicate identifier error for `d3`.
 
 Please, note that the definition and test files in this repo are currently using relative paths.
