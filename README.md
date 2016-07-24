@@ -44,14 +44,14 @@ First of:
 
 * As long as a D3 module does not have a definition _and_ test file flagged as complete, the definition is available for review and comment, but not considered stable. Self-evidently, changes may also result from changes to D3 itself. 
 
-* Starting with the D3 version 4 release, D3 provides substantial flexibility with regard to _(un)bundling_ as well as the choice between _vanilla_ and _mondule import_ use. The definitions in this repo are written as external modules/UMD module definitions.
+* Starting with the D3 version 4 release, D3 provides substantial flexibility with regard to _(un)bundling_ as well as the choice between _vanilla_ and _module import_ use. The definitions in this repo are written as external modules/UMD module definitions.
 Ambient declarations are only used, when required for module augmentation (e.g. **d3-transition** extending the `Selection` interface of **d3-selection**).
 
 * The availability of the `d3` **global** for _vanilla_ use, is somewhat related to the potential use of `export as namespace d3` in UMD module definitions.
 The [D3 standard bundle definitions file](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3/index.d.ts) contained in this repo re-exports the modules listed in
 the next section. It also exposes a `d3` **global** which can be used, where the module is not imported, but definitions are included by reference. The global is exposed using `export as namespace d3`.
 
-* The individual D3 modules, currently _do not_ merge into the `d3` **global** when used as unbundled vanilla scripts. This is a known [issue](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/41) with a duplicate identifier compile error create by using `export as namespace d3` at the constituent module level.
+* The individual D3 modules, currently _do not_ merge into the `d3` **global** when used as unbundled vanilla scripts. This is a known [issue](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/41) with a duplicate identifier compile error created by using `export as namespace d3` at the constituent module level.
 
 * The definition and test files in this repo are currently using relative paths.
 This was done as an interim step to focus on the D3-related aspects of this effort.
@@ -61,22 +61,32 @@ I.e. they are only shape tests as is the DefinitelyTyped tradition. They are exp
 
 ### D3 Standard Bundle Modules
 
+_(in alphabetical order)_
+
 #### d3-array
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-array/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-array/d3-array-test.ts)
 
 #### d3-axis
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-axis/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-axis/d3-axis-test.ts)
 
 #### d3-brush
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-brush/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-brush/d3-brush-test.ts)
 
 #### d3-chord
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-chord/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-chord/d3-chord-test.ts)
@@ -89,15 +99,21 @@ The latter is the case e.g. when using RibbonGenerator to create the path string
 
 #### d3-collection
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-collection/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-collection/d3-collection-test.ts)
 
 #### d3-color
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-color/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-color/d3-color-test.ts)
 
 #### d3-dispatch
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-dispatch/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-dispatch/d3-dispatch-test.ts)
@@ -105,6 +121,8 @@ The latter is the case e.g. when using RibbonGenerator to create the path string
 _Note_: Utilizes `this`-typing (criticality: _medium_)
 
 #### d3-drag
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-drag/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-drag/d3-drag-test.ts)
@@ -119,6 +137,8 @@ _Note_: Utilizes `this`-typing (criticality: _high_)
 - [ ] Test File
 
 #### d3-ease
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-ease/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-ease/d3-ease-test.ts)
@@ -135,6 +155,8 @@ _Note_: Utilizes `this`-typing (criticality: _medium_)
 
 #### d3-format
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-format/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-format/d3-format-test.ts)
 
@@ -145,25 +167,35 @@ _Note_: Utilizes `this`-typing (criticality: _medium_)
 
 #### d3-hierarchy
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-hierarchy/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-hierarchy/d3-hierarchy-test.ts)
 
 #### d3-interpolate
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-interpolate/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-interpolate/d3-interpolate-test.ts)
 
 #### d3-path
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-path/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-path/d3-path-test.ts)
 
 #### d3-polygon
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-polygon/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-polygon/d3-polygon-test.ts)
 
 #### d3-quadtree
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-quadtree/index.d.ts)
 - [x] Test File
@@ -175,6 +207,8 @@ _Note_: Utilizes `this`-typing (criticality: _medium_)
 
 #### d3-random
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-random/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-random/d3-random-test.ts)
 
@@ -185,10 +219,14 @@ _Note_: Utilizes `this`-typing (criticality: _medium_)
 
 #### d3-scale
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-scale/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-scale/d3-scale-test.ts)
 
 #### d3-selection
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-selection/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-selection/d3-selection-test.ts)
@@ -201,6 +239,8 @@ _Note:_ Utilizes `this`-typing (criticality: _high_)
 
 #### d3-shape
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-shape/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-shape/d3-shape-test.ts)
 
@@ -212,20 +252,28 @@ The latter is the case e.g. when using `symbol` or `arc` to create the path stri
 
 #### d3-time
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-time/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-time/d3-time-test.ts)
 
 #### d3-time-format
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-time-format/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-time-format/d3-time-format-test.ts)
 
 #### d3-timer
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-timer/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-timer/d3-timer-test.ts)
 
 #### d3-transition
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-transition/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-transition/d3-transition-test.ts)
@@ -236,10 +284,14 @@ _Note_: Utilizes `this`-typing (criticality: _high_)
 
 #### d3-voronoi
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-voronoi/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-voronoi/d3-voronoi-test.ts)
 
 #### d3-zoom
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-zoom/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-zoom/d3-zoom-test.ts)
@@ -251,7 +303,7 @@ _Note_: Utilizes `this`-typing (criticality: _high_)
 
 ## Contributing
 
-_to be added (including ref to Contributing.md)_
+_to be added_
 
 Details can be found [here](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/CONTRIBUTING.md).
 
