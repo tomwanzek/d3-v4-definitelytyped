@@ -77,7 +77,7 @@ The section [Module-Level Status](#module-level-status) gives a quick migration 
 
 ### TypeScript 1.8.x Compatible Definitions
 
-Under the milestone **Standard Bundle Modules (TypeScript 1.8.x) consideration is given to the preparation of definitions/tests which do not require the latest features of TypeScript 2.
+Under the milestone **Standard Bundle Modules (TypeScript 1.8.x)** consideration is given to the preparation of definitions/tests which do not require the latest features of TypeScript 2.
 
 The intent is to strip the unsupported features (e.g. `this` typing of function contexts) out, with the aim of keeping the definitions structurally as comparable as possible. A suitable wrapping of the module definitions may be required.
 
@@ -352,10 +352,16 @@ _Note_: Utilizes `this`-typing (criticality: _high_)
 
 ## Contributing
 
-_to be added_
+You can contribute to this repository in several ways:
 
-Details can be found [here](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/CONTRIBUTING.md).
+* help to identify or resolve specific issues with the existing definitions,
+* review the definitions and point out areas of improvement, or
+* provide pull requests for as yet missing definitions.
 
+For details of how to contribute, please see [here](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/CONTRIBUTING.md).
+
+**Important:**
+Contributing to this repo, means your contribution is intended to be merged into DefinitelyTyped. Once a module indicates completed migration from here to DefinitelyTyped, all new issues should be opened on DefinitelyTyped. Any related outstanding issues will be migrated over to DefinitelyTyped alond-side the module.
 
 ## Related Contributions
 
