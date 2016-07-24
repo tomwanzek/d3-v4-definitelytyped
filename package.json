@@ -3,7 +3,7 @@
   "version": "1.13.1",
   "description": "Staged typescript definition files related to D3 version 4.1.x for contribution to DefinitelyTyped.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt compile"
   },
   "repository": {
     "type": "git",
