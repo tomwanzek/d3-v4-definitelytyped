@@ -40,24 +40,24 @@ _to be added_
 
 ## Module-Level Status
 
-First of, 
+First of: 
 
-* as long as a repo does not have a test file flagged as complete, the content is available for review and comment, but not considered stable. Self-evidently, changes may also result from changes to D3 itself. 
+* As long as a D3 module does not have a definition _and_ test file flagged as complete, the definition is available for review and comment, but not considered stable. Self-evidently, changes may also result from changes to D3 itself. 
 
-* starting with the **D3 Version 4** release, D3 provides substantial flexibility with regard to _(un)bundling_ as well as the choice between _vanilla_ and _mondule import_ use. The definitions in this repo are written as external modules/UMD module definitions.
+* Starting with the D3 version 4 release, D3 provides substantial flexibility with regard to _(un)bundling_ as well as the choice between _vanilla_ and _mondule import_ use. The definitions in this repo are written as external modules/UMD module definitions.
 Ambient declarations are only used, when required for module augmentation (e.g. **d3-transition** extending the `Selection` interface of **d3-selection**).
 
-The question of exporting to a `d3` **global** for _vanilla_ use, is somewhat related to the potential use of `export as namespace d3` in UMD module definitions.
+* The availability of the `d3` **global** for _vanilla_ use, is somewhat related to the potential use of `export as namespace d3` in UMD module definitions.
 The [D3 standard bundle definitions file](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3/index.d.ts) contained in this repo re-exports the modules listed in
 the next section. It also exposes a `d3` **global** which can be used, where the module is not imported, but definitions are included by reference. The global is exposed using `export as namespace d3`.
-Note that, this is _currently_ not possible at module level, as it creates a duplicate identifier error for `d3`.
 
-Please, note that the definition and test files in this repo are currently using relative paths.
-This was done as an interim step to focus on the D3-related aspects of this effort (including the experimental `this` typing). See [issue #1 regarding definitions discovery/deployment mechanism](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/1).
+* The individual D3 modules, currently _do not_ merge into the `d3` **global** when used as unbundled vanilla scripts. This is a known [issue](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/41) with a duplicate identifier compile error create by using `export as namespace d3` at the constituent module level.
 
+* The definition and test files in this repo are currently using relative paths.
+This was done as an interim step to focus on the D3-related aspects of this effort.
 
-**Note**: All references to "Test File" below should be read as follows. The typescript files should compile without errors to indicate the internal consistency of the typescript definitions.
-I.e. they are only shape tests as is the DefinitelyTyped tradition. They are expressly not meant to be used with a test runner as functional tests. A grunt-task using the dev-dependency typescript@2.0.0 version is currently used to perform the compilation tests.
+**Important**: All references to "Test File" below should be read as follows. The typescript files should compile without errors to indicate the internal consistency of the typescript definitions.
+I.e. they are only shape tests as is the DefinitelyTyped tradition. They are expressly not meant to be used with a test runner as functional tests.
 
 ### D3 Standard Bundle Modules
 
