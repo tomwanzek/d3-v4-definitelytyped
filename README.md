@@ -11,11 +11,18 @@ functions to the _DOM Element_ being manipulated. The definition files are writt
 The intended complete scope of this project covers the modules which are part of the **standard D3 bundle** as defined by Mike Bostock. On a best efforts basis, consideration may be given to a small number of D3 modules which are
 not part of the standard bundle, but are  maintained by Mike Bostock. Specifically, this optional scope may include **d3-selection-multi** and **d3-scale-chromatic**.
 
-The content is _work in progress_ as detailed in the section **Module-Level Status** below.
+The content is _work in progress_ as detailed in the section **[Module-Level Status](#module-level-status)** below.
 
-The migration of completed definitions and their supporting shape tests to **[DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)** has started. See the section **Roadmap** below, which also lines out the considered strategy to addressing TypeScript 1.8.x compatible definitions.
+The migration of completed definitions and their supporting shape tests to **[DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)** has started. See the section **[Roadmap](#roadmap)** below, which also lines out the considered strategy to addressing TypeScript 1.8.x compatible definitions.
 
 For added clarity, this repo is _not intended_ as a permanent source for definition files to be used in the regular course of working with D3 in TypeScript. As a result, this repo currently does not contain instructions for definitions acquisition using **@types**, **typings**, or **tsd**. The plan is to retire this repo after successful migration to DefinitelyTyped and keep it only for historic reference.
+
+## Content
+
+* [Roadmap](#roadmap)
+* [Module-Level Status](#module-level-status)
+* [Contributing](#contributing)
+* [Related Contributions](related-contributions)
 
 ## Roadmap
 
@@ -30,12 +37,6 @@ _to be added_
 ### TypeScript 1.8.x Compatible Definitions
 
 _to be added_
-
-## Contributing
-
-_to be added (including ref to Contributing.md)_
-
-Details can be found [here](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/CONTRIBUTING.md).
 
 ## Module-Level Status
 
@@ -246,6 +247,13 @@ _Note_: Utilizes `this`-typing (criticality: _high_)
 _Note_: Utilizes `this`-typing (criticality: _high_)
 
 `this`-typing is used for context-binding to DOM element.
+
+
+## Contributing
+
+_to be added (including ref to Contributing.md)_
+
+Details can be found [here](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/CONTRIBUTING.md).
 
 
 ## Related Contributions
