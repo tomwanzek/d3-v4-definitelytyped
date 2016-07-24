@@ -26,13 +26,50 @@ For added clarity, this repo is _not intended_ as a permanent source for definit
 
 ## Roadmap
 
+This section provides a high-level view of the road ahead to completed definitons for D3 4.1.x, which can be accessed by developers using standard definition acquisition methods.
+
 ### Completion of Module Definitions
 
-_to be added_
+While most modules comprising the **standard D3 bundle** now have a complete working TypeScript 2 definition with accompanying tests, there is some remaining work to be done.
+
+_(a) Open Modules_
+
+The [Module-Level Status](#module-level-status) section provides a quick glance at the modules, which do not yet have a complete initial definition with tests.
+
+For each of these modules there is one issue for the definition and one for the related tests. Should you wish
+to contribute by writing a definition that is flagged as not yet started, please check the related issue for a current status. The issue is also mapped to a milestone to give a sence of prioritization.
+
+The **Standard Bundle Module (TypeScript 2)** milestone takes priority over the **Optional Scope Modules** milestone.
+
+Beyond that, please refer to the [Contributing](#contributing) section.
+
+_(a) Open Issues_
+
+The issues in this repo, broadly fall into three categories:
+
+1. Overarching issues related to how TypeScript definitions are written and/or deployed for easy use/maintenance by developers,
+2. Module-specific 'functional' issues, and
+3. Project management issues (progress tracking etc).
+ 
+Please review and contribute to these open issues as you see fit.
+
+**Important:** As described in the next sub-sections, this repo is in the process of being migrated to DefinitelyTyped.
+If an open module-specific issue for an otherwise complete module is critical/severe, I may hold off on migrating the affected module. Otherwise, preference will be given to migrating the module and carrying the related open issue over to DefinitelyTyped.
+
 
 ### Migration to DefinitelyTyped
 
-_to be added_
+The process of moving essentially complete TypeScript 2 definitions and tests over to **DefinitelyTyped** has started.
+
+A key rationale for using **DefinitelyTyped** going forward is that, it serves as the primary feeder source for the **@types organization**. Aspirationally, this means the resulting definitions should be easily deployable using, e.g:
+
+```
+npm install @types/d3-selection --save
+```
+
+The main DefinitelyTyped issue thread for the migration-related questions is [Request for d3.js API update from v3 to v4.1.0](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/9936). This thread contains a more in depth, live disscussion of the mechanics related to the migration.
+
+The section [Module-Level Status](#module-level-status) gives a quick migration status indication by module. A slightly more granular breakout can be found [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56).
 
 ### TypeScript 1.8.x Compatible Definitions
 
