@@ -26,7 +26,11 @@ For added clarity, this repo is _not intended_ as a permanent source for definit
 
 ## Roadmap
 
-This section provides a high-level view of the road ahead to completed definitons for D3 4.1.x, which can be accessed by developers using standard definition acquisition methods.
+This section provides a high-level view of the road ahead to completed definitons for D3 4.1.x, which can be accessed by developers using standard definition acquisition methods:
+
+* [Completion of Module Definitions](#completion-of-module-definitions)
+* [Migration to DefinitelyTyped](migration-to-definitelytyped)
+* TypeScript 1.8.x Compatible Definitions
 
 ### Completion of Module Definitions
 
@@ -59,7 +63,7 @@ If an open module-specific issue for an otherwise complete module is critical/se
 
 ### Migration to DefinitelyTyped
 
-The process of moving essentially complete TypeScript 2 definitions and tests over to **DefinitelyTyped** has started.
+The process of moving essentially complete TypeScript 2 definitions and tests over to **DefinitelyTyped/types-2.0** branch has started.
 
 A key rationale for using **DefinitelyTyped** going forward is that, it serves as the primary feeder source for the **@types organization**. Aspirationally, this means the resulting definitions should be easily deployable using, e.g:
 
@@ -73,7 +77,15 @@ The section [Module-Level Status](#module-level-status) gives a quick migration 
 
 ### TypeScript 1.8.x Compatible Definitions
 
-_to be added_
+Under the milestone **Standard Bundle Modules (TypeScript 1.8.x) consideration is given to the preparation of definitions/tests which do not require the latest features of TypeScript 2.
+
+The intent is to strip the unsupported features (e.g. `this` typing of function contexts) out, with the aim of keeping the definitions structurally as comparable as possible. A suitable wrapping of the module definitions may be required.
+
+This way the impact of upgrading a D3-consuming code base from TS 1.8.x to TS 2.x should be minimal.
+
+These definitions could then be contributed to what is currently the **DefinitelyTyped/master** branch.
+
+See specifically [this issue comment](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/9936#issuecomment-234431988) for DefinitelyTyped related questions.
 
 ## Module-Level Status
 
