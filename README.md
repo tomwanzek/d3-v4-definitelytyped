@@ -89,6 +89,9 @@ See specifically [this issue comment](https://github.com/DefinitelyTyped/Definit
 
 ## Module-Level Status
 
+* [D3 Standard Bundle Modules](#d3-standard-bundle-modules)
+* [Optional Scope Modules](#optional-scope-modules)
+
 First of: 
 
 * As long as a D3 module does not have a definition _and_ test file flagged as complete, the definition is available for review and comment, but not considered stable. Self-evidently, changes may also result from changes to D3 itself. 
@@ -348,6 +351,20 @@ _Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definite
 _Note_: Utilizes `this`-typing (criticality: _high_)
 
 `this`-typing is used for context-binding to DOM element.
+
+### Optional Scope Modules
+
+_(in alphabetical order)_
+
+#### d3-scale-chromatic
+
+- [ ] Definition File
+- [ ] Test File
+
+#### d3-selection-multi
+
+- [ ] Definition File
+- [ ] Test File
 
 
 ## Contributing
