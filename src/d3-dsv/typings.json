@@ -1,0 +1,14 @@
+{
+  "name": "d3-dsv",
+  "homepage": "https://github.com/d3/d3-dsv",
+  "version": "1.0.0",
+  "global": false,
+  "main": "index.d.ts",
+  "files": [
+    "index.d.ts"
+  ],
+  "dependencies": {
+    
+  },
+  "globalDependencies": {}
+}

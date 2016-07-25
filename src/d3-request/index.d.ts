@@ -1,5 +1,5 @@
 // Type definitions for D3JS d3-request module 1.0.1
-// Project: https://github.com/d3/d3-random/
+// Project: https://github.com/d3/d3-request/
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Hugues Stefanski <https://github.com/Ledragon>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
