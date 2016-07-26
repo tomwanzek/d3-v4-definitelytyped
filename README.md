@@ -197,8 +197,8 @@ _Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definite
 
 #### d3-force
 
-- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-force/index.d.ts) (*draft*)
-- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-ease/d3-ease-test.ts)
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-force/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-ease/d3-ease-test.ts)
 
 _Note_: Utilizes `this`-typing (criticality: _medium_)
 
