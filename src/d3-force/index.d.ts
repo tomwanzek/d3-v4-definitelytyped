@@ -46,7 +46,8 @@ export interface Simulation<NodeDatum extends SimulationNodeDatum, LinkDatum ext
     alphaTarget(target: number): Simulation<NodeDatum, LinkDatum>;
     velocityDecay(): number;
     velocityDecay(decay: number): Simulation<NodeDatum, LinkDatum>;
-    force(name: string): Force<NodeDatum, LinkDatum>;
+    force(name: string): Force<NodeDatum, LinkDatum>; // force names are arbitrary, so return type inference is not possible
+    force(name: string, force: null): Simulation<NodeDatum, LinkDatum>;
     force(name: string, force: Force<NodeDatum, LinkDatum>): Simulation<NodeDatum, LinkDatum>;
     find(x: number, y: number, radius?: number): NodeDatum | undefined;
     on(typenames: 'tick' | 'end' | string): (this: Simulation<NodeDatum, LinkDatum>) => void;
@@ -84,7 +85,7 @@ export function forceCenter<NodeDatum extends SimulationNodeDatum>(x?: number, y
 export interface ForceCollide<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
     radius(): (node: NodeDatum, i: number, nodes: Array<NodeDatum>) => number;
     radius(radius: number): ForceCollide<NodeDatum>;
-    radius(radius: (node: NodeDatum, i?: number, nodes?: Array<NodeDatum>) => number): ForceCollide<NodeDatum>;
+    radius(radius: (node: NodeDatum, i: number, nodes: Array<NodeDatum>) => number): ForceCollide<NodeDatum>;
     strength(): number;
     strength(strength: number): ForceCollide<NodeDatum>;
     iterations(): number;
@@ -100,18 +101,20 @@ export function forceCollide<NodeDatum extends SimulationNodeDatum>(radius: (nod
 export interface ForceLink<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum>> extends Force<NodeDatum, LinkDatum> {
     links(): Array<LinkDatum>;
     links(links: Array<LinkDatum>): ForceLink<NodeDatum, LinkDatum>;
-    id(): (d: NodeDatum, i: number, nodesData: Array<NodeDatum>) => (string | number);
-    id(id: (d: NodeDatum, i?: number, nodesData?: Array<NodeDatum>) => string): ForceLink<NodeDatum, LinkDatum>;
-    distance(): (d: LinkDatum, i: number, linksData: Array<LinkDatum>) => number;
-    distance(distance: (d: LinkDatum, i: number, linksData: Array<LinkDatum>) => number): ForceLink<NodeDatum, LinkDatum>;
-    strength(): (d: LinkDatum, i: number, linksData: Array<LinkDatum>) => number;
-    strength(strength: (d: LinkDatum, i: number, linksData: Array<LinkDatum>) => number): ForceLink<NodeDatum, LinkDatum>;
+    id(): (node: NodeDatum, i: number, nodesData: Array<NodeDatum>) => (string | number);
+    id(id: (node: NodeDatum, i: number, nodesData: Array<NodeDatum>) => string): ForceLink<NodeDatum, LinkDatum>;
+    distance(): (link: LinkDatum, i: number, links: Array<LinkDatum>) => number;
+    distance(distance: number): ForceLink<NodeDatum, LinkDatum>;
+    distance(distance: (link: LinkDatum, i: number, links: Array<LinkDatum>) => number): ForceLink<NodeDatum, LinkDatum>;
+    strength(): (link: LinkDatum, i: number, links: Array<LinkDatum>) => number;
+    strength(strength: number): ForceLink<NodeDatum, LinkDatum>;
+    strength(strength: (link: LinkDatum, i: number, links: Array<LinkDatum>) => number): ForceLink<NodeDatum, LinkDatum>;
     iterations(): number;
     iterations(iterations: number): ForceLink<NodeDatum, LinkDatum>;
 }
 
 export function forceLink<NodeDatum extends SimulationNodeDatum, LinksDatum extends SimulationLinkDatum<NodeDatum>>(): ForceLink<NodeDatum, LinksDatum>;
-export function forceLink<NodeDatum extends SimulationNodeDatum, LinksDatum extends SimulationLinkDatum<NodeDatum>>(linksData: Array<LinksDatum>): ForceLink<NodeDatum, LinksDatum>;
+export function forceLink<NodeDatum extends SimulationNodeDatum, LinksDatum extends SimulationLinkDatum<NodeDatum>>(links: Array<LinksDatum>): ForceLink<NodeDatum, LinksDatum>;
 
 // Many Body ----------------------------------------------------------------
 
@@ -131,28 +134,28 @@ export function forceManyBody<NodeDatum extends SimulationNodeDatum>(): ForceMan
 
 // Positioning ----------------------------------------------------------------
 
-export interface ForcePositionX<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
+export interface ForceX<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
     strength(): (d: NodeDatum, i: number, data: Array<NodeDatum>) => number;
-    strength(strength: number): ForcePositionX<NodeDatum>;
-    strength(strength: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionX<NodeDatum>;
+    strength(strength: number): ForceX<NodeDatum>;
+    strength(strength: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForceX<NodeDatum>;
     x(): (d: NodeDatum, i: number, data: Array<NodeDatum>) => number;
-    x(x: number): ForcePositionX<NodeDatum>;
-    x(x: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionX<NodeDatum>;
+    x(x: number): ForceX<NodeDatum>;
+    x(x: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForceX<NodeDatum>;
 }
 
-export function forceX<NodeDatum extends SimulationNodeDatum>(): ForcePositionX<NodeDatum>;
-export function forceX<NodeDatum extends SimulationNodeDatum>(x: number): ForcePositionX<NodeDatum>;
-export function forceX<NodeDatum extends SimulationNodeDatum>(x: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionX<NodeDatum>;
+export function forceX<NodeDatum extends SimulationNodeDatum>(): ForceX<NodeDatum>;
+export function forceX<NodeDatum extends SimulationNodeDatum>(x: number): ForceX<NodeDatum>;
+export function forceX<NodeDatum extends SimulationNodeDatum>(x: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForceX<NodeDatum>;
 
-export interface ForcePositionY<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
+export interface ForceY<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
     strength(): (d: NodeDatum, i: number, data: Array<NodeDatum>) => number;
-    strength(strength: number): ForcePositionY<NodeDatum>;
-    strength(strength: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionY<NodeDatum>;
+    strength(strength: number): ForceY<NodeDatum>;
+    strength(strength: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForceY<NodeDatum>;
     y(): (d: NodeDatum, i: number, data: Array<NodeDatum>) => number;
-    y(y: number): ForcePositionY<NodeDatum>;
-    y(y: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionY<NodeDatum>;
+    y(y: number): ForceY<NodeDatum>;
+    y(y: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForceY<NodeDatum>;
 }
 
-export function forceY<NodeDatum extends SimulationNodeDatum>(): ForcePositionY<NodeDatum>;
-export function forceY<NodeDatum extends SimulationNodeDatum>(y: number): ForcePositionY<NodeDatum>;
-export function forceY<NodeDatum extends SimulationNodeDatum>(y: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForcePositionY<NodeDatum>;
+export function forceY<NodeDatum extends SimulationNodeDatum>(): ForceY<NodeDatum>;
+export function forceY<NodeDatum extends SimulationNodeDatum>(y: number): ForceY<NodeDatum>;
+export function forceY<NodeDatum extends SimulationNodeDatum>(y: (d: NodeDatum, i: number, data: Array<NodeDatum>) => number): ForceY<NodeDatum>;
