@@ -1,6 +1,6 @@
 {
   "name": "d3-v4-definitelytyped",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "description": "Staged typescript definition files related to D3 version 4.1.x for contribution to DefinitelyTyped.",
   "scripts": {
     "test": "grunt compile"
