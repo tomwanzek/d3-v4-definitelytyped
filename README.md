@@ -185,8 +185,8 @@ _Note_: Utilizes `this`-typing (criticality: _high_)
 
 #### d3-dsv
 
-- [ ] Definition File
-- [ ] Test File
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-dsv/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-dsv/d3-dsv-test.ts)
 
 #### d3-ease
 
