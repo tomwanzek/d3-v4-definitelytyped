@@ -10,6 +10,6 @@
 import {Selection} from '../../src/d3-selection';
 import {Transition} from '../../src/d3-transition';
 
-import * as d3SelectionMulti from '../../src/d3-selection-multi';
+import '../../src/d3-selection-multi';
 
 // Add tests of augmentation
