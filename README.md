@@ -197,6 +197,8 @@ _Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definite
 
 #### d3-force
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-force/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-ease/d3-ease-test.ts)
 
