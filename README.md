@@ -41,7 +41,7 @@ _(a) Open Modules_
 The [Module-Level Status](#module-level-status) section provides a quick glance at the modules, which do not yet have a complete initial definition with tests.
 
 For each of these modules there is one issue for the definition and one for the related tests. Should you wish
-to contribute by writing a definition that is flagged as not yet started, please check the related issue for a current status. The issue is also mapped to a milestone to give a sence of prioritization.
+to contribute by writing a definition that is flagged as not yet started, please check the related issue for a current status. The issue is also mapped to a milestone to give a sense of prioritization.
 
 The **Standard Bundle Module (TypeScript 2)** milestone takes priority over the **Optional Scope Modules** milestone.
 
