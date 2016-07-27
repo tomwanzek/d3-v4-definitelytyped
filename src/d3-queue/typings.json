@@ -1,0 +1,14 @@
+{
+  "name": "d3-queue",
+  "homepage": "https://github.com/d3/d3-queue",
+  "version": "3.0.1",
+  "global": false,
+  "main": "index.d.ts",
+  "files": [
+    "index.d.ts"
+  ],
+  "dependencies": {
+    
+  },
+  "globalDependencies": {}
+}
