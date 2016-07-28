@@ -252,12 +252,12 @@ _Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definite
 _Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-quadtree/index.d.ts)
-- [x] Test File
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-quadtree/d3-quadtree-test.ts)
 
 #### d3-queue
 
-- [ ] Definition File
-- [ ] Test File
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-queue/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-queue/d3-queue-test.ts)
 
 #### d3-random
 
