@@ -3,11 +3,13 @@
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Hugues Stefanski <https://github.com/Ledragon>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
+/// <reference path="typings/browser.d.ts" />
+
 //TOOD object and feature are linked to GeoJSON types. These should be linked.
 export interface GeoPath {
-    area(object: any): number;
-    bounds(object: any): [[number, number], [number, number]];
-    centroid(object: any): [number, number];
+    area(object: GeoJSON.Feature<any>): number;
+    bounds(object: GeoJSON.Feature<any>): [[number, number], [number, number]];
+    centroid(object: GeoJSON.Feature<any>): [number, number];
     projection(): Projection;
     projection(projection: Projection): this;
     (object: any): string;
@@ -49,15 +51,15 @@ export interface Rotation {
 // Spherical Math
 // ----------------------------------------------------------------------
 /**Returns the spherical area of the specified GeoJSON feature in steradians. */
-export function geoArea(feature: any): number;
+export function geoArea(feature: GeoJSON.Feature<any>): number;
 /**Returns the spherical bounding box for the specified GeoJSON feature. The bounding box is represented by a two-dimensional array: [[left, bottom], [right, top]], where left is the minimum longitude, bottom is the minimum latitude, right is maximum longitude, and top is the maximum latitude. All coordinates are given in degrees. */
-export function geoBounds(feature: any): [[number, number], [number, number]];
+export function geoBounds(feature: GeoJSON.Feature<any>): [[number, number], [number, number]];
 /**Returns the spherical centroid of the specified GeoJSON feature. See also path.centroid, which computes the projected planar centroid.*/
-export function geoCentroid(feature: any): number;
+export function geoCentroid(feature: GeoJSON.Feature<any>): number;
 /**Returns the great-arc distance in radians between the two points a and b. Each point must be specified as a two-element array [longitude, latitude] in degrees. */
 export function geoDistance(a: [number, number], b: [number, number]): number;
 /**Returns the great-arc length of the specified GeoJSON feature in radians.*/
-export function geoLength(feature: any): number;
+export function geoLength(feature: GeoJSON.Feature<any>): number;
 /**Returns an interpolator function given two points a and b. Each point must be specified as a two-element array [longitude, latitude] in degrees. */
 export function geoInterpolate(a: [number, number], b: [number, number]): (t: number) => number;
 /**Returns a rotation function for the given angles, which must be a two- or three-element array of numbers [lambda, phi, gamma] specifying the rotation angles in degrees about each spherical axis. */
@@ -69,7 +71,7 @@ export function geoRotation(angles: [number, number] | [number, number, number])
 export interface CircleGenerator {
     //TODO
     /**Returns a new GeoJSON geometry object of type “Polygon” approximating a circle on the surface of a sphere, with the current center, radius and precision. */
-    (...args: any[]): any;
+    (...args: any[]): GeoJSON.Polygon;
     center(): ((...args: any[]) => [number, number]) | [number, number];
     center(center: ((...args: any[]) => [number, number]) | [number, number]): this;
     radius(): ((...args: any[]) => number) | number;
@@ -78,7 +80,23 @@ export interface CircleGenerator {
     precision(precision: ((...args: any[]) => number) | number): this;
 }
 export function geoCircle(): CircleGenerator;
+export interface FeatureGenerator {
+    //TODO
+    /**Returns a GeoJSON MultiLineString geometry object representing all meridians and parallels for this graticule. */
+    (): GeoJSON.MultiLineString;
 
+    lines(): any[];
+    outline(): ;
+    extent([extent])
+    extentMajor([extent])
+    extentMinor([extent])
+    step([step])
+    stepMajor([step])
+    stepMinor([step])
+    precision([angle])
+
+}
+export function graticule(): FeatureGenerator;
 // ----------------------------------------------------------------------
 // Projections
 // ----------------------------------------------------------------------

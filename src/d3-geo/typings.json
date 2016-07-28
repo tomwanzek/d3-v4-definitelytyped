@@ -7,8 +7,9 @@
   "files": [
     "index.d.ts"
   ],
-  "dependencies": {
-    
-  },
-  "globalDependencies": {}
+  "dependencies": {},
+  "globalDependencies": {},
+  "ambientDependencies": {
+    "geojson": "registry:dt/geojson#0.0.0+20160619034323"
+  }
 }
