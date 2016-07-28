@@ -41,7 +41,7 @@ _(a) Open Modules_
 The [Module-Level Status](#module-level-status) section provides a quick glance at the modules, which do not yet have a complete initial definition with tests.
 
 For each of these modules there is one issue for the definition and one for the related tests. Should you wish
-to contribute by writing a definition that is flagged as not yet started, please check the related issue for a current status. The issue is also mapped to a milestone to give a sence of prioritization.
+to contribute by writing a definition that is flagged as not yet started, please check the related issue for a current status. The issue is also mapped to a milestone to give a sense of prioritization.
 
 The **Standard Bundle Module (TypeScript 2)** milestone takes priority over the **Optional Scope Modules** milestone.
 
@@ -252,12 +252,12 @@ _Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definite
 _Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-quadtree/index.d.ts)
-- [x] Test File
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-quadtree/d3-quadtree-test.ts)
 
 #### d3-queue
 
-- [ ] Definition File
-- [ ] Test File
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-queue/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-queue/d3-queue-test.ts)
 
 #### d3-random
 
