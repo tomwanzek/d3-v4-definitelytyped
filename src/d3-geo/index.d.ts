@@ -5,24 +5,14 @@
 
 /// <reference path="typings/browser.d.ts" />
 
-//TOOD object and feature are linked to GeoJSON types. These should be linked.
-export interface GeoPath {
-    area(object: GeoJSON.Feature<any>): number;
-    bounds(object: GeoJSON.Feature<any>): [[number, number], [number, number]];
-    centroid(object: GeoJSON.Feature<any>): [number, number];
-    projection(): Projection;
-    projection(projection: Projection): this;
-    (object: any): string;
-}
-
 export interface Projection {
     (point: [number, number]): [number, number];
 
     clipAngle(): number;
-    clipAngle(angle?: number): this;
+    clipAngle(angle: number): this;
 
     scale(): number;
-    scale(scale?: number): this;
+    scale(scale: number): this;
 
     translate(): [number, number];
     translate(point: [number, number]): this;
@@ -40,11 +30,6 @@ export interface ProjectionStream {
 export interface RawProjection {
     (longitude: number, latitude: number): [number, number];
     invert(x: number, y: number): [number, number];
-}
-
-export interface Rotation {
-    (point: [number, number]): [number, number];
-    invert(point: [number, number]): [number, number];
 }
 
 // ----------------------------------------------------------------------
@@ -65,11 +50,18 @@ export function geoInterpolate(a: [number, number], b: [number, number]): (t: nu
 /**Returns a rotation function for the given angles, which must be a two- or three-element array of numbers [lambda, phi, gamma] specifying the rotation angles in degrees about each spherical axis. */
 export function geoRotation(angles: [number, number] | [number, number, number]): Rotation;
 
+export interface Rotation {
+    (point: [number, number]): [number, number];
+    invert(point: [number, number]): [number, number];
+}
+
+
 // ----------------------------------------------------------------------
 // Spherical Shapes
 // ----------------------------------------------------------------------
+export function geoCircle(): CircleGenerator;
+
 export interface CircleGenerator {
-    //TODO
     /**Returns a new GeoJSON geometry object of type “Polygon” approximating a circle on the surface of a sphere, with the current center, radius and precision. */
     (...args: any[]): GeoJSON.Polygon;
     center(): ((...args: any[]) => [number, number]) | [number, number];
@@ -79,28 +71,58 @@ export interface CircleGenerator {
     precision(): ((...args: any[]) => number) | number;
     precision(precision: ((...args: any[]) => number) | number): this;
 }
-export function geoCircle(): CircleGenerator;
+
+export function graticule(): FeatureGenerator;
+
 export interface FeatureGenerator {
-    //TODO
     /**Returns a GeoJSON MultiLineString geometry object representing all meridians and parallels for this graticule. */
     (): GeoJSON.MultiLineString;
 
-    lines(): any[];
-    outline(): ;
-    extent([extent])
-    extentMajor([extent])
-    extentMinor([extent])
-    step([step])
-    stepMajor([step])
-    stepMinor([step])
-    precision([angle])
-
+    lines(): GeoJSON.LineString[];
+    outline(): GeoJSON.Polygon;
+    extent(): [[number, number], [number, number]];
+    extent(extent: [[number, number], [number, number]]): this;
+    extentMajor(): [[number, number], [number, number]];
+    extentMajor(extent: [[number, number], [number, number]]): this;
+    extentMinor(): [[number, number], [number, number]];
+    extentMinor(extent: [[number, number], [number, number]]): this;
+    step(): [number, number];
+    step(step: [number, number]): this;
+    stepMajor(): [number, number];
+    stepMajor(step: [number, number]): this;
+    stepMinor(): [number, number];
+    precision(): number
+    precision(angle: number): this;
 }
-export function graticule(): FeatureGenerator;
+
 // ----------------------------------------------------------------------
 // Projections
 // ----------------------------------------------------------------------
+
 export function geoPath(): GeoPath;
+
+export interface GeoPath {
+    area(object: GeoJSON.Feature<any>): number;
+    bounds(object: GeoJSON.Feature<any>): [[number, number], [number, number]];
+    centroid(object: GeoJSON.Feature<any>): [number, number];
+    context(): Context | null;
+    context(context: Context | null): this;
+    projection(): Projection;
+    projection(projection: Projection): this;
+    pointRadius(): number;
+    pointRadius(value: number): this;
+    (object: GeoJSON.Feature<any>): string;
+    (object: GeoJSON.Feature<any>, ...args: any[]): string;
+}
+
+export interface Context {
+    arc(x: number, y: number, radius: number, startAngle: number, endAngle: number, anticlockwise?: boolean): void;
+    beginPath(): void;
+    closePath(): void;
+    lineTo(x: number, y: number): void;
+    moveTo(x: number, y: number): void;
+}
+
 export function geoProjection(project: RawProjection): Projection;
 
 export function geoAzimuthalEqualAreaRaw(): RawProjection;
