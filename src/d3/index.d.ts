@@ -26,8 +26,7 @@ export * from '../d3-interpolate';
 export * from '../d3-path';
 export * from '../d3-polygon';
 export * from '../d3-quadtree';
-// TODO: d3-queue
-// export * from '../d3-queue';
+export * from '../d3-queue';
 export * from '../d3-random';
 export * from '../d3-request';
 export * from '../d3-scale';
