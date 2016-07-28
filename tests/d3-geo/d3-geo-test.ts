@@ -7,4 +7,5 @@
  */
 
 // TODO: uncomment below and add tests
-// import * as d3Geo from '../../src/d3-geo';
+import * as d3Geo from '../../src/d3-geo';
+let distance: number = d3Geo.geoDistance([54, 2], [53, 1]);
