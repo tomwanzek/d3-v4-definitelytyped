@@ -3,6 +3,7 @@
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Hugues Stefanski <https://github.com/Ledragon>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
+import { DSVParsedArray, DSVRowString, DSVRowAny } from '../d3-dsv';
 
 export interface Request {
     abort(): this;
@@ -18,26 +19,35 @@ export interface Request {
     mimeType(): string | null;
     mimeType(value: string | null): this;
 
-    on(type: 'beforesend' | 'progress' | 'load' | 'error' | string): (data: any) => void;
-    on(type: 'beforesend' | 'progress' | 'load' | 'error' | string, listener: (data: any) => void): this;
+    on(type: 'beforesend'): (this: this, xhr: XMLHttpRequest) => void;
+    on(type: 'progress'): (this: this, progressEvent: ProgressEvent) => void;
+    on(type: 'error'): (this: this, error: any) => void;
+    on<ResponseData>(type: 'load'): (this: this, data: ResponseData) => void;
+    on(type: string): (this: this, data: any) => void;
+    on(type: string, listener: null): this;
+    on(type: 'beforesend', listener: (this: this, xhr: XMLHttpRequest) => void): this;
+    on(type: 'progress', listener: (this: this, progressEvent: ProgressEvent) => void): this;
+    on(type: 'error', listener: (this: this, error: any) => void): this;
+    on<ResponseData>(type: 'load', listener: (this: this, data: ResponseData) => void): this;
+    on(type: string, listener: (this: this, data: any) => void): this;
 
     password(): string | null;
     password(value: string): this;
 
     post(): this;
     post<RequestData>(data: RequestData): this;
-    post<ResponseData>(callback: (error: any, d: ResponseData) => void): this;
-    post<RequestData, ResponseData>(data: RequestData, callback: (error: any, d: ResponseData) => void): this;
+    post<ResponseData>(callback: (this: this, error: any, d: ResponseData) => void): this;
+    post<RequestData, ResponseData>(data: RequestData, callback: (this: this, error: any, d: ResponseData) => void): this;
 
-    response<ResponseData>(callback: (data: XMLHttpRequest) => ResponseData): this;
+    response<ResponseData>(callback: (this: this, response: XMLHttpRequest) => ResponseData): this;
 
     responseType(): string | null;
     responseType(value: string): this;
 
     send(method: string): this;
     send<RequestData>(method: string, data: RequestData): this;
-    send<ResponseData>(method: string, callback: (error: any | null, d: ResponseData | null) => void): this;
-    send<RequestData, ResponseData>(method: string, data: RequestData, callback: (error: any | null, d: ResponseData | null) => void): this;
+    send<ResponseData>(method: string, callback: (this: this, error: any | null, d: ResponseData | null) => void): this;
+    send<RequestData, ResponseData>(method: string, data: RequestData, callback: (this: this, error: any | null, d: ResponseData | null) => void): this;
 
     timeout(): number;
     timeout(value: number): this;
@@ -47,28 +57,28 @@ export interface Request {
 }
 
 export interface DsvRequest extends Request {
-    row<RequestData, ResponseData>(value: (d: RequestData) => ResponseData): DsvRequest;
+    row<ParsedRow extends DSVRowAny>(value: (rawRow: DSVRowString, index?: number, columns?: Array<string>) => ParsedRow): DsvRequest;
 }
 
 export function csv(url: string): DsvRequest;
-export function csv<ResponseData>(url: string, callback: (error: any, d: ResponseData[]) => void): DsvRequest;
-export function csv<RequestData, ResponseData>(url: string, row: (d: RequestData) => ResponseData, callback: (error: any, d: ResponseData[]) => void): DsvRequest;
+export function csv(url: string, callback: (this: DsvRequest, error: any, d: DSVParsedArray<DSVRowString>) => void): DsvRequest;
+export function csv<ParsedRow extends DSVRowAny>(url: string, row: (rawRow: DSVRowString, index?: number, columns?: Array<string>) => ParsedRow, callback: (this: DsvRequest, error: any, d: DSVParsedArray<ParsedRow>) => void): DsvRequest;
 
 export function html(url: string): Request;
-export function html(url: string, callback: (error: any, d: DocumentFragment) => void): Request;
+export function html(url: string, callback: (this: Request, error: any, d: DocumentFragment) => void): Request;
 
 export function json(url: string): Request;
-export function json<RequestData>(url: string, callback: (error: any, d: RequestData) => void): Request;
+export function json<ParsedObject extends { [key: string]: any }>(url: string, callback: (this: Request, error: any, d: ParsedObject) => void): Request;
 
 export function request(url: string): Request;
-export function request<RequestData>(url: string, callback: (error: any, d: RequestData) => void): Request;
+export function request(url: string, callback: (this: Request, error: any, d: XMLHttpRequest) => void): Request;
 
 export function text(url: string): Request;
-export function text(url: string, callback: (error: any, d: string) => void): Request;
+export function text(url: string, callback: (this: Request, error: any, d: string) => void): Request;
 
 export function tsv(url: string): DsvRequest;
-export function tsv<ResponseData>(url: string, callback: (error: any, d: ResponseData[]) => void): DsvRequest;
-export function tsv<RequestData, ResponseData>(url: string, row: (d: RequestData) => ResponseData, callback: (error: any, d: ResponseData[]) => void): DsvRequest;
+export function tsv(url: string, callback: (this: DsvRequest, error: any, d: DSVParsedArray<DSVRowString>) => void): DsvRequest;
+export function tsv<ParsedRow extends DSVRowAny>(url: string, row: (rawRow: DSVRowString, index?: number, columns?: Array<string>) => ParsedRow, callback: (this: DsvRequest, error: any, d: DSVParsedArray<ParsedRow>) => void): DsvRequest;
 
 export function xml(url: string): Request;
-export function xml(url: string, callback: (error: any, d: any) => void): Request;
+export function xml(url: string, callback: (this: Request, error: any, d: any) => void): Request;
