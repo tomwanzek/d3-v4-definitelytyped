@@ -17,26 +17,43 @@ export interface CircleGenerator {
 }
 
 export interface Projection {
-    (point: [number, number]): [number, number];
-
-    clipAngle(): number;
-    clipAngle(angle: number): this;
-
-    scale(): number;
-    scale(scale: number): this;
-
-    translate(): [number, number];
-    translate(point: [number, number]): this;
+    /**Returns a new array x, y representing the projected point of the given point. The point must be specified as a two-element array [longitude, latitude] in degrees. */
+    (point: [number, number]): [number, number] | null;
 
     center(): [number, number];
     center(point: [number, number]): this;
 
-    invert(point: [number, number]): [number, number];
+    clipAngle(): number | null;
+    clipAngle(angle: null): this;
+    clipAngle(angle: number): this;
+
+    clipExtent(): [[number, number], [number, number]] | null;
+    clipAngle(extent: null): this;
+    clipExtent(extent: [[number, number], [number, number]]): this;
+
+    fitExtent(extent: [[number, number], [number, number]], object: GeoJSON.GeoJsonObject): this;
+    fitSize(size: [number, number], object: GeoJSON.GeoJsonObject): this;
+
+    /**Returns a new array [longitude, latitude] in degrees representing the unprojected point of the given projected point. */
+    invert?(point: [number, number]): [number, number] | null;
+
+    precision(): number;
+    precision(precision: number): this;
+
+    rotate(): [number, number, number];
+    rotate(angles: [number, number] | [number, number, number]): this;
+
+    scale(): number;
+    scale(scale: number): this;
+
     stream(stream: any): ProjectionStream;
+
+    translate(): [number, number];
+    translate(point: [number, number]): this;
 }
 
-export interface ConicProjection extends Projection{
-    //TODO find return tyoe from code, documentation unavailable
+export interface ConicProjection extends Projection {
+    //TODO find return type from code, documentation unavailable
     parallels(value: [number, number]): any;
     parallels(): [number, number];
 }
@@ -65,7 +82,7 @@ export interface FeatureGenerator {
 export interface ProjectionStream {
 }
 
-export interface Extent{
+export interface Extent {
     extent(): [[number, number], [number, number]];
     extent(extent: [[number, number], [number, number]]): this;
     stream(): ProjectionStream;
@@ -135,7 +152,7 @@ export function geoPath(): GeoPath;
 
 export function geoProjection(project: RawProjection): Projection;
 //TODO type factory properly
-export function geoProjectionMutator(factory: any): any;
+export function geoProjectionMutator(factory: any): () => () => () => Projection;
 
 export function geoAzimuthalEqualAreaRaw(): RawProjection;
 export function geoAzimuthalEquidistantRaw(): RawProjection;
