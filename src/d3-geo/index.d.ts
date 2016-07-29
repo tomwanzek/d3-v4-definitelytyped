@@ -46,7 +46,7 @@ export interface Projection {
     scale(): number;
     scale(scale: number): this;
 
-    stream(stream: any): ProjectionStream;
+    stream(stream: any): Stream;
 
     translate(): [number, number];
     translate(point: [number, number]): this;
@@ -79,14 +79,20 @@ export interface FeatureGenerator {
     precision(angle: number): this;
 }
 
-export interface ProjectionStream {
+export interface Stream {
+    lineEnd(): void;
+    lineStart(): void;
+    point(x: number, y: number, z?: number): void;
+    polygonEnd(): void;
+    polygonStart(): void;
+    sphere(): void;
 }
 
 export interface Extent {
     extent(): [[number, number], [number, number]];
     extent(extent: [[number, number], [number, number]]): this;
-    stream(): ProjectionStream;
-    stream(value: ProjectionStream): this;
+    stream(): Stream;
+    stream(value: Stream): this;
 }
 
 export interface Rotation {
@@ -181,3 +187,9 @@ export function geoStereographic(): Projection;
 export function geoTransverseMercator(): Projection;
 
 export function geoClipExtent(): Extent;
+
+// ----------------------------------------------------------------------
+// Projection Streams
+// ----------------------------------------------------------------------
+export function geoTransform(prototype: any): { stream: (s: Stream) => any };
+export function geoStream(object: GeoJSON.GeoJsonObject, stream: Stream): void;
