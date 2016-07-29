@@ -1,5 +1,7 @@
 # D3 Version 4 Typescript Definition Files
 
+[![Build Status](https://travis-ci.org/tomwanzek/d3-v4-definitelytyped.svg?branch=master)](https://travis-ci.org/tomwanzek/d3-v4-definitelytyped)
+
 ## Summary
 
 This repo is intended as a staging area for typescript definitions supporting the latest major release of **[D3js](https://github.com/d3/d3) (i.e. version 4.1.x)** by [Mike Bostock](https://github.com/mbostock).
