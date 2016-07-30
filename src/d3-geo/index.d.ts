@@ -53,7 +53,7 @@ export interface Projection {
 }
 
 export interface ConicProjection extends Projection {
-    //TODO find return type from code, documentation unavailable
+    // TODO find return type from code, documentation unavailable
     parallels(value: [number, number]): any;
     parallels(): [number, number];
 }
@@ -75,7 +75,7 @@ export interface FeatureGenerator {
     stepMajor(): [number, number];
     stepMajor(step: [number, number]): this;
     stepMinor(): [number, number];
-    precision(): number
+    precision(): number;
     precision(angle: number): this;
 }
 
@@ -157,7 +157,7 @@ export function graticule(): FeatureGenerator;
 export function geoPath(): GeoPath;
 
 export function geoProjection(project: RawProjection): Projection;
-//TODO type factory properly
+// TODO type factory properly
 export function geoProjectionMutator(factory: any): () => () => () => Projection;
 
 export function geoAzimuthalEqualAreaRaw(): RawProjection;
