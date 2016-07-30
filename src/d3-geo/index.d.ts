@@ -16,6 +16,28 @@ export interface CircleGenerator {
     precision(precision: ((...args: any[]) => number) | number): this;
 }
 
+export interface GraticuleGenerator {
+    /**Returns a GeoJSON MultiLineString geometry object representing all meridians and parallels for this graticule. */
+    (): GeoJSON.MultiLineString;
+
+    lines(): GeoJSON.LineString[];
+    outline(): GeoJSON.Polygon;
+    extent(): [[number, number], [number, number]];
+    extent(extent: [[number, number], [number, number]]): this;
+    extentMajor(): [[number, number], [number, number]];
+    extentMajor(extent: [[number, number], [number, number]]): this;
+    extentMinor(): [[number, number], [number, number]];
+    extentMinor(extent: [[number, number], [number, number]]): this;
+    step(): [number, number];
+    step(step: [number, number]): this;
+    stepMajor(): [number, number];
+    stepMajor(step: [number, number]): this;
+    stepMinor(): [number, number];
+    stepMinor(step: [number, number]): this;
+    precision(): number;
+    precision(angle: number): this;
+}
+
 export interface Projection {
     /**Returns a new array x, y representing the projected point of the given point. The point must be specified as a two-element array [longitude, latitude] in degrees. */
     (point: [number, number]): [number, number] | null;
@@ -58,26 +80,6 @@ export interface ConicProjection extends Projection {
     parallels(): [number, number];
 }
 
-export interface FeatureGenerator {
-    /**Returns a GeoJSON MultiLineString geometry object representing all meridians and parallels for this graticule. */
-    (): GeoJSON.MultiLineString;
-
-    lines(): GeoJSON.LineString[];
-    outline(): GeoJSON.Polygon;
-    extent(): [[number, number], [number, number]];
-    extent(extent: [[number, number], [number, number]]): this;
-    extentMajor(): [[number, number], [number, number]];
-    extentMajor(extent: [[number, number], [number, number]]): this;
-    extentMinor(): [[number, number], [number, number]];
-    extentMinor(extent: [[number, number], [number, number]]): this;
-    step(): [number, number];
-    step(step: [number, number]): this;
-    stepMajor(): [number, number];
-    stepMajor(step: [number, number]): this;
-    stepMinor(): [number, number];
-    precision(): number;
-    precision(angle: number): this;
-}
 
 export interface Stream {
     lineEnd(): void;
@@ -95,10 +97,6 @@ export interface Extent {
     stream(value: Stream): this;
 }
 
-export interface Rotation {
-    (point: [number, number]): [number, number];
-    invert(point: [number, number]): [number, number];
-}
 
 export interface GeoPath {
     area(object: GeoJSON.Feature<any>): number;
@@ -135,21 +133,26 @@ export function geoArea(feature: GeoJSON.Feature<any>): number;
 /**Returns the spherical bounding box for the specified GeoJSON feature. The bounding box is represented by a two-dimensional array: [[left, bottom], [right, top]], where left is the minimum longitude, bottom is the minimum latitude, right is maximum longitude, and top is the maximum latitude. All coordinates are given in degrees. */
 export function geoBounds(feature: GeoJSON.Feature<any>): [[number, number], [number, number]];
 /**Returns the spherical centroid of the specified GeoJSON feature. See also path.centroid, which computes the projected planar centroid.*/
-export function geoCentroid(feature: GeoJSON.Feature<any>): number;
+export function geoCentroid(feature: GeoJSON.Feature<any>): [number, number];
 /**Returns the great-arc distance in radians between the two points a and b. Each point must be specified as a two-element array [longitude, latitude] in degrees. */
 export function geoDistance(a: [number, number], b: [number, number]): number;
 /**Returns the great-arc length of the specified GeoJSON feature in radians.*/
 export function geoLength(feature: GeoJSON.Feature<any>): number;
 /**Returns an interpolator function given two points a and b. Each point must be specified as a two-element array [longitude, latitude] in degrees. */
-export function geoInterpolate(a: [number, number], b: [number, number]): (t: number) => number;
+export function geoInterpolate(a: [number, number], b: [number, number]): (t: number) => [number, number];
 /**Returns a rotation function for the given angles, which must be a two- or three-element array of numbers [lambda, phi, gamma] specifying the rotation angles in degrees about each spherical axis. */
 export function geoRotation(angles: [number, number] | [number, number, number]): Rotation;
+
+export interface Rotation {
+    (point: [number, number]): [number, number];
+    invert(point: [number, number]): [number, number];
+}
 
 // ----------------------------------------------------------------------
 // Spherical Shapes
 // ----------------------------------------------------------------------
 export function geoCircle(): CircleGenerator;
-export function graticule(): FeatureGenerator;
+export function graticule(): GraticuleGenerator;
 
 // ----------------------------------------------------------------------
 // Projections

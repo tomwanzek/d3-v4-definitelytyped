@@ -6,7 +6,6 @@
  * are not intended as functional tests.
  */
 
-// TODO: uncomment below and add tests
 import * as d3Geo from '../../src/d3-geo';
 
 const feature: GeoJSON.Feature<any> = {
@@ -47,8 +46,64 @@ const feature: GeoJSON.Feature<any> = {
     }
 };
 
-
-
+// ----------------------------------------------------------------------
+// Spherical Math
+// ----------------------------------------------------------------------
 let area: number = d3Geo.geoArea(feature);
-
+let bounds: [[number, number], [number, number]] = d3Geo.geoBounds(feature);
+let centroid: [number, number] = d3Geo.geoCentroid(feature);
 let distance: number = d3Geo.geoDistance([54, 2], [53, 1]);
+let length: number = d3Geo.geoLength(feature);
+let interpolateFct: (t: number) => [number, number] = d3Geo.geoInterpolate([54, 2], [53, 1]);
+let rotation: d3Geo.Rotation = d3Geo.geoRotation([90, 45]);
+let rotation2: d3Geo.Rotation = d3Geo.geoRotation([90, 45, 27.5]);
+
+// ----------------------------------------------------------------------
+// Rotation interface
+// ----------------------------------------------------------------------
+let point: [number, number] = rotation([54, 2]);
+let inverted: [number, number] = rotation.invert([54, 2]);
+
+// ----------------------------------------------------------------------
+// Spherical Shapes
+// ----------------------------------------------------------------------
+let circleGenerator: d3Geo.CircleGenerator = d3Geo.geoCircle();
+let graticuleGenerator: d3Geo.GraticuleGenerator = d3Geo.graticule();
+
+// ----------------------------------------------------------------------
+// CircleGenerator interface
+// ----------------------------------------------------------------------
+let polygon: GeoJSON.Polygon = circleGenerator();
+// TODO is this correct?
+let centerFct: ((...args: any[]) => [number, number]) | [number, number] = circleGenerator.center();
+let generator1: d3Geo.CircleGenerator = circleGenerator.center(() => [54, 2]);
+let generator2: d3Geo.CircleGenerator = circleGenerator.center([54, 2]);
+// TODO is this correct?
+let radius: ((...args: any[]) => number) | number = circleGenerator.radius();
+let generator3: d3Geo.CircleGenerator = circleGenerator.radius(() => 5);
+let generator4: d3Geo.CircleGenerator = circleGenerator.radius(2);
+// TODO is this correct?
+let precision: ((...args: any[]) => number) | number = circleGenerator.precision();
+let generator5: d3Geo.CircleGenerator = circleGenerator.precision(() => 5);
+let generator6: d3Geo.CircleGenerator = circleGenerator.precision(2);
+
+// ----------------------------------------------------------------------
+// GraticuleGenerator interface
+// ----------------------------------------------------------------------
+let multiString: GeoJSON.MultiLineString = graticuleGenerator();
+let lines: GeoJSON.LineString[] = graticuleGenerator.lines();
+let polygon2: GeoJSON.Polygon = graticuleGenerator.outline();
+let extent: [[number, number], [number, number]] = graticuleGenerator.extent();
+let generator11: d3Geo.GraticuleGenerator = graticuleGenerator.extent([[-180, -80], [180, 80]]);
+let extentMajor: [[number, number], [number, number]] = graticuleGenerator.extentMajor();
+let generator12: d3Geo.GraticuleGenerator = graticuleGenerator.extentMajor([[-180, -80], [180, 80]]);
+let extentMinor: [[number, number], [number, number]] = graticuleGenerator.extentMinor();
+let generator13: d3Geo.GraticuleGenerator = graticuleGenerator.extentMinor([[-180, -80], [180, 80]]);
+let step: [number, number] = graticuleGenerator.step();
+let generator14: d3Geo.GraticuleGenerator = graticuleGenerator.step([10,10]);
+let stepMajor: [number, number] = graticuleGenerator.stepMajor();
+let generator15: d3Geo.GraticuleGenerator = graticuleGenerator.stepMajor([10,10]);
+let stepMinor: [number, number] = graticuleGenerator.stepMinor();
+let generator16: d3Geo.GraticuleGenerator = graticuleGenerator.stepMinor([10, 10]);
+let precision1: number = graticuleGenerator.precision();
+let generator17: d3Geo.GraticuleGenerator = graticuleGenerator.precision(5);
