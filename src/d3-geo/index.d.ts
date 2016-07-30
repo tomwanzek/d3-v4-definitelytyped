@@ -5,6 +5,12 @@
 
 /// <reference path="typings/browser.d.ts" />
 
+export interface Rotation {
+    (point: [number, number]): [number, number];
+    invert(point: [number, number]): [number, number];
+}
+
+// TODO generic (argument type)?
 export interface CircleGenerator {
     /**Returns a new GeoJSON geometry object of type “Polygon” approximating a circle on the surface of a sphere, with the current center, radius and precision. */
     (...args: any[]): GeoJSON.Polygon;
@@ -80,7 +86,6 @@ export interface ConicProjection extends Projection {
     parallels(): [number, number];
 }
 
-
 export interface Stream {
     lineEnd(): void;
     lineStart(): void;
@@ -97,19 +102,18 @@ export interface Extent {
     stream(value: Stream): this;
 }
 
-
-export interface GeoPath {
-    area(object: GeoJSON.Feature<any>): number;
-    bounds(object: GeoJSON.Feature<any>): [[number, number], [number, number]];
-    centroid(object: GeoJSON.Feature<any>): [number, number];
+export interface GeoPath<FeatureType extends GeoJSON.GeometryObject>{  
+    area(object: GeoJSON.Feature<FeatureType>): number;
+    bounds(object: GeoJSON.Feature<FeatureType>): [[number, number], [number, number]];
+    centroid(object: GeoJSON.Feature<FeatureType>): [number, number];
     context(): Context | null;
     context(context: Context | null): this;
     projection(): Projection;
     projection(projection: Projection): this;
     pointRadius(): number;
     pointRadius(value: number): this;
-    (object: GeoJSON.Feature<any>): string;
-    (object: GeoJSON.Feature<any>, ...args: any[]): string;
+    (object: GeoJSON.Feature<FeatureType>): string;
+    (object: GeoJSON.Feature<FeatureType>, ...args: any[]): string;
 }
 
 export interface Context {
@@ -143,10 +147,6 @@ export function geoInterpolate(a: [number, number], b: [number, number]): (t: nu
 /**Returns a rotation function for the given angles, which must be a two- or three-element array of numbers [lambda, phi, gamma] specifying the rotation angles in degrees about each spherical axis. */
 export function geoRotation(angles: [number, number] | [number, number, number]): Rotation;
 
-export interface Rotation {
-    (point: [number, number]): [number, number];
-    invert(point: [number, number]): [number, number];
-}
 
 // ----------------------------------------------------------------------
 // Spherical Shapes
@@ -157,11 +157,7 @@ export function graticule(): GraticuleGenerator;
 // ----------------------------------------------------------------------
 // Projections
 // ----------------------------------------------------------------------
-export function geoPath(): GeoPath;
-
-export function geoProjection(project: RawProjection): Projection;
-// TODO type factory properly
-export function geoProjectionMutator(factory: any): () => () => () => Projection;
+export function geoPath<FeatureType extends GeoJSON.GeometryObject>(): GeoPath<FeatureType>;
 
 export function geoAzimuthalEqualAreaRaw(): RawProjection;
 export function geoAzimuthalEquidistantRaw(): RawProjection;
@@ -174,6 +170,10 @@ export function geoMercatorRaw(): RawProjection;
 export function geoOrthographicRaw(): RawProjection;
 export function geoStereographicRaw(): RawProjection;
 export function geoTransverseMercatorRaw(): RawProjection;
+
+export function geoProjection(project: RawProjection): Projection;
+// TODO type factory properly
+export function geoProjectionMutator(factory: any): () => () => () => Projection;
 
 export function geoAlbers(): Projection;
 export function geoAlbersUsa(): Projection;
