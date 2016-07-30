@@ -213,10 +213,21 @@ let obj: GeoJSON.GeoJsonObject = {
 };
 let fitExtent: d3Geo.Projection = constructedProjection.fitExtent([[0, 0], [960, 500]], obj);
 let fitSize: d3Geo.Projection = constructedProjection.fitSize([960, 500], obj);
+
 // ----------------------------------------------------------------------
 // ConicProjection interface
 // ----------------------------------------------------------------------
+let parallels: [number, number] = conicConformal.parallels();
+let conicProjection: d3Geo.ConicProjection = conicConformal.parallels([20, 20]);
 
 // ----------------------------------------------------------------------
 // Extent interface
+// ----------------------------------------------------------------------
+
+// ----------------------------------------------------------------------
+// Stream interface
+// ----------------------------------------------------------------------
+
+// ----------------------------------------------------------------------
+// Context interface
 // ----------------------------------------------------------------------

@@ -103,7 +103,7 @@ export interface Projection {
 
 export interface ConicProjection extends Projection {
     // TODO find return type from code, documentation unavailable
-    parallels(value: [number, number]): any;
+    parallels(value: [number, number]): this;
     parallels(): [number, number];
 }
 
