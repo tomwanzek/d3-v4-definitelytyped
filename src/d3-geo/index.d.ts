@@ -44,6 +44,25 @@ export interface GraticuleGenerator {
     precision(angle: number): this;
 }
 
+export interface GeoPath<FeatureType extends GeoJSON.GeometryObject> {
+    area(object: GeoJSON.Feature<FeatureType>): number;
+    bounds(object: GeoJSON.Feature<FeatureType>): [[number, number], [number, number]];
+    centroid(object: GeoJSON.Feature<FeatureType>): [number, number];
+    context(): Context | null;
+    context(context: Context | null): this;
+    projection(): Projection;
+    projection(projection: Projection): this;
+    pointRadius(): number;
+    pointRadius(value: number): this;
+    (object: GeoJSON.Feature<FeatureType>): string;
+    (object: GeoJSON.Feature<FeatureType>, ...args: any[]): string;
+}
+
+export interface RawProjection {
+    (longitude: number, latitude: number): [number, number];
+    invert(x: number, y: number): [number, number];
+}
+
 export interface Projection {
     /**Returns a new array x, y representing the projected point of the given point. The point must be specified as a two-element array [longitude, latitude] in degrees. */
     (point: [number, number]): [number, number] | null;
@@ -56,7 +75,7 @@ export interface Projection {
     clipAngle(angle: number): this;
 
     clipExtent(): [[number, number], [number, number]] | null;
-    clipAngle(extent: null): this;
+    clipExtent(extent: null): this;
     clipExtent(extent: [[number, number], [number, number]]): this;
 
     fitExtent(extent: [[number, number], [number, number]], object: GeoJSON.GeoJsonObject): this;
@@ -86,15 +105,6 @@ export interface ConicProjection extends Projection {
     parallels(): [number, number];
 }
 
-export interface Stream {
-    lineEnd(): void;
-    lineStart(): void;
-    point(x: number, y: number, z?: number): void;
-    polygonEnd(): void;
-    polygonStart(): void;
-    sphere(): void;
-}
-
 export interface Extent {
     extent(): [[number, number], [number, number]];
     extent(extent: [[number, number], [number, number]]): this;
@@ -102,18 +112,13 @@ export interface Extent {
     stream(value: Stream): this;
 }
 
-export interface GeoPath<FeatureType extends GeoJSON.GeometryObject>{  
-    area(object: GeoJSON.Feature<FeatureType>): number;
-    bounds(object: GeoJSON.Feature<FeatureType>): [[number, number], [number, number]];
-    centroid(object: GeoJSON.Feature<FeatureType>): [number, number];
-    context(): Context | null;
-    context(context: Context | null): this;
-    projection(): Projection;
-    projection(projection: Projection): this;
-    pointRadius(): number;
-    pointRadius(value: number): this;
-    (object: GeoJSON.Feature<FeatureType>): string;
-    (object: GeoJSON.Feature<FeatureType>, ...args: any[]): string;
+export interface Stream {
+    lineEnd(): void;
+    lineStart(): void;
+    point(x: number, y: number, z?: number): void;
+    polygonEnd(): void;
+    polygonStart(): void;
+    sphere(): void;
 }
 
 export interface Context {
@@ -124,10 +129,6 @@ export interface Context {
     moveTo(x: number, y: number): void;
 }
 
-export interface RawProjection {
-    (longitude: number, latitude: number): [number, number];
-    invert(x: number, y: number): [number, number];
-}
 
 // ----------------------------------------------------------------------
 // Spherical Math
@@ -172,8 +173,7 @@ export function geoStereographicRaw(): RawProjection;
 export function geoTransverseMercatorRaw(): RawProjection;
 
 export function geoProjection(project: RawProjection): Projection;
-// TODO type factory properly
-export function geoProjectionMutator(factory: any): () => () => () => Projection;
+export function geoProjectionMutator(factory: (...args: any[]) => RawProjection): () => Projection;
 
 export function geoAlbers(): Projection;
 export function geoAlbersUsa(): Projection;

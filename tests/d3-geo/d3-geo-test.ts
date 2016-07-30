@@ -8,6 +8,9 @@
 
 import * as d3Geo from '../../src/d3-geo';
 
+// ----------------------------------------------------------------------
+// Tests setup
+// ----------------------------------------------------------------------
 const feature: GeoJSON.Feature<any> = {
     'type': 'Feature',
     'id': '01',
@@ -117,28 +120,37 @@ let generator17: d3Geo.GraticuleGenerator = graticuleGenerator.precision(5);
 // Projections
 // ----------------------------------------------------------------------
 let geoPath: d3Geo.GeoPath<MyGeoGeometry> = d3Geo.geoPath<MyGeoGeometry>();
+
 let azimuthalEqualAreaRaw: d3Geo.RawProjection = d3Geo.geoAzimuthalEqualAreaRaw();
 let azimuthalEquidistantRaw: d3Geo.RawProjection = d3Geo.geoAzimuthalEquidistantRaw();
-let ConicConformalRaw: d3Geo.RawProjection = d3Geo.geoConicConformalRaw(0, 0);
-let ConicEqualAreaRaw: d3Geo.RawProjection = d3Geo.geoConicEqualAreaRaw(0, 0);
-let ConicEquidistantRaw: d3Geo.RawProjection = d3Geo.geoConicEquidistantRaw(0, 0);
-let EquirectangularRaw: d3Geo.RawProjection = d3Geo.geoEquirectangularRaw();
-let GnomonicRaw: d3Geo.RawProjection = d3Geo.geoGnomonicRaw();
-let MercatorRaw: d3Geo.RawProjection = d3Geo.geoMercatorRaw();
-let OrthographicRaw: d3Geo.RawProjection = d3Geo.geoOrthographicRaw();
-let StereographicRaw: d3Geo.RawProjection = d3Geo.geoStereographicRaw();
-let TransverseMercatorRaw: d3Geo.RawProjection = d3Geo.geoTransverseMercatorRaw();
+let conicConformalRaw: d3Geo.RawProjection = d3Geo.geoConicConformalRaw(0, 0);
+let conicEqualAreaRaw: d3Geo.RawProjection = d3Geo.geoConicEqualAreaRaw(0, 0);
+let conicEquidistantRaw: d3Geo.RawProjection = d3Geo.geoConicEquidistantRaw(0, 0);
+let equirectangularRaw: d3Geo.RawProjection = d3Geo.geoEquirectangularRaw();
+let gnomonicRaw: d3Geo.RawProjection = d3Geo.geoGnomonicRaw();
+let mercatorRaw: d3Geo.RawProjection = d3Geo.geoMercatorRaw();
+let orthographicRaw: d3Geo.RawProjection = d3Geo.geoOrthographicRaw();
+let stereographicRaw: d3Geo.RawProjection = d3Geo.geoStereographicRaw();
+let transverseMercatorRaw: d3Geo.RawProjection = d3Geo.geoTransverseMercatorRaw();
 
 let geoProjection: d3Geo.Projection = d3Geo.geoProjection(azimuthalEqualAreaRaw);
+let mutate: () => d3Geo.Projection = d3Geo.geoProjectionMutator(() => azimuthalEqualAreaRaw);
+let constructedProjection: d3Geo.Projection = mutate();
 
 let azimuthalEqualArea: d3Geo.Projection = d3Geo.geoAzimuthalEqualArea();
 let azimuthalEquidistant: d3Geo.Projection = d3Geo.geoAzimuthalEquidistant();
-let ConicConformal: d3Geo.Projection = d3Geo.geoConicConformal();
-let ConicEqualArea: d3Geo.Projection = d3Geo.geoConicEqualArea();
-let ConicEquidistant: d3Geo.Projection = d3Geo.geoConicEquidistant();
-let Equirectangular: d3Geo.Projection = d3Geo.geoEquirectangular();
-let Gnomonic: d3Geo.Projection = d3Geo.geoGnomonic();
-let Mercator: d3Geo.Projection = d3Geo.geoMercator();
-let Orthographic: d3Geo.Projection = d3Geo.geoOrthographic();
-let Stereographic: d3Geo.Projection = d3Geo.geoStereographic();
-let TransverseMercator: d3Geo.Projection = d3Geo.geoTransverseMercator();
+let conicConformal: d3Geo.Projection = d3Geo.geoConicConformal();
+let conicEqualArea: d3Geo.Projection = d3Geo.geoConicEqualArea();
+let conicEquidistant: d3Geo.Projection = d3Geo.geoConicEquidistant();
+let cquirectangular: d3Geo.Projection = d3Geo.geoEquirectangular();
+let gnomonic: d3Geo.Projection = d3Geo.geoGnomonic();
+let mercator: d3Geo.Projection = d3Geo.geoMercator();
+let orthographic: d3Geo.Projection = d3Geo.geoOrthographic();
+let stereographic: d3Geo.Projection = d3Geo.geoStereographic();
+let transverseMercator: d3Geo.Projection = d3Geo.geoTransverseMercator();
+
+let extent2: d3Geo.Extent = d3Geo.geoClipExtent();
+
+// ----------------------------------------------------------------------
+// GeoPath interface
+// ----------------------------------------------------------------------
