@@ -1,6 +1,6 @@
 /**
  * Typescript definition tests for d3/d3-drag module
- * 
+ *
  * Note: These tests are intended to test the definitions only
  * in the sense of typing and call signature consistency. They
  * are not intended as functional tests.
@@ -11,7 +11,7 @@ import { event, select, Selection } from '../../src/d3-selection';
 
 // NB: Consider alternative approachto getting live event-binding
 // when using webpack as suggested by @ocombe in response to
-// event binding question https://github.com/d3/d3-zoom/issues/32#issuecomment-229889310 
+// event binding question https://github.com/d3/d3-zoom/issues/32#issuecomment-229889310
 // d3.getEvent = () => require("d3-selection").event;
 //
 // This can be used in callbacks
@@ -228,3 +228,4 @@ d3Drag.dragDisable(w);
 d3Drag.dragEnable(w);
 
 d3Drag.dragEnable(w, true);
+

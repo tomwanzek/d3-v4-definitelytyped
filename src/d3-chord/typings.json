@@ -7,8 +7,6 @@
   "files": [
     "index.d.ts"
   ],
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "globalDependencies": {}
 }
