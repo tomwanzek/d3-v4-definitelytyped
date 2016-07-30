@@ -1,4 +1,4 @@
-// Type definitions for D3JS d3-geo module 1.1.1
+// Type definitions for D3JS d3-geo module 1.2.0
 // Project: https://github.com/d3/d3-geo/
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Hugues Stefanski <https://github.com/Ledragon>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
@@ -78,7 +78,9 @@ export interface Projection {
     clipExtent(extent: null): this;
     clipExtent(extent: [[number, number], [number, number]]): this;
 
+    /**Sets the projection’s scale and translate to fit the specified GeoJSON object in the center of the given extent. */
     fitExtent(extent: [[number, number], [number, number]], object: GeoJSON.GeoJsonObject): this;
+    /**A convenience method for projection.fitExtent where the top-left corner of the extent is [0,0]. */
     fitSize(size: [number, number], object: GeoJSON.GeoJsonObject): this;
 
     /**Returns a new array [longitude, latitude] in degrees representing the unprojected point of the given projected point. */
@@ -179,9 +181,9 @@ export function geoAlbers(): Projection;
 export function geoAlbersUsa(): Projection;
 export function geoAzimuthalEqualArea(): Projection;
 export function geoAzimuthalEquidistant(): Projection;
-export function geoConicConformal(): Projection;
-export function geoConicEqualArea(): Projection;
-export function geoConicEquidistant(): Projection;
+export function geoConicConformal(): ConicProjection;
+export function geoConicEqualArea(): ConicProjection;
+export function geoConicEquidistant(): ConicProjection;
 export function geoEquirectangular(): Projection;
 export function geoGnomonic(): Projection;
 export function geoMercator(): Projection;
@@ -194,5 +196,5 @@ export function geoClipExtent(): Extent;
 // ----------------------------------------------------------------------
 // Projection Streams
 // ----------------------------------------------------------------------
-export function geoTransform(prototype: any): { stream: (s: Stream) => any };
+export function geoTransform(prototype: Stream): { stream: (s: Stream) => any };
 export function geoStream(object: GeoJSON.GeoJsonObject, stream: Stream): void;

@@ -138,9 +138,9 @@ let constructedProjection: d3Geo.Projection = mutate();
 
 let azimuthalEqualArea: d3Geo.Projection = d3Geo.geoAzimuthalEqualArea();
 let azimuthalEquidistant: d3Geo.Projection = d3Geo.geoAzimuthalEquidistant();
-let conicConformal: d3Geo.Projection = d3Geo.geoConicConformal();
-let conicEqualArea: d3Geo.Projection = d3Geo.geoConicEqualArea();
-let conicEquidistant: d3Geo.Projection = d3Geo.geoConicEquidistant();
+let conicConformal: d3Geo.ConicProjection = d3Geo.geoConicConformal();
+let conicEqualArea: d3Geo.ConicProjection = d3Geo.geoConicEqualArea();
+let conicEquidistant: d3Geo.ConicProjection = d3Geo.geoConicEquidistant();
 let cquirectangular: d3Geo.Projection = d3Geo.geoEquirectangular();
 let gnomonic: d3Geo.Projection = d3Geo.geoGnomonic();
 let mercator: d3Geo.Projection = d3Geo.geoMercator();
@@ -168,3 +168,55 @@ let geoPath3: d3Geo.GeoPath<MyGeoGeometry> = geoPath.context({
 });
 let geoPathPointRadius: number = geoPath.pointRadius();
 let geoPath4: d3Geo.GeoPath<MyGeoGeometry> = geoPath.pointRadius(5);
+
+// ----------------------------------------------------------------------
+// RawProjection interface
+// ----------------------------------------------------------------------
+let rawProjectionPoint: [number, number] = azimuthalEqualAreaRaw(54, 2);
+let rawProjectionInvertedPoint: [number, number] = azimuthalEqualAreaRaw.invert(180, 6);
+
+// ----------------------------------------------------------------------
+// Projection interface
+// ----------------------------------------------------------------------
+let projected: [number, number] = constructedProjection([54, 2]);
+let inverted2: [number, number] = constructedProjection.invert([54, 2]);
+
+// TODO ?????
+// let stream: d3Geo.Stream = constructedProjection.stream([54, 2]);
+
+let clipAngle: number = constructedProjection.clipAngle();
+let constructedProjection1: d3Geo.Projection = constructedProjection.clipAngle(null);
+let constructedProjection2: d3Geo.Projection = constructedProjection.clipAngle(45);
+
+let clipExtent: [[number, number], [number, number]] = constructedProjection.clipExtent();
+let constructedProjection3: d3Geo.Projection = constructedProjection.clipExtent(null);
+let constructedProjection4: d3Geo.Projection = constructedProjection.clipExtent([[0, 0], [1, 1]]);
+
+let scale: number = constructedProjection.scale();
+let constructedProjection5: d3Geo.Projection = constructedProjection.scale(45);
+
+let translate: [number, number] = constructedProjection.translate();
+let constructedProjection6: d3Geo.Projection = constructedProjection.translate([480, 250]);
+
+let center: [number, number] = constructedProjection.center();
+let constructedProjection7: d3Geo.Projection = constructedProjection.center([0, 0]);
+
+let rotate: [number, number, number] = constructedProjection.rotate();
+let constructedProjection8: d3Geo.Projection = constructedProjection.rotate([0, 0]);
+let constructedProjection9: d3Geo.Projection = constructedProjection.rotate([0, 0, 0]);
+
+let precision2: number = constructedProjection.precision();
+let constructedProjection10: d3Geo.Projection = constructedProjection.precision(0.707);
+
+let obj: GeoJSON.GeoJsonObject = {
+    'type': 'Feature'
+};
+let fitExtent: d3Geo.Projection = constructedProjection.fitExtent([[0, 0], [960, 500]], obj);
+let fitSize: d3Geo.Projection = constructedProjection.fitSize([960, 500], obj);
+// ----------------------------------------------------------------------
+// ConicProjection interface
+// ----------------------------------------------------------------------
+
+// ----------------------------------------------------------------------
+// Extent interface
+// ----------------------------------------------------------------------
