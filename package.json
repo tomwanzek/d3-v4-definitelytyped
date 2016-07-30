@@ -26,5 +26,7 @@
     "tslint": "^3.13.0",
     "typescript": "^2.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/geojson": "0.0.27"
+  }
 }
