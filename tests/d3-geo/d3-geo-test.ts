@@ -11,7 +11,7 @@ import * as d3Geo from '../../src/d3-geo';
 // ----------------------------------------------------------------------
 // Tests setup
 // ----------------------------------------------------------------------
-const feature: GeoJSON.Feature<any> = {
+const feature: GeoJSON.Feature<MyGeoGeometry> = {
     'type': 'Feature',
     'id': '01',
     'properties': {
@@ -52,7 +52,6 @@ const feature: GeoJSON.Feature<any> = {
 interface MyGeoGeometry extends GeoJSON.GeometryObject {
 
 }
-
 
 // ----------------------------------------------------------------------
 // Spherical Math
@@ -154,3 +153,18 @@ let extent2: d3Geo.Extent = d3Geo.geoClipExtent();
 // ----------------------------------------------------------------------
 // GeoPath interface
 // ----------------------------------------------------------------------
+let geoPathArea: number = geoPath.area(feature);
+let geoPathBounds: [[number, number], [number, number]] = geoPath.bounds(feature);
+let geoPathCentroid: [number, number] = geoPath.centroid(feature);
+let geoPathProjection: d3Geo.Projection = geoPath.projection();
+let geoPath2: d3Geo.GeoPath<MyGeoGeometry> = geoPath.projection(azimuthalEqualArea);
+let geoPathContext: d3Geo.Context = geoPath.context();
+let geoPath3: d3Geo.GeoPath<MyGeoGeometry> = geoPath.context({
+    beginPath: () => { return; },
+    moveTo: (x: number, y: number) => { return; },
+    lineTo: (x: number, y: number) => { return; },
+    arc: (x, y, radius, startAngle, endAngle) => { return; },
+    closePath: () => { return; }
+});
+let geoPathPointRadius: number = geoPath.pointRadius();
+let geoPath4: d3Geo.GeoPath<MyGeoGeometry> = geoPath.pointRadius(5);
