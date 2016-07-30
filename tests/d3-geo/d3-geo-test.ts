@@ -49,6 +49,10 @@ const feature: GeoJSON.Feature<MyGeoGeometry> = {
     }
 };
 
+const obj: GeoJSON.GeoJsonObject = {
+    'type': 'Feature'
+};
+
 interface MyGeoGeometry extends GeoJSON.GeometryObject {
 
 }
@@ -148,7 +152,7 @@ let orthographic: d3Geo.Projection = d3Geo.geoOrthographic();
 let stereographic: d3Geo.Projection = d3Geo.geoStereographic();
 let transverseMercator: d3Geo.Projection = d3Geo.geoTransverseMercator();
 
-let extent2: d3Geo.Extent = d3Geo.geoClipExtent();
+let geoClipExtent: d3Geo.Extent = d3Geo.geoClipExtent();
 
 // ----------------------------------------------------------------------
 // GeoPath interface
@@ -208,9 +212,6 @@ let constructedProjection9: d3Geo.Projection = constructedProjection.rotate([0, 
 let precision2: number = constructedProjection.precision();
 let constructedProjection10: d3Geo.Projection = constructedProjection.precision(0.707);
 
-let obj: GeoJSON.GeoJsonObject = {
-    'type': 'Feature'
-};
 let fitExtent: d3Geo.Projection = constructedProjection.fitExtent([[0, 0], [960, 500]], obj);
 let fitSize: d3Geo.Projection = constructedProjection.fitSize([960, 500], obj);
 
@@ -223,11 +224,37 @@ let conicProjection: d3Geo.ConicProjection = conicConformal.parallels([20, 20]);
 // ----------------------------------------------------------------------
 // Extent interface
 // ----------------------------------------------------------------------
+let extent2: [[number, number], [number, number]] = geoClipExtent.extent();
+let geoClipExtent2: d3Geo.Extent = geoClipExtent.extent([[0, 0], [960, 500]]);
+let stream: d3Geo.Stream = geoClipExtent.stream();
+let geoClipExtent3: d3Geo.Extent = geoClipExtent.stream(stream);
 
 // ----------------------------------------------------------------------
 // Stream interface
 // ----------------------------------------------------------------------
+// Weird to be able to assign void type to a variable
+let void1: void = stream.point(0,0);
+let void2: void = stream.point(0,0,0);
+let void3: void = stream.lineStart();
+let void4: void = stream.lineEnd();
+let void5: void = stream.polygonStart();
+let void6: void = stream.polygonEnd();
+let void7: void = stream.sphere();
 
 // ----------------------------------------------------------------------
 // Context interface
 // ----------------------------------------------------------------------
+let context: d3Geo.Context = {
+    beginPath: () => { return; },
+    moveTo: (x: number, y: number) => { return; },
+    lineTo: (x: number, y: number) => { return; },
+    arc: (x, y, radius, startAngle, endAngle) => { return; },
+    closePath: () => { return; }
+};
+
+// ----------------------------------------------------------------------
+// Projection Streams
+// ----------------------------------------------------------------------
+let void8: void = d3Geo.geoStream(obj, stream);
+// TODO 
+let transformFunction: { stream: (s: d3Geo.Stream) => {} } = d3Geo.geoTransform({});

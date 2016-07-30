@@ -196,5 +196,6 @@ export function geoClipExtent(): Extent;
 // ----------------------------------------------------------------------
 // Projection Streams
 // ----------------------------------------------------------------------
-export function geoTransform(prototype: Stream): { stream: (s: Stream) => any };
+// TODO return type is an extension of T augmented by Stream method. How to specify this?
+export function geoTransform<T>(prototype: T): ({ stream: (s: Stream) => any });
 export function geoStream(object: GeoJSON.GeoJsonObject, stream: Stream): void;
