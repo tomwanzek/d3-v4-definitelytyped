@@ -1,6 +1,6 @@
 /**
  * Typescript definition tests for d3/d3-geo module
- * 
+ *
  * Note: These tests are intended to test the definitions only
  * in the sense of typing and call signature consistency. They
  * are not intended as functional tests.
@@ -256,5 +256,6 @@ let context: d3Geo.Context = {
 // Projection Streams
 // ----------------------------------------------------------------------
 let void8: void = d3Geo.geoStream(obj, stream);
-// TODO 
+// TODO
 let transformFunction: { stream: (s: d3Geo.Stream) => {} } = d3Geo.geoTransform({});
+

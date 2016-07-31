@@ -5,8 +5,6 @@
 
 export as namespace d3;
 
-// See TODOs below for modules that are not yet supported by definitions for version 4.1
-
 export * from '../d3-array';
 export * from '../d3-axis';
 export * from '../d3-brush';

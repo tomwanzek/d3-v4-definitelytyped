@@ -2,3 +2,5 @@
 // Project: https://github.com/d3/d3-scale-chromatic/
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+
+// TODO: write definitions
