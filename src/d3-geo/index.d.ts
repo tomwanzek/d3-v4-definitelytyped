@@ -9,7 +9,7 @@ export interface Rotation {
 }
 
 // TODO generic (argument type)?
-export interface CircleGenerator {
+export interface GeoCircleGenerator {
     /**Returns a new GeoJSON geometry object of type “Polygon” approximating a circle on the surface of a sphere, with the current center, radius and precision. */
     (...args: any[]): GeoJSON.Polygon;
     center(): ((...args: any[]) => [number, number]) | [number, number];
@@ -20,7 +20,7 @@ export interface CircleGenerator {
     precision(precision: ((...args: any[]) => number) | number): this;
 }
 
-export interface GraticuleGenerator {
+export interface GeoGraticuleGenerator {
     /**Returns a GeoJSON MultiLineString geometry object representing all meridians and parallels for this graticule. */
     (): GeoJSON.MultiLineString;
 
@@ -152,8 +152,8 @@ export function geoRotation(angles: [number, number] | [number, number, number])
 // ----------------------------------------------------------------------
 // Spherical Shapes
 // ----------------------------------------------------------------------
-export function geoCircle(): CircleGenerator;
-export function graticule(): GraticuleGenerator;
+export function geoCircle(): GeoCircleGenerator;
+export function geoGraticule(): GeoGraticuleGenerator;
 
 // ----------------------------------------------------------------------
 // Projections
