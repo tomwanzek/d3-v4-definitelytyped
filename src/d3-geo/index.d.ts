@@ -3,7 +3,7 @@
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Hugues Stefanski <https://github.com/Ledragon>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-export interface Rotation {
+export interface GeoRotation {
     (point: [number, number]): [number, number];
     invert(point: [number, number]): [number, number];
 }
@@ -46,22 +46,22 @@ export interface GeoPath<FeatureType extends GeoJSON.GeometryObject> {
     area(object: GeoJSON.Feature<FeatureType>): number;
     bounds(object: GeoJSON.Feature<FeatureType>): [[number, number], [number, number]];
     centroid(object: GeoJSON.Feature<FeatureType>): [number, number];
-    context(): Context | null;
-    context(context: Context | null): this;
-    projection(): Projection;
-    projection(projection: Projection): this;
+    context(): GeoContext | null;
+    context(context: GeoContext | null): this;
+    projection(): GeoProjection;
+    projection(projection: GeoProjection): this;
     pointRadius(): number;
     pointRadius(value: number): this;
     (object: GeoJSON.Feature<FeatureType>): string;
     (object: GeoJSON.Feature<FeatureType>, ...args: any[]): string;
 }
 
-export interface RawProjection {
+export interface GeoRawProjection {
     (longitude: number, latitude: number): [number, number];
     invert(x: number, y: number): [number, number];
 }
 
-export interface Projection {
+export interface GeoProjection {
     /**Returns a new array x, y representing the projected point of the given point. The point must be specified as a two-element array [longitude, latitude] in degrees. */
     (point: [number, number]): [number, number] | null;
 
@@ -93,26 +93,26 @@ export interface Projection {
     scale(): number;
     scale(scale: number): this;
 
-    stream(stream: any): Stream;
+    stream(stream: any): GeoStream;
 
     translate(): [number, number];
     translate(point: [number, number]): this;
 }
 
-export interface ConicProjection extends Projection {
+export interface GeoConicProjection extends GeoProjection {
     // TODO find return type from code, documentation unavailable
     parallels(value: [number, number]): this;
     parallels(): [number, number];
 }
 
-export interface Extent {
+export interface GeoExtent {
     extent(): [[number, number], [number, number]];
     extent(extent: [[number, number], [number, number]]): this;
-    stream(): Stream;
-    stream(value: Stream): this;
+    stream(): GeoStream;
+    stream(value: GeoStream): this;
 }
 
-export interface Stream {
+export interface GeoStream {
     lineEnd(): void;
     lineStart(): void;
     point(x: number, y: number, z?: number): void;
@@ -121,7 +121,7 @@ export interface Stream {
     sphere(): void;
 }
 
-export interface Context {
+export interface GeoContext {
     arc(x: number, y: number, radius: number, startAngle: number, endAngle: number, anticlockwise?: boolean): void;
     beginPath(): void;
     closePath(): void;
@@ -146,7 +146,7 @@ export function geoLength<FeatureType extends GeoJSON.GeometryObject>(feature: G
 /**Returns an interpolator function given two points a and b. Each point must be specified as a two-element array [longitude, latitude] in degrees. */
 export function geoInterpolate(a: [number, number], b: [number, number]): (t: number) => [number, number];
 /**Returns a rotation function for the given angles, which must be a two- or three-element array of numbers [lambda, phi, gamma] specifying the rotation angles in degrees about each spherical axis. */
-export function geoRotation(angles: [number, number] | [number, number, number]): Rotation;
+export function geoRotation(angles: [number, number] | [number, number, number]): GeoRotation;
 
 
 // ----------------------------------------------------------------------
@@ -160,40 +160,40 @@ export function geoGraticule(): GeoGraticuleGenerator;
 // ----------------------------------------------------------------------
 export function geoPath<FeatureType extends GeoJSON.GeometryObject>(): GeoPath<FeatureType>;
 
-export function geoAzimuthalEqualAreaRaw(): RawProjection;
-export function geoAzimuthalEquidistantRaw(): RawProjection;
-export function geoConicConformalRaw(phi0: number, phi1: number): RawProjection;
-export function geoConicEqualAreaRaw(phi0: number, phi1: number): RawProjection;
-export function geoConicEquidistantRaw(phi0: number, phi1: number): RawProjection;
-export function geoEquirectangularRaw(): RawProjection;
-export function geoGnomonicRaw(): RawProjection;
-export function geoMercatorRaw(): RawProjection;
-export function geoOrthographicRaw(): RawProjection;
-export function geoStereographicRaw(): RawProjection;
-export function geoTransverseMercatorRaw(): RawProjection;
+export function geoAzimuthalEqualAreaRaw(): GeoRawProjection;
+export function geoAzimuthalEquidistantRaw(): GeoRawProjection;
+export function geoConicConformalRaw(phi0: number, phi1: number): GeoRawProjection;
+export function geoConicEqualAreaRaw(phi0: number, phi1: number): GeoRawProjection;
+export function geoConicEquidistantRaw(phi0: number, phi1: number): GeoRawProjection;
+export function geoEquirectangularRaw(): GeoRawProjection;
+export function geoGnomonicRaw(): GeoRawProjection;
+export function geoMercatorRaw(): GeoRawProjection;
+export function geoOrthographicRaw(): GeoRawProjection;
+export function geoStereographicRaw(): GeoRawProjection;
+export function geoTransverseMercatorRaw(): GeoRawProjection;
 
-export function geoProjection(project: RawProjection): Projection;
-export function geoProjectionMutator(factory: (...args: any[]) => RawProjection): () => Projection;
+export function geoProjection(project: GeoRawProjection): GeoProjection;
+export function geoProjectionMutator(factory: (...args: any[]) => GeoRawProjection): () => GeoProjection;
 
-export function geoAlbers(): Projection;
-export function geoAlbersUsa(): Projection;
-export function geoAzimuthalEqualArea(): Projection;
-export function geoAzimuthalEquidistant(): Projection;
-export function geoConicConformal(): ConicProjection;
-export function geoConicEqualArea(): ConicProjection;
-export function geoConicEquidistant(): ConicProjection;
-export function geoEquirectangular(): Projection;
-export function geoGnomonic(): Projection;
-export function geoMercator(): Projection;
-export function geoOrthographic(): Projection;
-export function geoStereographic(): Projection;
-export function geoTransverseMercator(): Projection;
+export function geoAlbers(): GeoProjection;
+export function geoAlbersUsa(): GeoProjection;
+export function geoAzimuthalEqualArea(): GeoProjection;
+export function geoAzimuthalEquidistant(): GeoProjection;
+export function geoConicConformal(): GeoConicProjection;
+export function geoConicEqualArea(): GeoConicProjection;
+export function geoConicEquidistant(): GeoConicProjection;
+export function geoEquirectangular(): GeoProjection;
+export function geoGnomonic(): GeoProjection;
+export function geoMercator(): GeoProjection;
+export function geoOrthographic(): GeoProjection;
+export function geoStereographic(): GeoProjection;
+export function geoTransverseMercator(): GeoProjection;
 
-export function geoClipExtent(): Extent;
+export function geoClipExtent(): GeoExtent;
 
 // ----------------------------------------------------------------------
 // Projection Streams
 // ----------------------------------------------------------------------
 // TODO return type is an extension of T augmented by Stream method. How to specify this?
-export function geoTransform<T>(prototype: T): ({ stream: (s: Stream) => any });
-export function geoStream(object: GeoJSON.GeoJsonObject, stream: Stream): void;
+export function geoTransform<T>(prototype: T): ({ stream: (s: GeoStream) => any });
+export function geoStream(object: GeoJSON.GeoJsonObject, stream: GeoStream): void;

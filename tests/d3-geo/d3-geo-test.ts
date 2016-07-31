@@ -66,8 +66,8 @@ let centroid: [number, number] = d3Geo.geoCentroid(feature);
 let distance: number = d3Geo.geoDistance([54, 2], [53, 1]);
 let length: number = d3Geo.geoLength(feature);
 let interpolateFct: (t: number) => [number, number] = d3Geo.geoInterpolate([54, 2], [53, 1]);
-let rotation: d3Geo.Rotation = d3Geo.geoRotation([90, 45]);
-let rotation2: d3Geo.Rotation = d3Geo.geoRotation([90, 45, 27.5]);
+let rotation: d3Geo.GeoRotation = d3Geo.geoRotation([90, 45]);
+let rotation2: d3Geo.GeoRotation = d3Geo.geoRotation([90, 45, 27.5]);
 
 // ----------------------------------------------------------------------
 // Rotation interface
@@ -124,35 +124,35 @@ let generator17: d3Geo.GeoGraticuleGenerator = graticuleGenerator.precision(5);
 // ----------------------------------------------------------------------
 let geoPath: d3Geo.GeoPath<MyGeoGeometry> = d3Geo.geoPath<MyGeoGeometry>();
 
-let azimuthalEqualAreaRaw: d3Geo.RawProjection = d3Geo.geoAzimuthalEqualAreaRaw();
-let azimuthalEquidistantRaw: d3Geo.RawProjection = d3Geo.geoAzimuthalEquidistantRaw();
-let conicConformalRaw: d3Geo.RawProjection = d3Geo.geoConicConformalRaw(0, 0);
-let conicEqualAreaRaw: d3Geo.RawProjection = d3Geo.geoConicEqualAreaRaw(0, 0);
-let conicEquidistantRaw: d3Geo.RawProjection = d3Geo.geoConicEquidistantRaw(0, 0);
-let equirectangularRaw: d3Geo.RawProjection = d3Geo.geoEquirectangularRaw();
-let gnomonicRaw: d3Geo.RawProjection = d3Geo.geoGnomonicRaw();
-let mercatorRaw: d3Geo.RawProjection = d3Geo.geoMercatorRaw();
-let orthographicRaw: d3Geo.RawProjection = d3Geo.geoOrthographicRaw();
-let stereographicRaw: d3Geo.RawProjection = d3Geo.geoStereographicRaw();
-let transverseMercatorRaw: d3Geo.RawProjection = d3Geo.geoTransverseMercatorRaw();
+let azimuthalEqualAreaRaw: d3Geo.GeoRawProjection = d3Geo.geoAzimuthalEqualAreaRaw();
+let azimuthalEquidistantRaw: d3Geo.GeoRawProjection = d3Geo.geoAzimuthalEquidistantRaw();
+let conicConformalRaw: d3Geo.GeoRawProjection = d3Geo.geoConicConformalRaw(0, 0);
+let conicEqualAreaRaw: d3Geo.GeoRawProjection = d3Geo.geoConicEqualAreaRaw(0, 0);
+let conicEquidistantRaw: d3Geo.GeoRawProjection = d3Geo.geoConicEquidistantRaw(0, 0);
+let equirectangularRaw: d3Geo.GeoRawProjection = d3Geo.geoEquirectangularRaw();
+let gnomonicRaw: d3Geo.GeoRawProjection = d3Geo.geoGnomonicRaw();
+let mercatorRaw: d3Geo.GeoRawProjection = d3Geo.geoMercatorRaw();
+let orthographicRaw: d3Geo.GeoRawProjection = d3Geo.geoOrthographicRaw();
+let stereographicRaw: d3Geo.GeoRawProjection = d3Geo.geoStereographicRaw();
+let transverseMercatorRaw: d3Geo.GeoRawProjection = d3Geo.geoTransverseMercatorRaw();
 
-let geoProjection: d3Geo.Projection = d3Geo.geoProjection(azimuthalEqualAreaRaw);
-let mutate: () => d3Geo.Projection = d3Geo.geoProjectionMutator(() => azimuthalEqualAreaRaw);
-let constructedProjection: d3Geo.Projection = mutate();
+let geoProjection: d3Geo.GeoProjection = d3Geo.geoProjection(azimuthalEqualAreaRaw);
+let mutate: () => d3Geo.GeoProjection = d3Geo.geoProjectionMutator(() => azimuthalEqualAreaRaw);
+let constructedProjection: d3Geo.GeoProjection = mutate();
 
-let azimuthalEqualArea: d3Geo.Projection = d3Geo.geoAzimuthalEqualArea();
-let azimuthalEquidistant: d3Geo.Projection = d3Geo.geoAzimuthalEquidistant();
-let conicConformal: d3Geo.ConicProjection = d3Geo.geoConicConformal();
-let conicEqualArea: d3Geo.ConicProjection = d3Geo.geoConicEqualArea();
-let conicEquidistant: d3Geo.ConicProjection = d3Geo.geoConicEquidistant();
-let cquirectangular: d3Geo.Projection = d3Geo.geoEquirectangular();
-let gnomonic: d3Geo.Projection = d3Geo.geoGnomonic();
-let mercator: d3Geo.Projection = d3Geo.geoMercator();
-let orthographic: d3Geo.Projection = d3Geo.geoOrthographic();
-let stereographic: d3Geo.Projection = d3Geo.geoStereographic();
-let transverseMercator: d3Geo.Projection = d3Geo.geoTransverseMercator();
+let azimuthalEqualArea: d3Geo.GeoProjection = d3Geo.geoAzimuthalEqualArea();
+let azimuthalEquidistant: d3Geo.GeoProjection = d3Geo.geoAzimuthalEquidistant();
+let conicConformal: d3Geo.GeoConicProjection = d3Geo.geoConicConformal();
+let conicEqualArea: d3Geo.GeoConicProjection = d3Geo.geoConicEqualArea();
+let conicEquidistant: d3Geo.GeoConicProjection = d3Geo.geoConicEquidistant();
+let cquirectangular: d3Geo.GeoProjection = d3Geo.geoEquirectangular();
+let gnomonic: d3Geo.GeoProjection = d3Geo.geoGnomonic();
+let mercator: d3Geo.GeoProjection = d3Geo.geoMercator();
+let orthographic: d3Geo.GeoProjection = d3Geo.geoOrthographic();
+let stereographic: d3Geo.GeoProjection = d3Geo.geoStereographic();
+let transverseMercator: d3Geo.GeoProjection = d3Geo.geoTransverseMercator();
 
-let geoClipExtent: d3Geo.Extent = d3Geo.geoClipExtent();
+let geoClipExtent: d3Geo.GeoExtent = d3Geo.geoClipExtent();
 
 // ----------------------------------------------------------------------
 // GeoPath interface
@@ -160,9 +160,9 @@ let geoClipExtent: d3Geo.Extent = d3Geo.geoClipExtent();
 let geoPathArea: number = geoPath.area(feature);
 let geoPathBounds: [[number, number], [number, number]] = geoPath.bounds(feature);
 let geoPathCentroid: [number, number] = geoPath.centroid(feature);
-let geoPathProjection: d3Geo.Projection = geoPath.projection();
+let geoPathProjection: d3Geo.GeoProjection = geoPath.projection();
 let geoPath2: d3Geo.GeoPath<MyGeoGeometry> = geoPath.projection(azimuthalEqualArea);
-let geoPathContext: d3Geo.Context = geoPath.context();
+let geoPathContext: d3Geo.GeoContext = geoPath.context();
 let geoPath3: d3Geo.GeoPath<MyGeoGeometry> = geoPath.context({
     beginPath: () => { return; },
     moveTo: (x: number, y: number) => { return; },
@@ -189,45 +189,45 @@ let inverted2: [number, number] = constructedProjection.invert([54, 2]);
 // let stream: d3Geo.Stream = constructedProjection.stream([54, 2]);
 
 let clipAngle: number = constructedProjection.clipAngle();
-let constructedProjection1: d3Geo.Projection = constructedProjection.clipAngle(null);
-let constructedProjection2: d3Geo.Projection = constructedProjection.clipAngle(45);
+let constructedProjection1: d3Geo.GeoProjection = constructedProjection.clipAngle(null);
+let constructedProjection2: d3Geo.GeoProjection = constructedProjection.clipAngle(45);
 
 let clipExtent: [[number, number], [number, number]] = constructedProjection.clipExtent();
-let constructedProjection3: d3Geo.Projection = constructedProjection.clipExtent(null);
-let constructedProjection4: d3Geo.Projection = constructedProjection.clipExtent([[0, 0], [1, 1]]);
+let constructedProjection3: d3Geo.GeoProjection = constructedProjection.clipExtent(null);
+let constructedProjection4: d3Geo.GeoProjection = constructedProjection.clipExtent([[0, 0], [1, 1]]);
 
 let scale: number = constructedProjection.scale();
-let constructedProjection5: d3Geo.Projection = constructedProjection.scale(45);
+let constructedProjection5: d3Geo.GeoProjection = constructedProjection.scale(45);
 
 let translate: [number, number] = constructedProjection.translate();
-let constructedProjection6: d3Geo.Projection = constructedProjection.translate([480, 250]);
+let constructedProjection6: d3Geo.GeoProjection = constructedProjection.translate([480, 250]);
 
 let center: [number, number] = constructedProjection.center();
-let constructedProjection7: d3Geo.Projection = constructedProjection.center([0, 0]);
+let constructedProjection7: d3Geo.GeoProjection = constructedProjection.center([0, 0]);
 
 let rotate: [number, number, number] = constructedProjection.rotate();
-let constructedProjection8: d3Geo.Projection = constructedProjection.rotate([0, 0]);
-let constructedProjection9: d3Geo.Projection = constructedProjection.rotate([0, 0, 0]);
+let constructedProjection8: d3Geo.GeoProjection = constructedProjection.rotate([0, 0]);
+let constructedProjection9: d3Geo.GeoProjection = constructedProjection.rotate([0, 0, 0]);
 
 let precision2: number = constructedProjection.precision();
-let constructedProjection10: d3Geo.Projection = constructedProjection.precision(0.707);
+let constructedProjection10: d3Geo.GeoProjection = constructedProjection.precision(0.707);
 
-let fitExtent: d3Geo.Projection = constructedProjection.fitExtent([[0, 0], [960, 500]], obj);
-let fitSize: d3Geo.Projection = constructedProjection.fitSize([960, 500], obj);
+let fitExtent: d3Geo.GeoProjection = constructedProjection.fitExtent([[0, 0], [960, 500]], obj);
+let fitSize: d3Geo.GeoProjection = constructedProjection.fitSize([960, 500], obj);
 
 // ----------------------------------------------------------------------
 // ConicProjection interface
 // ----------------------------------------------------------------------
 let parallels: [number, number] = conicConformal.parallels();
-let conicProjection: d3Geo.ConicProjection = conicConformal.parallels([20, 20]);
+let conicProjection: d3Geo.GeoConicProjection = conicConformal.parallels([20, 20]);
 
 // ----------------------------------------------------------------------
 // Extent interface
 // ----------------------------------------------------------------------
 let extent2: [[number, number], [number, number]] = geoClipExtent.extent();
-let geoClipExtent2: d3Geo.Extent = geoClipExtent.extent([[0, 0], [960, 500]]);
-let stream: d3Geo.Stream = geoClipExtent.stream();
-let geoClipExtent3: d3Geo.Extent = geoClipExtent.stream(stream);
+let geoClipExtent2: d3Geo.GeoExtent = geoClipExtent.extent([[0, 0], [960, 500]]);
+let stream: d3Geo.GeoStream = geoClipExtent.stream();
+let geoClipExtent3: d3Geo.GeoExtent = geoClipExtent.stream(stream);
 
 // ----------------------------------------------------------------------
 // Stream interface
@@ -244,7 +244,7 @@ let void7: void = stream.sphere();
 // ----------------------------------------------------------------------
 // Context interface
 // ----------------------------------------------------------------------
-let context: d3Geo.Context = {
+let context: d3Geo.GeoContext = {
     beginPath: () => { return; },
     moveTo: (x: number, y: number) => { return; },
     lineTo: (x: number, y: number) => { return; },
@@ -257,4 +257,4 @@ let context: d3Geo.Context = {
 // ----------------------------------------------------------------------
 let void8: void = d3Geo.geoStream(obj, stream);
 // TODO
-let transformFunction: { stream: (s: d3Geo.Stream) => {} } = d3Geo.geoTransform({});
+let transformFunction: { stream: (s: d3Geo.GeoStream) => {} } = d3Geo.geoTransform({});
