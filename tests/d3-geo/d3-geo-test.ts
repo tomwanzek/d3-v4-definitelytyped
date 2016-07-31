@@ -233,8 +233,8 @@ let geoClipExtent3: d3Geo.Extent = geoClipExtent.stream(stream);
 // Stream interface
 // ----------------------------------------------------------------------
 // Weird to be able to assign void type to a variable
-let void1: void = stream.point(0,0);
-let void2: void = stream.point(0,0,0);
+let void1: void = stream.point(0, 0);
+let void2: void = stream.point(0, 0, 0);
 let void3: void = stream.lineStart();
 let void4: void = stream.lineEnd();
 let void5: void = stream.polygonStart();
@@ -258,4 +258,3 @@ let context: d3Geo.Context = {
 let void8: void = d3Geo.geoStream(obj, stream);
 // TODO
 let transformFunction: { stream: (s: d3Geo.Stream) => {} } = d3Geo.geoTransform({});
-
