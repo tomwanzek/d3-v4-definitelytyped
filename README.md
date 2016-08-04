@@ -115,7 +115,16 @@ I.e. they are only shape tests as is the DefinitelyTyped tradition. They are exp
 
 ### D3 Standard Bundle Modules
 
-_(in alphabetical order)_
+#### D3 Standard Bundle Definition
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
+This is a definitions file for the bundle which re-exports the constituent modules and exposes a `d3` global for vanilla script use.
+
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3/index.d.ts)
+- [ ] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3/d3-test.ts)
+
+_(individual modules in alphabetical order)_
 
 #### d3-array
 
@@ -186,6 +195,8 @@ _Note_: Utilizes `this`-typing (criticality: _high_)
 `this`-typing is used for context-binding to DOM element.
 
 #### d3-dsv
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-dsv/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-dsv/d3-dsv-test.ts)
@@ -271,6 +282,8 @@ _Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definite
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-random/d3-random-test.ts)
 
 #### d3-request
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-request/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-request/d3-random-test.ts)
@@ -362,12 +375,37 @@ _Note_: Utilizes `this`-typing (criticality: _high_)
 
 _(in alphabetical order)_
 
+#### d3-geo-projection
+
+- [ ] Definition File
+- [ ] Test File
+
+#### d3-hexbin
+
+- [ ] Definition File
+- [ ] Test File
+
+#### d3-hsv
+
+- [ ] Definition File
+- [ ] Test File
+
+#### d3-sankey
+
+- [ ] Definition File
+- [ ] Test File
+
 #### d3-scale-chromatic
 
 - [ ] Definition File
 - [ ] Test File
 
 #### d3-selection-multi
+
+- [ ] Definition File
+- [ ] Test File
+
+#### d3-tile
 
 - [ ] Definition File
 - [ ] Test File
