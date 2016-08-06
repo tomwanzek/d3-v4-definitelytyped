@@ -12,8 +12,7 @@ module.exports = function (grunt) {
             files: {
                 src: [
                     'tests/**/*.ts',
-                    'src/**/*.d.ts',
-                    '!src/**/typings/**/*.d.ts'
+                    'src/**/*.d.ts'
                 ]
             }
         },

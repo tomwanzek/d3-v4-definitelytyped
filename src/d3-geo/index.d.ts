@@ -3,6 +3,8 @@
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Hugues Stefanski <https://github.com/Ledragon>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
+/// <reference types="geojson" />
+
 export interface GeoRotation {
     (point: [number, number]): [number, number];
     invert(point: [number, number]): [number, number];
