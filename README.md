@@ -387,8 +387,8 @@ _(in alphabetical order)_
 
 #### d3-hsv
 
-- [ ] Definition File
-- [ ] Test File
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-hsv/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-hsv/d3-hsv.ts)
 
 #### d3-sankey
 
