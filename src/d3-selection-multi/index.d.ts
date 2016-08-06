@@ -3,14 +3,12 @@
 // Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-import {Selection, BaseType, ArrayLike} from '../d3-selection';
+import {Selection, BaseType, ArrayLike, ValueFn} from '../d3-selection';
 import {Transition} from '../d3-transition';
 
-// Callback type for selections and transitions
-type ValueFn<Element, Datum, Result> = (this: Element, datum: Datum, index: number, groups: Array<Element> | ArrayLike<Element>) => Result;
 
 // An object mapping attribute (or style or property) names to value accessors
-type ValueMap<Element, Datum> = { [key: string]: number | string | boolean | null | ValueFn<Element, Datum, number | string | boolean | null> };
+export type ValueMap<Element, Datum> = { [key: string]: number | string | boolean | null | ValueFn<Element, Datum, number | string | boolean | null> };
 
 declare module '../d3-selection' {
     export interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {

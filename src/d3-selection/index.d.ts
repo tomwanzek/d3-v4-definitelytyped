@@ -21,7 +21,7 @@ export interface ArrayLike<T> {
     [index: number]: T;
 }
 
-// TODO: Review Use for enter()
+
 export interface EnterElement {
     ownerDocument: Document;
     namespaceURI: string;
@@ -56,6 +56,11 @@ export type CustomEventParameters = {
     detail: any;
 }
 
+/**
+ * Callback type for selections and transitions
+ */
+export type ValueFn<Element, Datum, Result> = (this: Element, datum: Datum, index: number, groups: Array<Element> | ArrayLike<Element>) => Result;
+
 
 /**
  * TransitionLike is a helper interface to represent a quasi-Transition, without specifying the full Transition  interface in this file.
@@ -70,9 +75,9 @@ export type CustomEventParameters = {
 export interface TransitionLike<GElement extends BaseType, Datum> {
     selection(): Selection<GElement, Datum, any, any>;
     on(type: string, listener: null): TransitionLike<GElement, Datum>;
-    on(type: string, listener: (this: GElement, datum: Datum, index: number, group: Array<GElement> | ArrayLike<GElement>) => any): TransitionLike<GElement, Datum>;
+    on(type: string, listener: ValueFn<GElement, Datum, void>): TransitionLike<GElement, Datum>;
     tween(name: string, tweenFn: null): TransitionLike<GElement, Datum>;
-    tween(name: string, tweenFn: (this: GElement, datum?: Datum, i?: number, group?: GElement[] | ArrayLike<GElement>) => ((t: number) => void)): TransitionLike<GElement, Datum>;
+    tween(name: string, tweenFn: ValueFn<GElement, Datum, ((t: number) => void)>): TransitionLike<GElement, Datum>;
 }
 
 
@@ -100,50 +105,49 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 
     select<DescElement extends BaseType>(selector: string): Selection<DescElement, Datum, PElement, PDatum>;
     select<DescElement extends BaseType>(selector: null): Selection<null, undefined, PElement, PDatum>; // _groups are set to empty array, first generic type is set to null by convention
-    select<DescElement extends BaseType>(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => DescElement): Selection<DescElement, Datum, PElement, PDatum>;
+    select<DescElement extends BaseType>(selector: ValueFn<GElement, Datum, DescElement>): Selection<DescElement, Datum, PElement, PDatum>;
 
     selectAll(): Selection<null, undefined, GElement, Datum>; // _groups are set to empty array, first generic type is set to null by convention
     selectAll(selector: null): Selection<null, undefined, GElement, Datum>; // _groups are set to empty array, first generic type is set to null by convention
     selectAll<DescElement extends BaseType, OldDatum>(selector: string): Selection<DescElement, OldDatum, GElement, Datum>;
-    selectAll<DescElement extends BaseType, OldDatum>(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => (Array<DescElement> | ArrayLike<DescElement>)): Selection<DescElement, OldDatum, GElement, Datum>;
+    selectAll<DescElement extends BaseType, OldDatum>(selector: ValueFn<GElement, Datum, Array<DescElement> | ArrayLike<DescElement>>): Selection<DescElement, OldDatum, GElement, Datum>;
 
     // Modifying -------------------------------
 
     attr(name: string): string;
     attr(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
     attr(name: string, value: string | number | boolean): Selection<GElement, Datum, PElement, PDatum>;
-    attr(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => (string | number | boolean)): Selection<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: ValueFn<GElement, Datum, string | number | boolean>): Selection<GElement, Datum, PElement, PDatum>;
 
     classed(name: string): boolean;
     classed(name: string, value: boolean): Selection<GElement, Datum, PElement, PDatum>;
-    classed(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => boolean): Selection<GElement, Datum, PElement, PDatum>;
+    classed(name: string, value: ValueFn<GElement, Datum, boolean>): Selection<GElement, Datum, PElement, PDatum>;
 
     style(name: string): string;
     style(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
     style(name: string, value: string | number | boolean, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => (string | number | boolean), priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: ValueFn<GElement, Datum, string | number | boolean>, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
 
     property(name: string): any;
-    property(name: string, value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => any): Selection<GElement, Datum, PElement, PDatum>;
+    property(name: string, value: ValueFn<GElement, Datum, any>): Selection<GElement, Datum, PElement, PDatum>;
     property(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
     property(name: string, value: any): Selection<GElement, Datum, PElement, PDatum>;
 
     text(): string;
     text(value: string | number | boolean): Selection<GElement, Datum, PElement, PDatum>;
-    text(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => (string | number | boolean)): Selection<GElement, Datum, PElement, PDatum>;
+    text(value: ValueFn<GElement, Datum, string | number | boolean>): Selection<GElement, Datum, PElement, PDatum>;
 
     html(): string;
     html(value: string): Selection<GElement, Datum, PElement, PDatum>;
-    html(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => string): Selection<GElement, Datum, PElement, PDatum>;
+    html(value: ValueFn<GElement, Datum, string>): Selection<GElement, Datum, PElement, PDatum>;
 
     append<ChildElement extends BaseType>(type: string): Selection<ChildElement, Datum, PElement, PDatum>;
-    append<ChildElement extends BaseType>(type: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => ChildElement): Selection<ChildElement, Datum, PElement, PDatum>;
+    append<ChildElement extends BaseType>(type: ValueFn<GElement, Datum, ChildElement>): Selection<ChildElement, Datum, PElement, PDatum>;
 
     insert<ChildElement extends BaseType>(type: string, before: string): Selection<ChildElement, Datum, PElement, PDatum>;
-    insert<ChildElement extends BaseType>(type: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => ChildElement, before: string): Selection<ChildElement, Datum, PElement, PDatum>;
-    insert<ChildElement extends BaseType>(type: string, before: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => BaseType): Selection<ChildElement, Datum, PElement, PDatum>;
-    insert<ChildElement extends BaseType>(type: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => ChildElement,
-        before: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => BaseType): Selection<ChildElement, Datum, PElement, PDatum>;
+    insert<ChildElement extends BaseType>(type: ValueFn<GElement, Datum, ChildElement>, before: string): Selection<ChildElement, Datum, PElement, PDatum>;
+    insert<ChildElement extends BaseType>(type: string, before: ValueFn<GElement, Datum, BaseType>): Selection<ChildElement, Datum, PElement, PDatum>;
+    insert<ChildElement extends BaseType>(type: ValueFn<GElement, Datum, ChildElement>, before: ValueFn<GElement, Datum, BaseType>): Selection<ChildElement, Datum, PElement, PDatum>;
 
     /**
      * Removes the selected elements from the document.
@@ -154,7 +158,7 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     merge(other: Selection<GElement, Datum, PElement, PDatum>): Selection<GElement, Datum, PElement, PDatum>;
 
     filter(selector: string): Selection<GElement, Datum, PElement, PDatum>;
-    filter(selector: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => boolean): Selection<GElement, Datum, PElement, PDatum>;
+    filter(selector: ValueFn<GElement, Datum, boolean>): Selection<GElement, Datum, PElement, PDatum>;
 
 
 
@@ -171,42 +175,33 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
 
     datum(): Datum;
     datum(value: null): Selection<GElement, undefined, PElement, PDatum>;
-    datum<NewDatum>(value: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => NewDatum): Selection<GElement, NewDatum, PElement, PDatum>;
+    datum<NewDatum>(value: ValueFn<GElement, Datum, NewDatum>): Selection<GElement, NewDatum, PElement, PDatum>;
     datum<NewDatum>(value: NewDatum): Selection<GElement, NewDatum, PElement, PDatum>;
 
     data(): Datum[];
-    data<NewDatum>(
-        data: Array<NewDatum>,
-        key?: (this: GElement | PElement, datum?: Datum | NewDatum, index?: number, group?: Array<GElement | PElement> | ArrayLike<GElement | PElement>) => string
-    ): Selection<GElement, NewDatum, PElement, PDatum>;
-    data<NewDatum>(
-        data: (this: PElement, datum?: PDatum, index?: number, group?: Array<PElement> | ArrayLike<PElement>) => Array<NewDatum>,
-        key?: (this: GElement | PElement, datum?: Datum | NewDatum, index?: number, group?: Array<GElement | PElement> | ArrayLike<GElement | PElement>) => string
-    ): Selection<GElement, NewDatum, PElement, PDatum>;
+    data<NewDatum>(data: Array<NewDatum>, key?: ValueFn<GElement | PElement, Datum | NewDatum, string>): Selection<GElement, NewDatum, PElement, PDatum>;
+    data<NewDatum>(data: ValueFn<PElement, PDatum, Array<NewDatum>>, key?: ValueFn<GElement | PElement, Datum | NewDatum, string>): Selection<GElement, NewDatum, PElement, PDatum>;
 
-    // TODO: Enter Selection returns GElements of type EnterNode, which do not meet the minimum interface of BaseType = Element
-    // HACK: Keep enter() selection 'as-if' they  are of type GElement, while overly permissive, this may be of little practical relevance,
-    // given that the normal next step is an .append(...), which would address the matter
     enter(): Selection<EnterElement, Datum, PElement, PDatum>;
 
-    // TODO: Review this: The type Datum on the exit items is actually of the type prior to calling data(...), as by definition, no new data of type NewDatum exists for these
+    // The type Datum on the exit items is actually of the type prior to calling data(...), as by definition, no new data of type NewDatum exists for these
     // elements. Due to the chaining, .data(...).exit(...), however, the definition would imply that the exit group elements have assumed the NewDatum type.
     // This seems to imply the following workaroud: Recast the exit Selection to OldDatum, if needed, or ommit and allow exit group elements to be of type any.
     exit<OldDatum>(): Selection<GElement, OldDatum, PElement, PDatum>;
 
     // Event Handling -------------------
 
-    on(type: string): (this: GElement, datum: Datum, index: number, group: Array<GElement> | ArrayLike<GElement>) => void;
+    on(type: string): ValueFn<GElement, Datum, void>;
     on(type: string, listener: null): Selection<GElement, Datum, PElement, PDatum>;
-    on(type: string, listener: (this: GElement, datum: Datum, index: number, group: Array<GElement> | ArrayLike<GElement>) => void, capture?: boolean): Selection<GElement, Datum, PElement, PDatum>;
+    on(type: string, listener: ValueFn<GElement, Datum, void>, capture?: boolean): Selection<GElement, Datum, PElement, PDatum>;
 
 
     dispatch(type: string, parameters?: CustomEventParameters): Selection<GElement, Datum, PElement, PDatum>;
-    dispatch(type: string, parameters?: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => CustomEventParameters): Selection<GElement, Datum, PElement, PDatum>;
+    dispatch(type: string, parameters?: ValueFn<GElement, Datum, CustomEventParameters>): Selection<GElement, Datum, PElement, PDatum>;
 
     // Control Flow ----------------------
 
-    each(valueFn: (this: GElement, datum?: Datum, index?: number, group?: Array<GElement> | ArrayLike<GElement>) => void): Selection<GElement, Datum, PElement, PDatum>;
+    each(valueFn: ValueFn<GElement, Datum, void>): Selection<GElement, Datum, PElement, PDatum>;
 
     call(func: (selection: Selection<GElement, Datum, PElement, PDatum>, ...args: any[]) => void, ...args: any[]): Selection<GElement, Datum, PElement, PDatum>;
 
