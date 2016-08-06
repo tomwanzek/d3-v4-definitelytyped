@@ -78,7 +78,7 @@ let inverted: [number, number] = rotation.invert([54, 2]);
 // ----------------------------------------------------------------------
 // Spherical Shapes
 // ----------------------------------------------------------------------
-let circleGenerator: d3Geo.GeoCircleGenerator = d3Geo.geoCircle();
+let circleGenerator: d3Geo.GeoCircleGenerator<any, any> = d3Geo.geoCircle();
 let graticuleGenerator: d3Geo.GeoGraticuleGenerator = d3Geo.geoGraticule();
 
 // ----------------------------------------------------------------------
@@ -87,16 +87,17 @@ let graticuleGenerator: d3Geo.GeoGraticuleGenerator = d3Geo.geoGraticule();
 let polygon: GeoJSON.Polygon = circleGenerator();
 // TODO is this correct?
 let centerFct: ((...args: any[]) => [number, number]) | [number, number] = circleGenerator.center();
-let generator1: d3Geo.GeoCircleGenerator = circleGenerator.center(() => [54, 2]);
-let generator2: d3Geo.GeoCircleGenerator = circleGenerator.center([54, 2]);
+let c: [number, number] = [54, 2];
+let generator1: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.center(() => c);
+let generator2: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.center(c);
 // TODO is this correct?
 let radius: ((...args: any[]) => number) | number = circleGenerator.radius();
-let generator3: d3Geo.GeoCircleGenerator = circleGenerator.radius(() => 5);
-let generator4: d3Geo.GeoCircleGenerator = circleGenerator.radius(2);
+let generator3: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.radius(() => 5);
+let generator4: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.radius(2);
 // TODO is this correct?
 let precision: ((...args: any[]) => number) | number = circleGenerator.precision();
-let generator5: d3Geo.GeoCircleGenerator = circleGenerator.precision(() => 5);
-let generator6: d3Geo.GeoCircleGenerator = circleGenerator.precision(2);
+let generator5: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.precision(() => 5);
+let generator6: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.precision(2);
 
 // ----------------------------------------------------------------------
 // GraticuleGenerator interface

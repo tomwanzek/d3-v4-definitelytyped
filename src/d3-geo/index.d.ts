@@ -15,7 +15,8 @@ export interface GeoCircleGenerator<This, Datum> {
     (this: This, d?: Datum, ...args: any[]): GeoJSON.Polygon;
     center(): ((this: This, d: Datum, ...args: any[]) => [number, number]);
     center(center: [number, number]): this;
-    center(center: ((this: This, d: Datum, ...args: any[]) => [number, number])): this;
+    center(center: ((this: This, d?: Datum, ...args: any[]) => [number, number])): this;
+
     radius(): ((this: This, d: Datum, ...args: any[]) => number);
     radius(radius: number): this;
     radius(radius: ((this: This, d: Datum, ...args: any[]) => number)): this;
@@ -141,6 +142,7 @@ export interface GeoContext {
 export function geoArea<FeatureType extends GeoJSON.GeometryObject>(feature: GeoJSON.Feature<FeatureType>): number;
 export function geoArea<FeatureType extends GeoJSON.GeometryObject>(feature: GeoJSON.FeatureCollection<FeatureType>): number;
 export function geoArea(feature: GeoJSON.GeometryObject): number;
+export function geoArea(feature: GeoJSON.GeometryCollection): number;
 export function geoArea(feature: GeoJSON.GeometryCollection): number;
 /**Returns the spherical bounding box for the specified GeoJSON feature. The bounding box is represented by a two-dimensional array: [[left, bottom], [right, top]], where left is the minimum longitude, bottom is the minimum latitude, right is maximum longitude, and top is the maximum latitude. All coordinates are given in degrees. */
 export function geoBounds<FeatureType extends GeoJSON.GeometryObject>(feature: GeoJSON.Feature<FeatureType>): [[number, number], [number, number]];
