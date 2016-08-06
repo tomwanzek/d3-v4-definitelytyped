@@ -209,7 +209,7 @@ export function scaleUtc<Range, Output>(): ScaleTime<Range, Output>;
 
 
 export interface ScaleSequential<Output> {
-    (value: number): Output;
+    (value: number | { valueOf(): number }): Output;
     domain(): [number, number];
     domain(domain: [number | { valueOf(): number }, number | { valueOf(): number }]): ScaleSequential<Output>;
     clamp(): boolean;
