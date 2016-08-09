@@ -291,7 +291,7 @@ export interface SymbolType {
 
 
 export interface Symbol<This, Datum> {
-    (this: This, d: Datum, ...args: any[]): undefined | string;
+    (this: This, d?: Datum, ...args: any[]): undefined | string;
     size(): (this: This, d: Datum, ...args: any[]) => number;
     size(size: number): this;
     size(size: (this: This, d: Datum, ...args: any[]) => number): this;
