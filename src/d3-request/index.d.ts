@@ -1,6 +1,6 @@
 // Type definitions for D3JS d3-request module 1.0.1
 // Project: https://github.com/d3/d3-request/
-// Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Hugues Stefanski <https://github.com/Ledragon>, Tom Wanzek <https://github.com/tomwanzek> 
+// Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Hugues Stefanski <https://github.com/Ledragon>, Tom Wanzek <https://github.com/tomwanzek>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 import { DSVParsedArray, DSVRowString, DSVRowAny } from '../d3-dsv';
@@ -57,12 +57,12 @@ export interface Request {
 }
 
 export interface DsvRequest extends Request {
-    row<ParsedRow extends DSVRowAny>(value: (rawRow: DSVRowString, index?: number, columns?: Array<string>) => ParsedRow): DsvRequest;
+    row<ParsedRow extends DSVRowAny>(value: (rawRow: DSVRowString, index: number, columns: Array<string>) => ParsedRow): DsvRequest;
 }
 
 export function csv(url: string): DsvRequest;
 export function csv(url: string, callback: (this: DsvRequest, error: any, d: DSVParsedArray<DSVRowString>) => void): DsvRequest;
-export function csv<ParsedRow extends DSVRowAny>(url: string, row: (rawRow: DSVRowString, index?: number, columns?: Array<string>) => ParsedRow, callback: (this: DsvRequest, error: any, d: DSVParsedArray<ParsedRow>) => void): DsvRequest;
+export function csv<ParsedRow extends DSVRowAny>(url: string, row: (rawRow: DSVRowString, index: number, columns: Array<string>) => ParsedRow, callback: (this: DsvRequest, error: any, d: DSVParsedArray<ParsedRow>) => void): DsvRequest;
 
 export function html(url: string): Request;
 export function html(url: string, callback: (this: Request, error: any, d: DocumentFragment) => void): Request;
@@ -78,7 +78,7 @@ export function text(url: string, callback: (this: Request, error: any, d: strin
 
 export function tsv(url: string): DsvRequest;
 export function tsv(url: string, callback: (this: DsvRequest, error: any, d: DSVParsedArray<DSVRowString>) => void): DsvRequest;
-export function tsv<ParsedRow extends DSVRowAny>(url: string, row: (rawRow: DSVRowString, index?: number, columns?: Array<string>) => ParsedRow, callback: (this: DsvRequest, error: any, d: DSVParsedArray<ParsedRow>) => void): DsvRequest;
+export function tsv<ParsedRow extends DSVRowAny>(url: string, row: (rawRow: DSVRowString, index: number, columns: Array<string>) => ParsedRow, callback: (this: DsvRequest, error: any, d: DSVParsedArray<ParsedRow>) => void): DsvRequest;
 
 export function xml(url: string): Request;
 export function xml(url: string, callback: (this: Request, error: any, d: any) => void): Request;

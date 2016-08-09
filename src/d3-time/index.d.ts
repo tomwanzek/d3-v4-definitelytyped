@@ -14,7 +14,7 @@ export interface TimeInterval {
     ceil(date: Date): Date;
     offset(date: Date, step?: number): Date;
     range(start: Date, stop: Date, step?: number): Date[];
-    filter(test: (date: Date) => boolean): TimeInterval;
+    filter(test: (date: Date) => boolean): this;
 }
 
 export interface CountableTimeInterval extends TimeInterval {

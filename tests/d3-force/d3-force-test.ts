@@ -511,11 +511,11 @@ nodeSimulation = nodeSimulation.on('tick', null);
 
 // restart() --------------------------------------------------------------------------
 
-nodeLinkSimulation.restart();
+nodeLinkSimulation = nodeLinkSimulation.restart();
 
 // stop() -----------------------------------------------------------------------------
 
-nodeLinkSimulation.stop();
+nodeLinkSimulation = nodeLinkSimulation.stop();
 
 // tick() -----------------------------------------------------------------------------
 

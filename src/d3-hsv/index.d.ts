@@ -3,14 +3,14 @@
 // Definitions by: Yuri Feldman <https://github.com/arrayjam>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-import {Color, RGBColor, ColorSpaceObject} from '../d3-color';
+import {Color, RGBColor, ColorSpaceObject, ColorCommonInstance} from '../d3-color';
 
 type ColorSpaceObjectWithHSV = ColorSpaceObject | HSVColor;
 
 export interface HSVColorFactory extends Function {
     (h: number, s: number, v: number, opacity?: number): HSVColor;
     (cssColorSpecifier: string): HSVColor;
-    (color: ColorSpaceObjectWithHSV): HSVColor;
+    (color: HSVColor | ColorSpaceObject | ColorCommonInstance): HSVColor;
 }
 
 export interface HSVColor extends Color {
@@ -18,8 +18,8 @@ export interface HSVColor extends Color {
     s: number;
     v: number;
     opacity: number;
-    brighter(k?: number): HSVColor;
-    darker(k?: number): HSVColor;
+    brighter(k?: number): this;
+    darker(k?: number): this;
     rgb(): RGBColor;
 }
 
