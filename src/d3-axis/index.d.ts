@@ -73,7 +73,7 @@ export interface Axis<Domain> {
      *
      * @param scale  The scale to be used for axis generation
      */
-    scale(scale: AxisScale<Domain>): Axis<Domain>;
+    scale(scale: AxisScale<Domain>): this;
 
     /**
      * Sets the arguments that will be passed to scale.ticks and scale.tickFormat when the axis is rendered, and returns the axis generator.
@@ -81,7 +81,7 @@ export interface Axis<Domain> {
      * @param count Number of ticks that should be rendered
      * @param specifier An optional format specifier to customize how the tick values are formatted.
      */
-    ticks(count: number, specifier?: string): Axis<Domain>;
+    ticks(count: number, specifier?: string): this;
 
     /**
      * Sets the arguments that will be passed to scale.ticks and scale.tickFormat when the axis is rendered, and returns the axis generator.
@@ -91,12 +91,12 @@ export interface Axis<Domain> {
      * in d3-time. E.g. as obtained by passing in d3.timeMinute.every(15).
      * @param specifier An optional format specifier to customize how the tick values are formatted.
      */
-    ticks(interval: AxisTimeInterval, specifier?: string): Axis<Domain>;
+    ticks(interval: AxisTimeInterval, specifier?: string): this;
 
     /**
      * Sets the arguments that will be passed to scale.ticks and scale.tickFormat when the axis is rendered, and returns the axis generator.
      */
-    ticks(arg0: any, ...args: any[]): Axis<Domain>;
+    ticks(arg0: any, ...args: any[]): this;
 
     /**
      * Get an array containing the currently set arguments to be passed into scale.ticks and scale.tickFormat.
@@ -108,7 +108,7 @@ export interface Axis<Domain> {
      *
      * @param args An array containing a single element representing the count, i.e. number of ticks to be rendered.
      */
-    tickArguments(args: [number]): Axis<Domain>;
+    tickArguments(args: [number]): this;
 
     /**
      * Sets the arguments that will be passed to scale.ticks and scale.tickFormat when the axis is rendered, and returns the axis generator.
@@ -116,7 +116,7 @@ export interface Axis<Domain> {
      * @param args An array containing two elements. The first element represents the count, i.e. number of ticks to be rendered. The second
      * element is a string representing the format specifier to customize how the tick values are formatted.
      */
-    tickArguments(args: [number, string]): Axis<Domain>;
+    tickArguments(args: [number, string]): this;
 
     /**
      * Sets the arguments that will be passed to scale.ticks and scale.tickFormat when the axis is rendered, and returns the axis generator.
@@ -125,7 +125,7 @@ export interface Axis<Domain> {
      * @param args An array containing a single element representing a time interval used to generate date-based ticks.
      * This is typically a TimeInterval/CountableTimeInterval as defined in d3-time. E.g. as obtained by passing in d3.timeMinute.every(15).
      */
-    tickArguments(args: [AxisTimeInterval]): Axis<Domain>;
+    tickArguments(args: [AxisTimeInterval]): this;
 
     /**
      * Sets the arguments that will be passed to scale.ticks and scale.tickFormat when the axis is rendered, and returns the axis generator.
@@ -135,14 +135,14 @@ export interface Axis<Domain> {
      * This is typically a TimeInterval/CountableTimeInterval as defined in d3-time. E.g. as obtained by passing in d3.timeMinute.every(15).
      * The second element is a string representing the format specifier to customize how the tick values are formatted.
      */
-    tickArguments(args: [AxisTimeInterval, string]): Axis<Domain>;
+    tickArguments(args: [AxisTimeInterval, string]): this;
 
     /**
     * Sets the arguments that will be passed to scale.ticks and scale.tickFormat when the axis is rendered, and returns the axis generator.
     *
     * @param args An array with arguments suitable for the scale to be used for tick generation
     */
-    tickArguments(args: any[]): Axis<Domain>;
+    tickArguments(args: any[]): this;
 
     /**
      * Returns the current tick values, which defaults to null.
@@ -157,14 +157,14 @@ export interface Axis<Domain> {
      *
      * @param values An array with values from the Domain of the scale underlying the axis.
      */
-    tickValues(values: Domain[]): Axis<Domain>;
+    tickValues(values: Domain[]): this;
 
     /**
      * Clears any previously-set explicit tick values and reverts back to the scale’s tick generator.
      *
      * @param values null
      */
-    tickValues(values: null): Axis<Domain>;
+    tickValues(values: null): this;
 
 
     /**
@@ -178,7 +178,7 @@ export interface Axis<Domain> {
      * @param format A function mapping a value from the axis Domain to a formatted string
      * for display purposes.
      */
-    tickFormat(format: (domainValue: Domain) => string): Axis<Domain>;
+    tickFormat(format: (domainValue: Domain) => string): this;
 
     /**
      * Reset the tick format function. A null format indicates that the scale’s
@@ -188,7 +188,7 @@ export interface Axis<Domain> {
      *
      * @param format null
      */
-    tickFormat(format: null): Axis<Domain>;
+    tickFormat(format: null): this;
 
     /**
      * Get the current inner tick size, which defaults to 6.
@@ -199,7 +199,7 @@ export interface Axis<Domain> {
      *
      * @param size Tick size in pixels (Default is 6).
      */
-    tickSize(size: number): Axis<Domain>;
+    tickSize(size: number): this;
 
     /**
      * Get the current inner tick size, which defaults to 6.
@@ -215,7 +215,7 @@ export interface Axis<Domain> {
      *
      * @param size Tick size in pixels (Default is 6).
      */
-    tickSizeInner(size: number): Axis<Domain>;
+    tickSizeInner(size: number): this;
 
     /**
      * Get the current outer tick size, which defaults to 6.
@@ -239,7 +239,7 @@ export interface Axis<Domain> {
      *
      * @param size Tick size in pixels (Default is 6).
      */
-    tickSizeOuter(size: number): Axis<Domain>;
+    tickSizeOuter(size: number): this;
 
     /**
      * Get the current padding, which defaults to 3.
@@ -251,7 +251,7 @@ export interface Axis<Domain> {
      *
      * @param padding Padding in pixels  (Default is 3).
      */
-    tickPadding(padding: number): Axis<Domain>;
+    tickPadding(padding: number): this;
 
 }
 

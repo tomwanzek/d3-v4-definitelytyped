@@ -9,8 +9,8 @@ export interface Dispatch<T extends EventTarget> {
     copy(): Dispatch<T>;
 
     on(typenames: string): (this: T, ...args: any[]) => void;
-    on(typenames: string, callback: null): Dispatch<T>;
-    on(typenames: string, callback: (this: T, ...args: any[]) => void): Dispatch<T>;
+    on(typenames: string, callback: null): this;
+    on(typenames: string, callback: (this: T, ...args: any[]) => void): this;
 }
 
 export function dispatch<T extends EventTarget>(...types: string[]): Dispatch<T>;
