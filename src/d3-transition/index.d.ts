@@ -40,42 +40,42 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
 
     // Modifying -------------------------------
 
-    attr(name: string, value: null): Transition<GElement, Datum, PElement, PDatum>;
-    attr(name: string, value: string | number | boolean): Transition<GElement, Datum, PElement, PDatum>;
-    attr(name: string, value: ValueFn<GElement, Datum, string | number | boolean>): Transition<GElement, Datum, PElement, PDatum>;
-    attrTween(name: string, tweenFn: ValueFn<GElement, Datum, (t: number) => (string | number | boolean)>): Transition<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: null): this;
+    attr(name: string, value: string | number | boolean): this;
+    attr(name: string, value: ValueFn<GElement, Datum, string | number | boolean>): this;
+    attrTween(name: string, tweenFn: ValueFn<GElement, Datum, (t: number) => (string | number | boolean)>): this;
 
-    style(name: string, value: null): Transition<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: string | number | boolean, priority?: null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: ValueFn<GElement, Datum, string | number | boolean>, priority?: null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
-    styleTween(name: string, tweenFn: ValueFn<GElement, Datum, (t: number) => (string | number | boolean)>, priority?: null | 'important'): Transition<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: null): this;
+    style(name: string, value: string | number | boolean, priority?: null | 'important'): this;
+    style(name: string, value: ValueFn<GElement, Datum, string | number | boolean>, priority?: null | 'important'): this;
+    styleTween(name: string, tweenFn: ValueFn<GElement, Datum, (t: number) => (string | number | boolean)>, priority?: null | 'important'): this;
 
-    text(value: null): Transition<GElement, Datum, PElement, PDatum>;
-    text(value: string | number | boolean): Transition<GElement, Datum, PElement, PDatum>;
-    text(value: ValueFn<GElement, Datum, string | number | boolean>): Transition<GElement, Datum, PElement, PDatum>;
+    text(value: null): this;
+    text(value: string | number | boolean): this;
+    text(value: ValueFn<GElement, Datum, string | number | boolean>): this;
 
-    tween(name: string): (this: GElement, datum?: Datum, i?: number, group?: GElement[] | ArrayLike<GElement>) => ((t: number) => void);
-    tween(name: string, tweenFn: null): Transition<GElement, Datum, PElement, PDatum>;
-    tween(name: string, tweenFn: ValueFn<GElement, Datum, (t: number) => void>): Transition<GElement, Datum, PElement, PDatum>;
+    tween(name: string): ValueFn<GElement, Datum, (t: number) => void>;
+    tween(name: string, tweenFn: null): this;
+    tween(name: string, tweenFn: ValueFn<GElement, Datum, (t: number) => void>): this;
 
-    remove(): Transition<GElement, Datum, PElement, PDatum>;
+    remove(): this;
 
     merge(other: Transition<GElement, Datum, PElement, PDatum>): Transition<GElement, Datum, PElement, PDatum>;
 
-    filter(filter: string): Transition<GElement, Datum, PElement, PDatum>;
-    filter(filter: ValueFn<GElement, Datum, boolean>): Transition<GElement, Datum, PElement, PDatum>;
+    filter(filter: string): this;
+    filter(filter: ValueFn<GElement, Datum, boolean>): this;
 
     // Event Handling -------------------
 
     on(type: string): ValueFn<GElement, Datum, void>;
-    on(type: string, listener: null): Transition<GElement, Datum, PElement, PDatum>;
-    on(type: string, listener: ValueFn<GElement, Datum, void>): Transition<GElement, Datum, PElement, PDatum>;
+    on(type: string, listener: null): this;
+    on(type: string, listener: ValueFn<GElement, Datum, void>): this;
 
     // Control Flow ----------------------
 
-    each(valueFn: ValueFn<GElement, Datum, void>): Transition<GElement, Datum, PElement, PDatum>;
+    each(valueFn: ValueFn<GElement, Datum, void>): this;
 
-    call(func: (transition: Transition<GElement, Datum, PElement, PDatum>, ...args: any[]) => any, ...args: any[]): Transition<GElement, Datum, PElement, PDatum>;
+    call(func: (transition: Transition<GElement, Datum, PElement, PDatum>, ...args: any[]) => any, ...args: any[]): this;
 
     empty(): boolean;
 
@@ -87,13 +87,13 @@ export interface Transition<GElement extends BaseType, Datum, PElement extends B
     // Transition Configuration ----------------------
 
     delay(): number;
-    delay(milliseconds: number): Transition<GElement, Datum, PElement, PDatum>;
+    delay(milliseconds: number): this;
 
     duration(): number;
-    duration(milliseconds: number): Transition<GElement, Datum, PElement, PDatum>;
+    duration(milliseconds: number): this;
 
     ease(): (normalizedTime: number) => number;
-    ease(easingFn: (normalizedTime: number) => number): Transition<GElement, Datum, PElement, PDatum>;
+    ease(easingFn: (normalizedTime: number) => number): this;
 }
 
 

@@ -115,31 +115,31 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     // Modifying -------------------------------
 
     attr(name: string): string;
-    attr(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
-    attr(name: string, value: string | number | boolean): Selection<GElement, Datum, PElement, PDatum>;
-    attr(name: string, value: ValueFn<GElement, Datum, string | number | boolean>): Selection<GElement, Datum, PElement, PDatum>;
+    attr(name: string, value: null): this;
+    attr(name: string, value: string | number | boolean): this;
+    attr(name: string, value: ValueFn<GElement, Datum, string | number | boolean>): this;
 
     classed(name: string): boolean;
-    classed(name: string, value: boolean): Selection<GElement, Datum, PElement, PDatum>;
-    classed(name: string, value: ValueFn<GElement, Datum, boolean>): Selection<GElement, Datum, PElement, PDatum>;
+    classed(name: string, value: boolean): this;
+    classed(name: string, value: ValueFn<GElement, Datum, boolean>): this;
 
     style(name: string): string;
-    style(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: string | number | boolean, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
-    style(name: string, value: ValueFn<GElement, Datum, string | number | boolean>, priority?: null | 'important'): Selection<GElement, Datum, PElement, PDatum>;
+    style(name: string, value: null): this;
+    style(name: string, value: string | number | boolean, priority?: null | 'important'): this;
+    style(name: string, value: ValueFn<GElement, Datum, string | number | boolean>, priority?: null | 'important'): this;
 
     property(name: string): any;
-    property(name: string, value: ValueFn<GElement, Datum, any>): Selection<GElement, Datum, PElement, PDatum>;
-    property(name: string, value: null): Selection<GElement, Datum, PElement, PDatum>;
-    property(name: string, value: any): Selection<GElement, Datum, PElement, PDatum>;
+    property(name: string, value: ValueFn<GElement, Datum, any>): this;
+    property(name: string, value: null): this;
+    property(name: string, value: any): this;
 
     text(): string;
-    text(value: string | number | boolean): Selection<GElement, Datum, PElement, PDatum>;
-    text(value: ValueFn<GElement, Datum, string | number | boolean>): Selection<GElement, Datum, PElement, PDatum>;
+    text(value: string | number | boolean): this;
+    text(value: ValueFn<GElement, Datum, string | number | boolean>): this;
 
     html(): string;
-    html(value: string): Selection<GElement, Datum, PElement, PDatum>;
-    html(value: ValueFn<GElement, Datum, string>): Selection<GElement, Datum, PElement, PDatum>;
+    html(value: string): this;
+    html(value: ValueFn<GElement, Datum, string>): this;
 
     append<ChildElement extends BaseType>(type: string): Selection<ChildElement, Datum, PElement, PDatum>;
     append<ChildElement extends BaseType>(type: ValueFn<GElement, Datum, ChildElement>): Selection<ChildElement, Datum, PElement, PDatum>;
@@ -153,22 +153,22 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
      * Removes the selected elements from the document.
      * Returns this selection (the removed elements) which are now detached from the DOM.
      */
-    remove(): Selection<GElement, Datum, PElement, PDatum>;
+    remove(): this;
 
     merge(other: Selection<GElement, Datum, PElement, PDatum>): Selection<GElement, Datum, PElement, PDatum>;
 
-    filter(selector: string): Selection<GElement, Datum, PElement, PDatum>;
-    filter(selector: ValueFn<GElement, Datum, boolean>): Selection<GElement, Datum, PElement, PDatum>;
+    filter(selector: string): this;
+    filter(selector: ValueFn<GElement, Datum, boolean>): this;
 
 
 
-    sort(comparator?: (a: Datum, b: Datum) => number): Selection<GElement, Datum, PElement, PDatum>;
+    sort(comparator?: (a: Datum, b: Datum) => number): this;
 
-    order(): Selection<GElement, Datum, PElement, PDatum>;
+    order(): this;
 
-    raise(): Selection<GElement, Datum, PElement, PDatum>;
+    raise(): this;
 
-    lower(): Selection<GElement, Datum, PElement, PDatum>;
+    lower(): this;
 
 
     // Data Join ---------------------------------
@@ -192,18 +192,18 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     // Event Handling -------------------
 
     on(type: string): ValueFn<GElement, Datum, void>;
-    on(type: string, listener: null): Selection<GElement, Datum, PElement, PDatum>;
-    on(type: string, listener: ValueFn<GElement, Datum, void>, capture?: boolean): Selection<GElement, Datum, PElement, PDatum>;
+    on(type: string, listener: null): this;
+    on(type: string, listener: ValueFn<GElement, Datum, void>, capture?: boolean): this;
 
 
-    dispatch(type: string, parameters?: CustomEventParameters): Selection<GElement, Datum, PElement, PDatum>;
-    dispatch(type: string, parameters?: ValueFn<GElement, Datum, CustomEventParameters>): Selection<GElement, Datum, PElement, PDatum>;
+    dispatch(type: string, parameters?: CustomEventParameters): this;
+    dispatch(type: string, parameters?: ValueFn<GElement, Datum, CustomEventParameters>): this;
 
     // Control Flow ----------------------
 
-    each(valueFn: ValueFn<GElement, Datum, void>): Selection<GElement, Datum, PElement, PDatum>;
+    each(valueFn: ValueFn<GElement, Datum, void>): this;
 
-    call(func: (selection: Selection<GElement, Datum, PElement, PDatum>, ...args: any[]) => void, ...args: any[]): Selection<GElement, Datum, PElement, PDatum>;
+    call(func: (selection: Selection<GElement, Datum, PElement, PDatum>, ...args: any[]) => void, ...args: any[]): this;
 
     empty(): boolean;
 

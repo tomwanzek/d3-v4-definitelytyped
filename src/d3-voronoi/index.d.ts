@@ -53,13 +53,13 @@ export interface VoronoiLink<T> {
 export interface VoronoiLayout<T> {
     (data: Array<T>): VoronoiDiagram<T>;
     x(): (d: T) => number;
-    x(x: (d: T) => number): VoronoiLayout<T>;
+    x(x: (d: T) => number): this;
     y(): (d: T) => number;
-    y(y: (d: T) => number): VoronoiLayout<T>;
+    y(y: (d: T) => number): this;
     extent(): [[number, number], [number, number]] | null;
-    extent(extent: [[number, number], [number, number]]): VoronoiLayout<T>;
+    extent(extent: [[number, number], [number, number]]): this;
     size(): [number, number] | null;
-    size(size: [number, number]): VoronoiLayout<T>;
+    size(size: [number, number]): this;
     polygons(data: Array<T>): Array<VoronoiPolygon<T>>;
     triangles(data: Array<T>): Array<VoronoiTriangle<T>>;
     links(data: Array<T>): Array<VoronoiLink<T>>;
