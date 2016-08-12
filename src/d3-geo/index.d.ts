@@ -14,7 +14,7 @@
  * beyond the GeoJSON geometries.
  */
 export interface GeoSphere {
-    type: 'Sphere'
+    type: 'Sphere';
 }
 
 /**
