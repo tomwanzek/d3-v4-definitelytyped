@@ -62,11 +62,12 @@ export interface GeoCircleGenerator<This, Datum> {
     (this: This, d?: Datum, ...args: any[]): GeoJSON.Polygon;
     center(): ((this: This, d: Datum, ...args: any[]) => [number, number]);
     center(center: [number, number]): this;
-    center(center: ((this: This, d?: Datum, ...args: any[]) => [number, number])): this;
+    center(center: ((this: This, d: Datum, ...args: any[]) => [number, number])): this;
 
     radius(): ((this: This, d: Datum, ...args: any[]) => number);
     radius(radius: number): this;
     radius(radius: ((this: This, d: Datum, ...args: any[]) => number)): this;
+
     precision(): ((this: This, d: Datum, ...args: any[]) => number);
     precision(precision: number): this;
     precision(precision: (this: This, d: Datum, ...args: any[]) => number): this;

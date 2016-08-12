@@ -72,53 +72,143 @@ let rotation2: d3Geo.GeoRotation = d3Geo.geoRotation([90, 45, 27.5]);
 // ----------------------------------------------------------------------
 // Rotation interface
 // ----------------------------------------------------------------------
+
 let point: [number, number] = rotation([54, 2]);
 let inverted: [number, number] = rotation.invert([54, 2]);
 
 // ----------------------------------------------------------------------
-// Spherical Shapes
+// Spherical Shapes - geoCircle
 // ----------------------------------------------------------------------
-let circleGenerator: d3Geo.GeoCircleGenerator<any, any> = d3Geo.geoCircle();
+
+
+
+
+// Create GeoCircleGenerator ============================================
+
+// simple use case
+let circleGeneratorSimple: d3Geo.GeoCircleGenerator<any, any> = d3Geo.geoCircle();
+
+// complex use as part of object
+class Circulator {
+
+    constructor(radius: number, precision: number) {
+        this.r = radius;
+        this.p = precision;
+        this.circleGenerator = d3Geo.geoCircle<Circulator, [number, number] | undefined>()
+            .radius(function (datum) {
+                let t: Circulator = this;
+                let d: [number, number] | undefined = datum;
+                return this.r;
+            })
+            .precision(function (datum) {
+                let t: Circulator = this;
+                let d: [number, number] | undefined = datum;
+                return this.p;
+            })
+            .center(function (datum) {
+                let t: Circulator = this;
+                let d: [number, number] | undefined = datum;
+                return d ? d : [0, 0];
+            });
+    }
+    private r: number;
+    private p: number;
+    private circleGenerator: d3Geo.GeoCircleGenerator<Circulator, [number, number]>;
+
+    public getCirclePolygon(center?: [number, number]): GeoJSON.Polygon {
+        if (center && center.length === 2 && typeof center[0] === 'number' && typeof center[1] === 'number') {
+            return this.circleGenerator(center);
+        } else {
+            return this.circleGenerator();
+        }
+    }
+}
+
+let circulator = new Circulator(50, 2);
+
+// Configure CircleGenerator ============================================
+
+// center(...) ----------------------------------------------------------
+
+let centerFctSimple: ((this: any, d: any, ...args: any[]) => [number, number]) = circleGeneratorSimple.center();
+
+let c: [number, number] = [54, 2];
+
+circleGeneratorSimple = circleGeneratorSimple.center(() => c);
+circleGeneratorSimple = circleGeneratorSimple.center(c);
+
+// radius(...) -----------------------------------------------------------
+
+let radius: ((...args: any[]) => number) = circleGeneratorSimple.radius();
+circleGeneratorSimple = circleGeneratorSimple.radius(() => 5);
+circleGeneratorSimple = circleGeneratorSimple.radius(2);
+
+// precision(...) --------------------------------------------------------
+
+let precision: ((...args: any[]) => number) = circleGeneratorSimple.precision();
+circleGeneratorSimple = circleGeneratorSimple.precision(() => 5);
+circleGeneratorSimple = circleGeneratorSimple.precision(2);
+
+// Use CircleGenerator ====================================================
+
+// use simple geoCircleGenerator
+let circlePolygon: GeoJSON.Polygon = circleGeneratorSimple();
+
+// use encapsulated geoCircleGenerator
+circlePolygon = circulator.getCirclePolygon([5, 5]);
+circlePolygon = circulator.getCirclePolygon();
+
+
+// ----------------------------------------------------------------------
+// Spherical Shapes - geoGraticule
+// ----------------------------------------------------------------------
+
+// Create GeoGraticuleGenerator =========================================
+
 let graticuleGenerator: d3Geo.GeoGraticuleGenerator = d3Geo.geoGraticule();
 
-// ----------------------------------------------------------------------
-// CircleGenerator interface
-// ----------------------------------------------------------------------
-let polygon: GeoJSON.Polygon = circleGenerator();
-// TODO is this correct?
-let centerFct: ((...args: any[]) => [number, number]) | [number, number] = circleGenerator.center();
-let c: [number, number] = [54, 2];
-let generator1: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.center(() => c);
-let generator2: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.center(c);
-// TODO is this correct?
-let radius: ((...args: any[]) => number) | number = circleGenerator.radius();
-let generator3: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.radius(() => 5);
-let generator4: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.radius(2);
-// TODO is this correct?
-let precision: ((...args: any[]) => number) | number = circleGenerator.precision();
-let generator5: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.precision(() => 5);
-let generator6: d3Geo.GeoCircleGenerator<any, any> = circleGenerator.precision(2);
+// Configure GeoGraticuleGenerator =======================================
 
-// ----------------------------------------------------------------------
-// GraticuleGenerator interface
-// ----------------------------------------------------------------------
+// extent(...) -----------------------------------------------------------
+
+let extent: [[number, number], [number, number]] = graticuleGenerator.extent();
+graticuleGenerator = graticuleGenerator.extent([[-180, -80], [180, 80]]);
+
+// extentMajor(...) ---------------------------------------------------------
+
+let extentMajor: [[number, number], [number, number]] = graticuleGenerator.extentMajor();
+graticuleGenerator = graticuleGenerator.extentMajor([[-180, -80], [180, 80]]);
+
+// extentMinor(...) ---------------------------------------------------------
+
+let extentMinor: [[number, number], [number, number]] = graticuleGenerator.extentMinor();
+graticuleGenerator = graticuleGenerator.extentMinor([[-180, -80], [180, 80]]);
+
+// step(...) ----------------------------------------------------------------
+
+let step: [number, number] = graticuleGenerator.step();
+graticuleGenerator = graticuleGenerator.step([10, 10]);
+
+// stepMajor(...) -----------------------------------------------------------
+
+let stepMajor: [number, number] = graticuleGenerator.stepMajor();
+graticuleGenerator = graticuleGenerator.stepMajor([10, 10]);
+
+// stepMinor(...) ------------------------------------------------------------
+
+let stepMinor: [number, number] = graticuleGenerator.stepMinor();
+graticuleGenerator = graticuleGenerator.stepMinor([10, 10]);
+
+// precision(...) -------------------------------------------------------------
+
+let precision1: number = graticuleGenerator.precision();
+graticuleGenerator = graticuleGenerator.precision(5);
+
+// Use GeoGraticuleGenerator ============================================
+
 let multiString: GeoJSON.MultiLineString = graticuleGenerator();
 let lines: GeoJSON.LineString[] = graticuleGenerator.lines();
 let polygon2: GeoJSON.Polygon = graticuleGenerator.outline();
-let extent: [[number, number], [number, number]] = graticuleGenerator.extent();
-let generator11: d3Geo.GeoGraticuleGenerator = graticuleGenerator.extent([[-180, -80], [180, 80]]);
-let extentMajor: [[number, number], [number, number]] = graticuleGenerator.extentMajor();
-let generator12: d3Geo.GeoGraticuleGenerator = graticuleGenerator.extentMajor([[-180, -80], [180, 80]]);
-let extentMinor: [[number, number], [number, number]] = graticuleGenerator.extentMinor();
-let generator13: d3Geo.GeoGraticuleGenerator = graticuleGenerator.extentMinor([[-180, -80], [180, 80]]);
-let step: [number, number] = graticuleGenerator.step();
-let generator14: d3Geo.GeoGraticuleGenerator = graticuleGenerator.step([10, 10]);
-let stepMajor: [number, number] = graticuleGenerator.stepMajor();
-let generator15: d3Geo.GeoGraticuleGenerator = graticuleGenerator.stepMajor([10, 10]);
-let stepMinor: [number, number] = graticuleGenerator.stepMinor();
-let generator16: d3Geo.GeoGraticuleGenerator = graticuleGenerator.stepMinor([10, 10]);
-let precision1: number = graticuleGenerator.precision();
-let generator17: d3Geo.GeoGraticuleGenerator = graticuleGenerator.precision(5);
 
 // ----------------------------------------------------------------------
 // Projections
