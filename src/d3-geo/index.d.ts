@@ -5,38 +5,83 @@
 
 /// <reference types="geojson" />
 
+// ----------------------------------------------------------------------
+// Shared Interfaces and Types
+// ----------------------------------------------------------------------
+
+/**
+ * A basic geometry for a sphere, which is supported by d3-geo
+ * beyond the GeoJSON geometries.
+ */
+export interface GeoSphere {
+    type: 'Sphere'
+}
+
+/**
+ * Type Alias for for GeoJSON Geometry Object and GeoSphere additional
+ * geometry supported by d3-geo
+ */
+export type GeoGeometryObjects = GeoJSON.GeometryObject | GeoSphere;
+
+/**
+ * A GeoJSON-style GeometryCollection which supports GeoJSON geometry objects
+ * and additionally GeoSphere
+ */
+export interface ExtendedGeometryCollection<GeometryType extends GeoGeometryObjects> {
+    type: string;
+    bbox?: number[];
+    crs?: GeoJSON.CoordinateReferenceSystem;
+    geometries: GeometryType[];
+}
+
+/**
+ * A GeoJSON-style Feature which support features built on GeoJSON GeometryObjects
+ * or GeoSphere
+ */
+export interface ExtendedFeature<GeometryType extends GeoGeometryObjects, Properties> extends GeoJSON.GeoJsonObject {
+    geometry: GeometryType;
+    properties: Properties;
+    id?: string;
+}
+
+/**
+ * A GeoJSON-style FeatureCollection which supports GeoJSON features
+ * and features built on GeoSphere
+ */
+export interface ExtendedFeatureCollection<FeatureType extends ExtendedFeature<GeoGeometryObjects, any>> extends GeoJSON.GeoJsonObject {
+    features: FeatureType[];
+}
 
 // ----------------------------------------------------------------------
 // Spherical Math
 // ----------------------------------------------------------------------
 
 /**Returns the spherical area of the specified GeoJSON feature in steradians. */
-export function geoArea<FeatureType extends GeoJSON.GeometryObject>(feature: GeoJSON.Feature<FeatureType>): number;
-export function geoArea<FeatureType extends GeoJSON.GeometryObject>(feature: GeoJSON.FeatureCollection<FeatureType>): number;
-export function geoArea(feature: GeoJSON.GeometryObject): number;
-export function geoArea(feature: GeoJSON.GeometryCollection): number;
-export function geoArea(feature: GeoJSON.GeometryCollection): number;
+export function geoArea(feature: ExtendedFeature<GeoGeometryObjects, any>): number;
+export function geoArea(feature: ExtendedFeatureCollection<ExtendedFeature<GeoGeometryObjects, any>>): number;
+export function geoArea(feature: GeoGeometryObjects): number;
+export function geoArea(feature: ExtendedGeometryCollection<GeoGeometryObjects>): number;
 
 /**Returns the spherical bounding box for the specified GeoJSON feature. The bounding box is represented by a two-dimensional array: [[left, bottom], [right, top]], where left is the minimum longitude, bottom is the minimum latitude, right is maximum longitude, and top is the maximum latitude. All coordinates are given in degrees. */
-export function geoBounds<FeatureType extends GeoJSON.GeometryObject>(feature: GeoJSON.Feature<FeatureType>): [[number, number], [number, number]];
-export function geoBounds<FeatureType extends GeoJSON.GeometryObject>(feature: GeoJSON.FeatureCollection<FeatureType>): [[number, number], [number, number]];
-export function geoBounds(feature: GeoJSON.GeometryObject): [[number, number], [number, number]];
-export function geoBounds(feature: GeoJSON.GeometryCollection): [[number, number], [number, number]];
+export function geoBounds(feature: ExtendedFeature<GeoGeometryObjects, any>): [[number, number], [number, number]];
+export function geoBounds(feature: ExtendedFeatureCollection<ExtendedFeature<GeoGeometryObjects, any>>): [[number, number], [number, number]];
+export function geoBounds(feature: GeoGeometryObjects): [[number, number], [number, number]];
+export function geoBounds(feature: ExtendedGeometryCollection<GeoGeometryObjects>): [[number, number], [number, number]];
 
 /**Returns the spherical centroid of the specified GeoJSON feature. See also path.centroid, which computes the projected planar centroid.*/
-export function geoCentroid<FeatureType extends GeoJSON.GeometryObject>(feature: GeoJSON.Feature<FeatureType>): [number, number];
-export function geoCentroid<FeatureType extends GeoJSON.GeometryObject>(feature: GeoJSON.FeatureCollection<FeatureType>): [number, number];
-export function geoCentroid(feature: GeoJSON.GeometryObject): [number, number];
-export function geoCentroid(feature: GeoJSON.GeometryCollection): [number, number];
+export function geoCentroid(feature: ExtendedFeature<GeoGeometryObjects, any>): [number, number];
+export function geoCentroid(feature: ExtendedFeatureCollection<ExtendedFeature<GeoGeometryObjects, any>>): [number, number];
+export function geoCentroid(feature: GeoGeometryObjects): [number, number];
+export function geoCentroid(feature: ExtendedGeometryCollection<GeoGeometryObjects>): [number, number];
 
 /**Returns the great-arc distance in radians between the two points a and b. Each point must be specified as a two-element array [longitude, latitude] in degrees. */
 export function geoDistance(a: [number, number], b: [number, number]): number;
 
 /**Returns the great-arc length of the specified GeoJSON feature in radians.*/
-export function geoLength<FeatureType extends GeoJSON.GeometryObject>(feature: GeoJSON.Feature<FeatureType>): number;
-export function geoLength<FeatureType extends GeoJSON.GeometryObject>(feature: GeoJSON.FeatureCollection<FeatureType>): number;
-export function geoLength(feature: GeoJSON.GeometryObject): number;
-export function geoLength(feature: GeoJSON.GeometryCollection): number;
+export function geoLength(feature: ExtendedFeature<GeoGeometryObjects, any>): number;
+export function geoLength(feature: ExtendedFeatureCollection<ExtendedFeature<GeoGeometryObjects, any>>): number;
+export function geoLength(feature: GeoGeometryObjects): number;
+export function geoLength(feature: ExtendedGeometryCollection<GeoGeometryObjects>): number;
 
 /**Returns an interpolator function given two points a and b. Each point must be specified as a two-element array [longitude, latitude] in degrees. */
 export function geoInterpolate(a: [number, number], b: [number, number]): (t: number) => [number, number];

@@ -57,21 +57,151 @@ interface MyGeoGeometry extends GeoJSON.GeometryObject {
 
 }
 
+interface SampleProperties1 {
+    name: string;
+}
+
+interface SampleProperties2 {
+    name: string;
+    value: number;
+}
+
+const samplePolygon: GeoJSON.Polygon = {
+    type: 'Polygon',
+    coordinates: [
+        [[0, 0], [0, 90], [90, 0], [0, 0]]
+    ]
+};
+
+const sampleSphere: d3Geo.GeoSphere = {
+    type: 'Sphere'
+};
+
+const sampleGeometryCollection: GeoJSON.GeometryCollection = {
+    type: 'GeometryCollection',
+    geometries: [
+        samplePolygon,
+        samplePolygon
+    ]
+};
+
+const sampleExtendedGeometryCollection: d3Geo.ExtendedGeometryCollection<GeoJSON.Polygon | d3Geo.GeoSphere> = {
+    type: 'GeometryCollection',
+    geometries: [
+        samplePolygon,
+        sampleSphere
+    ]
+};
+
+const sampleFeature: GeoJSON.Feature<GeoJSON.Polygon> = {
+    type: 'Feature',
+    geometry: samplePolygon,
+    properties: {
+        name: 'Alabama'
+    }
+};
+
+const sampleExtendedFeature1: d3Geo.ExtendedFeature<GeoJSON.Polygon, SampleProperties1> = {
+    type: 'Feature',
+    geometry: samplePolygon,
+    properties: {
+        name: 'Alabama'
+    }
+};
+
+const sampleExtendedFeature2: d3Geo.ExtendedFeature<d3Geo.GeoSphere, SampleProperties2> = {
+    type: 'Feature',
+    geometry: sampleSphere,
+    properties: {
+        name: 'earth',
+        value: 42
+    }
+};
+
+const sampleFeatureCollection: GeoJSON.FeatureCollection<GeoJSON.Polygon> = {
+    type: 'FeatureCollection',
+    features: [
+        sampleFeature,
+        sampleFeature
+    ]
+};
+
+const sampleExtendedFeatureCollection: d3Geo.ExtendedFeatureCollection<d3Geo.ExtendedFeature<GeoJSON.Polygon, SampleProperties1> | d3Geo.ExtendedFeature<d3Geo.GeoSphere, SampleProperties2>> = {
+    type: 'FeatureCollection',
+    features: [
+        sampleExtendedFeature1,
+        sampleExtendedFeature2
+    ]
+};
+
 // ----------------------------------------------------------------------
 // Spherical Math
 // ----------------------------------------------------------------------
-let area: number = d3Geo.geoArea(feature);
-let bounds: [[number, number], [number, number]] = d3Geo.geoBounds(feature);
-let centroid: [number, number] = d3Geo.geoCentroid(feature);
+
+// geoArea(...) =========================================================
+
+let area: number = d3Geo.geoArea(samplePolygon);
+area = d3Geo.geoArea(sampleSphere);
+area = d3Geo.geoArea(sampleGeometryCollection);
+area = d3Geo.geoArea(sampleExtendedGeometryCollection);
+area = d3Geo.geoArea(sampleFeature);
+area = d3Geo.geoArea(sampleExtendedFeature1);
+area = d3Geo.geoArea(sampleExtendedFeature2);
+area = d3Geo.geoArea(sampleFeatureCollection);
+area = d3Geo.geoArea(sampleExtendedFeatureCollection);
+
+// geoBounds(...) =========================================================
+
+let bounds: [[number, number], [number, number]] = d3Geo.geoBounds(samplePolygon);
+bounds = d3Geo.geoBounds(sampleSphere);
+bounds = d3Geo.geoBounds(sampleGeometryCollection);
+bounds = d3Geo.geoBounds(sampleExtendedGeometryCollection);
+bounds = d3Geo.geoBounds(sampleFeature);
+bounds = d3Geo.geoBounds(sampleExtendedFeature1);
+bounds = d3Geo.geoBounds(sampleExtendedFeature2);
+bounds = d3Geo.geoBounds(sampleFeatureCollection);
+bounds = d3Geo.geoBounds(sampleExtendedFeatureCollection);
+
+// geoCentroid(...) =======================================================
+
+let centroid: [number, number] = d3Geo.geoCentroid(samplePolygon);
+centroid = d3Geo.geoCentroid(sampleSphere);
+centroid = d3Geo.geoCentroid(sampleGeometryCollection);
+centroid = d3Geo.geoCentroid(sampleExtendedGeometryCollection);
+centroid = d3Geo.geoCentroid(sampleFeature);
+centroid = d3Geo.geoCentroid(sampleExtendedFeature1);
+centroid = d3Geo.geoCentroid(sampleExtendedFeature2);
+centroid = d3Geo.geoCentroid(sampleFeatureCollection);
+centroid = d3Geo.geoCentroid(sampleExtendedFeatureCollection);
+
+// geoDistance(...) =======================================================
+
 let distance: number = d3Geo.geoDistance([54, 2], [53, 1]);
-let length: number = d3Geo.geoLength(feature);
+
+// geoLength(...) =========================================================
+
+let length: number = d3Geo.geoLength(samplePolygon);
+length = d3Geo.geoLength(sampleSphere);
+length = d3Geo.geoLength(sampleGeometryCollection);
+length = d3Geo.geoLength(sampleExtendedGeometryCollection);
+length = d3Geo.geoLength(sampleFeature);
+length = d3Geo.geoLength(sampleExtendedFeature1);
+length = d3Geo.geoLength(sampleExtendedFeature2);
+length = d3Geo.geoLength(sampleFeatureCollection);
+length = d3Geo.geoLength(sampleExtendedFeatureCollection);
+
+// geoInterpolate(...) ====================================================
+
 let interpolateFct: (t: number) => [number, number] = d3Geo.geoInterpolate([54, 2], [53, 1]);
+
+// geoRotation(...) =======================================================
+
+// create rotation -----------------------------------------------------
+
 let rotation: d3Geo.GeoRotation = d3Geo.geoRotation([90, 45]);
 let rotation2: d3Geo.GeoRotation = d3Geo.geoRotation([90, 45, 27.5]);
 
-// ----------------------------------------------------------------------
-// Rotation interface
-// ----------------------------------------------------------------------
+// use rotation --------------------------------------------------------
 
 let point: [number, number] = rotation([54, 2]);
 let inverted: [number, number] = rotation.invert([54, 2]);
@@ -79,9 +209,6 @@ let inverted: [number, number] = rotation.invert([54, 2]);
 // ----------------------------------------------------------------------
 // Spherical Shapes - geoCircle
 // ----------------------------------------------------------------------
-
-
-
 
 // Create GeoCircleGenerator ============================================
 
@@ -113,7 +240,7 @@ class Circulator {
     }
     private r: number;
     private p: number;
-    private circleGenerator: d3Geo.GeoCircleGenerator<Circulator, [number, number]>;
+    private circleGenerator: d3Geo.GeoCircleGenerator<Circulator, [number, number] | undefined>;
 
     public getCirclePolygon(center?: [number, number]): GeoJSON.Polygon {
         if (center && center.length === 2 && typeof center[0] === 'number' && typeof center[1] === 'number') {
