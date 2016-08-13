@@ -7,6 +7,7 @@
  */
 
 import * as d3Geo from '../../src/d3-geo';
+import { Selection } from '../../src/d3-selection';
 
 // ----------------------------------------------------------------------
 // Tests setup
@@ -338,9 +339,10 @@ let lines: GeoJSON.LineString[] = graticuleGenerator.lines();
 let polygon2: GeoJSON.Polygon = graticuleGenerator.outline();
 
 // ----------------------------------------------------------------------
-// Projections
+// Raw Projections
 // ----------------------------------------------------------------------
-let geoPath: d3Geo.GeoPath<MyGeoGeometry> = d3Geo.geoPath<MyGeoGeometry>();
+
+// Pre-Defined Raw Projection Factories =================================
 
 let azimuthalEqualAreaRaw: d3Geo.GeoRawProjection = d3Geo.geoAzimuthalEqualAreaRaw();
 let azimuthalEquidistantRaw: d3Geo.GeoRawProjection = d3Geo.geoAzimuthalEquidistantRaw();
@@ -354,9 +356,18 @@ let orthographicRaw: d3Geo.GeoRawProjection = d3Geo.geoOrthographicRaw();
 let stereographicRaw: d3Geo.GeoRawProjection = d3Geo.geoStereographicRaw();
 let transverseMercatorRaw: d3Geo.GeoRawProjection = d3Geo.geoTransverseMercatorRaw();
 
-let geoProjection: d3Geo.GeoProjection = d3Geo.geoProjection(azimuthalEqualAreaRaw);
-let mutate: () => d3Geo.GeoProjection = d3Geo.geoProjectionMutator(() => azimuthalEqualAreaRaw);
-let constructedProjection: d3Geo.GeoProjection = mutate();
+// Use Raw Projection =====================================================
+
+let rawProjectionPoint: [number, number] = azimuthalEqualAreaRaw(54, 2);
+let rawProjectionInvertedPoint: [number, number] = azimuthalEqualAreaRaw.invert(180, 6);
+
+
+
+// ----------------------------------------------------------------------
+// Pre-Defined Projections
+// ----------------------------------------------------------------------
+
+// Create predefined Projection from factory =============================
 
 let azimuthalEqualArea: d3Geo.GeoProjection = d3Geo.geoAzimuthalEqualArea();
 let azimuthalEquidistant: d3Geo.GeoProjection = d3Geo.geoAzimuthalEquidistant();
@@ -370,36 +381,18 @@ let orthographic: d3Geo.GeoProjection = d3Geo.geoOrthographic();
 let stereographic: d3Geo.GeoProjection = d3Geo.geoStereographic();
 let transverseMercator: d3Geo.GeoProjection = d3Geo.geoTransverseMercator();
 
-let geoClipExtent: d3Geo.GeoExtent = d3Geo.geoClipExtent();
+// ----------------------------------------------------------------------
+// Create New Projections
+// ----------------------------------------------------------------------
 
-// ----------------------------------------------------------------------
-// GeoPath interface
-// ----------------------------------------------------------------------
-let geoPathArea: number = geoPath.area(feature);
-let geoPathBounds: [[number, number], [number, number]] = geoPath.bounds(feature);
-let geoPathCentroid: [number, number] = geoPath.centroid(feature);
-let geoPathProjection: d3Geo.GeoProjection = geoPath.projection();
-let geoPath2: d3Geo.GeoPath<MyGeoGeometry> = geoPath.projection(azimuthalEqualArea);
-let geoPathContext: d3Geo.GeoContext = geoPath.context();
-let geoPath3: d3Geo.GeoPath<MyGeoGeometry> = geoPath.context({
-    beginPath: () => { return; },
-    moveTo: (x: number, y: number) => { return; },
-    lineTo: (x: number, y: number) => { return; },
-    arc: (x, y, radius, startAngle, endAngle) => { return; },
-    closePath: () => { return; }
-});
-let geoPathPointRadius: number = geoPath.pointRadius();
-let geoPath4: d3Geo.GeoPath<MyGeoGeometry> = geoPath.pointRadius(5);
 
-// ----------------------------------------------------------------------
-// RawProjection interface
-// ----------------------------------------------------------------------
-let rawProjectionPoint: [number, number] = azimuthalEqualAreaRaw(54, 2);
-let rawProjectionInvertedPoint: [number, number] = azimuthalEqualAreaRaw.invert(180, 6);
+let geoProjection: d3Geo.GeoProjection = d3Geo.geoProjection(azimuthalEqualAreaRaw);
 
-// ----------------------------------------------------------------------
-// Projection interface
-// ----------------------------------------------------------------------
+let mutate: () => d3Geo.GeoProjection = d3Geo.geoProjectionMutator(() => azimuthalEqualAreaRaw);
+let constructedProjection: d3Geo.GeoProjection = mutate();
+
+// Use Projection ==========================================================
+
 let projected: [number, number] = constructedProjection([54, 2]);
 let inverted2: [number, number] = constructedProjection.invert([54, 2]);
 
@@ -440,8 +433,146 @@ let parallels: [number, number] = conicConformal.parallels();
 let conicProjection: d3Geo.GeoConicProjection = conicConformal.parallels([20, 20]);
 
 // ----------------------------------------------------------------------
-// Extent interface
+// GeoPath Generator
 // ----------------------------------------------------------------------
+
+// Create geoPath Generator =============================================
+
+let geoPathCanvas: d3Geo.GeoPath<any, d3Geo.GeoPremissibleObjects>;
+geoPathCanvas = d3Geo.geoPath();
+
+let geoPathSVG: d3Geo.GeoPath<SVGPathElement, d3Geo.ExtendedFeature<GeoJSON.Polygon, SampleProperties1>>;
+geoPathSVG = d3Geo.geoPath<SVGPathElement, d3Geo.ExtendedFeature<GeoJSON.Polygon, SampleProperties1>>();
+
+// Configure geoPath Generator ==========================================
+
+// projection(...) ------------------------------------------------------
+
+geoPathCanvas = geoPathCanvas.projection(azimuthalEqualArea);
+let geoPathProjection: d3Geo.GeoProjection = geoPathCanvas.projection();
+
+geoPathSVG = geoPathSVG.projection(conicConformal);
+let geoPathConicProjection: d3Geo.GeoConicProjection = geoPathCanvas.projection<d3Geo.GeoConicProjection>();
+// geoPathConicProjection = geoPathCanvas.projection(); // fails without casting to GeoConicProjection
+// geoPathConicProjection = geoPathCanvas.projection<SampleProperties1>(); // fails as SampleProperties does not extend minimal interface
+
+// context(...) ------------------------------------------------------
+
+// minimal context interface
+geoPathCanvas = geoPathCanvas.context({
+    beginPath: () => { return; },
+    moveTo: (x: number, y: number) => { return; },
+    lineTo: (x: number, y: number) => { return; },
+    arc: (x, y, radius, startAngle, endAngle) => { return; },
+    closePath: () => { return; }
+});
+
+
+let geoPathContext: d3Geo.GeoContext = geoPathCanvas.context();
+
+// reset
+geoPathCanvas = geoPathCanvas.context(null);
+
+// With canvas 2D rendering context
+let canvasContext: CanvasRenderingContext2D;
+
+geoPathCanvas = geoPathCanvas.context(canvasContext);
+
+canvasContext = geoPathCanvas.context<CanvasRenderingContext2D>();
+// canvasContext = geoPathSimple.context(); // fails without casting to CanvasRenderingContext2D
+// canvasContext = geoPathSimple.context<SampleProperties1>(); // fails as SampleProperties does not extend GeoCanvas
+
+// pointRadius(...) ------------------------------------------------------
+
+geoPathCanvas = geoPathCanvas.pointRadius(5);
+let geoPathCanvasPointRadiusAccessor: (this: any, d: d3Geo.GeoPremissibleObjects, ...args: any[]) => number = geoPathCanvas.pointRadius();
+
+geoPathSVG = geoPathSVG.pointRadius(function (datum) {
+    let that: SVGPathElement = this;
+    let d: d3Geo.ExtendedFeature<GeoJSON.Polygon, SampleProperties1> = datum;
+    return datum.properties.name === 'Alabama' ? 10 : 15;
+});
+
+let geoPathSVGPointRadiusAccessor: (this: SVGPathElement, d: d3Geo.ExtendedFeature<GeoJSON.Polygon, SampleProperties1>, ...args: any[]) => number = geoPathSVG.pointRadius();
+// let geoPathSVGPointRadiusAccessorWrong1: (this: SVGCircleElement, d: d3Geo.ExtendedFeature<GeoJSON.Polygon, SampleProperties1>, ...args: any[]) => number = geoPathSVG.pointRadius(); // fails, mismatch in this context
+// let geoPathSVGPointRadiusAccessorWrong2: (this: SVGPathElement, d: d3Geo.GeoGeometryObjects, ...args: any[]) => number = geoPathSVG.pointRadius(); // fails, mismatch in object datum type
+
+// Use geoPath Generator ================================================
+
+// area(...) ------------------------------------------------------
+
+let geoPathArea: number = geoPathCanvas.area(samplePolygon);
+geoPathArea = geoPathCanvas.area(sampleSphere);
+geoPathArea = geoPathCanvas.area(sampleGeometryCollection);
+geoPathArea = geoPathCanvas.area(sampleExtendedGeometryCollection);
+geoPathArea = geoPathCanvas.area(sampleFeature);
+geoPathArea = geoPathCanvas.area(sampleExtendedFeature1);
+geoPathArea = geoPathCanvas.area(sampleExtendedFeature2);
+geoPathArea = geoPathCanvas.area(sampleFeatureCollection);
+geoPathArea = geoPathCanvas.area(sampleExtendedFeatureCollection);
+
+// geoPathArea = geoPathSVG.area(sampleExtendedFeatureCollection); // fails, wrong data object type
+
+
+// bounds(...) ------------------------------------------------------
+
+let geoPathBounds: [[number, number], [number, number]] = geoPathCanvas.bounds(samplePolygon);
+geoPathBounds = geoPathCanvas.bounds(sampleSphere);
+geoPathBounds = geoPathCanvas.bounds(sampleGeometryCollection);
+geoPathBounds = geoPathCanvas.bounds(sampleExtendedGeometryCollection);
+geoPathBounds = geoPathCanvas.bounds(sampleFeature);
+geoPathBounds = geoPathCanvas.bounds(sampleExtendedFeature1);
+geoPathBounds = geoPathCanvas.bounds(sampleExtendedFeature2);
+geoPathBounds = geoPathCanvas.bounds(sampleFeatureCollection);
+geoPathBounds = geoPathCanvas.bounds(sampleExtendedFeatureCollection);
+
+// geoPathBounds = geoPathSVG.bounds(sampleExtendedFeatureCollection); // fails, wrong data object type
+
+// centroid(...) ------------------------------------------------------
+
+let geoPathCentroid: [number, number] = geoPathCanvas.centroid(samplePolygon);
+geoPathCentroid = geoPathCanvas.centroid(sampleSphere);
+geoPathCentroid = geoPathCanvas.centroid(sampleGeometryCollection);
+geoPathCentroid = geoPathCanvas.centroid(sampleExtendedGeometryCollection);
+geoPathCentroid = geoPathCanvas.centroid(sampleFeature);
+geoPathCentroid = geoPathCanvas.centroid(sampleExtendedFeature1);
+geoPathCentroid = geoPathCanvas.centroid(sampleExtendedFeature2);
+geoPathCentroid = geoPathCanvas.centroid(sampleFeatureCollection);
+geoPathCentroid = geoPathCanvas.centroid(sampleExtendedFeatureCollection);
+
+// geoPathCentroid = geoPathSVG.centroid(sampleExtendedFeatureCollection); // fails, wrong data object type
+
+// render path to context of get path string----------------------------
+
+// render to GeoContext/Canvas
+
+geoPathCanvas(samplePolygon);
+geoPathCanvas(sampleSphere);
+geoPathCanvas(sampleGeometryCollection);
+geoPathCanvas(sampleExtendedGeometryCollection);
+geoPathCanvas(sampleFeature);
+geoPathCanvas(sampleExtendedFeature1);
+geoPathCanvas(sampleExtendedFeature2);
+geoPathCanvas(sampleFeatureCollection);
+geoPathCanvas(sampleExtendedFeatureCollection);
+
+// Use path string generator for SVGPathElement
+
+let svgPath: Selection<SVGPathElement, d3Geo.ExtendedFeature<GeoJSON.Polygon, SampleProperties1>, any, any>;
+svgPath.attr('d', geoPathSVG);
+
+let svgCircleWrong: Selection<SVGCircleElement, d3Geo.ExtendedFeature<GeoJSON.Polygon, SampleProperties1>, any, any>;
+// svgCircleWrong.attr('d', geoPathSVG); // fails, mismatch in `this` context
+
+let svgPathWrong: Selection<SVGPathElement, GeoJSON.Polygon, any, any>;
+// svgPathWrong.attr('d', geoPathSVG); // fails, mismatch in datum type
+
+// ----------------------------------------------------------------------
+// geoClipExtent
+// ----------------------------------------------------------------------
+
+let geoClipExtent: d3Geo.GeoExtent = d3Geo.geoClipExtent();
+
 let extent2: [[number, number], [number, number]] = geoClipExtent.extent();
 let geoClipExtent2: d3Geo.GeoExtent = geoClipExtent.extent([[0, 0], [960, 500]]);
 let stream: d3Geo.GeoStream = geoClipExtent.stream();

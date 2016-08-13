@@ -18,7 +18,7 @@ export interface GeoSphere {
 }
 
 /**
- * Type Alias for for GeoJSON Geometry Object and GeoSphere additional
+ * Type Alias for GeoJSON Geometry Object and GeoSphere additional
  * geometry supported by d3-geo
  */
 export type GeoGeometryObjects = GeoJSON.GeometryObject | GeoSphere;
@@ -51,6 +51,12 @@ export interface ExtendedFeature<GeometryType extends GeoGeometryObjects, Proper
 export interface ExtendedFeatureCollection<FeatureType extends ExtendedFeature<GeoGeometryObjects, any>> extends GeoJSON.GeoJsonObject {
     features: FeatureType[];
 }
+
+/**
+ * Type Alias for permissible objects which can be used with d3-geo
+ * methods
+ */
+export type GeoPremissibleObjects = GeoGeometryObjects | ExtendedGeometryCollection<GeoGeometryObjects> | ExtendedFeature<GeoGeometryObjects, any> | ExtendedFeatureCollection<ExtendedFeature<GeoGeometryObjects, any>>;
 
 // ----------------------------------------------------------------------
 // Spherical Math
@@ -222,21 +228,24 @@ export interface GeoContext {
     moveTo(x: number, y: number): void;
 }
 
-export interface GeoPath<FeatureType extends GeoJSON.GeometryObject> {
-    area(object: GeoJSON.Feature<FeatureType>): number;
-    bounds(object: GeoJSON.Feature<FeatureType>): [[number, number], [number, number]];
-    centroid(object: GeoJSON.Feature<FeatureType>): [number, number];
-    context(): GeoContext | null;
+export interface GeoPath<This, DatumObject extends GeoPremissibleObjects> {
+    area(object: DatumObject): number;
+    bounds(object: DatumObject): [[number, number], [number, number]];
+    centroid(object: DatumObject): [number, number];
+    context<C extends GeoContext>(): C | null;
     context(context: GeoContext | null): this;
-    projection(): GeoProjection;
+    // TODO: generalize only projection.stream method suffices for projection(...) as per API doc
+    projection<P extends GeoProjection>(): P;
     projection(projection: GeoProjection): this;
-    pointRadius(): number;
+    pointRadius(): (this: This, object: DatumObject, ...args: any[]) => number;
     pointRadius(value: number): this;
-    (object: GeoJSON.Feature<FeatureType>): string;
-    (object: GeoJSON.Feature<FeatureType>, ...args: any[]): string;
+    pointRadius(value: (this: This, object: DatumObject, ...args: any[]) => number): this;
+    (this: This, object: DatumObject, ...args: any[]): string;
 }
 
-export function geoPath<FeatureType extends GeoJSON.GeometryObject>(): GeoPath<FeatureType>;
+export function geoPath(): GeoPath<any, GeoPremissibleObjects>;
+export function geoPath<DatumObject extends GeoPremissibleObjects>(): GeoPath<any, DatumObject>;
+export function geoPath<This, DatumObject extends GeoPremissibleObjects>(): GeoPath<This, DatumObject>;
 
 // Raw Projections ========================================================
 
