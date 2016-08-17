@@ -12,51 +12,6 @@ import { Selection } from '../../src/d3-selection';
 // ----------------------------------------------------------------------
 // Tests setup
 // ----------------------------------------------------------------------
-const feature: GeoJSON.Feature<MyGeoGeometry> = {
-    'type': 'Feature',
-    'id': '01',
-    'properties': {
-        'name': 'Alabama'
-    },
-    'geometry': {
-        'type': 'Polygon',
-        'coordinates':
-        [
-            [
-                [-87.359296, 35.00118],
-                [-85.606675, 34.984749],
-                [-85.431413, 34.124869],
-                [-85.184951, 32.859696],
-                [-85.069935, 32.580372],
-                [-84.960397, 32.421541],
-                [-85.004212, 32.322956],
-                [-84.889196, 32.262709],
-                [-85.058981, 32.13674],
-                [-85.053504, 32.01077],
-                [-85.141136, 31.840985],
-                [-85.042551, 31.539753],
-                [-85.113751, 31.27686],
-                [-85.004212, 31.003013],
-                [-85.497137, 30.997536],
-                [-87.600282, 30.997536],
-                [-87.633143, 30.86609],
-                [-87.408589, 30.674397],
-                [-87.446927, 30.510088],
-                [-87.37025, 30.427934],
-                [-87.518128, 30.280057],
-                [-87.655051, 30.247195], [-87.90699, 30.411504], [-87.934375, 30.657966], [-88.011052, 30.685351], [-88.10416, 30.499135], [-88.137022, 30.318396], [-88.394438, 30.367688], [-88.471115, 31.895754], [-88.241084, 33.796253], [-88.098683, 34.891641], [-88.202745, 34.995703], [-87.359296, 35.00118]
-            ]
-        ]
-    }
-};
-
-const obj: GeoJSON.GeoJsonObject = {
-    'type': 'Feature'
-};
-
-interface MyGeoGeometry extends GeoJSON.GeometryObject {
-
-}
 
 interface SampleProperties1 {
     name: string;
@@ -369,6 +324,8 @@ let rawProjectionInvertedPoint: [number, number] = azimuthalEqualAreaRaw.invert(
 
 // Create predefined Projection from factory =============================
 
+let albers: d3Geo.GeoConicProjection = d3Geo.geoAlbers();
+let albersUsa: d3Geo.GeoProjection = d3Geo.geoAlbersUsa();
 let azimuthalEqualArea: d3Geo.GeoProjection = d3Geo.geoAzimuthalEqualArea();
 let azimuthalEquidistant: d3Geo.GeoProjection = d3Geo.geoAzimuthalEquidistant();
 let conicConformal: d3Geo.GeoConicProjection = d3Geo.geoConicConformal();
@@ -400,37 +357,60 @@ let inverted2: [number, number] = constructedProjection.invert([54, 2]);
 // let stream: d3Geo.Stream = constructedProjection.stream([54, 2]);
 
 let clipAngle: number = constructedProjection.clipAngle();
-let constructedProjection1: d3Geo.GeoProjection = constructedProjection.clipAngle(null);
-let constructedProjection2: d3Geo.GeoProjection = constructedProjection.clipAngle(45);
+constructedProjection = constructedProjection.clipAngle(null);
+constructedProjection = constructedProjection.clipAngle(45);
 
 let clipExtent: [[number, number], [number, number]] = constructedProjection.clipExtent();
-let constructedProjection3: d3Geo.GeoProjection = constructedProjection.clipExtent(null);
-let constructedProjection4: d3Geo.GeoProjection = constructedProjection.clipExtent([[0, 0], [1, 1]]);
+constructedProjection = constructedProjection.clipExtent(null);
+constructedProjection = constructedProjection.clipExtent([[0, 0], [1, 1]]);
 
 let scale: number = constructedProjection.scale();
-let constructedProjection5: d3Geo.GeoProjection = constructedProjection.scale(45);
+constructedProjection = constructedProjection.scale(45);
 
 let translate: [number, number] = constructedProjection.translate();
-let constructedProjection6: d3Geo.GeoProjection = constructedProjection.translate([480, 250]);
+constructedProjection = constructedProjection.translate([480, 250]);
 
 let center: [number, number] = constructedProjection.center();
-let constructedProjection7: d3Geo.GeoProjection = constructedProjection.center([0, 0]);
+constructedProjection = constructedProjection.center([0, 0]);
 
 let rotate: [number, number, number] = constructedProjection.rotate();
-let constructedProjection8: d3Geo.GeoProjection = constructedProjection.rotate([0, 0]);
-let constructedProjection9: d3Geo.GeoProjection = constructedProjection.rotate([0, 0, 0]);
+constructedProjection = constructedProjection.rotate([0, 0]);
+constructedProjection = constructedProjection.rotate([0, 0, 0]);
 
 let precision2: number = constructedProjection.precision();
-let constructedProjection10: d3Geo.GeoProjection = constructedProjection.precision(0.707);
+constructedProjection = constructedProjection.precision(0.707);
 
-let fitExtent: d3Geo.GeoProjection = constructedProjection.fitExtent([[0, 0], [960, 500]], obj);
-let fitSize: d3Geo.GeoProjection = constructedProjection.fitSize([960, 500], obj);
+constructedProjection = constructedProjection.fitExtent([[0, 0], [960, 500]], samplePolygon);
+constructedProjection = constructedProjection.fitExtent([[0, 0], [960, 500]], sampleSphere);
+constructedProjection = constructedProjection.fitExtent([[0, 0], [960, 500]], sampleGeometryCollection);
+constructedProjection = constructedProjection.fitExtent([[0, 0], [960, 500]], sampleExtendedGeometryCollection);
+constructedProjection = constructedProjection.fitExtent([[0, 0], [960, 500]], sampleFeature);
+constructedProjection = constructedProjection.fitExtent([[0, 0], [960, 500]], sampleExtendedFeature1);
+constructedProjection = constructedProjection.fitExtent([[0, 0], [960, 500]], sampleExtendedFeature2);
+constructedProjection = constructedProjection.fitExtent([[0, 0], [960, 500]], sampleFeatureCollection);
+constructedProjection = constructedProjection.fitExtent([[0, 0], [960, 500]], sampleExtendedFeatureCollection);
+
+constructedProjection = constructedProjection.fitSize([960, 500], samplePolygon);
+constructedProjection = constructedProjection.fitSize([960, 500], sampleSphere);
+constructedProjection = constructedProjection.fitSize([960, 500], sampleGeometryCollection);
+constructedProjection = constructedProjection.fitSize([960, 500], sampleExtendedGeometryCollection);
+constructedProjection = constructedProjection.fitSize([960, 500], sampleFeature);
+constructedProjection = constructedProjection.fitSize([960, 500], sampleExtendedFeature1);
+constructedProjection = constructedProjection.fitSize([960, 500], sampleExtendedFeature2);
+constructedProjection = constructedProjection.fitSize([960, 500], sampleFeatureCollection);
+constructedProjection = constructedProjection.fitSize([960, 500], sampleExtendedFeatureCollection);
 
 // ----------------------------------------------------------------------
-// ConicProjection interface
+// GeoConicProjection interface
 // ----------------------------------------------------------------------
+
+// parallels(...) ------------------------------------------------------
 let parallels: [number, number] = conicConformal.parallels();
-let conicProjection: d3Geo.GeoConicProjection = conicConformal.parallels([20, 20]);
+conicConformal = conicConformal.parallels([20, 20]);
+
+// test method inheritance from GeoProjection ---------------------------
+
+conicConformal = conicConformal.fitSize([960, 500], samplePolygon); // inherited
 
 // ----------------------------------------------------------------------
 // GeoPath Generator
@@ -438,7 +418,7 @@ let conicProjection: d3Geo.GeoConicProjection = conicConformal.parallels([20, 20
 
 // Create geoPath Generator =============================================
 
-let geoPathCanvas: d3Geo.GeoPath<any, d3Geo.GeoPremissibleObjects>;
+let geoPathCanvas: d3Geo.GeoPath<any, d3Geo.GeoPermissibleObjects>;
 geoPathCanvas = d3Geo.geoPath();
 
 let geoPathSVG: d3Geo.GeoPath<SVGPathElement, d3Geo.ExtendedFeature<GeoJSON.Polygon, SampleProperties1>>;
@@ -449,12 +429,14 @@ geoPathSVG = d3Geo.geoPath<SVGPathElement, d3Geo.ExtendedFeature<GeoJSON.Polygon
 // projection(...) ------------------------------------------------------
 
 geoPathCanvas = geoPathCanvas.projection(azimuthalEqualArea);
-let geoPathProjection: d3Geo.GeoProjection = geoPathCanvas.projection();
+let geoPathProjectionMinimal: d3Geo.GeoStreamWrapper = geoPathCanvas.projection();
+let geoPathProjectionUnion: d3Geo.GeoProjection | d3Geo.GeoConicProjection | d3Geo.GeoStreamWrapper = geoPathCanvas.projection();
+let geoPathProjection: d3Geo.GeoProjection = geoPathCanvas.projection<d3Geo.GeoProjection>();
 
 geoPathSVG = geoPathSVG.projection(conicConformal);
-let geoPathConicProjection: d3Geo.GeoConicProjection = geoPathCanvas.projection<d3Geo.GeoConicProjection>();
-// geoPathConicProjection = geoPathCanvas.projection(); // fails without casting to GeoConicProjection
-// geoPathConicProjection = geoPathCanvas.projection<SampleProperties1>(); // fails as SampleProperties does not extend minimal interface
+let geoPathConicProjection: d3Geo.GeoConicProjection = geoPathSVG.projection<d3Geo.GeoConicProjection>();
+// geoPathConicProjection = geoPathSVG.projection(); // fails without casting to GeoConicProjection, or alternatively custom typeguard
+// geoPathConicProjection = geoPathSVG.projection<SampleProperties1>(); // fails as SampleProperties does not extend minimal interface
 
 // context(...) ------------------------------------------------------
 
@@ -485,7 +467,7 @@ canvasContext = geoPathCanvas.context<CanvasRenderingContext2D>();
 // pointRadius(...) ------------------------------------------------------
 
 geoPathCanvas = geoPathCanvas.pointRadius(5);
-let geoPathCanvasPointRadiusAccessor: (this: any, d: d3Geo.GeoPremissibleObjects, ...args: any[]) => number = geoPathCanvas.pointRadius();
+let geoPathCanvasPointRadiusAccessor: (this: any, d: d3Geo.GeoPermissibleObjects, ...args: any[]) => number = geoPathCanvas.pointRadius();
 
 geoPathSVG = geoPathSVG.pointRadius(function (datum) {
     let that: SVGPathElement = this;
@@ -573,22 +555,27 @@ let svgPathWrong: Selection<SVGPathElement, GeoJSON.Polygon, any, any>;
 
 let geoClipExtent: d3Geo.GeoExtent = d3Geo.geoClipExtent();
 
+// extent(...) ----------------------------------------------------------
+
 let extent2: [[number, number], [number, number]] = geoClipExtent.extent();
-let geoClipExtent2: d3Geo.GeoExtent = geoClipExtent.extent([[0, 0], [960, 500]]);
-let stream: d3Geo.GeoStream = geoClipExtent.stream();
-let geoClipExtent3: d3Geo.GeoExtent = geoClipExtent.stream(stream);
+geoClipExtent = geoClipExtent.extent([[0, 0], [960, 500]]);
+
+// stream(...) ----------------------------------------------------------
+
+let stream: d3Geo.GeoStream;
+stream = geoClipExtent.stream(stream);
 
 // ----------------------------------------------------------------------
 // Stream interface
 // ----------------------------------------------------------------------
-// Weird to be able to assign void type to a variable
-let void1: void = stream.point(0, 0);
-let void2: void = stream.point(0, 0, 0);
-let void3: void = stream.lineStart();
-let void4: void = stream.lineEnd();
-let void5: void = stream.polygonStart();
-let void6: void = stream.polygonEnd();
-let void7: void = stream.sphere();
+
+stream.point(0, 0);
+stream.point(0, 0, 0);
+stream.lineStart();
+stream.lineEnd();
+stream.polygonStart();
+stream.polygonEnd();
+stream.sphere();
 
 // ----------------------------------------------------------------------
 // Context interface
@@ -604,6 +591,35 @@ let context: d3Geo.GeoContext = {
 // ----------------------------------------------------------------------
 // Projection Streams
 // ----------------------------------------------------------------------
-let void8: void = d3Geo.geoStream(obj, stream);
-// TODO
+
+// geoTransform(...) ====================================================
+
 let transformFunction: { stream: (s: d3Geo.GeoStream) => {} } = d3Geo.geoTransform({});
+
+interface CustomTranformProto extends d3Geo.GeoTransformPrototype {
+    a: number;
+}
+
+let customTransformProto: CustomTranformProto;
+
+customTransformProto = {
+    point: function (x, y) {
+        return this.stream.point(x + this.a, -y);
+    },
+    a: 10
+};
+
+let t: { stream: (s: d3Geo.GeoStream) => (CustomTranformProto & d3Geo.GeoStream) } = d3Geo.geoTransform(customTransformProto);
+
+// geoStream(...) ========================================================
+
+d3Geo.geoStream(samplePolygon, stream);
+d3Geo.geoStream(sampleSphere, stream);
+d3Geo.geoStream(sampleGeometryCollection, stream);
+d3Geo.geoStream(sampleExtendedGeometryCollection, stream);
+d3Geo.geoStream(sampleFeature, stream);
+d3Geo.geoStream(sampleExtendedFeature1, stream);
+d3Geo.geoStream(sampleExtendedFeature2, stream);
+d3Geo.geoStream(sampleFeatureCollection, stream);
+d3Geo.geoStream(sampleExtendedFeatureCollection, stream);
+

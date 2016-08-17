@@ -56,7 +56,7 @@ export interface ExtendedFeatureCollection<FeatureType extends ExtendedFeature<G
  * Type Alias for permissible objects which can be used with d3-geo
  * methods
  */
-export type GeoPremissibleObjects = GeoGeometryObjects | ExtendedGeometryCollection<GeoGeometryObjects> | ExtendedFeature<GeoGeometryObjects, any> | ExtendedFeatureCollection<ExtendedFeature<GeoGeometryObjects, any>>;
+export type GeoPermissibleObjects = GeoGeometryObjects | ExtendedGeometryCollection<GeoGeometryObjects> | ExtendedFeature<GeoGeometryObjects, any> | ExtendedFeatureCollection<ExtendedFeature<GeoGeometryObjects, any>>;
 
 // ----------------------------------------------------------------------
 // Spherical Math
@@ -164,15 +164,21 @@ export interface GeoStream {
     point(x: number, y: number, z?: number): void;
     polygonEnd(): void;
     polygonStart(): void;
-    sphere(): void;
+    sphere?(): void;
 }
+
+export interface GeoStreamWrapper {
+    stream(stream: GeoStream): GeoStream;
+}
+
 
 export interface GeoRawProjection {
     (longitude: number, latitude: number): [number, number];
-    invert(x: number, y: number): [number, number];
+    invert?(x: number, y: number): [number, number];
 }
 
-export interface GeoProjection {
+
+export interface GeoProjection extends GeoStreamWrapper {
     /**Returns a new array x, y representing the projected point of the given point. The point must be specified as a two-element array [longitude, latitude] in degrees. */
     (point: [number, number]): [number, number] | null;
 
@@ -188,10 +194,17 @@ export interface GeoProjection {
     clipExtent(extent: [[number, number], [number, number]]): this;
 
     /**Sets the projection’s scale and translate to fit the specified GeoJSON object in the center of the given extent. */
-    fitExtent(extent: [[number, number], [number, number]], object: GeoJSON.GeoJsonObject): this;
+    fitExtent(extent: [[number, number], [number, number]], object: ExtendedFeature<GeoGeometryObjects, any>): this;
+    fitExtent(extent: [[number, number], [number, number]], object: ExtendedFeatureCollection<ExtendedFeature<GeoGeometryObjects, any>>): this;
+    fitExtent(extent: [[number, number], [number, number]], object: GeoGeometryObjects): this;
+    fitExtent(extent: [[number, number], [number, number]], object: ExtendedGeometryCollection<GeoGeometryObjects>): this;
+
 
     /**A convenience method for projection.fitExtent where the top-left corner of the extent is [0,0]. */
-    fitSize(size: [number, number], object: GeoJSON.GeoJsonObject): this;
+    fitSize(size: [number, number], object: ExtendedFeature<GeoGeometryObjects, any>): this;
+    fitSize(size: [number, number], object: ExtendedFeatureCollection<ExtendedFeature<GeoGeometryObjects, any>>): this;
+    fitSize(size: [number, number], object: GeoGeometryObjects): this;
+    fitSize(size: [number, number], object: ExtendedGeometryCollection<GeoGeometryObjects>): this;
 
     /**Returns a new array [longitude, latitude] in degrees representing the unprojected point of the given projected point. */
     invert?(point: [number, number]): [number, number] | null;
@@ -205,14 +218,11 @@ export interface GeoProjection {
     scale(): number;
     scale(scale: number): this;
 
-    stream(stream: any): GeoStream;
-
     translate(): [number, number];
     translate(point: [number, number]): this;
 }
 
 export interface GeoConicProjection extends GeoProjection {
-    // TODO find return type from code, documentation unavailable
     parallels(value: [number, number]): this;
     parallels(): [number, number];
 }
@@ -228,24 +238,49 @@ export interface GeoContext {
     moveTo(x: number, y: number): void;
 }
 
-export interface GeoPath<This, DatumObject extends GeoPremissibleObjects> {
+export interface GeoPath<This, DatumObject extends GeoPermissibleObjects> {
+
+    (this: This, object: DatumObject, ...args: any[]): string;
+
     area(object: DatumObject): number;
     bounds(object: DatumObject): [[number, number], [number, number]];
     centroid(object: DatumObject): [number, number];
     context<C extends GeoContext>(): C | null;
     context(context: GeoContext | null): this;
-    // TODO: generalize only projection.stream method suffices for projection(...) as per API doc
-    projection<P extends GeoProjection>(): P;
+
+    /**
+     * Get the current projection. The generic parameter can be used to cast the result to the
+     * correct, known type of the projection, e.g. GeoProjection or GeoConicProjection. Otherwise,
+     * the return type defaults to the minimum type requirement for a projection which
+     * can be passed into a GeoPath.
+     */
+    projection<P extends GeoConicProjection | GeoProjection | GeoStreamWrapper>(): P | null;
+
+    /**
+     * Set the projection to the identity projection
+     */
+    projection(projection: null): this;
+
+    /**
+     * Set the projection to be used with the geo path generator.
+     */
     projection(projection: GeoProjection): this;
+
+    /**
+     * Set the projection to be used with the geo path generator to a custom projection.
+     * Custom projections must minimally contain a stream method.
+     */
+    projection(projection: GeoStreamWrapper): this;
+
     pointRadius(): (this: This, object: DatumObject, ...args: any[]) => number;
     pointRadius(value: number): this;
     pointRadius(value: (this: This, object: DatumObject, ...args: any[]) => number): this;
-    (this: This, object: DatumObject, ...args: any[]): string;
+
 }
 
-export function geoPath(): GeoPath<any, GeoPremissibleObjects>;
-export function geoPath<DatumObject extends GeoPremissibleObjects>(): GeoPath<any, DatumObject>;
-export function geoPath<This, DatumObject extends GeoPremissibleObjects>(): GeoPath<This, DatumObject>;
+export function geoPath(): GeoPath<any, GeoPermissibleObjects>;
+export function geoPath<DatumObject extends GeoPermissibleObjects>(): GeoPath<any, DatumObject>;
+export function geoPath<This, DatumObject extends GeoPermissibleObjects>(): GeoPath<This, DatumObject>;
 
 // Raw Projections ========================================================
 
@@ -271,7 +306,7 @@ export function geoProjectionMutator(factory: (...args: any[]) => GeoRawProjecti
 
 // Pre-Defined Projections =================================================
 
-export function geoAlbers(): GeoProjection;
+export function geoAlbers(): GeoConicProjection;
 export function geoAlbersUsa(): GeoProjection;
 export function geoAzimuthalEqualArea(): GeoProjection;
 export function geoAzimuthalEquidistant(): GeoProjection;
@@ -290,8 +325,7 @@ export function geoTransverseMercator(): GeoProjection;
 export interface GeoExtent {
     extent(): [[number, number], [number, number]];
     extent(extent: [[number, number], [number, number]]): this;
-    stream(): GeoStream;
-    stream(value: GeoStream): this;
+    stream(stream: GeoStream): GeoStream;
 }
 
 
@@ -301,7 +335,24 @@ export function geoClipExtent(): GeoExtent;
 // Projection Streams
 // ----------------------------------------------------------------------
 
-// TODO return type is an extension of T augmented by Stream method. How to specify this?
-export function geoTransform<T>(prototype: T): ({ stream: (s: GeoStream) => any });
+// geoTransform(...) ====================================================
 
-export function geoStream(object: GeoJSON.GeoJsonObject, stream: GeoStream): void;
+export interface GeoTransformPrototype {
+    lineEnd?(this: this & { stream: GeoStream }): void;
+    lineStart?(this: this & { stream: GeoStream }): void;
+    point?(this: this & { stream: GeoStream }, x: number, y: number, z?: number): void;
+    polygonEnd?(this: this & { stream: GeoStream }): void;
+    polygonStart?(this: this & { stream: GeoStream }): void;
+    sphere?(this: this & { stream: GeoStream }): void;
+}
+// TODO: Review whether GeoStreamWrapper should be included into return value union type, i.e. ({ stream: (s: GeoStream) => (T & GeoStream & GeoStreamWrapper)})?
+// It probably should be omitted for purposes of this API. The stream method added to (T & GeoStream) is more of a private member used internally to
+// implement the Transform factory
+export function geoTransform<T extends GeoTransformPrototype>(prototype: T): { stream: (s: GeoStream) => (T & GeoStream) };
+
+// geoStream(...) =======================================================
+
+export function geoStream(object: ExtendedFeature<GeoGeometryObjects, any>, stream: GeoStream): void;
+export function geoStream(object: ExtendedFeatureCollection<ExtendedFeature<GeoGeometryObjects, any>>, stream: GeoStream): void;
+export function geoStream(object: GeoGeometryObjects, stream: GeoStream): void;
+export function geoStream(object: ExtendedGeometryCollection<GeoGeometryObjects>, stream: GeoStream): void;
