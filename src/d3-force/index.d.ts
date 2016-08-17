@@ -46,7 +46,7 @@ export interface Simulation<NodeDatum extends SimulationNodeDatum, LinkDatum ext
     alphaTarget(target: number): this;
     velocityDecay(): number;
     velocityDecay(decay: number): this;
-    force(name: string): Force<NodeDatum, LinkDatum>; // force names are arbitrary, so return type inference is not possible
+    force<F extends Force<NodeDatum, LinkDatum>>(name: string): F; // force names are arbitrary, so return type inference is not possible
     force(name: string, force: null): this;
     force(name: string, force: Force<NodeDatum, LinkDatum>): this;
     find(x: number, y: number, radius?: number): NodeDatum | undefined;
@@ -65,7 +65,7 @@ export function forceSimulation<NodeDatum extends SimulationNodeDatum, LinkDatum
 
 export interface Force<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum>> {
     (alpha: number): void;
-    initialize(nodes: Array<NodeDatum>): void;
+    initialize?(nodes: Array<NodeDatum>): void;
 }
 
 
