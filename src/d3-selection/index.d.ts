@@ -129,9 +129,12 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     style(name: string, value: ValueFn<GElement, Datum, string | number | boolean>, priority?: null | 'important'): this;
 
     property(name: string): any;
+    property<T>(name: Local<T>): T;
     property(name: string, value: ValueFn<GElement, Datum, any>): this;
     property(name: string, value: null): this;
     property(name: string, value: any): this;
+    property<T>(name: Local<T>, value: ValueFn<GElement, Datum, T>): this;
+    property<T>(name: Local<T>, value: T): this;
 
     text(): string;
     text(value: string | number | boolean): this;
@@ -262,10 +265,10 @@ export function touches(container: ContainerElement, touches?: TouchList): Array
 // ---------------------------------------------------------------------------
 
 
-export interface Local {
-    get(node: Element): any;
+export interface Local<T> {
+    get(node: Element): T;
     remove(node: Element): boolean;
-    set(node: Element, value: any): Element;
+    set(node: Element, value: T): Element;
     /**
      * Obtain a string with the internally assigned property name for the local
      * which is used to store the value on a node
@@ -276,7 +279,7 @@ export interface Local {
 /**
  * Obtain a new local variable
  */
-export function local(): Local;
+export function local<T>(): Local<T>;
 
 // ---------------------------------------------------------------------------
 // namespace.js related
