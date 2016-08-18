@@ -1,6 +1,6 @@
 /**
  * Typescript definition tests for d3/d3-axis module
- * 
+ *
  * Note: These tests are intended to test the definitions only
  * in the sense of typing and call signature consistency. They
  * are not intended as functional tests.
@@ -13,6 +13,7 @@ import {
     scaleOrdinal,
     ScaleOrdinal,
     scalePow,
+    ScalePower,
     scaleTime,
     ScaleTime,
 } from '../../src/d3-scale';
@@ -70,18 +71,22 @@ let leftAxis: d3Axis.Axis<number | { valueOf(): number }> = d3Axis.axisLeft(scal
 // scale(...) ----------------------------------------------------------------
 
 leftAxis = leftAxis.scale(scalePow());
+let powerScale: ScalePower<number, number> = leftAxis.scale<ScalePower<number, number>>();
+// powerScale = leftAxis.scale(); // fails, without casting as AxisScale is purposely  generic
 
+
+
+bottomAxis = bottomAxis.scale(scaleOrdinal<number>());
 // bottomAxis = bottomAxis.scale(scalePow()) // fails, domain of scale incompatible with domain of axis
 
 let axisScale: d3Axis.AxisScale<string> = bottomAxis.scale();
-// let ordinalScale: ScaleOrdinal<string, number> = bottomAxis.scale(); // fails, without casting as AxisScale is purposely  generic
+let ordinalScale: ScaleOrdinal<string, number> = bottomAxis.scale<ScaleOrdinal<string, number>>();
+// ordinalScale = bottomAxis.scale(); // fails, without casting as AxisScale is purposely  generic
 
 // ticks(...) ----------------------------------------------------------------
 
 topAxis = topAxis.ticks(20, ',f');
 
-// TODO: currently no strict typing for TimeInterval due to choice of
-// limiting imports into definition file when d3-axis module has no dependency on d3-time
 rightAxis = rightAxis.ticks(timeMinute.every(5));
 
 // tickArguments(...) ----------------------------------------------------------------

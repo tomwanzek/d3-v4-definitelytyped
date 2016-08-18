@@ -1,6 +1,6 @@
 // Type definitions for D3JS d3-collection module 1.0.0
 // Project: https://github.com/d3/d3-collection/
-// Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>, Tom Wanzek <https://github.com/tomwanzek>
+// Definitions by: Tom Wanzek <https://github.com/tomwanzek>, Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 /**
@@ -95,7 +95,7 @@ export function set<T>(array: Array<T>, key: (value: T, index?: number, array?: 
 // if AT LEAST ONE KEY was set. This seems a reasonable constraint in practice, given the intent of the nest operator.
 // Otherwise, an additional '| Array<Datum> | RollupType` would have to be added to the union type. This would cover
 // cases (a) without key or rollup (b) without key but with rollup. However, again, the union types make it cumbersome
-// without much gain. 
+// without much gain.
 
 export interface NestedArray<Datum, RollupType> extends Array<{ key: string, values: NestedArray<Datum, RollupType> | Array<Datum> | undefined, value: RollupType | undefined }> { }
 export interface NestedMap<Datum, RollupType> extends Map<NestedMap<Datum, RollupType> | Array<Datum> | RollupType> { }
@@ -104,10 +104,10 @@ export interface NestedObject<Datum, RollupType> {
 }
 
 interface Nest<Datum, RollupType> {
-    key(func: (datum: Datum) => string): Nest<Datum, RollupType>;
-    sortKeys(comparator: (a: string, b: string) => number): Nest<Datum, RollupType>;
-    sortValues(comparator: (a: Datum, b: Datum) => number): Nest<Datum, RollupType>;
-    rollup(func: (values: Datum[]) => RollupType): Nest<Datum, RollupType>;
+    key(func: (datum: Datum) => string): this;
+    sortKeys(comparator: (a: string, b: string) => number): this;
+    sortValues(comparator: (a: Datum, b: Datum) => number): this;
+    rollup(func: (values: Datum[]) => RollupType): this;
     map(array: Datum[]): Map<any>; // more specifically it returns NestedMap<Datum, RollupType>
     object(array: Datum[]): { [key: string]: any };  // more specifically it returns NestedObject<Datum, RollupType>
     entries(array: Datum[]): Array<{ key: string; values: any; value: RollupType | undefined }>;  // more specifically it returns NestedArray<Datum, RollupType>

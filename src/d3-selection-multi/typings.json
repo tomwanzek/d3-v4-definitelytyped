@@ -1,14 +1,12 @@
 {
   "name": "d3-selection-multi",
   "homepage": "https://github.com/d3/d3-selection-multi",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "global": false,
   "main": "index.d.ts",
   "files": [
     "index.d.ts"
   ],
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "globalDependencies": {}
 }

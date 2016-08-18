@@ -1,6 +1,6 @@
 {
   "name": "d3-v4-definitelytyped",
-  "version": "1.15.0",
+  "version": "1.21.0",
   "description": "Staged typescript definition files related to D3 version 4.1.x for contribution to DefinitelyTyped.",
   "scripts": {
     "test": "grunt compile"
@@ -26,5 +26,7 @@
     "tslint": "^3.13.0",
     "typescript": "^2.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/geojson": "0.0.27"
+  }
 }
