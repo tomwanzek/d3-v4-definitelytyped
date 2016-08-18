@@ -229,6 +229,8 @@ _Initial version available through @types. Check [here](https://github.com/tomwa
 
 #### d3-geo
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-geo/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-geo/d3-geo-test.ts)
 
@@ -387,6 +389,8 @@ _(in alphabetical order)_
 
 #### d3-hsv
 
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/105) for detailed status._
+
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-hsv/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-hsv/d3-hsv.ts)
 
@@ -401,6 +405,8 @@ _(in alphabetical order)_
 - [ ] Test File
 
 #### d3-selection-multi
+
+_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/105) for detailed status._
 
 - [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-selection-multi/index.d.ts)
 - [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-selection-multi/d3-selection-multi-test.ts)
