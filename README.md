@@ -229,8 +229,8 @@ _Initial version available through @types. Check [here](https://github.com/tomwa
 
 #### d3-geo
 
-- [ ] Definition File
-- [ ] Test File
+- [x] [Definition File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/src/d3-geo/index.d.ts)
+- [x] [Test File](https://github.com/tomwanzek/d3-v4-definitelytyped/blob/master/tests/d3-geo/d3-geo-test.ts)
 
 #### d3-hierarchy
 
