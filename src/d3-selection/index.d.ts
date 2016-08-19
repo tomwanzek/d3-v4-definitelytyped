@@ -129,11 +129,28 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
     style(name: string, value: ValueFn<GElement, Datum, string | number | boolean>, priority?: null | 'important'): this;
 
     property(name: string): any;
+    /**
+     * Look up a local variable on the first node of this selection. Note that this is not equivalent to `local.get(selection.node())` in that it will not look up locals set on the parent node(s).
+     *
+     * @param name The `d3.local` variable to look up.
+     */
     property<T>(name: Local<T>): T;
     property(name: string, value: ValueFn<GElement, Datum, any>): this;
     property(name: string, value: null): this;
     property(name: string, value: any): this;
+    /**
+     * Store a value in a `d3.local` variable. This is equivalent to `selection.each(function (d, i, g) { name.set(this, value.call(this, d, i, g)); })` but more concise.
+     *
+     * @param name A `d3.local` variable
+     * @param value A callback that returns the value to store
+     */
     property<T>(name: Local<T>, value: ValueFn<GElement, Datum, T>): this;
+    /**
+     * Store a value in a `d3.local` variable for each node in the selection. This is equivalent to `selection.each(function () { name.set(this, value); })` but more concise.
+     *
+     * @param name A `d3.local` variable
+     * @param value A callback that returns the value to store
+     */
     property<T>(name: Local<T>, value: T): this;
 
     text(): string;
