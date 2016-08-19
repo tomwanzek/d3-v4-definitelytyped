@@ -283,8 +283,17 @@ export function touches(container: ContainerElement, touches?: TouchList): Array
 
 
 export interface Local<T> {
+    /**
+     * Retrieves a local variable stored on the node (or one of its parents).
+     */
     get(node: Element): T | undefined;
+    /**
+     *
+     */
     remove(node: Element): boolean;
+    /**
+     * Store a value for this local variable. Calling `.get()` on children of this node will also retrieve the variable's value.
+     */
     set(node: Element, value: T): Element;
     /**
      * Obtain a string with the internally assigned property name for the local
