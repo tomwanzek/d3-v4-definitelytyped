@@ -134,7 +134,7 @@ interface Selection<GElement extends BaseType, Datum, PElement extends BaseType,
      *
      * @param name The `d3.local` variable to look up.
      */
-    property<T>(name: Local<T>): T;
+    property<T>(name: Local<T>): T | undefined;
     property(name: string, value: ValueFn<GElement, Datum, any>): this;
     property(name: string, value: null): this;
     property(name: string, value: any): this;
@@ -283,7 +283,7 @@ export function touches(container: ContainerElement, touches?: TouchList): Array
 
 
 export interface Local<T> {
-    get(node: Element): T;
+    get(node: Element): T | undefined;
     remove(node: Element): boolean;
     set(node: Element, value: T): Element;
     /**
