@@ -118,7 +118,7 @@ I.e. they are only shape tests as is the DefinitelyTyped tradition. They are exp
 
 #### D3 Standard Bundle Definition
 
-_Migration in progress. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/56) for detailed status._
+_Migration on hold. Check [here](https://github.com/tomwanzek/d3-v4-definitelytyped/issues/116) for detailed status._
 
 This is a definitions file for the bundle which re-exports the constituent modules and exposes a `d3` global for vanilla script use.
 
