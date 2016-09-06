@@ -28,7 +28,7 @@ For added clarity, this repo is _not intended_ as a permanent source for definit
 
 ## Roadmap
 
-This section provides a high-level view of the road ahead to completed definitons for D3 4.1.x, which can be accessed by developers using standard definition acquisition methods:
+This section provides a high-level view of the road ahead to completed definitons for D3 4.x, which can be accessed by developers using standard definition acquisition methods:
 
 * [Completion of Module Definitions](#completion-of-module-definitions)
 * [Migration to DefinitelyTyped](migration-to-definitelytyped)
@@ -36,7 +36,7 @@ This section provides a high-level view of the road ahead to completed definiton
 
 ### Completion of Module Definitions
 
-The modules comprising the **standard D3 bundle** now have a complete working TypeScript 2 definition with accompanying tests.
+The modules comprising the **D3 Standard Bundle** now have a complete working TypeScript 2 definition with accompanying tests.
 
 A TypeScript related issue is open and tracked which pertains to the generation of a `d3` global for plain-vanilla script use of individual D3 modules.
 
