@@ -33,3 +33,12 @@ let RdYlBu: string = d3ScaleChromatic.interpolateRdYlBu(0); //rgb(103, 0, 31)
 let RdYlGn: string = d3ScaleChromatic.interpolateRdYlGn(0); //rgb(103, 0, 31)
 let Spectral: string = d3ScaleChromatic.interpolateSpectral(0); //rgb(158, 1, 66)
 
+// -----------------------------------------------------------------------
+// Sequential
+// -----------------------------------------------------------------------
+let Blue: string = d3ScaleChromatic.interpolateBlues(1); //rgb(8, 48, 107)
+let Green: string = d3ScaleChromatic.interpolateGreens(1); //rgb(0, 68, 27)
+let Grey: string = d3ScaleChromatic.interpolateGreys(1); //rgb(0, 0, 0)
+let Orange: string = d3ScaleChromatic.interpolateOranges(1); //rgb(127, 39, 4)
+let Purple: string = d3ScaleChromatic.interpolatePurples(1); //rgb(63, 0, 125)
+let Red: string = d3ScaleChromatic.interpolateReds(1); //rgb(103, 0, 13)
