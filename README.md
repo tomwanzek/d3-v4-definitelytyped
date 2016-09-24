@@ -2,6 +2,41 @@
 
 [![Build Status](https://travis-ci.org/tomwanzek/d3-v4-definitelytyped.svg?branch=master)](https://travis-ci.org/tomwanzek/d3-v4-definitelytyped)
 
+## UPDATE (09/24/2016)
+
+**_MIGRATION COMPLETE_**
+
+It is with a great sense of pleasure that I announce the completed migration of the **D3 version 4** definitions in this repo to a production setting.
+
+**On a go forward basis the definitions will be maintained on [**DefinitelyTyped**](https://github.com/DefinitelyTyped/DefinitelyTyped)** (DT). The definitions utilize TypeScript 2 features and are currenly contained in the `types-2.0` branch.
+
+As **DefinitelyTyped/types-2.0** feeds the **npm @types organization**, **acquiring the definitions for a project** is as easy as:
+
+```
+npm install @types/d3-selection --save
+```
+All individual D3 modules comprising the D3 Standard Bundle as published on [d3/d3](https://github.com/d3/d3) have completed definition files. There are some additional D3 module definitions for what was called "optional scope modules" in this repo.
+
+_Important:_ Please refer to issue [**Parallel Version Structure to Support D3 v4 Standard Bundle Definition and D3 v3**](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/11367). As a result of this issue, the published definitions under **d3** still refer to the legacy version 3.5.17.
+
+The definitions on npm @types have version numbers following a variation of semver: _major.minor.patch_, where _major_ and _minor_ correspond to the _major_ and _minor_ version of the corresponding D3 module. The "_patch_" version number corresponds to updates of the definitions file itself.
+
+**To request enhancements, open issues or PRs with changes**, please, use [DefinitelyTyped Issues](https://github.com/DefinitelyTyped/DefinitelyTyped/issues) from now on. Kindly ensure you @ mention the author(s) listed in the header of the definitions file for their awareness, when submitting issues/PRs.
+
+As part of the transition to DT, any open issues in this repo have been migrated to DT as well. These issues have been cross-referenced to the main [Defintions Request Issue 9936](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/9936), which tracked the migration to DT/@types.
+
+## Thanks
+
+Thanks go to [Alex Ford](https://github.com/gustavderdrache), [Hugues Stefanski](https://github.com/Ledragon), and [Yuri Feldman](https://github.com/arrayjam) for their contributions to this repo. Their hard work will forever live on in the now published definitions...subject to git version control. :tada:
+
+Thanks as well to everyone, who participated in discussions/issues resolution.
+
+And last but not least, thanks to [Ryan Cavanaugh](https://github.com/ryancavanaugh), [Andy](https://github.com/andy-ms) and [Mohamed Hegazy](https://github.com/mhegazy) for making TypeScript and @types possible, and of course [Mike Bostock](https://github.com/mbostock) for D3. :+1: :+1: :+1:
+
+__________________________________________________________
+**_The following sections are kept for historic reference only_**
+
+
 ## Summary
 
 This repo is intended as a staging area for typescript definitions supporting the latest major release of **[D3js](https://github.com/d3/d3) (i.e. version 4.x)** by [Mike Bostock](https://github.com/mbostock).
