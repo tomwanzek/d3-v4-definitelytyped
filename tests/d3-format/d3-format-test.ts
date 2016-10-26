@@ -63,8 +63,8 @@ num = d3Format.precisionRound(0.0005, 3000);
 // Test Locale Definition
 // ----------------------------------------------------------------------
 
-let decimal: '.' | ',' = localeDef.decimal;
-let thousands: '.' | ',' = localeDef.thousands;
+let decimal: string = localeDef.decimal;
+let thousands: string = localeDef.thousands;
 let grouping: Array<number> = localeDef.grouping;
 let currency: [string, string] = localeDef.currency;
 
