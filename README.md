@@ -1,7 +1,5 @@
 # [DEPRECATED] D3 Version 4 Typescript Definition Files
 
-[![Build Status](https://travis-ci.org/tomwanzek/d3-v4-definitelytyped.svg?branch=master)](https://travis-ci.org/tomwanzek/d3-v4-definitelytyped)
-
 **This repo has been deprecated.**
 
 Current defintions for D3 modules are actively maintained on [**DefinitelyTyped**](https://github.com/DefinitelyTyped/DefinitelyTyped).
