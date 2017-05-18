@@ -99,7 +99,7 @@ export function selectAll<GElement extends BaseType, OldDatum>(nodes: ArrayLike<
 
 
 
-interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
+interface Selection<GElement extends BaseType | null, Datum, PElement extends BaseType | null, PDatum> {
 
     // Sub-selection -------------------------
 

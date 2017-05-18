@@ -9,7 +9,7 @@ import { ArrayLike, BaseType, Selection, ValueFn } from '../d3-selection';
  * Extend interface 'Selection' by declaration merging with 'd3-selection'
  */
 declare module '../d3-selection' {
-    export interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
+    export interface Selection<GElement extends BaseType | null, Datum, PElement extends BaseType | null, PDatum> {
         interrupt(name?: string): Transition<GElement, Datum, PElement, PDatum>;
         transition(name?: string): Transition<GElement, Datum, PElement, PDatum>;
         transition(transition: Transition<BaseType, any, any, any>): Transition<GElement, Datum, PElement, PDatum>;
@@ -21,7 +21,7 @@ export function active<GElement extends BaseType, Datum, PElement extends BaseTy
 
 export function interrupt(node: BaseType, name?: string): void;
 
-export interface Transition<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
+export interface Transition<GElement extends BaseType | null, Datum, PElement extends BaseType | null, PDatum> {
 
     // Sub-selection -------------------------
 

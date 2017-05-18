@@ -30,7 +30,7 @@ export interface SimulationLinkDatum<NodeDatum extends SimulationNodeDatum> {
     index?: number;
 }
 
-export interface Simulation<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum>> {
+export interface Simulation<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined> {
     restart(): this;
     stop(): this;
     tick(): void;
@@ -63,7 +63,7 @@ export function forceSimulation<NodeDatum extends SimulationNodeDatum, LinkDatum
 // ----------------------------------------------------------------------
 
 
-export interface Force<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum>> {
+export interface Force<NodeDatum extends SimulationNodeDatum, LinkDatum extends SimulationLinkDatum<NodeDatum> | undefined> {
     (alpha: number): void;
     initialize?(nodes: Array<NodeDatum>): void;
 }
